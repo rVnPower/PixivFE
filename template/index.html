@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Pixiv</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/css/template.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <ul class="navbar-list">
+        <li class="navbar-item">
+          <a href="#" class="navbar-brand"><b>Pixiv</b></a>
+        </li>
+        <li class="navbar-item">
+          <input type="text" name="name" id="name" placeholder="asd" />
+        </li>
+        <li class="navbar-item">
+          <button>asd</button>
+        </li>
+      </ul>
+    </nav>
+    <div class="container">
+      <h1>Recommended works</h1>
+      <div class="thumbnail-container">
+        {{ range . }}
+        <div class="artwork-thumbnail-small artwork-thumbnail">
+          <a href="#">
+            <img
+              src="{{ .Images.square_medium }}"
+              alt="{{ .Title }}"
+              class="artwork-master-image"
+            />
+          </a>
+
+          <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
+          <a href="#" class="artwork-thumbnail-artist flex"
+            ><img
+              src="https://px2.rainchan.win/c/360x360_70/img-master/img/2023/05/07/17/30/45/107910958_p0_square1200.jpg"
+              alt="avatar"
+              class="artwork-thumbnail-artist-avatar border-rounded"
+            />
+            VnPower</a
+          >
+        </div>
+        {{ end }}
+      </div>
+      <h1>Rankings</h1>
+      <div class="thumbnail-container">
+        <div class="artwork-thumbnail-large artwork-thumbnail">
+          <div class="artwork-rank-circle">1</div>
+          <a href="#">
+            <img
+              src="https://px2.rainchan.win/c/360x360_70/img-master/img/2023/05/07/17/30/45/107910958_p0_square1200.jpg"
+              alt="asd"
+              class="artwork-master-image"
+            />
+          </a>
+
+          <h3 class="artwork-thumbnail-title no-margin">Title</h3>
+          <a href="#" class="artwork-thumbnail-artist flex"
+            ><img
+              src="https://px2.rainchan.win/c/360x360_70/img-master/img/2023/05/07/17/30/45/107910958_p0_square1200.jpg"
+              alt="avatar"
+              class="artwork-thumbnail-artist-avatar border-rounded"
+            />
+            VnPower</a
+          >
+        </div>
+      </div>
+
+      <h1>Pixivision</h1>
+      <div class="thumbnail-container">
+        <a href="#" class="spotlight-thumbnail">
+          <img
+            src="https://px2.rainchan.win/c/360x360_70/img-master/img/2023/05/07/17/30/45/107910958_p0_square1200.jpg"
+            alt="asd"
+            class="spotlight-master-image"
+          />
+          <div class="spotlight-title-wrapper">
+            <h2 class="spotlight-title">
+              This is just a dummy text to fill up the blank for testing
+              purposes
+            </h2>
+          </div>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
