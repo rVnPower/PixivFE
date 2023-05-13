@@ -13,6 +13,61 @@ Intended to be written in Go with [Gin](https://gin-gonic.com).
 
 Note that this project is still under its preparation stage.
 
+## Installation
+
+Run these commands below, then access the site on [localhost:8080](https://localhost:8080)
+
+```
+git clone https://codeberg.org/VnPower/pixivfe.git
+cd pixivfe
+go install main.go
+go run main.go
+```
+
+## To-do
+
+- [ ] Base
+  - [ ] Navigation bar
+  - [ ] Searching
+  - [ ] Pagination
+- [ ] Index page
+  - [x] Recommended artworks
+  - [x] Daily rankings
+  - [ ] Spotlight (pixivision)
+  - [ ] Discovery
+    - [ ] Artworks
+    - [ ] Users
+  - [ ] Newest by all
+  - [ ] Switcher (illusts/mangas)
+- [ ] Single pages
+  - [ ] User
+  - [ ] Artwork
+  - [ ] Spotlight
+- [ ] List pages
+  - [ ] Recommended artworks
+  - [ ] Daily rankings
+  - [ ] Discovery
+    - [ ] Artworks
+    - [ ] Users
+  - [ ] Newest by all
+  - [ ] Search results
+  - [ ] Switcher
+- [ ] Settings
+  - [ ] Login
+  - [ ] Local history
+  - [ ] Toggling R-18, R-18G, AI
+  - [ ] Custom `pximg` proxy
+
+## Contributing
+
+Every kind of contribution is appreciated! You can help the with:
+
+- Design the front-end. If you have any interesting ideas for the front-end, you can create an issue or contact me. I desperately need you for this one ;-;
+- Back-end, anything.
+
+If you have any ideas to share, please contact me through email (vnpower@disroot.org) or [Matrix](https://matrix.to/#/@vnpower:exozy.me).
+I always take ideas from everybody for this project due to it's complex nature.
+
 ## License
 
 This project was made for learning and experimental purposes.
