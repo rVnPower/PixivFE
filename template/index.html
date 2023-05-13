@@ -25,7 +25,7 @@
     <div class="container">
       <h1>Recommended works</h1>
       <div class="thumbnail-container">
-        {{ range . }}
+        {{ range .Recommended }}
         <div class="artwork-thumbnail-small artwork-thumbnail">
           <a href="#">
             <img
@@ -47,19 +47,20 @@
         </div>
         {{ end }}
       </div>
-      <h1>Rankings</h1>
+      <h1>Today's rankings</h1>
       <div class="thumbnail-container">
+        {{ range $i, $_ := .Rankings }}
         <div class="artwork-thumbnail-large artwork-thumbnail">
-          <div class="artwork-rank-circle">1</div>
+          <div class="artwork-rank-circle">{{ $i | inc}}</div>
           <a href="#">
             <img
-              src="https://px2.rainchan.win/c/360x360_70/img-master/img/2023/05/07/17/30/45/107910958_p0_square1200.jpg"
-              alt="asd"
+              src="{{ .Images.square_medium }}"
+              alt="{{ .Title }}"
               class="artwork-master-image"
             />
           </a>
 
-          <h3 class="artwork-thumbnail-title no-margin">Title</h3>
+          <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
           <a href="#" class="artwork-thumbnail-artist flex"
             ><img
               src="https://px2.rainchan.win/c/360x360_70/img-master/img/2023/05/07/17/30/45/107910958_p0_square1200.jpg"
@@ -69,6 +70,7 @@
             VnPower</a
           >
         </div>
+        {{ end }}
       </div>
 
       <h1>Pixivision</h1>

@@ -35,12 +35,31 @@ func GetRecommendedIllust(c *gin.Context) []entity.Illust {
 	return illusts
 }
 
-func getJson(url string, target interface{}) error {
-	r, err := http.Get(url)
-	if err != nil {
-		return err
+func GetRankingIllust(c *gin.Context, mode string) []entity.Illust {
+	if mode == "" {
+		mode = "day"
 	}
-	defer r.Body.Close()
+	URL := "https://hibi.cocomi.cf/api/pixiv/rank?mode=" + mode
+	var illusts []entity.Illust
+	illusts = append(illusts, entity.Illust{}) // Placeholder to shift the index
 
-	return json.NewDecoder(r.Body).Decode(target)
+	resp, err := http.Get(URL)
+
+	if err != nil {
+		panic("Failed to request")
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		panic("Failed to parse body")
+	}
+	s := string(body)
+	g := gjson.Get(s, "illusts").String()
+
+	err = json.Unmarshal([]byte(g), &illusts)
+	if err != nil {
+		panic("Failed to parse Json.")
+	}
+
+	return illusts
 }
