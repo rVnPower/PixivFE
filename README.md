@@ -33,7 +33,7 @@ go run main.go
 - [ ] Index page
   - [x] Recommended artworks
   - [x] Daily rankings
-  - [ ] Spotlight (pixivision)
+  - [x] Spotlight (pixivision)
   - [ ] Discovery
     - [ ] Artworks
     - [ ] Users

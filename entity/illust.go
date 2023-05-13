@@ -12,3 +12,11 @@ type Illust struct {
 	Views     int    `json:"total_view"`
 	Bookmarks int    `json:"total_bookmarks"`
 }
+
+type Spotlight struct {
+	ID        int    `json:"id"`
+	Title     string `json:"title"`
+	Thumbnail string `json:"thumbnail"`
+	URL       string `json:"article_url"`
+	Date      string `json:"publish_date"`
+}

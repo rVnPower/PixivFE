@@ -63,3 +63,27 @@ func GetRankingIllust(c *gin.Context, mode string) []entity.Illust {
 
 	return illusts
 }
+
+func GetSpotlightArticle(c *gin.Context) []entity.Spotlight {
+	URL := "https://hibi.cocomi.cf/api/pixiv/spotlights?lang=en"
+	var articles []entity.Spotlight
+	resp, err := http.Get(URL)
+
+	if err != nil {
+		panic(":(")
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		panic(":(")
+	}
+	s := string(body)
+	g := gjson.Get(s, "spotlight_articles").String()
+
+	err = json.Unmarshal([]byte(g), &articles)
+	if err != nil {
+		panic(":(")
+	}
+
+	return articles
+}

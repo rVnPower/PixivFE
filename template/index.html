@@ -75,19 +75,18 @@
 
       <h1>Pixivision</h1>
       <div class="thumbnail-container">
-        <a href="#" class="spotlight-thumbnail">
+        {{ range .Spotlights }}
+        <a href="{{ .URL }}" class="spotlight-thumbnail">
           <img
-            src="https://px2.rainchan.win/c/360x360_70/img-master/img/2023/05/07/17/30/45/107910958_p0_square1200.jpg"
-            alt="asd"
+            src="{{ .Thumbnail }}"
+            alt="{{ .Title }}"
             class="spotlight-master-image"
           />
           <div class="spotlight-title-wrapper">
-            <h2 class="spotlight-title">
-              This is just a dummy text to fill up the blank for testing
-              purposes
-            </h2>
+            <h2 class="spotlight-title">{{ .Title }}</h2>
           </div>
         </a>
+        {{ end }}
       </div>
     </div>
   </body>
