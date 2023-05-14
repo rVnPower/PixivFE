@@ -38,10 +38,11 @@ go run main.go
     - [ ] Artworks
     - [ ] Users
   - [x] Newest by all
+  - [ ] Trending tags
   - [ ] Switcher (illusts/mangas)
 - [ ] Single pages
   - [ ] User
-  - [ ] Artwork
+  - [x] Artwork
   - [ ] Spotlight
 - [ ] List pages
   - [ ] Recommended artworks
@@ -57,6 +58,10 @@ go run main.go
   - [ ] Local history
   - [ ] Toggling R-18, R-18G, AI
   - [ ] Custom `pximg` proxy
+- [ ] Optimization
+  - [ ] Split web components into smaller templates
+  - [ ] Clean the models + JSON
+  - [ ] Navigation between pages
 
 ## Contributing
 
