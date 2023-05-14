@@ -1,117 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Pixiv</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="/css/style.css" rel="stylesheet" />
-    <link href="/css/template.css" rel="stylesheet" />
-  </head>
+{{ template "header.html" }}
+<div class="container">
+  <h1>Recommended works</h1>
+  <div class="thumbnail-container">
+    {{ range .Recommended }}
+    <div class="artwork-thumbnail-small artwork-thumbnail">
+      <a href="#">
+        <img
+          src="{{ .Images.square_medium }}"
+          alt="{{ .Title }}"
+          class="artwork-master-image"
+        />
+      </a>
 
-  <body>
-    <nav class="navbar">
-      <ul class="navbar-list">
-        <li class="navbar-item">
-          <a href="#" class="navbar-brand"><b>Pixiv</b></a>
-        </li>
-        <li class="navbar-item">
-          <input type="text" name="name" id="name" placeholder="asd" />
-        </li>
-        <li class="navbar-item">
-          <button>asd</button>
-        </li>
-      </ul>
-    </nav>
-    <div class="container">
-      <h1>Recommended works</h1>
-      <div class="thumbnail-container">
-        {{ range .Recommended }}
-        <div class="artwork-thumbnail-small artwork-thumbnail">
-          <a href="#">
-            <img
-              src="{{ .Images.square_medium }}"
-              alt="{{ .Title }}"
-              class="artwork-master-image"
-            />
-          </a>
-
-          <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
-          <a href="#" class="artwork-thumbnail-artist flex"
-            ><img
-              src="{{ .Artist.Avatar.medium }}"
-              alt="{{ .Artist.Name }}"
-              class="artwork-thumbnail-artist-avatar border-rounded"
-            />
-            {{ .Artist.Name }}</a
-          >
-        </div>
-        {{ end }}
-      </div>
-      <h1>Today's rankings</h1>
-      <div class="thumbnail-container">
-        {{ range $i, $_ := .Rankings }}
-        <div class="artwork-thumbnail-large artwork-thumbnail">
-          <div class="artwork-rank-circle">{{ $i | inc}}</div>
-          <a href="#">
-            <img
-              src="{{ .Images.square_medium }}"
-              alt="{{ .Title }}"
-              class="artwork-master-image"
-            />
-          </a>
-
-          <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
-          <a href="#" class="artwork-thumbnail-artist flex"
-            ><img
-              src="{{ .Artist.Avatar.medium }}"
-              alt="{{ .Artist.Name }}"
-              class="artwork-thumbnail-artist-avatar border-rounded"
-            />
-            {{ .Artist.Name }}</a
-          >
-        </div>
-        {{ end }}
-      </div>
-
-      <h1>Pixivision</h1>
-      <div class="thumbnail-container">
-        {{ range .Spotlights }}
-        <a href="{{ .URL }}" class="spotlight-thumbnail">
-          <img
-            src="{{ .Thumbnail }}"
-            alt="{{ .Title }}"
-            class="spotlight-master-image"
-          />
-          <div class="spotlight-title-wrapper">
-            <h2 class="spotlight-title">{{ .Title }}</h2>
-          </div>
-        </a>
-        {{ end }}
-      </div>
-      <h1>Newest by all</h1>
-      <div>
-        {{ range .Newest }}
-        <div class="artwork-thumbnail-small artwork-thumbnail">
-          <a href="#">
-            <img
-              src="{{ .Images.square_medium }}"
-              alt="{{ .Title }}"
-              class="artwork-master-image"
-            />
-          </a>
-
-          <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
-          <a href="#" class="artwork-thumbnail-artist flex"
-            ><img
-              src="{{ .Artist.Avatar.medium }}"
-              alt="{{ .Artist.Name }}"
-              class="artwork-thumbnail-artist-avatar border-rounded"
-            />
-            {{ .Artist.Name }}</a
-          >
-        </div>
-        {{ end }}
-      </div>
+      <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
+      <a href="#" class="artwork-thumbnail-artist flex"
+        ><img
+          src="{{ .Artist.Avatar.medium }}"
+          alt="{{ .Artist.Name }}"
+          class="artwork-thumbnail-artist-avatar border-rounded"
+        />
+        {{ .Artist.Name }}</a
+      >
     </div>
-  </body>
-</html>
+    {{ end }}
+  </div>
+
+  <h1>Today's rankings</h1>
+  <div class="thumbnail-container">
+    {{ range $i, $_ := .Rankings }}
+    <div class="artwork-thumbnail-large artwork-thumbnail">
+      <div class="artwork-rank-circle">{{ $i | inc}}</div>
+      <a href="#">
+        <img
+          src="{{ .Images.square_medium }}"
+          alt="{{ .Title }}"
+          class="artwork-master-image"
+        />
+      </a>
+
+      <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
+      <a href="#" class="artwork-thumbnail-artist flex"
+        ><img
+          src="{{ .Artist.Avatar.medium }}"
+          alt="{{ .Artist.Name }}"
+          class="artwork-thumbnail-artist-avatar border-rounded"
+        />
+        {{ .Artist.Name }}</a
+      >
+    </div>
+    {{ end }}
+  </div>
+
+  <h1>Pixivision</h1>
+  <div class="thumbnail-container">
+    {{ range .Spotlights }}
+    <a href="{{ .URL }}" class="spotlight-thumbnail">
+      <img
+        src="{{ .Thumbnail }}"
+        alt="{{ .Title }}"
+        class="spotlight-master-image"
+      />
+      <div class="spotlight-title-wrapper">
+        <h2 class="spotlight-title">{{ .Title }}</h2>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+
+  <h1>Newest by all</h1>
+  <div>
+    {{ range .Newest }}
+    <div class="artwork-thumbnail-small artwork-thumbnail">
+      <a href="#">
+        <img
+          src="{{ .Images.square_medium }}"
+          alt="{{ .Title }}"
+          class="artwork-master-image"
+        />
+      </a>
+
+      <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
+      <a href="#" class="artwork-thumbnail-artist flex"
+        ><img
+          src="{{ .Artist.Avatar.medium }}"
+          alt="{{ .Artist.Name }}"
+          class="artwork-thumbnail-artist-avatar border-rounded"
+        />
+        {{ .Artist.Name }}</a
+      >
+    </div>
+    {{ end }}
+  </div>
+</div>
+{{ template "footer.html" }}

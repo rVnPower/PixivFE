@@ -34,5 +34,5 @@ func main() {
 	server.LoadHTMLGlob("template/*.html")
 	server.GET("/", index_page)
 
-	server.Run(":8080")
+	server.Run(":8000")
 }
