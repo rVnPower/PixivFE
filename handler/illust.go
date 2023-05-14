@@ -14,76 +14,69 @@ import (
 func GetRecommendedIllust(c *gin.Context) []entity.Illust {
 	URL := "https://hibi.cocomi.cf/api/pixiv/illust_recommended"
 	var illusts []entity.Illust
-	resp, err := http.Get(URL)
 
-	if err != nil {
-		panic(":(")
-	}
+	s := Request(URL)
+	g := GetInnerJSON(s, "illusts")
 
-	body, err := ioutil.ReadAll(resp.Body)
+	err := json.Unmarshal([]byte(g), &illusts)
 	if err != nil {
-		panic(":(")
-	}
-	s := string(body)
-	g := gjson.Get(s, "illusts").String()
-
-	err = json.Unmarshal([]byte(g), &illusts)
-	if err != nil {
-		panic(":(")
+		panic("Failed to parse JSON")
 	}
 
 	return illusts
 }
 
 func GetRankingIllust(c *gin.Context, mode string) []entity.Illust {
-	if mode == "" {
-		mode = "day"
-	}
 	URL := "https://hibi.cocomi.cf/api/pixiv/rank?mode=" + mode
 	var illusts []entity.Illust
-	illusts = append(illusts, entity.Illust{}) // Placeholder to shift the index
 
-	resp, err := http.Get(URL)
+	s := Request(URL)
+	g := GetInnerJSON(s, "illusts")
 
+	err := json.Unmarshal([]byte(g), &illusts)
 	if err != nil {
-		panic("Failed to request")
-	}
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		panic("Failed to parse body")
-	}
-	s := string(body)
-	g := gjson.Get(s, "illusts").String()
-
-	err = json.Unmarshal([]byte(g), &illusts)
-	if err != nil {
-		panic("Failed to parse Json.")
+		panic("Failed to parse JSON")
 	}
 
 	return illusts
 }
 
 func GetSpotlightArticle(c *gin.Context) []entity.Spotlight {
-	URL := "https://hibi.cocomi.cf/api/pixiv/spotlights?lang=en"
+	// URL := "https://hibi.cocomi.cf/api/pixiv/spotlights?lang=en"
+	URL := "https://now.pixiv.pics/api/pixivision?lang=en"
 	var articles []entity.Spotlight
-	resp, err := http.Get(URL)
+
+	s := Request(URL)
+	g := GetInnerJSON(s, "articles")
+
+	err := json.Unmarshal([]byte(g), &articles)
+	if err != nil {
+		panic("Failed to parse JSON")
+	}
+
+	return articles
+}
+
+func GetInnerJSON(resp string, key string) string {
+	// As I see, the API always start its response with { "key": [...] }
+	return gjson.Get(resp, key).String()
+}
+
+func Request(URL string) string {
+	client := &http.Client{}
+
+	req, _ := http.NewRequest("GET", URL, nil)
+	req.Header.Set("accept-language", "en")
+	resp, err := client.Do(req)
 
 	if err != nil {
-		panic(":(")
+		panic("Failed to make a request to " + URL)
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		panic(":(")
-	}
-	s := string(body)
-	g := gjson.Get(s, "spotlight_articles").String()
-
-	err = json.Unmarshal([]byte(g), &articles)
-	if err != nil {
-		panic(":(")
+		panic("Failed to parse response")
 	}
 
-	return articles
+	return string(body)
 }

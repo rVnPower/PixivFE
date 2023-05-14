@@ -14,7 +14,7 @@ func inc(n int) int {
 
 func index_page(c *gin.Context) {
 	recommended := handler.GetRecommendedIllust(c)
-	ranking := handler.GetRankingIllust(c, "")
+	ranking := handler.GetRankingIllust(c, "day")
 	spotlight := handler.GetSpotlightArticle(c)
 	c.HTML(http.StatusOK, "index.html", gin.H{"Recommended": recommended, "Rankings": ranking, "Spotlights": spotlight})
 }
@@ -28,5 +28,5 @@ func main() {
 	server.LoadHTMLGlob("template/*.html")
 	server.GET("/", index_page)
 
-	server.Run(":8000")
+	server.Run(":8080")
 }
