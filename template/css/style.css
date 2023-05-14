@@ -74,11 +74,13 @@ body {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  display: block;
   text-decoration: none;
   color: inherit;
+  display: flex;
+  align-items: center;
 }
 .artwork-thumbnail .artwork-thumbnail-artist-avatar {
+  margin-right: 5px;
   width: 24px;
   height: 24px;
   object-position: center top;
@@ -141,7 +143,12 @@ body {
 .artwork-page .artwork-content a:hover {
   text-decoration: underline;
 }
-.artwork-page .artwork-artist-avatar {
+.artwork-page .artwork-artist {
+  display: flex;
+  align-items: center;
+}
+.artwork-page .artwork-artist .artwork-artist-avatar {
+  margin-right: 8px;
   width: 50px;
   height: 50px;
   object-position: center top;
