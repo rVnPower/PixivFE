@@ -157,7 +157,7 @@ body {
 
   .artwork-content {
     margin: 0 20px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 
     a {
       color: $blue;
@@ -181,14 +181,28 @@ body {
     }
   }
 
+  .artwork-tags {
+    display: inline-block;
+
+    .artwork-tag-name {
+      margin-right: 5px;
+      color: $blue;
+      font-weight: bold;
+    }
+    .artwork-tag-altname {
+      margin-right: 8px;
+    }
+  }
+
   .artwork-images {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     width: 100%;
 
     .artwork-image-page {
       margin: 10px auto;
-      height: 578px;
+      max-height: 578px;
       width: auto;
       max-width: 100%;
     }

@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"net/http"
 	"pixivfe/handler"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,7 +16,12 @@ func inc(n int) int {
 func artwork_page(c *gin.Context) {
 	illust := handler.GetIllustByID(c)
 	related := handler.GetRelatedIllust(c)
-	c.HTML(http.StatusOK, "artwork.html", gin.H{"Illust": illust, "Related": related})
+	recent_by_artist := handler.GetMemberIllust(c, strconv.Itoa(illust.Artist.ID))
+	c.HTML(http.StatusOK, "artwork.html", gin.H{
+		"Illust":  illust,
+		"Related": related,
+		"Recent":  recent_by_artist,
+	})
 }
 
 func index_page(c *gin.Context) {

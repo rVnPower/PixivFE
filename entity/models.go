@@ -17,7 +17,7 @@ type Illust struct {
 	Bookmarks     int                            `json:"total_bookmarks"`
 	SingleImage   map[string]string              `json:"meta_single_page"`
 	MultipleImage []map[string]map[string]string `json:"meta_pages"`
-	// Tags Tag[];
+	Tags          []Tag                          `json:"tags"`
 }
 
 type Spotlight struct {
@@ -26,6 +26,11 @@ type Spotlight struct {
 	Thumbnail string `json:"thumbnail"`
 	URL       string `json:"article_url"`
 	Date      string `json:"publish_date"`
+}
+
+type Tag struct {
+	Name           string `json:"name"`
+	TranslatedName string `json:"translated_name"`
 }
 
 type UserBrief struct {

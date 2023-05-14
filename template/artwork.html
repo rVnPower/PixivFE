@@ -1,19 +1,34 @@
 {{ template "header.html" }}
+{{ $parent := . }}
 <div class="container">
   <div class="artwork-page">
+    {{ with .Illust }}
     <div class="artwork-content">
       <div class="artwork-images">
         <!-- -->
-        <a href="#">
-          <img src="https://px2.rainchan.win/img-master/img/2023/05/14/10/00/17/108109545_p0_master1200.jpg" alt="#"
-            class="artwork-image-page" target="_blank" />
+        {{ if eq .Pages 1 }}
+        <a href="{{ .SingleImage.original_image_url }}" target="_blank">
+          <img src="{{ .Images.large }}" alt="{{ .Title }}" class="artwork-image-page" />
         </a>
+        {{ else }}
+        {{ range .MultipleImage }}
+        <a href="{{ .image_urls.original }}" target="_blank">
+          <img src="{{ .image_urls.large }}" alt="{{ .image_urls.original }}" class="artwork-image-page" />
+        </a>
+
+        {{ end }}
+        {{ end }}
       </div>
-      {{ with .Illust }}
       <h2>{{ .Title }}</h3>
         <p>{{ .Caption }}</p>
-        <p>Tags</p>
-        <br />
+
+        <div class="artwork-tags">
+
+          {{ range .Tags }}
+          <span class="artwork-tag-name">#{{ .Name }}</span><span class="artwork-tag-altname">{{ .TranslatedName
+            }}</span>
+          {{ end }}
+        </div>
         <span>{{ .Views }} views | {{ .Bookmarks }} bookmarks</span>
         <br />
         <small>{{ .Date }}</small>
@@ -21,12 +36,22 @@
         <a href="#" class="artwork-artist flex"><img src="{{ .Artist.Avatar.medium }}" alt="{{ .Artist.Name }}"
             class="artwork-artist-avatar border-rounded" />
           {{ .Artist.Name }}</a>
-        <div class="thumbnail-container">...</div>
+        <div class="thumbnail-container">
+          {{ range $parent.Recent }}
+          <div class="artwork-thumbnail-small artwork-thumbnail">
+            <a href="#">
+              <img src="{{ .Images.square_medium }}" alt="{{ .Title }}" class="artwork-master-image" />
+            </a>
+          </div>
+          {{ end }}
+        </div>
         <hr />
         <h2>Comments</h2>
-        {{ end }}
+        To be added :)
     </div>
+    {{ end }}
   </div>
+  <h2>Related works</h2>
   {{ range .Related }}
   <div class="artwork-thumbnail-small artwork-thumbnail">
     <a href="#">

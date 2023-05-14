@@ -56,6 +56,21 @@ func GetNewestIllust(c *gin.Context) []entity.Illust {
 	return illusts
 }
 
+func GetMemberIllust(c *gin.Context, id string) []entity.Illust {
+	URL := "https://hibi.cocomi.cf/api/pixiv/member_illust?id=" + id
+	var illusts []entity.Illust
+
+	s := Request(URL)
+	g := GetInnerJSON(s, "illusts")
+
+	err := json.Unmarshal([]byte(g), &illusts)
+	if err != nil {
+		panic("Failed to parse JSON")
+	}
+
+	return illusts
+}
+
 func GetRelatedIllust(c *gin.Context) []entity.Illust {
 	id := c.Param("id")
 	URL := "https://hibi.cocomi.cf/api/pixiv/related?id=" + id

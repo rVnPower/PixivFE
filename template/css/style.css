@@ -134,7 +134,7 @@ body {
 }
 .artwork-page .artwork-content {
   margin: 0 20px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 .artwork-page .artwork-content a {
   color: #3d7699;
@@ -153,14 +153,26 @@ body {
   height: 50px;
   object-position: center top;
 }
+.artwork-page .artwork-tags {
+  display: inline-block;
+}
+.artwork-page .artwork-tags .artwork-tag-name {
+  margin-right: 5px;
+  color: #3d7699;
+  font-weight: bold;
+}
+.artwork-page .artwork-tags .artwork-tag-altname {
+  margin-right: 8px;
+}
 .artwork-page .artwork-images {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
 }
 .artwork-page .artwork-images .artwork-image-page {
   margin: 10px auto;
-  height: 578px;
+  max-height: 578px;
   width: auto;
   max-width: 100%;
 }
