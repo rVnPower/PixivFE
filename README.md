@@ -13,6 +13,16 @@ Intended to be written in Go with [Gin](https://gin-gonic.com).
 
 Note that this project is still under its preparation stage.
 
+## Previews
+
+Homepage: currently contains recommended works, daily rankings, pixivision's articles and newest works on Pixiv. Route: `/`
+![Homepage](https://files.catbox.moe/053fzh.png)
+![Homepage](https://files.catbox.moe/m64h7s.png)
+
+Artwork's page: informations about the artwork, recent artworks by the artist and related artworks. Route: `/artworks/<id>` (id for the preview: 107664519)
+![Artwork](https://files.catbox.moe/x3k85p.png)
+![Artwork](https://files.catbox.moe/ocy4fq.png)
+
 ## Installation
 
 Run these commands below, then access the site on [localhost:8080](https://localhost:8080)
