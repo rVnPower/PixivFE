@@ -88,6 +88,30 @@
         </a>
         {{ end }}
       </div>
+      <h1>Newest by all</h1>
+      <div>
+        {{ range .Newest }}
+        <div class="artwork-thumbnail-small artwork-thumbnail">
+          <a href="#">
+            <img
+              src="{{ .Images.square_medium }}"
+              alt="{{ .Title }}"
+              class="artwork-master-image"
+            />
+          </a>
+
+          <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
+          <a href="#" class="artwork-thumbnail-artist flex"
+            ><img
+              src="https://px2.rainchan.win/c/360x360_70/img-master/img/2023/05/07/17/30/45/107910958_p0_square1200.jpg"
+              alt="avatar"
+              class="artwork-thumbnail-artist-avatar border-rounded"
+            />
+            VnPower</a
+          >
+        </div>
+        {{ end }}
+      </div>
     </div>
   </body>
 </html>

@@ -41,6 +41,21 @@ func GetRankingIllust(c *gin.Context, mode string) []entity.Illust {
 	return illusts
 }
 
+func GetNewestIllust(c *gin.Context) []entity.Illust {
+	URL := "https://hibi.cocomi.cf/api/pixiv/illust_new"
+	var illusts []entity.Illust
+
+	s := Request(URL)
+	g := GetInnerJSON(s, "illusts")
+
+	err := json.Unmarshal([]byte(g), &illusts)
+	if err != nil {
+		panic("Failed to parse JSON")
+	}
+
+	return illusts
+}
+
 func GetSpotlightArticle(c *gin.Context) []entity.Spotlight {
 	// URL := "https://hibi.cocomi.cf/api/pixiv/spotlights?lang=en"
 	URL := "https://now.pixiv.pics/api/pixivision?lang=en"

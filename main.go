@@ -16,7 +16,13 @@ func index_page(c *gin.Context) {
 	recommended := handler.GetRecommendedIllust(c)
 	ranking := handler.GetRankingIllust(c, "day")
 	spotlight := handler.GetSpotlightArticle(c)
-	c.HTML(http.StatusOK, "index.html", gin.H{"Recommended": recommended, "Rankings": ranking, "Spotlights": spotlight})
+	newest := handler.GetNewestIllust(c)
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"Recommended": recommended,
+		"Rankings":    ranking,
+		"Spotlights":  spotlight,
+		"Newest":      newest,
+	})
 }
 
 func main() {

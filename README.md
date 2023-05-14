@@ -37,7 +37,7 @@ go run main.go
   - [ ] Discovery
     - [ ] Artworks
     - [ ] Users
-  - [ ] Newest by all
+  - [x] Newest by all
   - [ ] Switcher (illusts/mangas)
 - [ ] Single pages
   - [ ] User
