@@ -56,13 +56,45 @@ func GetNewestIllust(c *gin.Context) []entity.Illust {
 	return illusts
 }
 
+func GetRelatedIllust(c *gin.Context) []entity.Illust {
+	id := c.Param("id")
+	URL := "https://hibi.cocomi.cf/api/pixiv/related?id=" + id
+	var illusts []entity.Illust
+
+	s := Request(URL)
+	g := GetInnerJSON(s, "illusts")
+
+	err := json.Unmarshal([]byte(g), &illusts)
+	if err != nil {
+		panic("Failed to parse JSON")
+	}
+
+	return illusts
+}
+
+func GetIllustByID(c *gin.Context) entity.Illust {
+	id := c.Param("id")
+	URL := "https://hibi.cocomi.cf/api/pixiv/illust?id=" + id
+	var illust entity.Illust
+
+	s := Request(URL)
+	g := GetInnerJSON(s, "illust")
+
+	err := json.Unmarshal([]byte(g), &illust)
+	if err != nil {
+		panic(err)
+	}
+
+	return illust
+}
+
 func GetSpotlightArticle(c *gin.Context) []entity.Spotlight {
-	// URL := "https://hibi.cocomi.cf/api/pixiv/spotlights?lang=en"
-	URL := "https://now.pixiv.pics/api/pixivision?lang=en"
+	URL := "https://hibi.cocomi.cf/api/pixiv/spotlights?lang=en"
+	// URL := "https://now.pixiv.pics/api/pixivision?lang=en"
 	var articles []entity.Spotlight
 
 	s := Request(URL)
-	g := GetInnerJSON(s, "articles")
+	g := GetInnerJSON(s, "spotlight_articles")
 
 	err := json.Unmarshal([]byte(g), &articles)
 	if err != nil {

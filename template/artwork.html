@@ -1,0 +1,43 @@
+{{ template "header.html" }}
+<div class="container">
+  <div class="artwork-page">
+    <div class="artwork-content">
+      <div class="artwork-images">
+        <!-- -->
+        <a href="#">
+          <img src="https://px2.rainchan.win/img-master/img/2023/05/14/10/00/17/108109545_p0_master1200.jpg" alt="#"
+            class="artwork-image-page" target="_blank" />
+        </a>
+      </div>
+      {{ with .Illust }}
+      <h2>{{ .Title }}</h3>
+        <p>{{ .Caption }}</p>
+        <p>Tags</p>
+        <br />
+        <span>{{ .Views }} views | {{ .Bookmarks }} bookmarks</span>
+        <br />
+        <small>{{ .Date }}</small>
+
+        <a href="#" class="artwork-thumbnail-artist flex"><img src="{{ .Artist.Avatar.medium }}"
+            alt="{{ .Artist.Name }}" class="artwork-artist-avatar border-rounded" />
+          {{ .Artist.Name }}</a>
+        <div class="thumbnail-container">...</div>
+        <hr />
+        <h2>Comments</h2>
+        {{ end }}
+    </div>
+  </div>
+  {{ range .Related }}
+  <div class="artwork-thumbnail-small artwork-thumbnail">
+    <a href="#">
+      <img src="{{ .Images.square_medium }}" alt="{{ .Title }}" class="artwork-master-image" />
+    </a>
+
+    <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
+    <a href="#" class="artwork-thumbnail-artist flex"><img src="{{ .Artist.Avatar.medium }}" alt="{{ .Artist.Name }}"
+        class="artwork-thumbnail-artist-avatar border-rounded" />
+      {{ .Artist.Name }}</a>
+  </div>
+  {{ end }}
+</div>
+{{ template "footer.html" }}

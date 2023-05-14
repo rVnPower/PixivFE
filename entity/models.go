@@ -1,16 +1,23 @@
 package entity
 
+import (
+	"html/template"
+	"time"
+)
+
 type Illust struct {
-	ID      int               `json:"id"`
-	Title   string            `json:"title"`
-	Caption string            `json:"caption"`
-	Images  map[string]string `json:"image_urls"`
-	Artist  UserBrief         `json:"user"`
+	ID            int                            `json:"id"`
+	Title         string                         `json:"title"`
+	Caption       template.HTML                  `json:"caption"`
+	Images        map[string]string              `json:"image_urls"`
+	Artist        UserBrief                      `json:"user"`
+	Date          time.Time                      `json:"create_date"`
+	Pages         int                            `json:"page_count"`
+	Views         int                            `json:"total_view"`
+	Bookmarks     int                            `json:"total_bookmarks"`
+	SingleImage   map[string]string              `json:"meta_single_page"`
+	MultipleImage []map[string]map[string]string `json:"meta_pages"`
 	// Tags Tag[];
-	Date      string `json:"create_date"`
-	Pages     int    `json:"page_count"`
-	Views     int    `json:"total_view"`
-	Bookmarks int    `json:"total_bookmarks"`
 }
 
 type Spotlight struct {

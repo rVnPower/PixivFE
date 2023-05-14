@@ -12,6 +12,12 @@ func inc(n int) int {
 	return n + 1
 }
 
+func artwork_page(c *gin.Context) {
+	illust := handler.GetIllustByID(c)
+	related := handler.GetRelatedIllust(c)
+	c.HTML(http.StatusOK, "artwork.html", gin.H{"Illust": illust, "Related": related})
+}
+
 func index_page(c *gin.Context) {
 	recommended := handler.GetRecommendedIllust(c)
 	ranking := handler.GetRankingIllust(c, "day")
@@ -30,9 +36,11 @@ func main() {
 	server.SetFuncMap(template.FuncMap{
 		"inc": inc,
 	})
+	server.StaticFile("/favicon.ico", "./template/favicon.ico")
 	server.Static("css/", "./template/css")
 	server.LoadHTMLGlob("template/*.html")
 	server.GET("/", index_page)
+	server.GET("artworks/:id", artwork_page)
 
-	server.Run(":8000")
+	server.Run(":8080")
 }
