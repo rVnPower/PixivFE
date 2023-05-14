@@ -38,11 +38,11 @@
           <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
           <a href="#" class="artwork-thumbnail-artist flex"
             ><img
-              src="https://px2.rainchan.win/c/360x360_70/img-master/img/2023/05/07/17/30/45/107910958_p0_square1200.jpg"
-              alt="avatar"
+              src="{{ .Artist.Avatar.medium }}"
+              alt="{{ .Artist.Name }}"
               class="artwork-thumbnail-artist-avatar border-rounded"
             />
-            VnPower</a
+            {{ .Artist.Name }}</a
           >
         </div>
         {{ end }}
@@ -63,11 +63,11 @@
           <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
           <a href="#" class="artwork-thumbnail-artist flex"
             ><img
-              src="https://px2.rainchan.win/c/360x360_70/img-master/img/2023/05/07/17/30/45/107910958_p0_square1200.jpg"
-              alt="avatar"
+              src="{{ .Artist.Avatar.medium }}"
+              alt="{{ .Artist.Name }}"
               class="artwork-thumbnail-artist-avatar border-rounded"
             />
-            VnPower</a
+            {{ .Artist.Name }}</a
           >
         </div>
         {{ end }}
@@ -103,11 +103,11 @@
           <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
           <a href="#" class="artwork-thumbnail-artist flex"
             ><img
-              src="https://px2.rainchan.win/c/360x360_70/img-master/img/2023/05/07/17/30/45/107910958_p0_square1200.jpg"
-              alt="avatar"
+              src="{{ .Artist.Avatar.medium }}"
+              alt="{{ .Artist.Name }}"
               class="artwork-thumbnail-artist-avatar border-rounded"
             />
-            VnPower</a
+            {{ .Artist.Name }}</a
           >
         </div>
         {{ end }}

@@ -5,7 +5,7 @@ type Illust struct {
 	Title   string            `json:"title"`
 	Caption string            `json:"caption"`
 	Images  map[string]string `json:"image_urls"`
-	// User User;
+	Artist  UserBrief         `json:"user"`
 	// Tags Tag[];
 	Date      string `json:"create_date"`
 	Pages     int    `json:"page_count"`
@@ -19,4 +19,11 @@ type Spotlight struct {
 	Thumbnail string `json:"thumbnail"`
 	URL       string `json:"article_url"`
 	Date      string `json:"publish_date"`
+}
+
+type UserBrief struct {
+	ID      int               `json:"id"`
+	Name    string            `json:"name"`
+	Account string            `json:"account"`
+	Avatar  map[string]string `json:"profile_image_urls"`
 }
