@@ -27,7 +27,7 @@ func GetRecommendedIllust(c *gin.Context) []entity.Illust {
 }
 
 func GetRankingIllust(c *gin.Context, mode string) []entity.Illust {
-	URL := "https://hibi.cocomi.cf/api/pixiv/rank?mode=" + mode
+	URL := "https://hibi.cocomi.cf/api/pixiv/rank?page=1&mode=" + mode
 	var illusts []entity.Illust
 
 	s := Request(URL)
