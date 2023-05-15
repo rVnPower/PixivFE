@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"pixivfe/entity"
+	"regexp"
 
 	"io/ioutil"
 
@@ -11,17 +12,61 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-func ParseIllusts(URL string) []entity.Illust {
-	// TODO: Clean the models
-	var illusts []entity.Illust
+func ImageProxy(url string) string {
 
-	s := Request(URL)
-	g := GetInnerJSON(s, "illusts")
+	regex := regexp.MustCompile(`i\.pximg\.net`)
+	proxy := "px2.rainchan.win"
 
-	err := json.Unmarshal([]byte(g), &illusts)
-	if err != nil {
-		panic("Failed to parse JSON")
+	return regex.ReplaceAllString(url, proxy)
+}
+
+func ParseImages(data string) []entity.Image {
+	var images []entity.Image
+
+	if gjson.Get(data, "meta_single_page.original_image_url").Exists() {
+		var image entity.Image
+		image.Small = ImageProxy(gjson.Get(data, "image_urls.square_medium").String())
+		image.Medium = ImageProxy(gjson.Get(data, "image_urls.medium").String())
+		image.Large = ImageProxy(gjson.Get(data, "image_urls.large").String())
+		image.Original = ImageProxy(gjson.Get(data, "meta_single_page.original_image_url").String())
+
+		images = append(images, image)
+	} else {
+		g := GetInnerJSON(data, "meta_pages.#.image_urls")
+
+		err := json.Unmarshal([]byte(g), &images)
+		if err != nil {
+			panic(err)
+		}
 	}
+
+	return images
+}
+
+func ParseIllust(data string) []entity.Illust {
+	var illusts []entity.Illust
+	g := gjson.Get(data, "#")
+
+	for _, handle := range g.Array() {
+		println(handle.String())
+		println("here")
+	}
+	// g.ForEach(func(key, value gjson.Result) bool {
+	// 	var illust entity.Illust
+	// 	v := value.String()
+	// 	println(v)
+	// 	err := json.Unmarshal([]byte(v), &illust)
+	//
+	// 	if err != nil {
+	// 		panic(err)
+	// 	}
+	//
+	// 	illust.Images = ParseImages(v)
+	// 	illusts = append(illusts, illust)
+	// 	return true
+	// })
+	//
+	// println(illusts)
 
 	return illusts
 }
@@ -31,6 +76,7 @@ func GetRecommendedIllust(c *gin.Context) []entity.Illust {
 	var illusts []entity.Illust
 
 	s := Request(URL)
+	ParseIllust(s)
 	g := GetInnerJSON(s, "illusts")
 
 	err := json.Unmarshal([]byte(g), &illusts)
