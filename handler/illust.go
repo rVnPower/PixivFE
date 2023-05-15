@@ -11,6 +11,21 @@ import (
 	"github.com/tidwall/gjson"
 )
 
+func ParseIllusts(URL string) []entity.Illust {
+	// TODO: Clean the models
+	var illusts []entity.Illust
+
+	s := Request(URL)
+	g := GetInnerJSON(s, "illusts")
+
+	err := json.Unmarshal([]byte(g), &illusts)
+	if err != nil {
+		panic("Failed to parse JSON")
+	}
+
+	return illusts
+}
+
 func GetRecommendedIllust(c *gin.Context) []entity.Illust {
 	URL := "https://hibi.cocomi.cf/api/pixiv/illust_recommended"
 	var illusts []entity.Illust
