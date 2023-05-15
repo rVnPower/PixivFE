@@ -1,0 +1,23 @@
+<div>
+  {{ range . }}
+  <div class="artwork-thumbnail-small artwork-thumbnail">
+    <a href="#">
+      <img
+        src="{{ .Images.square_medium }}"
+        alt="{{ .Title }}"
+        class="artwork-master-image"
+      />
+    </a>
+
+    <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
+    <a href="#" class="artwork-thumbnail-artist flex"
+      ><img
+        src="{{ .Artist.Avatar.medium }}"
+        alt="{{ .Artist.Name }}"
+        class="artwork-thumbnail-artist-avatar border-rounded"
+      />
+      {{ .Artist.Name }}</a
+    >
+  </div>
+  {{ end }}
+</div>

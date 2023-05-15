@@ -1,29 +1,8 @@
 {{ template "header.html" }}
 <div class="container">
   <h1>Recommended works</h1>
-  <div class="thumbnail-container">
-    {{ range .Recommended }}
-    <div class="artwork-thumbnail-small artwork-thumbnail">
-      <a href="#">
-        <img
-          src="{{ .Images.square_medium }}"
-          alt="{{ .Title }}"
-          class="artwork-master-image"
-        />
-      </a>
 
-      <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
-      <a href="#" class="artwork-thumbnail-artist flex"
-        ><img
-          src="{{ .Artist.Avatar.medium }}"
-          alt="{{ .Artist.Name }}"
-          class="artwork-thumbnail-artist-avatar border-rounded"
-        />
-        {{ .Artist.Name }}</a
-      >
-    </div>
-    {{ end }}
-  </div>
+  {{ template "scrollable-container.html" .Recommended }}
 
   <h1>Today's rankings</h1>
   <div class="thumbnail-container">
@@ -68,28 +47,6 @@
   </div>
 
   <h1>Newest by all</h1>
-  <div>
-    {{ range .Newest }}
-    <div class="artwork-thumbnail-small artwork-thumbnail">
-      <a href="#">
-        <img
-          src="{{ .Images.square_medium }}"
-          alt="{{ .Title }}"
-          class="artwork-master-image"
-        />
-      </a>
-
-      <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
-      <a href="#" class="artwork-thumbnail-artist flex"
-        ><img
-          src="{{ .Artist.Avatar.medium }}"
-          alt="{{ .Artist.Name }}"
-          class="artwork-thumbnail-artist-avatar border-rounded"
-        />
-        {{ .Artist.Name }}</a
-      >
-    </div>
-    {{ end }}
-  </div>
+  {{ template "thumbnail-container.html" .Newest }}
 </div>
 {{ template "footer.html" }}
