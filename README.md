@@ -87,4 +87,4 @@ I always take ideas from everybody for this project due to it's complex nature.
 
 This project was made for learning and experimental purposes.
 
-[MIT](https://mit-license.org/)
+[~~MIT~~](https://mit-license.org/) [AGPL3](https://www.gnu.org/licenses/agpl-3.0.txt)
