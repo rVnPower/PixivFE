@@ -2,14 +2,16 @@
 <div class="container">
   <h1>Recommended works</h1>
 
-  {{ template "scrollable-container.html" .Recommended }}
+  <div class="thumbnail-container">
+    {{ template "thumbnail-container.html" .Recommended }}
+  </div>
 
   <h1>Today's rankings</h1>
   <div class="thumbnail-container">
     {{ range $i, $_ := .Rankings }}
     <div class="artwork-thumbnail-large artwork-thumbnail">
       <div class="artwork-rank-circle">{{ $i | inc}}</div>
-      <a href="#">
+      <a href="/artworks/{{ .ID }}">
         <img
           src="{{ (index .Images 0).Small }}"
           alt="{{ .Title }}"
@@ -17,7 +19,9 @@
         />
       </a>
 
-      <h3 class="artwork-thumbnail-title no-margin">{{ .Title }}</h3>
+      <a class="artwork-thumbnail-title" href="/artworks/{{ .ID }}">
+        <h3 class="no-margin">{{ .Title }}</h3>
+      </a>
       <a href="#" class="artwork-thumbnail-artist flex"
         ><img
           src="{{ .Artist.Avatar.medium }}"
@@ -47,6 +51,6 @@
   </div>
 
   <h1>Newest by all</h1>
-  {{ template "thumbnail-container.html" .Newest }}
+  <div>{{ template "thumbnail-container.html" .Newest }}</div>
 </div>
 {{ template "footer.html" }}
