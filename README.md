@@ -70,7 +70,7 @@ go run main.go
   - [ ] Custom `pximg` proxy
 - [ ] Optimization
   - [ ] Split web components into smaller templates
-  - [ ] Clean the models + JSON
+  - [x] Clean the models + JSON
   - [ ] Navigation between pages
 
 ## Contributing
