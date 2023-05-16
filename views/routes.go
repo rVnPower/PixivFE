@@ -8,9 +8,9 @@ import (
 )
 
 func artwork_page(c *gin.Context) {
-	illust := handler.GetIllustByID(c)
-	related := handler.GetRelatedIllust(c)
-	recent_by_artist := handler.GetMemberIllust(c, strconv.Itoa(illust.Artist.ID))
+	illust, _ := handler.GetIllustByID(c)
+	related, _ := handler.GetRelatedIllust(c)
+	recent_by_artist, _ := handler.GetMemberIllust(c, strconv.Itoa(illust.Artist.ID))
 	c.HTML(http.StatusOK, "artwork.html", gin.H{
 		"Illust":  illust,
 		"Related": related,
@@ -19,10 +19,10 @@ func artwork_page(c *gin.Context) {
 }
 
 func index_page(c *gin.Context) {
-	recommended := handler.GetRecommendedIllust(c)
-	ranking := handler.GetRankingIllust(c, "day")
+	recommended, _ := handler.GetRecommendedIllust(c)
+	ranking, _ := handler.GetRankingIllust(c, "day")
 	spotlight := handler.GetSpotlightArticle(c)
-	newest := handler.GetNewestIllust(c)
+	newest, _ := handler.GetNewestIllust(c)
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"Recommended": recommended,
 		"Rankings":    ranking,

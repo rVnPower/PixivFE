@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"pixivfe/entity"
 	"regexp"
@@ -20,7 +21,8 @@ func ImageProxy(url string) string {
 	return regex.ReplaceAllString(url, proxy)
 }
 
-func ParseImages(data string) []entity.Image {
+func ParseImages(data string) ([]entity.Image, error) {
+	// Parse illusts images
 	var images []entity.Image
 
 	if gjson.Get(data, "meta_single_page.original_image_url").Exists() {
@@ -33,100 +35,132 @@ func ParseImages(data string) []entity.Image {
 		images = append(images, image)
 	} else {
 		g := GetInnerJSON(data, "meta_pages.#.image_urls")
-		println(g)
 
 		err := json.Unmarshal([]byte(g), &images)
 		if err != nil {
-			panic(err)
+			return nil, fmt.Errorf("Failed to parse JSON for images.\n%s", err)
 		}
 	}
 
-	return images
+	return images, nil
 }
 
-func ParseIllust(data string) entity.Illust {
+func ParseIllust(data string) (entity.Illust, error) {
 	var illust entity.Illust
 
-	images := ParseImages(data)
-	illust.Images = images
+	images, err := ParseImages(data)
 
-	err := json.Unmarshal([]byte(data), &illust)
 	if err != nil {
-		panic("Failed to parse JSON")
+		return illust, fmt.Errorf("Failed to parse images from illust.\n%s", err)
 	}
 
-	return illust
+	illust.Images = images
+
+	err = json.Unmarshal([]byte(data), &illust)
+	if err != nil {
+		return illust, fmt.Errorf("Failed to parse JSON for illust.\n%s", err)
+	}
+
+	return illust, nil
 }
 
-func ParseIllusts(data string) []entity.Illust {
+func ParseIllusts(data string) ([]entity.Illust, error) {
 	var illusts []entity.Illust
 	g := gjson.Get(data, "illusts").Array()
 
 	for _, illust := range g {
 		println(illust.String())
-		illust := ParseIllust(illust.String())
+		illust, err := ParseIllust(illust.String())
+
+		if err != nil {
+			return nil, fmt.Errorf("Failed to parse illusts.\n%s", err)
+		}
 
 		illusts = append(illusts, illust)
 	}
 
-	return illusts
+	return illusts, nil
 }
 
-func GetRecommendedIllust(c *gin.Context) []entity.Illust {
+func GetRecommendedIllust(c *gin.Context) ([]entity.Illust, error) {
 	URL := "https://hibi.cocomi.cf/api/pixiv/illust_recommended"
 
 	s := Request(URL)
-	illusts := ParseIllusts(s)
+	illusts, err := ParseIllusts(s)
 
-	return illusts
+	if err != nil {
+		return illusts, fmt.Errorf("Failed to get recommended illusts.\n%s", err)
+	}
+
+	return illusts, nil
 }
 
-func GetRankingIllust(c *gin.Context, mode string) []entity.Illust {
+func GetRankingIllust(c *gin.Context, mode string) ([]entity.Illust, error) {
 	URL := "https://hibi.cocomi.cf/api/pixiv/rank?page=1&mode=" + mode
 
 	s := Request(URL)
-	illusts := ParseIllusts(s)
+	illusts, err := ParseIllusts(s)
 
-	return illusts
+	if err != nil {
+		return illusts, fmt.Errorf("Failed to get recommended illusts.\n%s", err)
+	}
+
+	return illusts, nil
 }
 
-func GetNewestIllust(c *gin.Context) []entity.Illust {
+func GetNewestIllust(c *gin.Context) ([]entity.Illust, error) {
 	URL := "https://hibi.cocomi.cf/api/pixiv/illust_new"
 
 	s := Request(URL)
-	illusts := ParseIllusts(s)
+	illusts, err := ParseIllusts(s)
 
-	return illusts
+	if err != nil {
+		return illusts, fmt.Errorf("Failed to get recommended illusts.\n%s", err)
+	}
+
+	return illusts, nil
 }
 
-func GetMemberIllust(c *gin.Context, id string) []entity.Illust {
+func GetMemberIllust(c *gin.Context, id string) ([]entity.Illust, error) {
 	URL := "https://hibi.cocomi.cf/api/pixiv/member_illust?id=" + id
 
 	s := Request(URL)
-	illusts := ParseIllusts(s)
+	illusts, err := ParseIllusts(s)
 
-	return illusts
+	if err != nil {
+		return illusts, fmt.Errorf("Failed to get a member's illusts.\n%s", err)
+	}
+
+	return illusts, nil
 }
 
-func GetRelatedIllust(c *gin.Context) []entity.Illust {
+func GetRelatedIllust(c *gin.Context) ([]entity.Illust, error) {
 	id := c.Param("id")
 	URL := "https://hibi.cocomi.cf/api/pixiv/related?id=" + id
 
 	s := Request(URL)
-	illusts := ParseIllusts(s)
+	illusts, err := ParseIllusts(s)
 
-	return illusts
+	if err != nil {
+		return illusts, fmt.Errorf("Failed to get related illusts.\n%s", err)
+	}
+
+	return illusts, nil
 }
 
-func GetIllustByID(c *gin.Context) entity.Illust {
+func GetIllustByID(c *gin.Context) (entity.Illust, error) {
 	id := c.Param("id")
 	URL := "https://hibi.cocomi.cf/api/pixiv/illust?id=" + id
 
 	s := Request(URL)
 	g := GetInnerJSON(s, "illust")
-	illust := ParseIllust(g)
+	illust, err := ParseIllust(g)
 
-	return illust
+	if err != nil {
+		return illust, fmt.Errorf("Failed to get illust by ID.\n%s", err)
+	}
+
+	return illust, nil
 }
 
 func GetSpotlightArticle(c *gin.Context) []entity.Spotlight {
