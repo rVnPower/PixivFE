@@ -5,18 +5,10 @@
     {{ with .Illust }}
     <div class="artwork-content">
       <div class="artwork-images">
-        <!-- -->
-        {{ if eq .Pages 1 }}
-        <a href="{{ .SingleImage.original_image_url }}" target="_blank">
-          <img src="{{ .Images.large }}" alt="{{ .Title }}" class="artwork-image-page" />
+        {{ range .Images }}
+        <a href="{{ .Original }}" target="_blank">
+          <img src="{{ .Large }}" alt="{{ .Original }}" class="artwork-image-page" />
         </a>
-        {{ else }}
-        {{ range .MultipleImage }}
-        <a href="{{ .image_urls.original }}" target="_blank">
-          <img src="{{ .image_urls.large }}" alt="{{ .image_urls.original }}" class="artwork-image-page" />
-        </a>
-
-        {{ end }}
         {{ end }}
       </div>
       <h2>{{ .Title }}</h3>
@@ -40,7 +32,8 @@
           {{ range $parent.Recent }}
           <div class="artwork-thumbnail-small artwork-thumbnail">
             <a href="#">
-              <img src="{{ .Images.square_medium }}" alt="{{ .Title }}" class="artwork-master-image" />
+              <img src="{{ (index .Images 0).Small }}" alt="{{ (index .Images 0).Small }}"
+                class="artwork-master-image" />
             </a>
           </div>
           {{ end }}

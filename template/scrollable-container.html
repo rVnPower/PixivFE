@@ -3,7 +3,7 @@
   <div class="artwork-thumbnail-small artwork-thumbnail">
     <a href="#">
       <img
-        src="{{ .Images.square_medium }}"
+        src="{{ (index .Images 0).Small }}"
         alt="{{ .Title }}"
         class="artwork-master-image"
       />

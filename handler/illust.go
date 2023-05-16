@@ -33,6 +33,7 @@ func ParseImages(data string) []entity.Image {
 		images = append(images, image)
 	} else {
 		g := GetInnerJSON(data, "meta_pages.#.image_urls")
+		println(g)
 
 		err := json.Unmarshal([]byte(g), &images)
 		if err != nil {
@@ -43,91 +44,66 @@ func ParseImages(data string) []entity.Image {
 	return images
 }
 
-func ParseIllust(data string) []entity.Illust {
-	var illusts []entity.Illust
-	g := gjson.Get(data, "#")
+func ParseIllust(data string) entity.Illust {
+	var illust entity.Illust
 
-	for _, handle := range g.Array() {
-		println(handle.String())
-		println("here")
+	images := ParseImages(data)
+	illust.Images = images
+
+	err := json.Unmarshal([]byte(data), &illust)
+	if err != nil {
+		panic("Failed to parse JSON")
 	}
-	// g.ForEach(func(key, value gjson.Result) bool {
-	// 	var illust entity.Illust
-	// 	v := value.String()
-	// 	println(v)
-	// 	err := json.Unmarshal([]byte(v), &illust)
-	//
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-	//
-	// 	illust.Images = ParseImages(v)
-	// 	illusts = append(illusts, illust)
-	// 	return true
-	// })
-	//
-	// println(illusts)
+
+	return illust
+}
+
+func ParseIllusts(data string) []entity.Illust {
+	var illusts []entity.Illust
+	g := gjson.Get(data, "illusts").Array()
+
+	for _, illust := range g {
+		println(illust.String())
+		illust := ParseIllust(illust.String())
+
+		illusts = append(illusts, illust)
+	}
 
 	return illusts
 }
 
 func GetRecommendedIllust(c *gin.Context) []entity.Illust {
 	URL := "https://hibi.cocomi.cf/api/pixiv/illust_recommended"
-	var illusts []entity.Illust
 
 	s := Request(URL)
-	ParseIllust(s)
-	g := GetInnerJSON(s, "illusts")
-
-	err := json.Unmarshal([]byte(g), &illusts)
-	if err != nil {
-		panic("Failed to parse JSON")
-	}
+	illusts := ParseIllusts(s)
 
 	return illusts
 }
 
 func GetRankingIllust(c *gin.Context, mode string) []entity.Illust {
 	URL := "https://hibi.cocomi.cf/api/pixiv/rank?page=1&mode=" + mode
-	var illusts []entity.Illust
 
 	s := Request(URL)
-	g := GetInnerJSON(s, "illusts")
-
-	err := json.Unmarshal([]byte(g), &illusts)
-	if err != nil {
-		panic("Failed to parse JSON")
-	}
+	illusts := ParseIllusts(s)
 
 	return illusts
 }
 
 func GetNewestIllust(c *gin.Context) []entity.Illust {
 	URL := "https://hibi.cocomi.cf/api/pixiv/illust_new"
-	var illusts []entity.Illust
 
 	s := Request(URL)
-	g := GetInnerJSON(s, "illusts")
-
-	err := json.Unmarshal([]byte(g), &illusts)
-	if err != nil {
-		panic("Failed to parse JSON")
-	}
+	illusts := ParseIllusts(s)
 
 	return illusts
 }
 
 func GetMemberIllust(c *gin.Context, id string) []entity.Illust {
 	URL := "https://hibi.cocomi.cf/api/pixiv/member_illust?id=" + id
-	var illusts []entity.Illust
 
 	s := Request(URL)
-	g := GetInnerJSON(s, "illusts")
-
-	err := json.Unmarshal([]byte(g), &illusts)
-	if err != nil {
-		panic("Failed to parse JSON")
-	}
+	illusts := ParseIllusts(s)
 
 	return illusts
 }
@@ -135,15 +111,9 @@ func GetMemberIllust(c *gin.Context, id string) []entity.Illust {
 func GetRelatedIllust(c *gin.Context) []entity.Illust {
 	id := c.Param("id")
 	URL := "https://hibi.cocomi.cf/api/pixiv/related?id=" + id
-	var illusts []entity.Illust
 
 	s := Request(URL)
-	g := GetInnerJSON(s, "illusts")
-
-	err := json.Unmarshal([]byte(g), &illusts)
-	if err != nil {
-		panic("Failed to parse JSON")
-	}
+	illusts := ParseIllusts(s)
 
 	return illusts
 }
@@ -151,15 +121,10 @@ func GetRelatedIllust(c *gin.Context) []entity.Illust {
 func GetIllustByID(c *gin.Context) entity.Illust {
 	id := c.Param("id")
 	URL := "https://hibi.cocomi.cf/api/pixiv/illust?id=" + id
-	var illust entity.Illust
 
 	s := Request(URL)
 	g := GetInnerJSON(s, "illust")
-
-	err := json.Unmarshal([]byte(g), &illust)
-	if err != nil {
-		panic(err)
-	}
+	illust := ParseIllust(g)
 
 	return illust
 }
