@@ -208,3 +208,35 @@ body {
     }
   }
 }
+
+.user-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+  height: 40vw;
+
+  img {
+    width: 100%;
+  }
+}
+
+.user-page {
+  transform: translateY(-4rem);
+
+  .user-details {
+    text-align: center;
+
+    .user-name,
+    .user-id {
+      margin: 2px;
+    }
+
+    .user-avatar {
+      width: 144px;
+      height: 144px;
+      border-radius: 50%;
+    }
+  }
+}

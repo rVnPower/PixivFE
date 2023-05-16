@@ -177,4 +177,31 @@ body {
   max-width: 100%;
 }
 
+.user-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  height: 40vw;
+}
+.user-background img {
+  width: 100%;
+}
+
+.user-page {
+  transform: translateY(-4rem);
+}
+.user-page .user-details {
+  text-align: center;
+}
+.user-page .user-details .user-name,
+.user-page .user-details .user-id {
+  margin: 2px;
+}
+.user-page .user-details .user-avatar {
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
+}
+
 /*# sourceMappingURL=style.css.map */

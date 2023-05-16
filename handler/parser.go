@@ -69,7 +69,6 @@ func ParseIllusts(data string) ([]entity.Illust, error) {
 	g := gjson.Get(data, "illusts").Array()
 
 	for _, illust := range g {
-		println(illust.String())
 		illust, err := ParseIllust(illust.String())
 
 		if err != nil {
@@ -177,6 +176,20 @@ func GetSpotlightArticle(c *gin.Context) []entity.Spotlight {
 	}
 
 	return articles
+}
+
+func GetUserInfo(c *gin.Context) (entity.User, error) {
+	id := c.Param("id")
+	URL := "https://hibi.cocomi.cf/api/pixiv/member?id=" + id
+	var user entity.User
+
+	s := Request(URL)
+	err := json.Unmarshal([]byte(s), &user)
+	if err != nil {
+		panic("Failed to parse JSON")
+	}
+
+	return user, nil
 }
 
 func GetInnerJSON(resp string, key string) string {

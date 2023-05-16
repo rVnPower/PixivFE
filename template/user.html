@@ -1,0 +1,19 @@
+{{ template "header.html" }} {{ $Recent := .Recent }} {{ with .User }}
+<div class="user-background">
+  <img src="{{ .Profile.BackgroundImage }}" alt="alt" />
+</div>
+<div class="container">
+  <div class="user-page">
+    <div class="user-details">
+      <img src="{{ .User.Avatar.medium }}" alt="avatar" class="user-avatar" />
+      <h2 class="user-name">{{ .User.Name }}</h2>
+      <p class="user-id">@{{ .User.Account }}</p>
+      <p>{{ .Profile.Followers }} Following | {{ .Profile.MyPixiv }} MyPixiv</p>
+    </div>
+  </div>
+  <div>
+    <h1>Illustrations and Mangas</h1>
+    {{ template "thumbnail-container.html" $Recent}}
+  </div>
+</div>
+{{ end }} {{ template "footer.html" }}

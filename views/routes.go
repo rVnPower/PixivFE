@@ -31,7 +31,14 @@ func index_page(c *gin.Context) {
 	})
 }
 
+func user_page(c *gin.Context) {
+	user, _ := handler.GetUserInfo(c)
+	recent, _ := handler.GetMemberIllust(c, c.Param("id"))
+	c.HTML(http.StatusOK, "user.html", gin.H{"User": user, "Recent": recent})
+}
+
 func SetupRoutes(r *gin.Engine) {
 	r.GET("/", index_page)
 	r.GET("artworks/:id", artwork_page)
+	r.GET("user/:id", user_page)
 }

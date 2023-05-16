@@ -31,11 +31,30 @@ type Tag struct {
 	TranslatedName string `json:"translated_name"`
 }
 
+type User struct {
+	User    UserBrief   `json:"user"`
+	Profile UserProfile `json:"profile"`
+}
+
 type UserBrief struct {
 	ID      int               `json:"id"`
 	Name    string            `json:"name"`
 	Account string            `json:"account"`
 	Avatar  map[string]string `json:"profile_image_urls"`
+}
+
+type UserProfile struct {
+	Webpage         string `json:"webpage"`
+	Gender          string `json:"gender"`
+	Birth           string `json:"birth"`
+	BirthDay        string `json:"birth_day"`
+	BirthYear       int    `json:"birth_year"`
+	Region          string `json:"region"`
+	BackgroundImage string `json:"background_image_url"`
+	Followers       int    `json:"total_follow_users"`
+	MyPixiv         int    `json:"total_mypixiv_users"`
+	TwitterURL      string `json:"twitter_url"`
+	PawooURL        string `json:"pawoo_url"`
 }
 
 type Image struct {
