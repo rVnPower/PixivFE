@@ -25,10 +25,10 @@ func ParseImages(data string) []entity.Image {
 
 	if gjson.Get(data, "meta_single_page.original_image_url").Exists() {
 		var image entity.Image
-		image.Small = ImageProxy(gjson.Get(data, "image_urls.square_medium").String())
-		image.Medium = ImageProxy(gjson.Get(data, "image_urls.medium").String())
-		image.Large = ImageProxy(gjson.Get(data, "image_urls.large").String())
-		image.Original = ImageProxy(gjson.Get(data, "meta_single_page.original_image_url").String())
+		image.Small = ImageProxy(GetInnerJSON(data, "image_urls.square_medium"))
+		image.Medium = ImageProxy(GetInnerJSON(data, "image_urls.medium"))
+		image.Large = ImageProxy(GetInnerJSON(data, "image_urls.large"))
+		image.Original = ImageProxy(GetInnerJSON(data, "meta_single_page.original_image_url"))
 
 		images = append(images, image)
 	} else {
