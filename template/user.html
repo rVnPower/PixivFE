@@ -1,6 +1,6 @@
-{{ template "header.html" }} {{ $Recent := .Recent }} {{ with .User }}
+{{ template "header.html" }}
 <div class="user-background">
-  <img src="{{ .Profile.BackgroundImage }}" alt="alt" />
+  <img src="{{ .User.BackgroundImage }}" alt="{{ .User.Name }}" />
 </div>
 <div class="container">
   <div class="user-page">
@@ -8,12 +8,12 @@
       <img src="{{ .User.Avatar.medium }}" alt="avatar" class="user-avatar" />
       <h2 class="user-name">{{ .User.Name }}</h2>
       <p class="user-id">@{{ .User.Account }}</p>
-      <p>{{ .Profile.Followers }} Following | {{ .Profile.MyPixiv }} MyPixiv</p>
+      <p>{{ .User.Followers }} Following | {{ .User.MyPixiv }} MyPixiv</p>
     </div>
   </div>
   <div>
     <h1>Illustrations and Mangas</h1>
-    {{ template "small-tn.html" $Recent }}
+    {{ template "small-tn.html" .Recent }}
   </div>
 </div>
-{{ end }} {{ template "footer.html" }}
+{{ template "footer.html" }}

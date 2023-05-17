@@ -79,8 +79,6 @@ body {
   }
 
   .artwork-master-image {
-    width: 184px;
-    height: 184px;
     object-position: center center;
   }
 
@@ -108,10 +106,12 @@ body {
 
 .artwork-thumbnail-small {
   width: 184px;
+  height: 184px;
 }
 
 .artwork-thumbnail-large {
   width: 288px;
+  height: 288px;
 }
 
 .spotlight-thumbnail {

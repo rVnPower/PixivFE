@@ -9,7 +9,7 @@ type Illust struct {
 	ID        int           `json:"id"`
 	Title     string        `json:"title"`
 	Caption   template.HTML `json:"caption"`
-	Artist    UserBrief     `json:"user"`
+	Artist    User          `json:"user"`
 	Date      time.Time     `json:"create_date"`
 	Pages     int           `json:"page_count"`
 	Views     int           `json:"total_view"`
@@ -32,29 +32,23 @@ type Tag struct {
 }
 
 type User struct {
-	User    UserBrief   `json:"user"`
-	Profile UserProfile `json:"profile"`
-}
-
-type UserBrief struct {
-	ID      int               `json:"id"`
-	Name    string            `json:"name"`
-	Account string            `json:"account"`
-	Avatar  map[string]string `json:"profile_image_urls"`
-}
-
-type UserProfile struct {
-	Webpage         string `json:"webpage"`
-	Gender          string `json:"gender"`
-	Birth           string `json:"birth"`
-	BirthDay        string `json:"birth_day"`
-	BirthYear       int    `json:"birth_year"`
-	Region          string `json:"region"`
-	BackgroundImage string `json:"background_image_url"`
-	Followers       int    `json:"total_follow_users"`
-	MyPixiv         int    `json:"total_mypixiv_users"`
-	TwitterURL      string `json:"twitter_url"`
-	PawooURL        string `json:"pawoo_url"`
+	ID              int               `json:"id"`
+	Name            string            `json:"name"`
+	Account         string            `json:"account"`
+	Avatar          map[string]string `json:"profile_image_urls"`
+	Webpage         string            `json:"webpage"`
+	Gender          string            `json:"gender"`
+	Birth           string            `json:"birth"`
+	BirthDay        string            `json:"birth_day"`
+	BirthYear       int               `json:"birth_year"`
+	Region          string            `json:"region"`
+	BackgroundImage string            `json:"background_image_url"`
+	Followers       int               `json:"total_follow_users"`
+	MyPixiv         int               `json:"total_mypixiv_users"`
+	Illusts         int               `json:"total_illusts"`
+	Mangas          int               `json:"total_mangas"`
+	TwitterURL      string            `json:"twitter_url"`
+	PawooURL        string            `json:"pawoo_url"`
 }
 
 type Image struct {

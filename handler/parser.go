@@ -184,7 +184,15 @@ func GetUserInfo(c *gin.Context) (entity.User, error) {
 	var user entity.User
 
 	s := Request(URL)
-	err := json.Unmarshal([]byte(s), &user)
+	user_string := GetInnerJSON(s, "user")
+	profile_string := GetInnerJSON(s, "profile")
+
+	err := json.Unmarshal([]byte(user_string), &user)
+	if err != nil {
+		panic("Failed to parse JSON")
+	}
+
+	err = json.Unmarshal([]byte(profile_string), &user)
 	if err != nil {
 		panic("Failed to parse JSON")
 	}
