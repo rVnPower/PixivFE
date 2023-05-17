@@ -15,11 +15,7 @@
   <div class="thumbnail-container">
     {{ range .Spotlights }}
     <a href="{{ .URL }}" class="spotlight-thumbnail">
-      <img
-        src="{{ .Thumbnail }}"
-        alt="{{ .Title }}"
-        class="spotlight-master-image"
-      />
+      <img src="{{ .Thumbnail }}" alt="{{ .Title }}" class="spotlight-master-image" />
       <div class="spotlight-title-wrapper">
         <h2 class="spotlight-title">{{ .Title }}</h2>
       </div>

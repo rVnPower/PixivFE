@@ -2,23 +2,14 @@
 <div class="artwork-thumbnail-large artwork-thumbnail">
   <div class="artwork-rank-circle">{{ $i | inc}}</div>
   <a href="/artworks/{{ .ID }}">
-    <img
-      src="{{ (index .Images 0).Small }}"
-      alt="{{ .Title }}"
-      class="artwork-master-image"
-    />
+    <img data-src="{{ (index .Images 0).Small }}" alt="{{ .Title }}" class="artwork-master-image lazy" />
   </a>
 
   <a class="artwork-thumbnail-title" href="/artworks/{{ .ID }}">
     <h3 class="no-margin">{{ .Title }}</h3>
   </a>
-  <a href="#" class="artwork-thumbnail-artist flex"
-    ><img
-      src="{{ .Artist.Avatar.medium }}"
-      alt="{{ .Artist.Name }}"
-      class="artwork-thumbnail-artist-avatar border-rounded"
-    />
-    {{ .Artist.Name }}</a
-  >
+  <a href="#" class="artwork-thumbnail-artist flex"><img data-src="{{ .Artist.Avatar.medium }}" alt="{{ .Artist.Name }}"
+      class="artwork-thumbnail-artist-avatar border-rounded lazy" />
+    {{ .Artist.Name }}</a>
 </div>
 {{ end }}
