@@ -71,7 +71,8 @@ go run main.go
 - [ ] Optimization
   - [ ] Split web components into smaller templates
   - [x] Clean the models + JSON
-  - [ ] Navigation between pages
+  - [x] Navigation between pages
+  - [ ] Lazy load images
 
 ## Contributing
 
