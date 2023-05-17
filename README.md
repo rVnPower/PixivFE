@@ -21,6 +21,9 @@ Artwork's page: informations about the artwork, recent artworks by the artist an
 ![Artwork](https://files.catbox.moe/x3k85p.png)
 ![Artwork](https://files.catbox.moe/ocy4fq.png)
 
+User's page: Route: `/user/<id>` (id for the preview: 11065404)
+![User](https://files.catbox.moe/f055gn.png)
+
 ## Installation
 
 Run these commands below, then access the site on [localhost:8080](https://localhost:8080)

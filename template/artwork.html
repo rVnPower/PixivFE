@@ -26,8 +26,8 @@
         <br />
         <small>{{ .Date }}</small>
 
-        <a href="#" class="artwork-artist flex"><img src="{{ .Artist.Avatar.medium }}" alt="{{ .Artist.Name }}"
-            class="artwork-artist-avatar border-rounded" />
+        <a href="/user/{{ .Artist.ID }}" class="artwork-artist flex"><img src="{{ .Artist.Avatar.medium }}"
+            alt="{{ .Artist.Name }}" class="artwork-artist-avatar border-rounded" />
           {{ .Artist.Name }}</a>
         <div class="thumbnail-container">
           {{ range $parent.Recent }}
