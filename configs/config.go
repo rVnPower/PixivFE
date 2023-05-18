@@ -11,7 +11,7 @@ var Configs Conf
 
 type Conf struct {
 	PHPSESSID string `yaml:"PHPSESSID"`
-	userAgent int    `yaml:"userAgent"`
+	UserAgent string `yaml:"userAgent"`
 }
 
 func (conf *Conf) ReadConfig() {

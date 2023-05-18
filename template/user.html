@@ -5,10 +5,11 @@
 <div class="container">
   <div class="user-page">
     <div class="user-details">
-      <img src="{{ .User.Avatar.medium }}" alt="avatar" class="user-avatar" />
+      <img src="{{ .User.Avatar }}" alt="avatar" class="user-avatar" />
       <h2 class="user-name">{{ .User.Name }}</h2>
-      <p class="user-id">@{{ .User.Account }}</p>
-      <p>{{ .User.Followers }} Following | {{ .User.MyPixiv }} MyPixiv</p>
+      <p class="user-id">
+        {{ .User.Following }} Following | {{ .User.MyPixiv }} MyPixiv
+      </p>
     </div>
   </div>
   <div>

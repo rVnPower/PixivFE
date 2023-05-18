@@ -33,7 +33,6 @@ func setupRouter() *gin.Engine {
 
 func main() {
 	configs.Configs.ReadConfig()
-	println(configs.Configs.PHPSESSID)
 
 	r := setupRouter()
 
