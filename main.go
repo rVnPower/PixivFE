@@ -2,6 +2,7 @@ package main
 
 import (
 	"html/template"
+	"pixivfe/configs"
 	"pixivfe/views"
 
 	"github.com/gin-gonic/gin"
@@ -31,6 +32,9 @@ func setupRouter() *gin.Engine {
 }
 
 func main() {
+	configs.Configs.ReadConfig()
+	println(configs.Configs.PHPSESSID)
+
 	r := setupRouter()
 
 	r.Run(":8080")

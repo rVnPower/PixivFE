@@ -1,0 +1,6 @@
+# This is required for the API. See https://github.com/Nandaka/PixivUtil2/wiki#pixiv-login-using-cookie
+# Please keep this carefully, there is a risk of account theft if somebody got your cookie.
+# It is better to use a decoy account, instead of using your main account's cookie.
+PHPSESSID:
+
+userAgent: Mozilla/5.0
