@@ -32,6 +32,9 @@
         <div class="thumbnail-container">
           {{ range $parent.Recent }}
           <div class="artwork-thumbnail-small artwork-thumbnail">
+            {{ if gt .Pages 1 }}
+            <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
+            {{ end }}
             <a href="/artworks/{{ .ID }}">
               <img src="{{ .Thumbnail }}" alt="{{ .Thumbnail }}" class="artwork-master-image" />
             </a>

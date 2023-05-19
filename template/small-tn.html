@@ -1,5 +1,8 @@
 {{ range . }}
 <div class="artwork-thumbnail-small artwork-thumbnail">
+  {{ if gt .Pages 1 }}
+  <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
+  {{ end }}
   <a href="/artworks/{{ .ID }}">
     <img
       data-src="{{ .Thumbnail }}"

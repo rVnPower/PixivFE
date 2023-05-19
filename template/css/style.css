@@ -52,6 +52,27 @@ body {
   padding: 1rem;
   background-color: #262a2b;
 }
+.artwork-thumbnail .artwork-page-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  border-radius: 20px;
+  padding: 0.3rem;
+  background-color: #262a2b;
+  opacity: 60%;
+}
+.artwork-thumbnail .artwork-page-count span {
+  display: flex;
+  font-size: 0.7rem;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  height: 0.5rem;
+}
 .artwork-thumbnail .artwork-thumbnail-title {
   margin: 0.4rem;
   max-width: 100%;
