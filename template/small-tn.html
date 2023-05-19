@@ -1,6 +1,6 @@
-{{ range . }}
+{{ range . }} {{ if not (isEmpty .ID) }}
 <div class="artwork-thumbnail-small artwork-thumbnail">
   {{ template "thumbnail-dt-lazy.html" . }} {{ template "thumbnail-tt.html" . }}
   {{ template "thumbnail-at.html" . }}
 </div>
-{{ end }}
+{{ end }} {{ end }}
