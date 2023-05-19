@@ -46,13 +46,6 @@ func user_page(c *gin.Context) {
 	c.HTML(http.StatusOK, "user.html", gin.H{"User": user, "Recent": recent})
 }
 
-func getUserInformation(c *gin.Context) {
-	id := c.Param("id")
-	data, _ := PC.GetUserInformation(id)
-
-	c.IndentedJSON(http.StatusOK, data)
-}
-
 func NewPixivClient(timeout int) *models.PixivClient {
 	transport := &http.Transport{Proxy: http.ProxyFromEnvironment}
 	client := &http.Client{
@@ -77,5 +70,4 @@ func SetupRoutes(r *gin.Engine) {
 	// r.GET("/", index_page)
 	r.GET("artworks/:id", artwork_page)
 	r.GET("users/:id", user_page)
-	r.GET("api/users/:id", getUserInformation)
 }

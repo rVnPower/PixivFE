@@ -17,8 +17,12 @@
         <div class="artwork-tags">
 
           {{ range .Tags }}
+          {{ if isEmphasize .Name }}
+          <span class="artwork-tag-name emphasize">{{ .Name }}</span>
+          {{ else }}
           <span class="artwork-tag-name">#{{ .Name }}</span><span class="artwork-tag-altname">{{ .TranslatedName
             }}</span>
+          {{ end }}
           {{ end }}
         </div>
         <br />
@@ -32,12 +36,7 @@
         <div class="thumbnail-container">
           {{ range $parent.Recent }}
           <div class="artwork-thumbnail-small artwork-thumbnail">
-            {{ if gt .Pages 1 }}
-            <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
-            {{ end }}
-            <a href="/artworks/{{ .ID }}">
-              <img src="{{ .Thumbnail }}" alt="{{ .Thumbnail }}" class="artwork-master-image" />
-            </a>
+            {{ template "thumbnail-dt.html" . }}
           </div>
           {{ end }}
         </div>

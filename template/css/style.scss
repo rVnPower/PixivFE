@@ -1,7 +1,9 @@
 $bg: #131516;
 $fg: #d8d4cf;
 $bg-alt: #262a2b;
+$bg-alt-dimmed: #262a2b99;
 $blue: #3d7699;
+$red: #ff4060;
 
 * {
   box-sizing: border-box;
@@ -68,12 +70,33 @@ body {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 0.6rem;
-    right: 0.6rem;
+    top: 0.3rem;
+    right: 0.3rem;
     border-radius: 20px;
     padding: 0.3rem;
-    background-color: $bg-alt;
-    opacity: 60%;
+    background-color: $bg-alt-dimmed;
+
+    span {
+      display: flex;
+      font-size: 0.7rem;
+      font-weight: bold;
+      align-items: center;
+      justify-content: center;
+      width: max-content;
+      height: 0.5rem;
+    }
+  }
+
+  .artwork-profanity-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0.3rem;
+    left: 0.3rem;
+    border-radius: 20px;
+    padding: 0.3rem;
+    background-color: $red;
 
     span {
       display: flex;
@@ -216,6 +239,10 @@ body {
     }
     .artwork-tag-altname {
       margin-right: 8px;
+    }
+
+    .emphasize {
+      color: $red;
     }
   }
 

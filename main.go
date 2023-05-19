@@ -20,6 +20,16 @@ func setupRouter() *gin.Engine {
 		"isEmpty": func(s string) bool {
 			return len(s) < 1
 		},
+
+		"isEmphasize": func(s string) bool {
+			switch s {
+			case
+				"R-18",
+				"R-18G":
+				return true
+			}
+			return false
+		},
 	})
 
 	// Static files

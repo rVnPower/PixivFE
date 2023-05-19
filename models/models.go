@@ -36,7 +36,7 @@ const (
 )
 
 var xRestrictModel = map[xRestrict]string{
-	Safe: "Safe",
+	Safe: "",
 	R18:  "R18",
 	R18G: "R18G",
 }
@@ -57,7 +57,7 @@ const (
 
 var aiTypeModel = map[aiType]string{
 	Unrated: "Unrated",
-	NotAI:   "NotAI",
+	NotAI:   "Not AI",
 	AI:      "AI",
 }
 
