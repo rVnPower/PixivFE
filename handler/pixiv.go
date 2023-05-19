@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"math"
 	"net/http"
 	"pixivfe/models"
 	"regexp"
@@ -197,7 +198,7 @@ func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 	return illust.Illust, nil
 }
 
-func (p *PixivClient) GetUserArtworksID(id string) (*string, error) {
+func (p *PixivClient) GetUserArtworksID(id string, page int) (*string, error) {
 	s, _ := p.TextRequest(fmt.Sprintf(UserArtworksURL, id))
 
 	var pr models.PixivResponse
@@ -226,17 +227,49 @@ func (p *PixivClient) GetUserArtworksID(id string) (*string, error) {
 	// Reverse sort the ids
 	sort.Sort(sort.Reverse(sort.IntSlice(ids)))
 
-	i := 0
-	for _, k := range ids {
-		if i < 30 {
-			idsString += fmt.Sprintf("&ids[]=%d", k)
-		} else {
-			break
-		}
-		i++
+	worksNumber := float64(len(ids))
+	worksPerPage := 30.0
+
+	if page < 1 || float64(page) > math.Ceil(worksNumber/worksPerPage)+1.0 {
+		return nil, errors.New("Page overflow")
+	}
+
+	start := (page - 1) * int(worksPerPage)
+	end := int(math.Min(float64(page)*worksPerPage, worksNumber)) // no overflow
+
+	for _, k := range ids[start:end] {
+		idsString += fmt.Sprintf("&ids[]=%d", k)
 	}
 
 	return &idsString, nil
+}
+
+func (p *PixivClient) GetUserArtworksCount(id string) (int, error) {
+	s, _ := p.TextRequest(fmt.Sprintf(UserArtworksURL, id))
+
+	var pr models.PixivResponse
+
+	err := json.Unmarshal([]byte(s), &pr)
+
+	if err != nil {
+		return -1, errors.New(fmt.Sprintf("Failed to extract data from JSON response from server. %s", err))
+	}
+	if pr.Error {
+		return -1, errors.New(pr.Message)
+	}
+
+	var count int
+	var body struct {
+		Illusts map[int]string `json:"illusts"`
+	}
+	err = json.Unmarshal(pr.Body, &body)
+
+	// Get the keys, because Pixiv only returns IDs (very evil)
+	for range body.Illusts {
+		count++
+	}
+
+	return count, nil
 }
 
 func (p *PixivClient) GetRelatedArtworks(id string) ([]models.IllustShort, error) {
@@ -263,8 +296,8 @@ func (p *PixivClient) GetRelatedArtworks(id string) ([]models.IllustShort, error
 	return body.Illusts, nil
 }
 
-func (p *PixivClient) GetUserArtworks(id string) ([]models.IllustShort, error) {
-	ids, err := p.GetUserArtworksID(id)
+func (p *PixivClient) GetUserArtworks(id string, page int) ([]models.IllustShort, error) {
+	ids, err := p.GetUserArtworksID(id, page)
 	if err != nil {
 		return nil, err
 	}
@@ -300,11 +333,11 @@ func (p *PixivClient) GetUserArtworks(id string) ([]models.IllustShort, error) {
 	return works, nil
 }
 
-func (p *PixivClient) GetUserInformation(id string) (*models.User, error) {
-	s, _ := p.TextRequest(fmt.Sprintf(UserInformationURL, id))
-
+func (p *PixivClient) GetUserInformation(id string, page int) (*models.User, error) {
 	var user *models.User
 	var pr models.PixivResponse
+
+	s, _ := p.TextRequest(fmt.Sprintf(UserInformationURL, id))
 
 	err := json.Unmarshal([]byte(s), &pr)
 
@@ -326,7 +359,7 @@ func (p *PixivClient) GetUserInformation(id string) (*models.User, error) {
 	user = body.User
 
 	// Artworks
-	works, _ := p.GetUserArtworks(id)
+	works, _ := p.GetUserArtworks(id, page)
 	user.Artworks = works
 
 	// Avatar
@@ -336,6 +369,9 @@ func (p *PixivClient) GetUserInformation(id string) (*models.User, error) {
 	if body.Background != nil {
 		user.BackgroundImage = ProxyImage(body.Background["url"])
 	}
+
+	// Artworks count
+	// user.ArtworksCount, _ = p.GetUserArtworksCount(id)
 
 	return user, nil
 }

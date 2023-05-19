@@ -7,6 +7,12 @@ import (
 	"encoding/json"
 )
 
+type PaginationData struct {
+	PreviousPage int
+	CurrentPage  int
+	NextPage     int
+}
+
 type PixivResponse struct {
 	Error   bool
 	Message string
@@ -117,4 +123,5 @@ type User struct {
 	MyPixiv         int           `json:"mypixivCount"`
 	Comment         string        `json:"comment"`
 	Artworks        []IllustShort `json:"artworks"`
+	ArtworksCount   int
 }

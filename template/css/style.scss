@@ -298,3 +298,12 @@ body {
     }
   }
 }
+
+.pagination {
+  width: 100%;
+  text-align: center;
+
+  .disabled {
+    pointer-events: none;
+  }
+}

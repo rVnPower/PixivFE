@@ -255,4 +255,12 @@ body {
   border-radius: 50%;
 }
 
+.pagination {
+  width: 100%;
+  text-align: center;
+}
+.pagination .disabled {
+  pointer-events: none;
+}
+
 /*# sourceMappingURL=style.css.map */

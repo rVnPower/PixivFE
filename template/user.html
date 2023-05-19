@@ -17,7 +17,24 @@
   </div>
   <div>
     <h1>Illustrations and Mangas</h1>
-    {{ template "small-tn.html" .Recent }}
+    {{ template "small-tn.html" .User.Artworks }}
+  </div>
+  <div class="pagination">
+    {{ if eq .Page 1 }}
+    <a href="#" class="pagination-button disabled">Previous</a>
+    <a href="#" class="pagination-button disabled">1</a>
+    {{ else }}
+    <a href="/users/{{ .User.ID }}?page={{ dec .Page }}" class="pagination-button">Previous</a>
+    <a href="/users/{{ .User.ID }}?page={{ dec .Page }}" class="pagination-button">{{ dec .Page }}</a>
+    {{ end }}
+    <a href="#" class="pagination-button disabled">{{ .Page }}</a>
+    {{ if eq .Page .PageLimit }}
+    <a href="#" class="pagination-button disabled">{{ .PageLimit }}</a>
+    <a href="#" class="pagination-button disabled">Next</a>
+    {{ else }}
+    <a href="/users/{{ .User.ID }}?page={{ inc .Page }}" class="pagination-button">{{ inc .Page }}</a>
+    <a href="/users/{{ .User.ID }}?page={{ inc .Page }}" class="pagination-button">Next</a>
+    {{ end }}
   </div>
 </div>
 {{ template "footer.html" }}

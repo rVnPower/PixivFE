@@ -1,9 +1,11 @@
 package views
 
 import (
+	"math"
 	"net/http"
 	"pixivfe/configs"
 	"pixivfe/handler"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -15,13 +17,11 @@ func artwork_page(c *gin.Context) {
 	id := c.Param("id")
 	illust, _ := PC.GetArtworkByID(id)
 	related, _ := PC.GetRelatedArtworks(id)
-	recent_by_artist, _ := PC.GetUserArtworks(illust.UserID)
-	artist_info, _ := PC.GetUserInformation(illust.UserID)
+	artist_info, _ := PC.GetUserInformation(illust.UserID, 1)
 
 	c.HTML(http.StatusOK, "artwork.html", gin.H{
 		"Illust":  illust,
 		"Related": related,
-		"Recent":  recent_by_artist,
 		"Artist":  artist_info,
 	})
 }
@@ -41,9 +41,19 @@ func artwork_page(c *gin.Context) {
 
 func user_page(c *gin.Context) {
 	id := c.Param("id")
-	user, _ := PC.GetUserInformation(id)
-	recent, _ := PC.GetUserArtworks(id)
-	c.HTML(http.StatusOK, "user.html", gin.H{"User": user, "Recent": recent})
+	page, ok := c.GetQuery("page")
+
+	if !ok {
+		page = "1"
+	}
+
+	pageInt, _ := strconv.Atoi(page)
+	user, _ := PC.GetUserInformation(id, pageInt)
+
+	worksCount, _ := PC.GetUserArtworksCount(id)
+	pageLimit := math.Ceil(float64(worksCount)/30) + 1.0
+
+	c.HTML(http.StatusOK, "user.html", gin.H{"User": user, "PageLimit": int(pageLimit), "Page": pageInt})
 }
 
 func NewPixivClient(timeout int) *models.PixivClient {

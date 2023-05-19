@@ -16,6 +16,13 @@ func setupRouter() *gin.Engine {
 			// For rankings to increment a number by 1
 			return n + 1
 		},
+		"add": func(a int, b int) int {
+			return a + b
+		},
+
+		"dec": func(n int) int {
+			return n - 1
+		},
 
 		"isEmpty": func(s string) bool {
 			return len(s) < 1
