@@ -6,14 +6,13 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck
 
 This is an alternative front-end for Pixiv, also my second Go project, so the code may not look good for those who are experienced :(
 
-**Why?** Because nobody made a front-end that I like.
+**Why?** Because nobody made a front-end for Pixiv that I like.
 
 Note that this project is still under its preparation stage.
-It is not prepared for production, or to be called a "real alternative front-end", yet.
 
 ## Previews
 
-Homepage: currently contains recommended works, daily rankings, pixivision's articles and newest works on Pixiv. Route: `/`
+Homepage: currently contains recommended works, daily rankings, pixivision's articles and newest works on Pixiv. ~~Route: `/`~~ Currently borked due to recent API changes.
 ![Homepage](https://files.catbox.moe/053fzh.png)
 ![Homepage](https://files.catbox.moe/m64h7s.png)
 
@@ -26,14 +25,17 @@ User's page: Route: `/user/<id>` (id for the preview: 11065404)
 
 ## Installation
 
+This project only depends on one Go library: [Gin](https://github.com/gin-gonic/gin)
 Run these commands below, then access the site on [localhost:8080](https://localhost:8080)
 
 ```
 git clone https://codeberg.org/VnPower/pixivfe.git
 cd pixivfe
-go install main.go
-go run main.go
+go get -u github.com/gin-gonic/gin
+cp config.example.yml config.yml # config file
 ```
+
+You will have to add your own `PHPSESSID` in order to run. Go to `config.yml` for more details.
 
 ## To-do
 
@@ -41,8 +43,8 @@ go run main.go
   - [ ] Navigation bar
   - [ ] Searching
   - [ ] Pagination
-  - [ ] Configuration file
-  - [ ] Write a real independent API
+  - [x] Configuration file
+  - [x] Write a real independent API
 - [ ] Index page
   - [x] Recommended artworks
   - [x] Daily rankings
