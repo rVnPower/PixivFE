@@ -11,10 +11,14 @@ import (
 func setupRouter() *gin.Engine {
 	server := gin.Default()
 
-	// For rankings to increment a number by 1
 	server.SetFuncMap(template.FuncMap{
 		"inc": func(n int) int {
+			// For rankings to increment a number by 1
 			return n + 1
+		},
+
+		"isEmpty": func(s string) bool {
+			return len(s) < 1
 		},
 	})
 

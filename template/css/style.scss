@@ -1,5 +1,5 @@
-$bg: #181a1b;
-$fg: #e8e6e3;
+$bg: #131516;
+$fg: #d8d4cf;
 $bg-alt: #262a2b;
 $blue: #3d7699;
 
@@ -155,7 +155,7 @@ body {
 }
 
 .artwork-page {
-  background: #333;
+  background: $bg-alt;
 
   .artwork-content {
     margin: 0 20px;
@@ -222,6 +222,12 @@ body {
   img {
     width: 100%;
   }
+}
+
+.user-background-placeholder {
+  display: flex;
+  height: 10vw;
+  background-color: $bg-alt;
 }
 
 .user-page {

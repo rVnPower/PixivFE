@@ -26,14 +26,14 @@
         <br />
         <small>{{ .Date }}</small>
 
-        <a href="/user/{{ $parent.Artist.ID }}" class="artwork-artist flex"><img src="{{ $parent.Artist.Avatar }}"
+        <a href="/users/{{ $parent.Artist.ID }}" class="artwork-artist flex"><img src="{{ $parent.Artist.Avatar }}"
             alt="{{ $parent.Artist.Name }}" class="artwork-artist-avatar border-rounded" />
           {{ $parent.Artist.Name }}</a>
         <div class="thumbnail-container">
           {{ range $parent.Recent }}
           <div class="artwork-thumbnail-small artwork-thumbnail">
             <a href="/artworks/{{ .ID }}">
-              <img data-src="{{ .Thumbnail }}" alt="{{ .Thumbnail }}" class="artwork-master-image lazy" />
+              <img src="{{ .Thumbnail }}" alt="{{ .Thumbnail }}" class="artwork-master-image" />
             </a>
           </div>
           {{ end }}

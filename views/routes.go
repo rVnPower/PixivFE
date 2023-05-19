@@ -77,4 +77,5 @@ func SetupRoutes(r *gin.Engine) {
 	// r.GET("/", index_page)
 	r.GET("artworks/:id", artwork_page)
 	r.GET("users/:id", user_page)
+	r.GET("api/users/:id", getUserInformation)
 }

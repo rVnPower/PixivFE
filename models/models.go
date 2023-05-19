@@ -111,7 +111,7 @@ type IllustShort struct {
 type User struct {
 	ID              string        `json:"userId"`
 	Name            string        `json:"name"`
-	Avatar          string        `json:"image"`
+	Avatar          string        `json:"imageBig"`
 	BackgroundImage string        `json:"background"`
 	Following       int           `json:"following"`
 	MyPixiv         int           `json:"mypixivCount"`

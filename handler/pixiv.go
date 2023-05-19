@@ -315,12 +315,27 @@ func (p *PixivClient) GetUserInformation(id string) (*models.User, error) {
 		return nil, errors.New(pr.Message)
 	}
 
+	var body struct {
+		*models.User
+		Background map[string]string `json:"background"`
+	}
+
 	// Basic user information
-	err = json.Unmarshal([]byte(pr.Body), &user)
+	err = json.Unmarshal([]byte(pr.Body), &body)
+
+	user = body.User
 
 	// Artworks
 	works, _ := p.GetUserArtworks(id)
 	user.Artworks = works
+
+	// Avatar
+	user.Avatar = ProxyImage(user.Avatar)
+
+	// Background image
+	if body.Background != nil {
+		user.BackgroundImage = ProxyImage(body.Background["url"])
+	}
 
 	return user, nil
 }
