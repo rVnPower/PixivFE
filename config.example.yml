@@ -3,4 +3,7 @@
 # It is better to use a decoy account, instead of using your main account's cookie.
 PHPSESSID:
 
-userAgent: Mozilla/5.0
+UserAgent: Mozilla/5.0
+
+# Number of items in each list page
+PageItems: 30

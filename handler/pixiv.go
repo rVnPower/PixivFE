@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"math"
 	"net/http"
+	"pixivfe/configs"
 	"pixivfe/models"
 	"regexp"
 	"sort"
@@ -24,7 +25,7 @@ type PixivClient struct {
 const (
 	ArtworkInformationURL = "https://www.pixiv.net/ajax/illust/%s"
 	ArtworkImagesURL      = "https://www.pixiv.net/ajax/illust/%s/pages"
-	ArtworkRelatedURL     = "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=30"
+	ArtworkRelatedURL     = "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=%d"
 	UserInformationURL    = "https://www.pixiv.net/ajax/user/%s?full=1"
 	UserArtworksURL       = "https://www.pixiv.net/ajax/user/%s/profile/all"
 	UserArtworksFullURL   = "https://www.pixiv.net/ajax/user/%s/profile/illusts?work_category=illustManga&is_first_page=0&lang=en%s"
@@ -228,7 +229,7 @@ func (p *PixivClient) GetUserArtworksID(id string, page int) (*string, error) {
 	sort.Sort(sort.Reverse(sort.IntSlice(ids)))
 
 	worksNumber := float64(len(ids))
-	worksPerPage := 30.0
+	worksPerPage := float64(configs.Configs.PageItems)
 
 	if page < 1 || float64(page) > math.Ceil(worksNumber/worksPerPage)+1.0 {
 		return nil, errors.New("Page overflow")
@@ -273,7 +274,7 @@ func (p *PixivClient) GetUserArtworksCount(id string) (int, error) {
 }
 
 func (p *PixivClient) GetRelatedArtworks(id string) ([]models.IllustShort, error) {
-	url := fmt.Sprintf(ArtworkRelatedURL, id)
+	url := fmt.Sprintf(ArtworkRelatedURL, id, configs.Configs.PageItems)
 
 	var pr models.PixivResponse
 

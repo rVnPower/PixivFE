@@ -11,7 +11,8 @@ var Configs Conf
 
 type Conf struct {
 	PHPSESSID string `yaml:"PHPSESSID"`
-	UserAgent string `yaml:"userAgent"`
+	UserAgent string `yaml:"UserAgent"`
+	PageItems int    `yaml:"PageItems"`
 }
 
 func (conf *Conf) ReadConfig() {
