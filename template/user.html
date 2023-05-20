@@ -28,7 +28,7 @@
     <a href="/users/{{ .User.ID }}?page={{ dec .Page }}" class="pagination-button">{{ dec .Page }}</a>
     {{ end }}
     <a href="#" class="pagination-button disabled">{{ .Page }}</a>
-    {{ if eq .Page .PageLimit }}
+    {{ if eq .Page (dec .PageLimit) }}
     <a href="#" class="pagination-button disabled">{{ .PageLimit }}</a>
     <a href="#" class="pagination-button disabled">Next</a>
     {{ else }}
