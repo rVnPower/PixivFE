@@ -26,6 +26,7 @@ const (
 	ArtworkInformationURL = "https://www.pixiv.net/ajax/illust/%s"
 	ArtworkImagesURL      = "https://www.pixiv.net/ajax/illust/%s/pages"
 	ArtworkRelatedURL     = "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=%d"
+	ArtworkNewestURL      = "https://www.pixiv.net/ajax/illust/new?limit=200&type=%s&r18=%s&lastId=%s"
 	UserInformationURL    = "https://www.pixiv.net/ajax/user/%s?full=1"
 	UserArtworksURL       = "https://www.pixiv.net/ajax/user/%s/profile/all"
 	UserArtworksFullURL   = "https://www.pixiv.net/ajax/user/%s/profile/illusts?work_category=illustManga&is_first_page=0&lang=en%s"
@@ -259,18 +260,12 @@ func (p *PixivClient) GetUserArtworksCount(id string) (int, error) {
 		return -1, errors.New(pr.Message)
 	}
 
-	var count int
 	var body struct {
 		Illusts map[int]string `json:"illusts"`
 	}
 	err = json.Unmarshal(pr.Body, &body)
 
-	// Get the keys, because Pixiv only returns IDs (very evil)
-	for range body.Illusts {
-		count++
-	}
-
-	return count, nil
+	return len(body.Illusts), nil
 }
 
 func (p *PixivClient) GetRelatedArtworks(id string) ([]models.IllustShort, error) {
@@ -375,4 +370,39 @@ func (p *PixivClient) GetUserInformation(id string, page int) (*models.User, err
 	// user.ArtworksCount, _ = p.GetUserArtworksCount(id)
 
 	return user, nil
+}
+
+func (p *PixivClient) GetNewestArtworks(worktype string, r18 string) ([]models.IllustShort, error) {
+
+	var pr models.PixivResponse
+	var newWorks []models.IllustShort
+	lastID := "0"
+
+	for i := 0; i < 10; i++ {
+		url := fmt.Sprintf(ArtworkNewestURL, worktype, r18, lastID)
+
+		s, err := p.TextRequest(url)
+		if err != nil {
+			return nil, err
+		}
+
+		err = json.Unmarshal([]byte(s), &pr)
+
+		var body struct {
+			Illusts []models.IllustShort `json:"illusts"`
+			LastID  string               `json:"lastId"`
+		}
+
+		err = json.Unmarshal([]byte(pr.Body), &body)
+		if err != nil {
+			return nil, err
+		}
+		newWorks = append(newWorks, body.Illusts...)
+
+		lastID = body.LastID
+	}
+
+	println(len(newWorks))
+
+	return newWorks, nil
 }

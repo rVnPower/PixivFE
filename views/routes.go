@@ -56,6 +56,23 @@ func user_page(c *gin.Context) {
 	c.HTML(http.StatusOK, "user.html", gin.H{"User": user, "PageLimit": int(pageLimit), "Page": pageInt})
 }
 
+func newestArtworksPage(c *gin.Context) {
+	worktype, ok := c.GetQuery("type")
+
+	if !ok {
+		worktype = "illust"
+	}
+	r18, ok := c.GetQuery("r18")
+
+	if !ok {
+		r18 = "false"
+	}
+
+	works, _ := PC.GetNewestArtworks(worktype, r18)
+
+	c.HTML(http.StatusOK, "list.html", gin.H{"Title": "Newest works from all users", "Items": works})
+}
+
 func NewPixivClient(timeout int) *models.PixivClient {
 	transport := &http.Transport{Proxy: http.ProxyFromEnvironment}
 	client := &http.Client{
@@ -80,4 +97,5 @@ func SetupRoutes(r *gin.Engine) {
 	// r.GET("/", index_page)
 	r.GET("artworks/:id", artwork_page)
 	r.GET("users/:id", user_page)
+	r.GET("newest", newestArtworksPage)
 }
