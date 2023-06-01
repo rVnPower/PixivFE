@@ -12,7 +12,7 @@ Note that this project is still under its preparation stage.
 
 ## Previews
 
-Homepage: currently contains recommended works, daily rankings, pixivision's articles and newest works on Pixiv. ~~Route: `/`~~ Currently borked due to recent API changes.
+~~Homepage: currently contains recommended works, daily rankings, pixivision's articles and newest works on Pixiv. Route: `/`~~ Previously this was made possible by using an external API. Currently, I had switched to Pixiv's ajax API, so the index page won't be available for now.
 ![Homepage](https://files.catbox.moe/053fzh.png)
 ![Homepage](https://files.catbox.moe/m64h7s.png)
 
