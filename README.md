@@ -65,7 +65,7 @@ You will have to add your own `PHPSESSID` in order to run. Go to `config.yml` fo
   - [ ] Discovery
     - [ ] Artworks
     - [ ] Users
-  - [ ] Newest by all
+  - [x] Newest by all
   - [ ] Search results
   - [ ] Switcher
 - [ ] Settings
@@ -82,7 +82,5 @@ You will have to add your own `PHPSESSID` in order to run. Go to `config.yml` fo
   - [ ] Fully proxy images from Pixiv
 
 ## License
-
-This project was made for learning and experimental purposes.
 
 [~~MIT~~](https://mit-license.org/) [AGPL3](https://www.gnu.org/licenses/agpl-3.0.txt)
