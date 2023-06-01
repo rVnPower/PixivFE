@@ -133,11 +133,11 @@ type User struct {
 }
 
 type RankedArtwork struct {
-	ID           string `json:"illust_id"`
+	ID           int    `json:"illust_id"`
 	Title        string `json:"title"`
-	Pages        int    `json:"illust_page_count"`
+	Pages        string `json:"illust_page_count"`
 	Image        string `json:"url"`
-	ArtistID     string `json:"user_id"`
+	ArtistID     int    `json:"user_id"`
 	ArtistName   string `json:"user_name"`
 	ArtistAvatar string `json:"profile_img"`
 }

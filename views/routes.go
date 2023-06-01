@@ -7,9 +7,16 @@ import (
 	"pixivfe/handler"
 	"strconv"
 	"time"
+	"unicode"
 
 	"github.com/gin-gonic/gin"
 )
+
+func capitalize(str string) string {
+	runes := []rune(str)
+	runes[0] = unicode.ToUpper(runes[0])
+	return string(runes)
+}
 
 var PC *models.PixivClient
 
@@ -77,7 +84,10 @@ func ranking_page(c *gin.Context) {
 
 	response, _ := PC.GetRanking(mode, content, page)
 
-	c.HTML(http.StatusOK, "rank.html", gin.H{"Items": response.Artworks})
+	c.HTML(http.StatusOK, "rank.html", gin.H{"Items": response.Artworks,
+		"Mode":    mode,
+		"Content": content,
+		"Page":    page})
 }
 
 func newestArtworksPage(c *gin.Context) {

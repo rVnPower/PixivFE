@@ -46,8 +46,8 @@ body {
   position: absolute;
   width: 1rem;
   height: 1rem;
-  top: 0.6rem;
-  left: 0.6rem;
+  top: 0.3rem;
+  left: 0.3rem;
   border-radius: 50%;
   padding: 1rem;
   background-color: #262a2b;
@@ -253,6 +253,29 @@ body {
   width: 144px;
   height: 144px;
   border-radius: 50%;
+}
+
+.switcher {
+  border-radius: 10px;
+}
+.switcher .switch-title {
+  margin-right: 5px;
+}
+.switcher .switch-button {
+  display: inline-block;
+  padding: 8px 5px;
+  background-color: #262a2b;
+  color: #d8d4cf;
+  text-decoration: none;
+  text-decoration-color: #d8d4cf;
+}
+.switcher .switch-button:hover {
+  background-color: rgba(38, 42, 43, 0.6);
+  text-decoration: underline;
+}
+.switcher .switch-seperator {
+  display: inline-block;
+  margin-left: 10px;
 }
 
 .pagination {

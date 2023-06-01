@@ -3,31 +3,42 @@
 <div class="container">
   <h2>{{ .Title }}</h2>
 
+  <div class="switcher">
+    <span class="switch-title">Content</span>
+    <a href="/ranking?content=all&mode={{ .Mode }}&p=1" class="switch-button">Overall</a>
+    <a href="/ranking?content=illust&mode={{ .Mode }}&p=1" class="switch-button">Illustrations</a>
+    <a href="/ranking?content=manga&mode={{ .Mode }}&p=1" class="switch-button">Mangas</a>
+  </div>
+  <br />
+
+  <div class="switcher">
+    <span class="switch-title">Modes</span>
+    <a href="/ranking?content={{ .Content }}&mode=daily&p=1" class="switch-button">Daily</a>
+    <a href="/ranking?content={{ .Content }}&mode=weekly&p=1" class="switch-button">Weekly</a>
+    <a href="/ranking?content={{ .Content }}&mode=monthly&p=1" class="switch-button">Monthly</a>
+    <a href="/ranking?content={{ .Content }}&mode=rookie&p=1" class="switch-button">Rookie</a>
+    <span class="switch-seperator"></span>
+    <a href="/ranking?content={{ .Content }}&mode=daily_r18&p=1" class="switch-button">Daily (R-18)</a>
+    <a href="/ranking?content={{ .Content }}&mode=weekly_r18&p=1" class="switch-button">Weekly (R-18)</a>
+  </div>
+  <br />
+
   {{ range $i, $_ := .Items }}
   <div class="artwork-thumbnail-small artwork-thumbnail">
     <div class="artwork-rank-circle">{{ $i | inc}}</div>
-    {{ if gt .Pages 1 }}
+    {{ if gt (toInt .Pages) 1 }}
     <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
     {{ end }}
     <a href="/artworks/{{ .ID }}">
-      <img
-        data-src="{{ .Image }}"
-        alt="{{ .Title }}"
-        class="artwork-master-image lazy"
-      />
+      <img data-src="{{ .Image }}" alt="{{ .Title }}" class="artwork-master-image lazy" />
     </a>
 
     <a class="artwork-thumbnail-title" href="/artworks/{{ .ID }}">
       <h3 class="no-margin">{{ .Title }}</h3>
     </a>
-    <a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"
-      ><img
-        data-src="{{ .ArtistAvatar }}"
-        alt="{{ .ArtistName }}"
-        class="artwork-thumbnail-artist-avatar border-rounded lazy"
-      />
-      {{ .ArtistName }}</a
-    >
+    <a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"><img data-src="{{ .ArtistAvatar }}"
+        alt="{{ .ArtistName }}" class="artwork-thumbnail-artist-avatar border-rounded lazy" />
+      {{ .ArtistName }}</a>
   </div>
   {{ end }}
 </div>

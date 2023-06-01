@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"pixivfe/configs"
 	"pixivfe/views"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,6 +23,10 @@ func setupRouter() *gin.Engine {
 
 		"dec": func(n int) int {
 			return n - 1
+		},
+		"toInt": func(s string) int64 {
+			n, _ := strconv.ParseInt(s, 10, 32)
+			return n
 		},
 
 		"isEmpty": func(s string) bool {
