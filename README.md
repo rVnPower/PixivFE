@@ -1,9 +1,12 @@
 # PixivFE
 
 A privacy-respecting alternative front-end for Pixiv that doesn't suck
-<a href="https://codeberg.org/Freeyourgadget/Gadgetbridge/">
+
+<p>
+<a href="https://codeberg.org/vnpower/pixivfe">
 <img alt="Get it on Codeberg" src="https://get-it-on.codeberg.org/get-it-on-blue-on-white.png" height="60">
 </a>
+</p>
 
 ## What is this?
 
@@ -64,13 +67,13 @@ You will have to add your own `PHPSESSID` in order to run. Go to `config.yml` fo
   - [ ] Spotlight
 - [ ] List pages
   - [ ] Recommended artworks
-  - [ ] Daily rankings
+  - [x] Daily rankings
   - [ ] Discovery
     - [ ] Artworks
     - [ ] Users
   - [x] Newest by all
   - [ ] Search results
-  - [ ] Switcher
+  - [x] Switcher
 - [ ] Settings
   - [ ] Login
   - [ ] Local history
@@ -82,7 +85,7 @@ You will have to add your own `PHPSESSID` in order to run. Go to `config.yml` fo
   - [x] Navigation between pages
   - [x] Lazy load images
   - [ ] Better error handling
-  - [ ] Fully proxy images from Pixiv
+  - [x] Fully proxy images from Pixiv
 
 ## License
 
