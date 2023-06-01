@@ -30,14 +30,15 @@
     <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
     {{ end }}
     <a href="/artworks/{{ .ID }}">
-      <img data-src="{{ .Image }}" alt="{{ .Title }}" class="artwork-master-image lazy" />
+      <img data-src="{{ proxyImage .Image }}" alt="{{ .Title }}" class="artwork-master-image lazy" />
     </a>
 
     <a class="artwork-thumbnail-title" href="/artworks/{{ .ID }}">
       <h3 class="no-margin">{{ .Title }}</h3>
     </a>
-    <a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"><img data-src="{{ .ArtistAvatar }}"
-        alt="{{ .ArtistName }}" class="artwork-thumbnail-artist-avatar border-rounded lazy" />
+    <a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"><img
+        data-src="{{ proxyImage .ArtistAvatar }}" alt="{{ .ArtistName }}"
+        class="artwork-thumbnail-artist-avatar border-rounded lazy" />
       {{ .ArtistName }}</a>
   </div>
   {{ end }}

@@ -10,9 +10,10 @@ var Config embed.FS
 var Configs Conf
 
 type Conf struct {
-	PHPSESSID string `yaml:"PHPSESSID"`
-	UserAgent string `yaml:"UserAgent"`
-	PageItems int    `yaml:"PageItems"`
+	PHPSESSID        string `yaml:"PHPSESSID"`
+	UserAgent        string `yaml:"UserAgent"`
+	PageItems        int    `yaml:"PageItems"`
+	ImageProxyServer string `yaml:"ImageProxyServer"`
 }
 
 func (conf *Conf) ReadConfig() {

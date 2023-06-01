@@ -6,5 +6,5 @@
 <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
 {{ end }}
 <a href="/artworks/{{ .ID }}">
-  <img src="{{ .Thumbnail }}" alt="{{ .Title }}" class="artwork-master-image" />
+  <img src="{{ proxyImage .Thumbnail }}" alt="{{ .Title }}" class="artwork-master-image" />
 </a>

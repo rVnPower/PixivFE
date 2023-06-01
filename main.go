@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"pixivfe/configs"
 	"pixivfe/views"
+	"regexp"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -24,9 +25,17 @@ func setupRouter() *gin.Engine {
 		"dec": func(n int) int {
 			return n - 1
 		},
+
 		"toInt": func(s string) int64 {
 			n, _ := strconv.ParseInt(s, 10, 32)
 			return n
+		},
+
+		"proxyImage": func(url string) string {
+			regex := regexp.MustCompile(`.*?pximg\.net`)
+			proxy := "https://" + configs.Configs.ImageProxyServer
+
+			return regex.ReplaceAllString(url, proxy)
 		},
 
 		"isEmpty": func(s string) bool {

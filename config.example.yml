@@ -7,3 +7,6 @@ UserAgent: Mozilla/5.0
 
 # Number of items in each list page
 PageItems: 30
+
+# Default image proxy server. Recommended since Pixiv doesn't like you accessing images on their server.
+ImageProxyServer: px2.rainchan.win

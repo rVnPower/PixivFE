@@ -6,8 +6,8 @@
     <div class="artwork-content">
       <div class="artwork-images">
         {{ range .Images }}
-        <a href="{{ .Original }}" target="_blank">
-          <img src="{{ .Large }}" alt="{{ .Original }}" class="artwork-image-page" />
+        <a href="{{ proxyImage .Original }}" target="_blank">
+          <img src="{{ proxyImage .Large }}" alt="{{ proxyImage .Original }}" class="artwork-image-page" />
         </a>
         {{ end }}
       </div>
@@ -30,8 +30,9 @@
         <br />
         <small>{{ .Date }}</small>
 
-        <a href="/users/{{ $parent.Artist.ID }}" class="artwork-artist flex"><img src="{{ $parent.Artist.Avatar }}"
-            alt="{{ $parent.Artist.Name }}" class="artwork-artist-avatar border-rounded" />
+        <a href="/users/{{ $parent.Artist.ID }}" class="artwork-artist flex"><img
+            src="{{ proxyImage $parent.Artist.Avatar }}" alt="{{ $parent.Artist.Name }}"
+            class="artwork-artist-avatar border-rounded" />
           {{ $parent.Artist.Name }}</a>
         <div class="thumbnail-container">
           {{ range $parent.Artist.Artworks }}

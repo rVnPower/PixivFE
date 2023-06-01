@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"pixivfe/configs"
 	"pixivfe/models"
-	"regexp"
 	"sort"
 	"strconv"
 )
@@ -32,13 +31,6 @@ const (
 	UserArtworksURL       = "https://www.pixiv.net/ajax/user/%s/profile/all"
 	UserArtworksFullURL   = "https://www.pixiv.net/ajax/user/%s/profile/illusts?work_category=illustManga&is_first_page=0&lang=en%s"
 )
-
-func ProxyImage(url string) string {
-	regex := regexp.MustCompile(`i\.pximg\.net`)
-	proxy := "px2.rainchan.win"
-
-	return regex.ReplaceAllString(url, proxy)
-}
 
 func (p *PixivClient) SetHeader(header map[string]string) {
 	p.Header = header
@@ -135,10 +127,10 @@ func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {
 	for _, imageRaw := range resp {
 		var image models.Image
 
-		image.Small = ProxyImage(imageRaw.Urls["thumb_mini"])
-		image.Medium = ProxyImage(imageRaw.Urls["small"])
-		image.Large = ProxyImage(imageRaw.Urls["regular"])
-		image.Original = ProxyImage(imageRaw.Urls["original"])
+		image.Small = imageRaw.Urls["thumb_mini"]
+		image.Medium = imageRaw.Urls["small"]
+		image.Large = imageRaw.Urls["regular"]
+		image.Original = imageRaw.Urls["original"]
 
 		images = append(images, image)
 	}
@@ -359,12 +351,9 @@ func (p *PixivClient) GetUserInformation(id string, page int) (*models.User, err
 	works, _ := p.GetUserArtworks(id, page)
 	user.Artworks = works
 
-	// Avatar
-	user.Avatar = ProxyImage(user.Avatar)
-
 	// Background image
 	if body.Background != nil {
-		user.BackgroundImage = ProxyImage(body.Background["url"])
+		user.BackgroundImage = body.Background["url"]
 	}
 
 	// Artworks count

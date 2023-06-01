@@ -2,13 +2,13 @@
 <div class="user-background-placeholder"></div>
 {{ else }}
 <div class="user-background">
-  <img src="{{ .User.BackgroundImage }}" alt="{{ .User.Name }}" />
+  <img src="{{ proxyImage .User.BackgroundImage }}" alt="{{ .User.Name }}" />
 </div>
 {{ end }}
 <div class="container">
   <div class="user-page">
     <div class="user-details">
-      <img src="{{ .User.Avatar }}" alt="avatar" class="user-avatar" />
+      <img src="{{ proxyImage .User.Avatar }}" alt="avatar" class="user-avatar" />
       <h2 class="user-name">{{ .User.Name }}</h2>
       <p class="user-id">
         {{ .User.Following }} Following | {{ .User.MyPixiv }} MyPixiv
@@ -25,11 +25,7 @@
     <a href="#" class="pagination-button disabled">Previous</a>
     {{ else }}
     <a href="/users/{{ .User.ID }}?page=1" class="pagination-button">First</a>
-    <a
-      href="/users/{{ .User.ID }}?page={{ dec .Page }}"
-      class="pagination-button"
-      >Previous</a
-    >
+    <a href="/users/{{ .User.ID }}?page={{ dec .Page }}" class="pagination-button">Previous</a>
     {{ end }}
 
     <a href="#" class="pagination-button disabled">{{ .Page }}</a>
@@ -38,16 +34,8 @@
     <a href="#" class="pagination-button disabled">Next</a>
     <a href="#" class="pagination-button disabled">Last</a>
     {{ else }}
-    <a
-      href="/users/{{ .User.ID }}?page={{ inc .Page }}"
-      class="pagination-button"
-      >Next</a
-    >
-    <a
-      href="/users/{{ .User.ID }}?page={{ dec .PageLimit }}"
-      class="pagination-button"
-      >Last</a
-    >
+    <a href="/users/{{ .User.ID }}?page={{ inc .Page }}" class="pagination-button">Next</a>
+    <a href="/users/{{ .User.ID }}?page={{ dec .PageLimit }}" class="pagination-button">Last</a>
     {{ end }}
   </div>
 </div>
