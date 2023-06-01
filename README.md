@@ -1,6 +1,9 @@
 # PixivFE
 
 A privacy-respecting alternative front-end for Pixiv that doesn't suck
+<a href="https://codeberg.org/Freeyourgadget/Gadgetbridge/">
+<img alt="Get it on Codeberg" src="https://get-it-on.codeberg.org/get-it-on-blue-on-white.png" height="60">
+</a>
 
 ## What is this?
 
