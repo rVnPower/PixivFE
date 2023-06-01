@@ -82,12 +82,14 @@ func ranking_page(c *gin.Context) {
 		page = "1"
 	}
 
+	pageInt, _ := strconv.Atoi(page)
+
 	response, _ := PC.GetRanking(mode, content, page)
 
 	c.HTML(http.StatusOK, "rank.html", gin.H{"Items": response.Artworks,
 		"Mode":    mode,
 		"Content": content,
-		"Page":    page})
+		"Page":    pageInt})
 }
 
 func newestArtworksPage(c *gin.Context) {

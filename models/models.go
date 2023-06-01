@@ -135,6 +135,7 @@ type User struct {
 type RankedArtwork struct {
 	ID           int    `json:"illust_id"`
 	Title        string `json:"title"`
+	Rank         int    `json:"rank"`
 	Pages        string `json:"illust_page_count"`
 	Image        string `json:"url"`
 	ArtistID     int    `json:"user_id"`
