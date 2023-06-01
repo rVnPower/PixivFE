@@ -19,6 +19,12 @@ type PixivResponse struct {
 	Body    json.RawMessage
 }
 
+type RankingResponse struct {
+	Artworks []RankedArtwork `json:"contents"`
+	Mode     string          `json:"mode"`
+	Content  string          `json:"content"`
+}
+
 type ImageResponse struct {
 	Urls map[string]string `json:"urls"`
 }
@@ -68,7 +74,7 @@ var aiTypeModel = map[aiType]string{
 }
 
 // Pixiv gives us 5 types of an image. I don't need the mini one tho.
-// PS: Where tf is my 360x360 image, Pixiv? :rage:
+// PS: Where tf is my 360x360 image, Pixiv?
 type Image struct {
 	Small    string `json:"thumb_mini"`
 	Medium   string `json:"small"`
@@ -124,4 +130,14 @@ type User struct {
 	Comment         string        `json:"comment"`
 	Artworks        []IllustShort `json:"artworks"`
 	ArtworksCount   int
+}
+
+type RankedArtwork struct {
+	ID           string `json:"illust_id"`
+	Title        string `json:"title"`
+	Pages        int    `json:"illust_page_count"`
+	Image        string `json:"url"`
+	ArtistID     string `json:"user_id"`
+	ArtistName   string `json:"user_name"`
+	ArtistAvatar string `json:"profile_img"`
 }

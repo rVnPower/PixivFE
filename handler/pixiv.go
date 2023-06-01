@@ -27,6 +27,7 @@ const (
 	ArtworkImagesURL      = "https://www.pixiv.net/ajax/illust/%s/pages"
 	ArtworkRelatedURL     = "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=%d"
 	ArtworkNewestURL      = "https://www.pixiv.net/ajax/illust/new?limit=200&type=%s&r18=%s&lastId=%s"
+	ArtworkRankingURL     = "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&p=%s"
 	UserInformationURL    = "https://www.pixiv.net/ajax/user/%s?full=1"
 	UserArtworksURL       = "https://www.pixiv.net/ajax/user/%s/profile/all"
 	UserArtworksFullURL   = "https://www.pixiv.net/ajax/user/%s/profile/illusts?work_category=illustManga&is_first_page=0&lang=en%s"
@@ -405,4 +406,19 @@ func (p *PixivClient) GetNewestArtworks(worktype string, r18 string) ([]models.I
 	println(len(newWorks))
 
 	return newWorks, nil
+}
+
+func (p *PixivClient) GetRanking(mode string, content string, page string) (models.RankingResponse, error) {
+	// Ranking data is formatted differently
+	var pr models.RankingResponse
+
+	url := fmt.Sprintf(ArtworkRankingURL, mode, content, page)
+
+	s, err := p.TextRequest(url)
+
+	err = json.Unmarshal([]byte(s), &pr)
+
+	_ = err
+
+	return pr, nil
 }

@@ -56,6 +56,30 @@ func user_page(c *gin.Context) {
 	c.HTML(http.StatusOK, "user.html", gin.H{"User": user, "PageLimit": int(pageLimit), "Page": pageInt})
 }
 
+func ranking_page(c *gin.Context) {
+	mode, ok := c.GetQuery("mode")
+
+	if !ok {
+		mode = "daily"
+	}
+
+	content, ok := c.GetQuery("content")
+
+	if !ok {
+		content = "all"
+	}
+
+	page, ok := c.GetQuery("page")
+
+	if !ok {
+		page = "1"
+	}
+
+	response, _ := PC.GetRanking(mode, content, page)
+
+	c.HTML(http.StatusOK, "rank.html", gin.H{"Items": response.Artworks})
+}
+
 func newestArtworksPage(c *gin.Context) {
 	worktype, ok := c.GetQuery("type")
 
@@ -98,4 +122,5 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("artworks/:id", artwork_page)
 	r.GET("users/:id", user_page)
 	r.GET("newest", newestArtworksPage)
+	r.GET("ranking", ranking_page)
 }
