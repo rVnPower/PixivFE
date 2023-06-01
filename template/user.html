@@ -21,19 +21,33 @@
   </div>
   <div class="pagination">
     {{ if eq .Page 1 }}
+    <a href="#" class="pagination-button disabled">First</a>
     <a href="#" class="pagination-button disabled">Previous</a>
-    <a href="#" class="pagination-button disabled">1</a>
     {{ else }}
-    <a href="/users/{{ .User.ID }}?page={{ dec .Page }}" class="pagination-button">Previous</a>
-    <a href="/users/{{ .User.ID }}?page={{ dec .Page }}" class="pagination-button">{{ dec .Page }}</a>
+    <a href="/users/{{ .User.ID }}?page=1" class="pagination-button">First</a>
+    <a
+      href="/users/{{ .User.ID }}?page={{ dec .Page }}"
+      class="pagination-button"
+      >Previous</a
+    >
     {{ end }}
+
     <a href="#" class="pagination-button disabled">{{ .Page }}</a>
+
     {{ if eq .Page (dec .PageLimit) }}
-    <a href="#" class="pagination-button disabled">{{ .PageLimit }}</a>
     <a href="#" class="pagination-button disabled">Next</a>
+    <a href="#" class="pagination-button disabled">Last</a>
     {{ else }}
-    <a href="/users/{{ .User.ID }}?page={{ inc .Page }}" class="pagination-button">{{ inc .Page }}</a>
-    <a href="/users/{{ .User.ID }}?page={{ inc .Page }}" class="pagination-button">Next</a>
+    <a
+      href="/users/{{ .User.ID }}?page={{ inc .Page }}"
+      class="pagination-button"
+      >Next</a
+    >
+    <a
+      href="/users/{{ .User.ID }}?page={{ dec .PageLimit }}"
+      class="pagination-button"
+      >Last</a
+    >
     {{ end }}
   </div>
 </div>
