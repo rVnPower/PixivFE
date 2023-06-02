@@ -33,10 +33,45 @@ body {
 }
 
 .navbar {
+  margin-left: 2rem;
+  margin-right: 2rem;
+
+  .navbar-brand {
+    display: inline-flex;
+    align-items: center;
+
+    font-size: 1.2rem;
+    color: $fg;
+    text-decoration: none;
+
+    img {
+      margin-right: 9px;
+      width: 30px;
+      height: 30px;
+    }
+  }
+
   .navbar-list {
     display: flex;
+    padding: 0;
     justify-content: space-between;
     list-style-type: none;
+  }
+
+  .search-bar {
+    width: 500px;
+
+    .search-form-text {
+      width: 100%;
+      background-color: $bg-alt;
+      padding: 7px 10px;
+      margin: 0;
+      border: none;
+
+      &::placeholder {
+        color: $fg;
+      }
+    }
   }
 }
 

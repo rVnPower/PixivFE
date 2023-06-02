@@ -23,10 +23,40 @@ body {
   white-space: nowrap;
 }
 
+.navbar {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+.navbar .navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.2rem;
+  color: #d8d4cf;
+  text-decoration: none;
+}
+.navbar .navbar-brand img {
+  margin-right: 9px;
+  width: 30px;
+  height: 30px;
+}
 .navbar .navbar-list {
   display: flex;
+  padding: 0;
   justify-content: space-between;
   list-style-type: none;
+}
+.navbar .search-bar {
+  width: 500px;
+}
+.navbar .search-bar .search-form-text {
+  width: 100%;
+  background-color: #262a2b;
+  padding: 7px 10px;
+  margin: 0;
+  border: none;
+}
+.navbar .search-bar .search-form-text::placeholder {
+  color: #d8d4cf;
 }
 
 .artwork-thumbnail {

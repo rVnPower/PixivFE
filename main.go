@@ -56,6 +56,7 @@ func setupRouter() *gin.Engine {
 	// Static files
 	server.StaticFile("/favicon.ico", "./template/favicon.ico")
 	server.Static("css/", "./template/css")
+	server.Static("assets/", "./template/assets")
 
 	// HTML templates, automatically loaded
 	server.LoadHTMLGlob("template/*.html")

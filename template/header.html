@@ -68,13 +68,21 @@
   <nav class="navbar">
     <ul class="navbar-list">
       <li class="navbar-item">
-        <a href="/" class="navbar-brand"><b>PixivFE</b></a>
+        <a href="/" class="navbar-brand">
+          <img src="/favicon.ico" alt="PixivFE's logo" />
+          <b>PixivFE</b>
+        </a>
+      </li>
+      <li class="navbar-item search-bar">
+        <form class="search-form" action="#" autocomplete="off">
+          <input type="text" name="name" class="search-form-text" placeholder="⌕ Search artworks..." />
+          <input type="submit" hidden />
+        </form>
       </li>
       <li class="navbar-item">
-        <input type="text" name="name" id="name" placeholder="asd" />
-      </li>
-      <li class="navbar-item">
-        <button>asd</button>
+        <a href="#">
+          <img src="/assets/settings.png" alt="Settings" width="30" height="30" />
+        </a>
       </li>
     </ul>
   </nav>
