@@ -292,6 +292,21 @@ body {
   border-radius: 50%;
 }
 
+.tag-header {
+  display: flex;
+}
+.tag-header .tag-thumbnail {
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
+  margin-right: 20px;
+  object-fit: cover;
+  object-position: center center;
+}
+.tag-header .tag-details .main-tag {
+  font-size: 1.2rem;
+}
+
 .switcher {
   border-radius: 10px;
 }

@@ -27,6 +27,8 @@ const (
 	ArtworkRelatedURL     = "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=%d"
 	ArtworkNewestURL      = "https://www.pixiv.net/ajax/illust/new?limit=200&type=%s&r18=%s&lastId=%s"
 	ArtworkRankingURL     = "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&p=%s"
+	SearchMetadataURL     = "https://www.pixiv.net/ajax/search/tags/%s"
+	SearchContentURL      = "https://www.pixiv.net/ajax/search/artworks/%s?order=%s&mode=%s&p=%s&type=%s"
 	UserInformationURL    = "https://www.pixiv.net/ajax/user/%s?full=1"
 	UserArtworksURL       = "https://www.pixiv.net/ajax/user/%s/profile/all"
 	UserArtworksFullURL   = "https://www.pixiv.net/ajax/user/%s/profile/illusts?work_category=illustManga&is_first_page=0&lang=en%s"

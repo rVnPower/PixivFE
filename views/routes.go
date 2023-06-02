@@ -109,6 +109,12 @@ func newestArtworksPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "list.html", gin.H{"Title": "Newest works from all users", "Items": works})
 }
 
+func tag_page(c *gin.Context) {
+	_ = c.Param("name")
+
+	c.HTML(http.StatusOK, "tag.html", gin.H{})
+}
+
 func NewPixivClient(timeout int) *models.PixivClient {
 	transport := &http.Transport{Proxy: http.ProxyFromEnvironment}
 	client := &http.Client{
@@ -135,4 +141,5 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("users/:id", user_page)
 	r.GET("newest", newestArtworksPage)
 	r.GET("ranking", ranking_page)
+	r.GET("tags/:name", tag_page)
 }
