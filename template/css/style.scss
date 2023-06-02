@@ -387,6 +387,18 @@ body {
   }
 }
 
+.footer {
+  text-align: center;
+  font-size: small;
+  margin-top: 8px;
+  margin-bottom: 8px;
+
+  a {
+    color: $fg;
+    text-decoration: none;
+  }
+}
+
 @media screen and (max-width: 750px) {
   .search-bar {
     display: none;

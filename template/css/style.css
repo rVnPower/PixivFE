@@ -331,6 +331,17 @@ body {
   background-color: #333;
 }
 
+.footer {
+  text-align: center;
+  font-size: small;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.footer a {
+  color: #d8d4cf;
+  text-decoration: none;
+}
+
 @media screen and (max-width: 750px) {
   .search-bar {
     display: none;
