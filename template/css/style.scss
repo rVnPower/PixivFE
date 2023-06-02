@@ -80,12 +80,6 @@ body {
   }
 }
 
-@media screen and (max-width: 750px) {
-  .search-bar {
-    display: none;
-  }
-}
-
 .artwork-thumbnail {
   position: relative;
   display: inline-block;
@@ -323,6 +317,7 @@ body {
 .user-background-placeholder {
   display: flex;
   height: 10vw;
+  min-height: 100px;
   background-color: $bg-alt;
 }
 
@@ -385,5 +380,11 @@ body {
   .disabled {
     pointer-events: none;
     background-color: #333;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .search-bar {
+    display: none;
   }
 }
