@@ -399,14 +399,14 @@ body {
   }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 800px) {
   .search-bar {
     display: none;
   }
 }
 
-@media screen and (min-width: 400px) and (max-width: 750px) {
-  /* 400px <= device width <= 750px */
+@media screen and (min-width: 400px) and (max-width: 800px) {
+  /* 400px <= device width <= 800px */
   .artwork-mobile {
     width: 45vw;
   }
