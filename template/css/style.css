@@ -301,6 +301,7 @@ body {
 .switcher .switch-button {
   display: inline-block;
   padding: 8px 5px;
+  margin-top: 5px;
   background-color: #262a2b;
   color: #d8d4cf;
   text-decoration: none;
