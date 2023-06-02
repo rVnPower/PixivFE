@@ -24,6 +24,8 @@ body {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .thumbnail-container {
@@ -386,5 +388,18 @@ body {
 @media screen and (max-width: 750px) {
   .search-bar {
     display: none;
+  }
+}
+
+@media screen and (min-width: 400px) and (max-width: 750px) {
+  /* 400px <= device width <= 750px */
+  .artwork-mobile {
+    width: 45vw;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .artwork-mobile {
+    width: 100%;
   }
 }
