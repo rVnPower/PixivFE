@@ -73,6 +73,17 @@ body {
       }
     }
   }
+
+  .navbar-button {
+    display: inline-block;
+    margin-left: 5px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .search-bar {
+    display: none;
+  }
 }
 
 .artwork-thumbnail {
