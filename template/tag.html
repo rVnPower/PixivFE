@@ -2,21 +2,19 @@
 
 <div class="container">
   <div class="tag-header">
-    <img
-      class="tag-thumbnail"
-      src="https://px2.rainchan.win/c/384x280_80_a2_g2/img-master/img/2022/12/22/00/00/21/103791396_p0_master1200.jpg"
-      alt="No image"
-    />
+    {{ with .Tag }}
+    <img class="tag-thumbnail" src="{{ .Metadata.image }}" alt="{{ .Name }}" />
 
     <div class="tag-details">
-      <b class="main-tag">#something</b>
-      <span class="translated-tag">Translated</span>
+      <b class="main-tag">#{{ .Name }}</b>
+      <span class="translated-tag">{{ .Metadata.tag }}</span>
       <br />
       <br />
       <span><b>69420</b> works</span>
 
-      <p class="tag-description">something is an English word for something</p>
+      <p class="tag-description">{{ .Metadata.abstract }}</p>
     </div>
+    {{ end }}
   </div>
   <!-- Switchers here -->
 </div>

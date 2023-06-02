@@ -110,9 +110,17 @@ func newestArtworksPage(c *gin.Context) {
 }
 
 func tag_page(c *gin.Context) {
-	_ = c.Param("name")
+	name := c.Param("name")
 
-	c.HTML(http.StatusOK, "tag.html", gin.H{})
+	tag, _ := PC.GetTagData(name)
+
+	c.HTML(http.StatusOK, "tag.html", gin.H{"Tag": tag})
+}
+
+func search(c *gin.Context) {
+	name := c.PostForm("name")
+
+	c.Redirect(http.StatusFound, "/tags/"+name)
 }
 
 func NewPixivClient(timeout int) *models.PixivClient {
@@ -142,4 +150,5 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("newest", newestArtworksPage)
 	r.GET("ranking", ranking_page)
 	r.GET("tags/:name", tag_page)
+	r.POST("tags", search)
 }

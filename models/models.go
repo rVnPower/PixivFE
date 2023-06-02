@@ -142,3 +142,9 @@ type RankedArtwork struct {
 	ArtistName   string `json:"user_name"`
 	ArtistAvatar string `json:"profile_img"`
 }
+
+type TagDetail struct {
+	Name            string            `json:"tag"`
+	AlternativeName string            `json:"word"`
+	Metadata        map[string]string `json:"pixpedia"`
+}
