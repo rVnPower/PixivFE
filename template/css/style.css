@@ -56,6 +56,7 @@ body {
   padding: 7px 10px;
   margin: 0;
   border: none;
+  color: #d8d4cf;
 }
 .navbar .search-bar .search-form-text::placeholder {
   color: #d8d4cf;
