@@ -448,7 +448,7 @@ func (p *PixivClient) GetSearchTop(name string) (*models.SearchResult, error) {
 	var artworks models.SearchArtworks
 	var result *models.SearchResult
 
-	url := fmt.Sprintf(SearchTopURL, name)
+	url := fmt.Sprintf(SearchArtworksURL, name, "date_d", "all", "1", "all")
 
 	s, err := p.TextRequest(url)
 
