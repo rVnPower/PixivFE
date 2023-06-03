@@ -113,8 +113,9 @@ func tag_page(c *gin.Context) {
 	name := c.Param("name")
 
 	tag, _ := PC.GetTagData(name)
+	result, _ := PC.GetSearchTop(name)
 
-	c.HTML(http.StatusOK, "tag.html", gin.H{"Tag": tag})
+	c.HTML(http.StatusOK, "tag.html", gin.H{"Tag": tag, "Data": result})
 }
 
 func search(c *gin.Context) {

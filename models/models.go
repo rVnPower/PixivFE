@@ -148,3 +148,19 @@ type TagDetail struct {
 	AlternativeName string            `json:"word"`
 	Metadata        map[string]string `json:"pixpedia"`
 }
+
+type PopularArtworks struct {
+	Permanent []IllustShort `json:"permanent"`
+	Recent    []IllustShort `json:"recent"`
+}
+
+type SearchArtworks struct {
+	Artworks []IllustShort `json:"data"`
+	Total    int           `json:"total"`
+}
+
+type SearchResult struct {
+	Artworks    SearchArtworks
+	Popular     PopularArtworks `json:"popular"`
+	RelatedTags []string        `json:"relatedTags"`
+}

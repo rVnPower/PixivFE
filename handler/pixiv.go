@@ -29,6 +29,7 @@ const (
 	ArtworkRankingURL     = "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&p=%s"
 	SearchTagURL          = "https://www.pixiv.net/ajax/search/tags/%s"
 	SearchArtworksURL     = "https://www.pixiv.net/ajax/search/artworks/%s?order=%s&mode=%s&p=%s&type=%s"
+	SearchTopURL          = "https://www.pixiv.net/ajax/search/top/%s"
 	UserInformationURL    = "https://www.pixiv.net/ajax/user/%s?full=1"
 	UserArtworksURL       = "https://www.pixiv.net/ajax/user/%s/profile/all"
 	UserArtworksFullURL   = "https://www.pixiv.net/ajax/user/%s/profile/illusts?work_category=illustManga&is_first_page=0&lang=en%s"
@@ -435,4 +436,35 @@ func (p *PixivClient) GetTagData(name string) (models.TagDetail, error) {
 	err = json.Unmarshal([]byte(pr.Body), &tag)
 
 	return tag, nil
+}
+
+func (p *PixivClient) GetSearchTop(name string) (*models.SearchResult, error) {
+	var pr models.PixivResponse
+	var resultRaw struct {
+		*models.SearchResult
+		ArtworksRaw json.RawMessage `json:"illustManga"`
+	}
+
+	var artworks models.SearchArtworks
+	var result *models.SearchResult
+
+	url := fmt.Sprintf(SearchTopURL, name)
+
+	s, err := p.TextRequest(url)
+
+	err = json.Unmarshal([]byte(s), &pr)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal([]byte(pr.Body), &resultRaw)
+
+	result = resultRaw.SearchResult
+
+	err = json.Unmarshal([]byte(resultRaw.ArtworksRaw), &artworks)
+
+	result.Artworks = artworks
+
+	return result, nil
 }

@@ -2,19 +2,21 @@
 
 <div class="container">
   <div class="tag-header">
-    {{ with .Tag }}
-    <img class="tag-thumbnail" src="{{ .Metadata.image }}" alt="{{ .Name }}" />
+    <img
+      class="tag-thumbnail"
+      src="{{ .Tag.Metadata.image }}"
+      alt="{{ .Tag.Name }}"
+    />
 
     <div class="tag-details">
-      <b class="main-tag">#{{ .Name }}</b>
-      <span class="translated-tag">{{ .Metadata.tag }}</span>
+      <b class="main-tag">#{{ .Tag.Name }}</b>
+      <span class="translated-tag">{{ .Tag.Metadata.tag }}</span>
       <br />
       <br />
-      <span><b>69420</b> works</span>
+      <span><b>{{ .Data.Artworks.Total }}</b> works</span>
 
-      <p class="tag-description">{{ .Metadata.abstract }}</p>
+      <p class="tag-description">{{ .Tag.Metadata.abstract }}</p>
     </div>
-    {{ end }}
   </div>
   <!-- Switchers here -->
 </div>
