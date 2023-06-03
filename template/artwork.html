@@ -20,7 +20,8 @@
           {{ if isEmphasize .Name }}
           <span class="artwork-tag-name emphasize">{{ .Name }}</span>
           {{ else }}
-          <span class="artwork-tag-name">#{{ .Name }}</span><span class="artwork-tag-altname">{{ .TranslatedName
+          <a href="/tags/{{ .Name }}" class="artwork-tag-name">#{{ .Name }}</a><span class="artwork-tag-altname">{{
+            .TranslatedName
             }}</span>
           {{ end }}
           {{ end }}
