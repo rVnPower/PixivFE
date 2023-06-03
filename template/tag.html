@@ -18,6 +18,13 @@
       <p class="tag-description">{{ .Tag.Metadata.abstract }}</p>
     </div>
   </div>
+  {{ if .Data.Popular.Recent }}
+  <h2>Popular artworks</h2>
+  <div class="thumbnail-container">
+    {{ template "small-tn-normal.html" .Data.Popular.Recent }} {{ template
+    "small-tn-normal.html" .Data.Popular.Permanent }}
+  </div>
+  {{ end }}
   <!-- Switchers here -->
 </div>
 {{ template "footer.html" }}
