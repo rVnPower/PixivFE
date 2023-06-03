@@ -20,6 +20,14 @@
       <p class="tag-description">{{ .Tag.Metadata.abstract }}</p>
     </div>
   </div>
+  <div class="switcher">
+    <span class="switch-title">Type</span>
+    <a href="/tags/{{ .Tag.Name }}/artworks" class="switch-button">All</a>
+    <a href="/tags/{{ .Tag.Name }}/illustrations" class="switch-button"
+      >Illustrations</a
+    >
+    <a href="/tags/{{ .Tag.Name }}/manga" class="switch-button">Manga</a>
+  </div>
   {{ if .Data.Popular.Recent }}
   <h2>Popular artworks</h2>
   <div class="thumbnail-container">
@@ -29,7 +37,7 @@
   {{ end }}
   <!-- Switchers here -->
   <br />
-  <h2>Illustrations and Mangas</h2>
+  <h2>{{ .Title }}</h2>
   <div>{{ template "small-tn.html" .Data.Artworks.Artworks }}</div>
 </div>
 {{ template "footer.html" }}

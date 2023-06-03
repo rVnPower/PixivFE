@@ -109,13 +109,31 @@ func newestArtworksPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "list.html", gin.H{"Title": "Newest works from all users", "Items": works})
 }
 
-func tag_page(c *gin.Context) {
+func search_artworks_page(c *gin.Context) {
 	name := c.Param("name")
 
 	tag, _ := PC.GetTagData(name)
-	result, _ := PC.GetSearchTop(name)
+	result, _ := PC.GetSearchArtworks(name)
 
-	c.HTML(http.StatusOK, "tag.html", gin.H{"Tag": tag, "Data": result})
+	c.HTML(http.StatusOK, "tag.html", gin.H{"Title": "Illustrations and Manga", "Tag": tag, "Data": result})
+}
+
+func search_illusts_page(c *gin.Context) {
+	name := c.Param("name")
+
+	tag, _ := PC.GetTagData(name)
+	result, _ := PC.GetSearchIllusts(name)
+
+	c.HTML(http.StatusOK, "tag.html", gin.H{"Title": "Works", "Tag": tag, "Data": result})
+}
+
+func search_manga_page(c *gin.Context) {
+	name := c.Param("name")
+
+	tag, _ := PC.GetTagData(name)
+	result, _ := PC.GetSearchManga(name)
+
+	c.HTML(http.StatusOK, "tag.html", gin.H{"Title": "Works", "Tag": tag, "Data": result})
 }
 
 func search(c *gin.Context) {
@@ -150,6 +168,9 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("users/:id", user_page)
 	r.GET("newest", newestArtworksPage)
 	r.GET("ranking", ranking_page)
-	r.GET("tags/:name", tag_page)
+	r.GET("tags/:name", search_artworks_page)
+	r.GET("tags/:name/artworks", search_artworks_page)
+	r.GET("tags/:name/illustrations", search_illusts_page)
+	r.GET("tags/:name/manga", search_manga_page)
 	r.POST("tags", search)
 }
