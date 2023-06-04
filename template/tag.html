@@ -89,5 +89,31 @@
   <br />
   <h2>Works</h2>
   <div>{{ template "small-tn.html" .Data.Artworks.Artworks }}</div>
+
+  <div class="pagination">
+    {{ if eq (toInt .Queries.Page) 1 }}
+    <a href="#" class="pagination-button disabled">First</a>
+    <a href="#" class="pagination-button disabled">Previous</a>
+    {{ else }}
+    <a
+      href="/tags/{{ .Tag.Name }}?category={{ .Queries.Category }}&order={{ .Queries.Order }}&mode={{ .Queries.Mode }}&page=1"
+      class="pagination-button"
+      >First</a
+    >
+    <a
+      href="/tags/{{ .Tag.Name }}?category={{ .Queries.Category }}&order={{ .Queries.Order }}&mode={{ .Queries.Mode }}&page={{ dec (toInt .Queries.Page) }}"
+      class="pagination-button"
+      >Previous</a
+    >
+    {{ end }}
+
+    <a href="#" class="pagination-button disabled">{{ .Queries.Page }}</a>
+
+    <a
+      href="/tags/{{ .Tag.Name }}?category={{ .Queries.Category }}&order={{ .Queries.Order }}&mode={{ .Queries.Mode }}&page={{ inc (toInt .Queries.Page) }}"
+      class="pagination-button"
+      >Next</a
+    >
+  </div>
 </div>
 {{ template "footer.html" }}

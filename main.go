@@ -27,8 +27,8 @@ func setupRouter() *gin.Engine {
 			return n - 1
 		},
 
-		"toInt": func(s string) int64 {
-			n, _ := strconv.ParseInt(s, 10, 32)
+		"toInt": func(s string) int {
+			n, _ := strconv.Atoi(s)
 			return n
 		},
 
