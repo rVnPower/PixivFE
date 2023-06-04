@@ -43,12 +43,18 @@ cp config.example.yml config.yml # config file
 
 You will have to add your own `PHPSESSID` in order to run. Go to `config.yml` for more details.
 
+## Instances
+
+Official instance: [https://pixivfe.exozy.me](https://pixivfe.exozy.me)
+
+I don't know how to write a self-host guide so you will have to wait :P
+
 ## To-do
 
-- [ ] Base
-  - [ ] Navigation bar
-  - [ ] Searching
-  - [ ] Pagination
+- [x] Base
+  - [x] Navigation bar
+  - [x] Searching
+  - [x] Pagination
   - [x] Configuration file
   - [x] Write a real independent API
 - [ ] Index page
@@ -72,7 +78,7 @@ You will have to add your own `PHPSESSID` in order to run. Go to `config.yml` fo
     - [ ] Artworks
     - [ ] Users
   - [x] Newest by all
-  - [ ] Search results
+  - [x] Search results
   - [x] Switcher
 - [ ] Settings
   - [ ] Login
