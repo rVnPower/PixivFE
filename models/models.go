@@ -120,6 +120,15 @@ type IllustShort struct {
 	AiType       aiType        `json:"aiType"`
 }
 
+type Comment struct {
+	AuthorID   string `json:"userId"`
+	AuthorName string `json:"userName"`
+	Avatar     string `json:"img"`
+	Context    string `json:"comment"`
+	Stamp      string `json:"stampId"`
+	Date       string `json:"commentDate"`
+}
+
 type User struct {
 	ID              string        `json:"userId"`
 	Name            string        `json:"name"`

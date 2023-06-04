@@ -26,7 +26,8 @@ const (
 	ArtworkInformationURL = "https://www.pixiv.net/ajax/illust/%s"
 	ArtworkImagesURL      = "https://www.pixiv.net/ajax/illust/%s/pages"
 	ArtworkRelatedURL     = "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=%d"
-	ArtworkNewestURL      = "https://www.pixiv.net/ajax/illust/new?limit=200&type=%s&r18=%s&lastId=%s"
+	ArtworkCommentsURL    = "https://www.pixiv.net/ajax/illusts/comments/roots?illust_id=%s&limit=100"
+	ArtworkNewestURL      = "https://www.pixiv.net/ajax/illust/new?limit=30&type=%s&r18=%s&lastId=%s"
 	ArtworkRankingURL     = "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&p=%s"
 	SearchTagURL          = "https://www.pixiv.net/ajax/search/tags/%s"
 	SearchArtworksURL     = "https://www.pixiv.net/ajax/search/%s/%s?order=%s&mode=%s&p=%s"
@@ -195,6 +196,28 @@ func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 	}
 
 	return illust.Illust, nil
+}
+
+func (p *PixivClient) GetArtworkComments(id string) ([]models.Comment, error) {
+	var pr models.PixivResponse
+	var body struct {
+		Comments []models.Comment `json:"comments"`
+	}
+
+	s, _ := p.TextRequest(fmt.Sprintf(ArtworkCommentsURL, id))
+
+	err := json.Unmarshal([]byte(s), &pr)
+
+	if err != nil {
+		return nil, errors.New(fmt.Sprintf("Failed to extract data from JSON response from server. %s", err))
+	}
+	if pr.Error {
+		return nil, errors.New(pr.Message)
+	}
+
+	err = json.Unmarshal([]byte(pr.Body), &body)
+
+	return body.Comments, nil
 }
 
 func (p *PixivClient) GetUserArtworksID(id string, page int) (*string, error) {

@@ -7,16 +7,9 @@ import (
 	"pixivfe/handler"
 	"strconv"
 	"time"
-	"unicode"
 
 	"github.com/gin-gonic/gin"
 )
-
-func capitalize(str string) string {
-	runes := []rune(str)
-	runes[0] = unicode.ToUpper(runes[0])
-	return string(runes)
-}
 
 var PC *models.PixivClient
 
@@ -24,12 +17,14 @@ func artwork_page(c *gin.Context) {
 	id := c.Param("id")
 	illust, _ := PC.GetArtworkByID(id)
 	related, _ := PC.GetRelatedArtworks(id)
+	comments, _ := PC.GetArtworkComments(id)
 	artist_info, _ := PC.GetUserInformation(illust.UserID, 1)
 
 	c.HTML(http.StatusOK, "artwork.html", gin.H{
-		"Illust":  illust,
-		"Related": related,
-		"Artist":  artist_info,
+		"Illust":   illust,
+		"Related":  related,
+		"Artist":   artist_info,
+		"Comments": comments,
 	})
 }
 

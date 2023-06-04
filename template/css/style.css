@@ -260,6 +260,24 @@ body {
   width: auto;
   max-width: 100%;
 }
+.artwork-page .comment {
+  display: flex;
+  margin-bottom: 10px;
+}
+.artwork-page .comment p {
+  margin: 0;
+}
+.artwork-page .comment .comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.artwork-page .comment .stamp {
+  width: 96px;
+  height: 96px;
+  border-radius: 4px;
+}
 
 .user-background {
   display: flex;
