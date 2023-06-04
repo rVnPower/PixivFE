@@ -2,6 +2,7 @@
 
 <div class="container">
   <div class="tag-header">
+    {{ if .Tag.Metadata.id }}
     <a href="/artworks/{{ .Tag.Metadata.id }}">
       <img
         class="tag-thumbnail"
@@ -9,6 +10,7 @@
         alt="{{ .Tag.Name }}"
       />
     </a>
+    {{ end }}
 
     <div class="tag-details">
       <b class="main-tag">#{{ .Tag.Name }}</b>
