@@ -20,6 +20,13 @@
       <p class="tag-description">{{ .Tag.Metadata.abstract }}</p>
     </div>
   </div>
+
+  <div class="thumbnail-container">
+    {{ range .Data.RelatedTags }}
+    <a class="tag-container" href="/tags/{{ . }}">#{{ . }}</a>
+    {{ end }}
+  </div>
+
   <div class="switcher">
     <span class="switch-title">Type</span>
     <a href="/tags/{{ .Tag.Name }}/artworks" class="switch-button">All</a>

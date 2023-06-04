@@ -23,6 +23,8 @@ body {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .navbar {
@@ -306,6 +308,14 @@ body {
 }
 .tag-header .tag-details .main-tag {
   font-size: 1.2rem;
+}
+
+.tag-container {
+  background-color: #262a2b;
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #d8d4cf;
 }
 
 .switcher {
