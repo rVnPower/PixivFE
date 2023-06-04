@@ -127,7 +127,7 @@ func search_page(c *gin.Context) {
 	mode, ok := c.GetQuery("mode")
 
 	if !ok {
-		mode = "all"
+		mode = "safe"
 	}
 
 	category, ok := c.GetQuery("category")
@@ -141,7 +141,6 @@ func search_page(c *gin.Context) {
 
 	queries := map[string]string{
 		"Page":     page,
-		"Name":     name,
 		"Order":    order,
 		"Mode":     mode,
 		"Category": category,
