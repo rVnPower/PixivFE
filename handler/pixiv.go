@@ -11,6 +11,7 @@ import (
 	"pixivfe/models"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 type PixivClient struct {
@@ -22,19 +23,17 @@ type PixivClient struct {
 }
 
 const (
-	ArtworkInformationURL  = "https://www.pixiv.net/ajax/illust/%s"
-	ArtworkImagesURL       = "https://www.pixiv.net/ajax/illust/%s/pages"
-	ArtworkRelatedURL      = "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=%d"
-	ArtworkNewestURL       = "https://www.pixiv.net/ajax/illust/new?limit=200&type=%s&r18=%s&lastId=%s"
-	ArtworkRankingURL      = "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&p=%s"
-	SearchTagURL           = "https://www.pixiv.net/ajax/search/tags/%s"
-	SearchArtworksURL      = "https://www.pixiv.net/ajax/search/artworks/%s?order=%s&mode=%s&p=%s&type=%s"
-	SearchIllustrationsURL = "https://www.pixiv.net/ajax/search/illustrations/%s?order=%s&mode=%s&p=%s&type=%s"
-	SearchMangaURL         = "https://www.pixiv.net/ajax/search/manga/%s?order=%s&mode=%s&p=%s&type=%s"
-	SearchTopURL           = "https://www.pixiv.net/ajax/search/top/%s"
-	UserInformationURL     = "https://www.pixiv.net/ajax/user/%s?full=1"
-	UserArtworksURL        = "https://www.pixiv.net/ajax/user/%s/profile/all"
-	UserArtworksFullURL    = "https://www.pixiv.net/ajax/user/%s/profile/illusts?work_category=illustManga&is_first_page=0&lang=en%s"
+	ArtworkInformationURL = "https://www.pixiv.net/ajax/illust/%s"
+	ArtworkImagesURL      = "https://www.pixiv.net/ajax/illust/%s/pages"
+	ArtworkRelatedURL     = "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=%d"
+	ArtworkNewestURL      = "https://www.pixiv.net/ajax/illust/new?limit=200&type=%s&r18=%s&lastId=%s"
+	ArtworkRankingURL     = "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&p=%s"
+	SearchTagURL          = "https://www.pixiv.net/ajax/search/tags/%s"
+	SearchArtworksURL     = "https://www.pixiv.net/ajax/search/%s/%s?order=%s&mode=%s&p=%s"
+	SearchTopURL          = "https://www.pixiv.net/ajax/search/top/%s"
+	UserInformationURL    = "https://www.pixiv.net/ajax/user/%s?full=1"
+	UserArtworksURL       = "https://www.pixiv.net/ajax/user/%s/profile/all"
+	UserArtworksFullURL   = "https://www.pixiv.net/ajax/user/%s/profile/illusts?work_category=illustManga&is_first_page=0&lang=en%s"
 )
 
 func (p *PixivClient) SetHeader(header map[string]string) {
@@ -440,14 +439,10 @@ func (p *PixivClient) GetTagData(name string) (models.TagDetail, error) {
 	return tag, nil
 }
 
-func (p *PixivClient) GetSearchArtworks(name string) (*models.SearchResult, error) {
+func (p *PixivClient) GetSearch(artworkType string, name string, order string, age_settings string, page string) (*models.SearchResult, error) {
 	var pr models.PixivResponse
-	var resultRaw struct {
-		*models.SearchResult
-		ArtworksRaw json.RawMessage `json:"illustManga"`
-	}
 
-	url := fmt.Sprintf(SearchArtworksURL, name, "date_d", "all", "1", "all")
+	url := fmt.Sprintf(SearchArtworksURL, artworkType, name, order, age_settings, page)
 
 	s, err := p.TextRequest(url)
 
@@ -457,72 +452,19 @@ func (p *PixivClient) GetSearchArtworks(name string) (*models.SearchResult, erro
 		return nil, err
 	}
 
-	var artworks models.SearchArtworks
-	var result *models.SearchResult
+	// IDK how to do better than this lol
+	temp := strings.ReplaceAll(string(pr.Body), `"illust"`, `"works"`)
+	temp = strings.ReplaceAll(temp, `"manga"`, `"works"`)
+	temp = strings.ReplaceAll(temp, `"illustManga"`, `"works"`)
 
-	err = json.Unmarshal([]byte(pr.Body), &resultRaw)
-
-	result = resultRaw.SearchResult
-
-	err = json.Unmarshal([]byte(resultRaw.ArtworksRaw), &artworks)
-
-	result.Artworks = artworks
-
-	return result, nil
-}
-
-func (p *PixivClient) GetSearchIllusts(name string) (*models.SearchResult, error) {
-	var pr models.PixivResponse
 	var resultRaw struct {
 		*models.SearchResult
-		ArtworksRaw json.RawMessage `json:"illust"`
+		ArtworksRaw json.RawMessage `json:"works"`
 	}
-
-	url := fmt.Sprintf(SearchIllustrationsURL, name, "date_d", "all", "1", "all")
-
-	s, err := p.TextRequest(url)
-
-	err = json.Unmarshal([]byte(s), &pr)
-
-	if err != nil {
-		return nil, err
-	}
-
 	var artworks models.SearchArtworks
 	var result *models.SearchResult
 
-	err = json.Unmarshal([]byte(pr.Body), &resultRaw)
-
-	result = resultRaw.SearchResult
-
-	err = json.Unmarshal([]byte(resultRaw.ArtworksRaw), &artworks)
-
-	result.Artworks = artworks
-
-	return result, nil
-}
-
-func (p *PixivClient) GetSearchManga(name string) (*models.SearchResult, error) {
-	var pr models.PixivResponse
-	var resultRaw struct {
-		*models.SearchResult
-		ArtworksRaw json.RawMessage `json:"manga"`
-	}
-
-	url := fmt.Sprintf(SearchMangaURL, name, "date_d", "all", "1", "all")
-
-	s, err := p.TextRequest(url)
-
-	err = json.Unmarshal([]byte(s), &pr)
-
-	if err != nil {
-		return nil, err
-	}
-
-	var artworks models.SearchArtworks
-	var result *models.SearchResult
-
-	err = json.Unmarshal([]byte(pr.Body), &resultRaw)
+	err = json.Unmarshal([]byte(temp), &resultRaw)
 
 	result = resultRaw.SearchResult
 

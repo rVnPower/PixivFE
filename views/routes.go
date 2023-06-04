@@ -109,31 +109,44 @@ func newestArtworksPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "list.html", gin.H{"Title": "Newest works from all users", "Items": works})
 }
 
-func search_artworks_page(c *gin.Context) {
+func search_page(c *gin.Context) {
 	name := c.Param("name")
 
+	page, ok := c.GetQuery("page")
+
+	if !ok {
+		page = "1"
+	}
+
+	order, ok := c.GetQuery("order")
+
+	if !ok {
+		order = "date_d"
+	}
+
+	mode, ok := c.GetQuery("mode")
+
+	if !ok {
+		mode = "all"
+	}
+
+	category, ok := c.GetQuery("category")
+
+	if !ok {
+		category = "artworks"
+	}
+
 	tag, _ := PC.GetTagData(name)
-	result, _ := PC.GetSearchArtworks(name)
+	result, _ := PC.GetSearch(category, name, order, mode, page)
 
-	c.HTML(http.StatusOK, "tag.html", gin.H{"Title": "Illustrations and Manga", "Tag": tag, "Data": result})
-}
-
-func search_illusts_page(c *gin.Context) {
-	name := c.Param("name")
-
-	tag, _ := PC.GetTagData(name)
-	result, _ := PC.GetSearchIllusts(name)
-
-	c.HTML(http.StatusOK, "tag.html", gin.H{"Title": "Works", "Tag": tag, "Data": result})
-}
-
-func search_manga_page(c *gin.Context) {
-	name := c.Param("name")
-
-	tag, _ := PC.GetTagData(name)
-	result, _ := PC.GetSearchManga(name)
-
-	c.HTML(http.StatusOK, "tag.html", gin.H{"Title": "Works", "Tag": tag, "Data": result})
+	queries := map[string]string{
+		"Page":     page,
+		"Name":     name,
+		"Order":    order,
+		"Mode":     mode,
+		"Category": category,
+	}
+	c.HTML(http.StatusOK, "tag.html", gin.H{"Tag": tag, "Data": result, "Queries": queries})
 }
 
 func search(c *gin.Context) {
@@ -168,9 +181,6 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("users/:id", user_page)
 	r.GET("newest", newestArtworksPage)
 	r.GET("ranking", ranking_page)
-	r.GET("tags/:name", search_artworks_page)
-	r.GET("tags/:name/artworks", search_artworks_page)
-	r.GET("tags/:name/illustrations", search_illusts_page)
-	r.GET("tags/:name/manga", search_manga_page)
+	r.GET("tags/:name", search_page)
 	r.POST("tags", search)
 }
