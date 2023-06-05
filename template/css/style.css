@@ -278,6 +278,12 @@ body {
   height: 96px;
   border-radius: 4px;
 }
+.artwork-page .comment .emoji {
+  width: 24px;
+  height: 24px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
 
 .user-background {
   display: flex;
