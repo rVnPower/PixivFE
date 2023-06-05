@@ -149,6 +149,17 @@ func search(c *gin.Context) {
 	c.Redirect(http.StatusFound, "/tags/"+name)
 }
 
+func discovery_page(c *gin.Context) {
+	mode, ok := c.GetQuery("mode")
+
+	if !ok {
+		mode = "all"
+	}
+
+	artworks, _ := PC.GetDiscoveryArtwork(mode)
+	c.HTML(http.StatusOK, "discovery.html", gin.H{"Artworks": artworks})
+}
+
 func NewPixivClient(timeout int) *models.PixivClient {
 	transport := &http.Transport{Proxy: http.ProxyFromEnvironment}
 	client := &http.Client{
@@ -176,5 +187,6 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("newest", newestArtworksPage)
 	r.GET("ranking", ranking_page)
 	r.GET("tags/:name", search_page)
+	r.GET("discovery", discovery_page)
 	r.POST("tags", search)
 }

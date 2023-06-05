@@ -29,6 +29,7 @@ const (
 	ArtworkCommentsURL    = "https://www.pixiv.net/ajax/illusts/comments/roots?illust_id=%s&limit=100"
 	ArtworkNewestURL      = "https://www.pixiv.net/ajax/illust/new?limit=30&type=%s&r18=%s&lastId=%s"
 	ArtworkRankingURL     = "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&p=%s"
+	ArtworkDiscoveryURL   = "https://www.pixiv.net/ajax/discovery/artworks?mode=%s&limit=100"
 	SearchTagURL          = "https://www.pixiv.net/ajax/search/tags/%s"
 	SearchArtworksURL     = "https://www.pixiv.net/ajax/search/%s/%s?order=%s&mode=%s&p=%s"
 	SearchTopURL          = "https://www.pixiv.net/ajax/search/top/%s"
@@ -496,4 +497,37 @@ func (p *PixivClient) GetSearch(artworkType string, name string, order string, a
 	result.Artworks = artworks
 
 	return result, nil
+}
+
+func (p *PixivClient) GetDiscoveryArtwork(mode string) ([]models.IllustShort, error) {
+	var pr models.PixivResponse
+	var artworks []models.IllustShort
+
+	url := fmt.Sprintf(ArtworkDiscoveryURL, mode)
+
+	s, err := p.TextRequest(url)
+
+	err = json.Unmarshal([]byte(s), &pr)
+
+	if err != nil {
+		return artworks, errors.New("Error")
+	}
+
+	if pr.Error {
+		return artworks, errors.New(pr.Message)
+	}
+
+	var thumbnail struct {
+		Data json.RawMessage `json:"thumbnails"`
+	}
+
+	err = json.Unmarshal([]byte(pr.Body), &thumbnail)
+
+	var body struct {
+		Artworks []models.IllustShort `json:"illust"`
+	}
+
+	err = json.Unmarshal([]byte(thumbnail.Data), &body)
+
+	return body.Artworks, nil
 }

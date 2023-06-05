@@ -1,0 +1,17 @@
+{{ template "header.html" }}
+
+<div class="container">
+  <h2>Newest works from all users</h2>
+  <div class="switcher">
+    <span class="switch-title">Filter</span>
+    <a href="/discovery?mode=all" class="switch-button">All</a>
+    <a href="/discovery?mode=safe" class="switch-button">Safe</a>
+    <a href="/discovery?mode=r18" class="switch-button">R-18</a>
+  </div>
+  <div>{{ template "small-tn.html" .Artworks }}</div>
+  <div class="pagination">
+    <a href="" class="pagination-button">Reload</a>
+  </div>
+</div>
+
+{{ template "footer.html" }}
