@@ -58,7 +58,7 @@
   <br />
 
   {{ range .Items }}
-  <div class="artwork-thumbnail-small artwork-thumbnail">
+  <div class="artwork-thumbnail-small artwork-thumbnail artwork-mobile">
     <div class="artwork-rank-circle">{{ .Rank }}</div>
     {{ if gt (toInt .Pages) 1 }}
     <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
