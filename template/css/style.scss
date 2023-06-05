@@ -85,6 +85,57 @@ body {
   }
 }
 
+.sidebar-toggler {
+  display: none;
+
+  &:checked ~ .sidebar {
+    transform: translateX(0);
+  }
+}
+
+.sidebar-label {
+  margin-right: 9px;
+  cursor: pointer;
+}
+
+.sidebar {
+  background-color: $bg;
+  position: absolute;
+  margin-top: 16px;
+  left: 0;
+  width: 200px;
+  transform: translateX(-200px);
+  transition: transform 250ms ease-in-out;
+
+  .sidebar-list {
+    list-style-type: none;
+
+    margin: 0;
+    padding: 0;
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      color: $fg;
+      text-decoration: none;
+      padding: 10px;
+      width: 100%;
+
+      &:hover {
+        background-color: $bg-alt;
+      }
+
+      img {
+        width: 30px;
+        height: 30px;
+        margin-left: 1rem;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
 .artwork-thumbnail {
   position: relative;
   display: inline-block;
