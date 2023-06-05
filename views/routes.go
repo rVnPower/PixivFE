@@ -101,7 +101,7 @@ func newestArtworksPage(c *gin.Context) {
 
 	works, _ := PC.GetNewestArtworks(worktype, r18)
 
-	c.HTML(http.StatusOK, "list.html", gin.H{"Title": "Newest works from all users", "Items": works})
+	c.HTML(http.StatusOK, "newest.html", gin.H{"Items": works})
 }
 
 func search_page(c *gin.Context) {
