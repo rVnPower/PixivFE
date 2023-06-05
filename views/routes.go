@@ -28,18 +28,19 @@ func artwork_page(c *gin.Context) {
 	})
 }
 
-// func index_page(c *gin.Context) {
-// 	recommended, _ := handler.GetRecommendedIllust(c)
-// 	ranking, _ := handler.GetRankingIllust(c, "day")
-// 	spotlight := handler.GetSpotlightArticle(c)
-// 	newest, _ := handler.GetNewestIllust(c)
-// 	c.HTML(http.StatusOK, "index.html", gin.H{
-// 		"Recommended": recommended,
-// 		"Rankings":    ranking,
-// 		"Spotlights":  spotlight,
-// 		"Newest":      newest,
-// 	})
-// }
+func index_page(c *gin.Context) {
+	// recommended, _ := handler.GetRecommendedIllust(c)
+	// ranking, _ := handler.GetRankingIllust(c, "day")
+	// spotlight := handler.GetSpotlightArticle(c)
+	// newest, _ := handler.GetNewestIllust(c)
+	// c.HTML(http.StatusOK, "index.html", gin.H{
+	// 	"Recommended": recommended,
+	// 	"Rankings":    ranking,
+	// 	"Spotlights":  spotlight,
+	// 	"Newest":      newest,
+	// })
+	c.HTML(http.StatusOK, "temp.html", gin.H{})
+}
 
 func user_page(c *gin.Context) {
 	id := c.Param("id")
@@ -181,7 +182,7 @@ func SetupRoutes(r *gin.Engine) {
 	PC = NewPixivClient(5000)
 	PC.SetSessionID(configs.Configs.PHPSESSID)
 	PC.SetUserAgent(configs.Configs.UserAgent)
-	// r.GET("/", index_page)
+	r.GET("/", index_page)
 	r.GET("artworks/:id", artwork_page)
 	r.GET("users/:id", user_page)
 	r.GET("newest", newestArtworksPage)
