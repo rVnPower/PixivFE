@@ -70,6 +70,9 @@ func setupRouter() *gin.Engine {
 	// Routes/Views
 	views.SetupRoutes(server)
 
+	// Disable trusted proxies since we do not use any for now
+	server.SetTrustedProxies(nil)
+
 	return server
 }
 
