@@ -6,7 +6,7 @@
     <a href="/artworks/{{ .Tag.Metadata.id }}">
       <img
         class="tag-thumbnail"
-        src="{{ .Tag.Metadata.image }}"
+        src="{{ proxyImage .Tag.Metadata.image }}"
         alt="{{ .Tag.Name }}"
       />
     </a>
