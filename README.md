@@ -17,7 +17,7 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck
 
 ## Installation
 
-Run these commands below, then access the site on [localhost:8080](https://localhost:8080)
+Run these commands below.
 
 ```
 git clone https://codeberg.org/VnPower/pixivfe.git
@@ -27,6 +27,14 @@ cp config.example.yml config.yml # config file
 ```
 
 You will have to add your own `PHPSESSID` in order to run. Go to `config.yml` for more details.
+
+After that, execute the code.
+
+```
+go run main.go
+```
+
+By default, if you did not configure the port, the site will run on localhost:8080
 
 ## Self-host guide
 

@@ -11,6 +11,7 @@ var Configs Conf
 
 type Conf struct {
 	PHPSESSID        string `yaml:"PHPSESSID"`
+	Port             string `yaml:"Port"`
 	UserAgent        string `yaml:"UserAgent"`
 	PageItems        int    `yaml:"PageItems"`
 	ImageProxyServer string `yaml:"ImageProxyServer"`
