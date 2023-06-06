@@ -12,7 +12,7 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck
 
 - Lightweight - both the interface and the code
 - Privacy-first - the server will do the work for you
-- No bloat - HTML and CSS, with minimal JS to enhance the interface
+- No bloat - we only serve HTML and CSS
 - Open source - you can trust me!
 
 ## Installation

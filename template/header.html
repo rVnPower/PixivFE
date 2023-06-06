@@ -1,131 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>PixivFE</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="/css/style.css" rel="stylesheet" />
-    <link href="/css/template.css" rel="stylesheet" />
-    <script>
-      // This is for image lazy loading
-      document.addEventListener("DOMContentLoaded", function () {
-        var lazyloadImages;
 
-        if ("IntersectionObserver" in window) {
-          lazyloadImages = document.querySelectorAll(".lazy");
-          var imageObserver = new IntersectionObserver(function (
-            entries,
-            observer
-          ) {
-            entries.forEach(function (entry) {
-              if (entry.isIntersecting) {
-                var image = entry.target;
-                image.src = image.dataset.src;
-                image.classList.remove("lazy");
-                imageObserver.unobserve(image);
-              }
-            });
-          });
+<head>
+  <title>PixivFE</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="/css/style.css" rel="stylesheet" />
+  <link href="/css/template.css" rel="stylesheet" />
+</head>
 
-          lazyloadImages.forEach(function (image) {
-            imageObserver.observe(image);
-          });
-        } else {
-          var lazyloadThrottleTimeout;
-          lazyloadImages = document.querySelectorAll(".lazy");
+<body>
+  <nav class="navbar">
+    <ul class="navbar-list">
+      <li class="navbar-item">
+        <input type="checkbox" class="sidebar-toggler" id="sidebar-toggler" />
+        <label for="sidebar-toggler" class="sidebar-label">
+          <img src="/assets/menu-thin.png" alt="Menu" width="30" height="30" />
+        </label>
 
-          function lazyload() {
-            if (lazyloadThrottleTimeout) {
-              clearTimeout(lazyloadThrottleTimeout);
-            }
+        <div class="sidebar">
+          <ul class="sidebar-list">
+            <a class="sidebar-item" href="/discovery">
+              <img src="/assets/compass.png" alt="icon" />Discovery</a>
+            <a class="sidebar-item" href="/ranking">
+              <img src="/assets/crown.png" alt="icon" />Ranking</a>
+            <a class="sidebar-item" href="/newest">
+              <img src="/assets/sparkling.png" alt="icon" />Newest</a>
+          </ul>
+        </div>
 
-            lazyloadThrottleTimeout = setTimeout(function () {
-              var scrollTop = window.pageYOffset;
-              lazyloadImages.forEach(function (img) {
-                if (img.offsetTop < window.innerHeight + scrollTop) {
-                  img.src = img.dataset.src;
-                  img.classList.remove("lazy");
-                }
-              });
-              if (lazyloadImages.length == 0) {
-                document.removeEventListener("scroll", lazyload);
-                window.removeEventListener("resize", lazyload);
-                window.removeEventListener("orientationChange", lazyload);
-              }
-            }, 20);
-          }
+        <a href="/" class="navbar-brand">
+          <img src="/favicon.ico" alt="PixivFE's logo" />
+          <b>PixivFE</b>
+        </a>
+      </li>
+      <li class="navbar-item search-bar">
+        <form class="search-form" action="/tags" method="post" autocomplete="off">
+          <input type="text" name="name" class="search-form-text" placeholder="⌕ Search artworks..." />
+          <input type="submit" hidden />
+        </form>
+      </li>
+      <li class="navbar-item">
+        <a href="#" class="navbar-button">
+          <img src="/assets/search.png" alt="Search" width="30" height="30" />
+        </a>
+        <a href="#" class="navbar-button">
+          <img src="/assets/settings.png" alt="Settings" width="30" height="30" />
+        </a>
+      </li>
+    </ul>
+  </nav>
+</body>
 
-          document.addEventListener("scroll", lazyload);
-          window.addEventListener("resize", lazyload);
-          window.addEventListener("orientationChange", lazyload);
-        }
-      });
-    </script>
-  </head>
-
-  <body>
-    <nav class="navbar">
-      <ul class="navbar-list">
-        <li class="navbar-item">
-          <input type="checkbox" class="sidebar-toggler" id="sidebar-toggler" />
-          <label for="sidebar-toggler" class="sidebar-label">
-            <img
-              src="/assets/menu-thin.png"
-              alt="Menu"
-              width="30"
-              height="30"
-            />
-          </label>
-
-          <div class="sidebar">
-            <ul class="sidebar-list">
-              <a class="sidebar-item" href="/discovery">
-                <img src="/assets/compass.png" alt="icon" />Discovery</a
-              >
-              <a class="sidebar-item" href="/ranking">
-                <img src="/assets/crown.png" alt="icon" />Ranking</a
-              >
-              <a class="sidebar-item" href="/newest">
-                <img src="/assets/sparkling.png" alt="icon" />Newest</a
-              >
-            </ul>
-          </div>
-
-          <a href="/" class="navbar-brand">
-            <img src="/favicon.ico" alt="PixivFE's logo" />
-            <b>PixivFE</b>
-          </a>
-        </li>
-        <li class="navbar-item search-bar">
-          <form
-            class="search-form"
-            action="/tags"
-            method="post"
-            autocomplete="off"
-          >
-            <input
-              type="text"
-              name="name"
-              class="search-form-text"
-              placeholder="⌕ Search artworks..."
-            />
-            <input type="submit" hidden />
-          </form>
-        </li>
-        <li class="navbar-item">
-          <a href="#" class="navbar-button">
-            <img src="/assets/search.png" alt="Search" width="30" height="30" />
-          </a>
-          <a href="#" class="navbar-button">
-            <img
-              src="/assets/settings.png"
-              alt="Settings"
-              width="30"
-              height="30"
-            />
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </body>
 </html>
