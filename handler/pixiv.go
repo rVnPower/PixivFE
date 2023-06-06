@@ -29,7 +29,7 @@ const (
 	ArtworkCommentsURL    = "https://www.pixiv.net/ajax/illusts/comments/roots?illust_id=%s&limit=100"
 	ArtworkNewestURL      = "https://www.pixiv.net/ajax/illust/new?limit=30&type=%s&r18=%s&lastId=%s"
 	ArtworkRankingURL     = "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&p=%s"
-	ArtworkDiscoveryURL   = "https://www.pixiv.net/ajax/discovery/artworks?mode=%s&limit=100"
+	ArtworkDiscoveryURL   = "https://www.pixiv.net/ajax/discovery/artworks?mode=%s&limit=%d"
 	SearchTagURL          = "https://www.pixiv.net/ajax/search/tags/%s"
 	SearchArtworksURL     = "https://www.pixiv.net/ajax/search/%s/%s?order=%s&mode=%s&p=%s"
 	SearchTopURL          = "https://www.pixiv.net/ajax/search/top/%s"
@@ -92,6 +92,13 @@ func (p *PixivClient) Request(URL string) (*http.Response, error) {
 	}
 
 	return resp, nil
+}
+
+func Min(x, y int) int {
+	if x < y {
+		return x
+	}
+	return y
 }
 
 func (p *PixivClient) TextRequest(URL string) (string, error) {
@@ -499,35 +506,42 @@ func (p *PixivClient) GetSearch(artworkType string, name string, order string, a
 	return result, nil
 }
 
-func (p *PixivClient) GetDiscoveryArtwork(mode string) ([]models.IllustShort, error) {
-	var pr models.PixivResponse
+func (p *PixivClient) GetDiscoveryArtwork(mode string, count int) ([]models.IllustShort, error) {
 	var artworks []models.IllustShort
 
-	url := fmt.Sprintf(ArtworkDiscoveryURL, mode)
+	for count > 0 {
+		var pr models.PixivResponse
+		itemsForRequest := Min(100, count)
 
-	s, err := p.TextRequest(url)
+		count -= itemsForRequest
 
-	err = json.Unmarshal([]byte(s), &pr)
+		url := fmt.Sprintf(ArtworkDiscoveryURL, mode, itemsForRequest)
+		s, err := p.TextRequest(url)
 
-	if err != nil {
-		return artworks, errors.New("Error")
+		if err != nil {
+			return artworks, err
+		}
+
+		err = json.Unmarshal([]byte(s), &pr)
+
+		if pr.Error {
+			return artworks, errors.New(pr.Message)
+		}
+
+		var thumbnail struct {
+			Data json.RawMessage `json:"thumbnails"`
+		}
+
+		err = json.Unmarshal([]byte(pr.Body), &thumbnail)
+
+		var body struct {
+			Artworks []models.IllustShort `json:"illust"`
+		}
+
+		err = json.Unmarshal([]byte(thumbnail.Data), &body)
+
+		artworks = append(artworks, body.Artworks...)
 	}
 
-	if pr.Error {
-		return artworks, errors.New(pr.Message)
-	}
-
-	var thumbnail struct {
-		Data json.RawMessage `json:"thumbnails"`
-	}
-
-	err = json.Unmarshal([]byte(pr.Body), &thumbnail)
-
-	var body struct {
-		Artworks []models.IllustShort `json:"illust"`
-	}
-
-	err = json.Unmarshal([]byte(thumbnail.Data), &body)
-
-	return body.Artworks, nil
+	return artworks, nil
 }
