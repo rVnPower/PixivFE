@@ -65,9 +65,9 @@
     {{ end }}
     <a href="/artworks/{{ .ID }}">
       <img
-        data-src="{{ proxyImage .Image }}"
+        src="{{ proxyImage .Image }}"
         alt="{{ .Title }}"
-        class="artwork-master-image lazy"
+        class="artwork-master-image"
       />
     </a>
 
@@ -76,9 +76,9 @@
     </a>
     <a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"
       ><img
-        data-src="{{ proxyImage .ArtistAvatar }}"
+        src="{{ proxyImage .ArtistAvatar }}"
         alt="{{ .ArtistName }}"
-        class="artwork-thumbnail-artist-avatar border-rounded lazy"
+        class="artwork-thumbnail-artist-avatar border-rounded"
       />
       {{ .ArtistName }}</a
     >
