@@ -40,7 +40,7 @@ func setupRouter() *gin.Engine {
 			}
 
 			regex := regexp.MustCompile(`.*?pximg\.net`)
-			proxy := "https://" + configs.Configs.ImageProxyServer
+			proxy := "https://" + configs.ProxyServer
 
 			return regex.ReplaceAllString(url, proxy)
 		},
@@ -167,9 +167,13 @@ func setupRouter() *gin.Engine {
 }
 
 func main() {
-	configs.Configs.ReadConfig()
+	err := configs.ParseConfig()
+
+	if err != nil {
+		panic(err)
+	}
 
 	r := setupRouter()
 
-	r.Run(":" + configs.Configs.Port)
+	r.Run(":" + configs.Port)
 }

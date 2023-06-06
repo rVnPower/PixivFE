@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"math"
 	"net/http"
-	"pixivfe/configs"
 	"pixivfe/models"
 	"sort"
 	"strconv"
@@ -258,7 +257,7 @@ func (p *PixivClient) GetUserArtworksID(id string, page int) (*string, error) {
 	sort.Sort(sort.Reverse(sort.IntSlice(ids)))
 
 	worksNumber := float64(len(ids))
-	worksPerPage := float64(configs.Configs.PageItems)
+	worksPerPage := 30.0
 
 	if page < 1 || float64(page) > math.Ceil(worksNumber/worksPerPage)+1.0 {
 		return nil, errors.New("Page overflow")
@@ -297,7 +296,7 @@ func (p *PixivClient) GetUserArtworksCount(id string) (int, error) {
 }
 
 func (p *PixivClient) GetRelatedArtworks(id string) ([]models.IllustShort, error) {
-	url := fmt.Sprintf(ArtworkRelatedURL, id, configs.Configs.PageItems)
+	url := fmt.Sprintf(ArtworkRelatedURL, id, 30)
 
 	var pr models.PixivResponse
 

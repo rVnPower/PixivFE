@@ -1,32 +1,44 @@
 package configs
 
 import (
-	"embed"
-	"gopkg.in/yaml.v3"
+	"errors"
 	"os"
 )
 
-var Config embed.FS
-var Configs Conf
+var Token, Port, UserAgent, ProxyServer string
 
-type Conf struct {
-	PHPSESSID        string `yaml:"PHPSESSID"`
-	Port             string `yaml:"Port"`
-	UserAgent        string `yaml:"UserAgent"`
-	PageItems        int    `yaml:"PageItems"`
-	ImageProxyServer string `yaml:"ImageProxyServer"`
+func parseEnv(key string) (string, error) {
+	value, ok := os.LookupEnv(key)
+
+	if !ok {
+		return "", errors.New("Failed to get environment variable" + key)
+	}
+
+	return value, nil
 }
 
-func (conf *Conf) ReadConfig() {
-	f, err := os.Open("config.yml")
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
+func parseEnvWithDefault(key string, defaultValue string) string {
+	value, ok := os.LookupEnv(key)
 
-	decoder := yaml.NewDecoder(f)
-	err = decoder.Decode(conf)
-	if err != nil {
-		panic(err)
+	if !ok {
+		return defaultValue
 	}
+
+	return value
+}
+
+func ParseConfig() error {
+	var err error
+
+	Token, err = parseEnv("PIXIVFE_TOKEN")
+
+	if err != nil {
+		return err
+	}
+
+	Port = parseEnvWithDefault("PIXIVFE_PORT", "8080")
+	UserAgent = parseEnvWithDefault("PIXIVFE_USERAGENT", "Mozilla/5.0")
+	ProxyServer = parseEnvWithDefault("PIXIVFE_IMAGEPROXY", "px2.rainchan.win")
+
+	return nil
 }

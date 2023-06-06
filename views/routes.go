@@ -54,7 +54,7 @@ func user_page(c *gin.Context) {
 	user, _ := PC.GetUserInformation(id, pageInt)
 
 	worksCount, _ := PC.GetUserArtworksCount(id)
-	pageLimit := math.Ceil(float64(worksCount)/float64(configs.Configs.PageItems)) + 1.0
+	pageLimit := math.Ceil(float64(worksCount)/30.0) + 1.0
 
 	c.HTML(http.StatusOK, "user.html", gin.H{"User": user, "PageLimit": int(pageLimit), "Page": pageInt})
 }
@@ -180,8 +180,8 @@ func NewPixivClient(timeout int) *models.PixivClient {
 
 func SetupRoutes(r *gin.Engine) {
 	PC = NewPixivClient(5000)
-	PC.SetSessionID(configs.Configs.PHPSESSID)
-	PC.SetUserAgent(configs.Configs.UserAgent)
+	PC.SetSessionID(configs.Token)
+	PC.SetUserAgent(configs.UserAgent)
 	r.GET("/", index_page)
 	r.GET("artworks/:id", artwork_page)
 	r.GET("users/:id", user_page)
