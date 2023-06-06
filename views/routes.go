@@ -157,7 +157,7 @@ func discovery_page(c *gin.Context) {
 		mode = "safe"
 	}
 
-	artworks, _ := PC.GetDiscoveryArtwork(mode)
+	artworks, _ := PC.GetDiscoveryArtwork(mode, 300)
 	c.HTML(http.StatusOK, "discovery.html", gin.H{"Artworks": artworks})
 }
 
