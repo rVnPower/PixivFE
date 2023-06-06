@@ -154,7 +154,7 @@ func discovery_page(c *gin.Context) {
 	mode, ok := c.GetQuery("mode")
 
 	if !ok {
-		mode = "all"
+		mode = "safe"
 	}
 
 	artworks, _ := PC.GetDiscoveryArtwork(mode)
