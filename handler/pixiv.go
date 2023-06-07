@@ -383,7 +383,7 @@ func (p *PixivClient) GetUserInformation(id string, page int) (*models.User, err
 
 	var body struct {
 		*models.User
-		Background map[string]string `json:"background"`
+		Background map[string]interface{} `json:"background"`
 	}
 
 	// Basic user information
@@ -400,7 +400,7 @@ func (p *PixivClient) GetUserInformation(id string, page int) (*models.User, err
 
 	// Background image
 	if body.Background != nil {
-		user.BackgroundImage = body.Background["url"]
+		user.BackgroundImage = body.Background["url"].(string)
 	}
 
 	// Artworks count

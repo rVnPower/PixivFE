@@ -81,7 +81,14 @@ func user_page(c *gin.Context) {
 	}
 
 	pageInt, _ := strconv.Atoi(page)
-	user, _ := PC.GetUserInformation(id, pageInt)
+	user, err := PC.GetUserInformation(id, pageInt)
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "error.html", gin.H{
+			"Title": "An error occured",
+			"Error": err,
+		})
+		return
+	}
 
 	worksCount, _ := PC.GetUserArtworksCount(id)
 	pageLimit := math.Ceil(float64(worksCount)/30.0) + 1.0
