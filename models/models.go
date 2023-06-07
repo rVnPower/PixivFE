@@ -136,7 +136,7 @@ type User struct {
 	BackgroundImage string        `json:"background"`
 	Following       int           `json:"following"`
 	MyPixiv         int           `json:"mypixivCount"`
-	Comment         string        `json:"comment"`
+	Comment         template.HTML `json:"commentHtml"`
 	Artworks        []IllustShort `json:"artworks"`
 	ArtworksCount   int
 }

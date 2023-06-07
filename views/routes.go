@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var PC *models.PixivClient
+var PC *handler.PixivClient
 
 func artwork_page(c *gin.Context) {
 	id := c.Param("id")
@@ -241,14 +241,14 @@ func not_found_page(c *gin.Context) {
 	})
 }
 
-func NewPixivClient(timeout int) *models.PixivClient {
+func NewPixivClient(timeout int) *handler.PixivClient {
 	transport := &http.Transport{Proxy: http.ProxyFromEnvironment}
 	client := &http.Client{
 		Timeout:   time.Duration(timeout) * time.Millisecond,
 		Transport: transport,
 	}
 
-	pc := &models.PixivClient{
+	pc := &handler.PixivClient{
 		Client: client,
 		Header: make(map[string]string),
 		Cookie: make(map[string]string),

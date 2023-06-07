@@ -1,4 +1,4 @@
-package models
+package handler
 
 import (
 	"encoding/json"
