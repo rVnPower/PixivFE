@@ -3,25 +3,11 @@ package handler
 import (
 	"fmt"
 	"html/template"
-	"math/rand"
 	"pixivfe/configs"
 	"regexp"
 	"strconv"
 	"strings"
 )
-
-func GetRandomColor() string {
-	// Some color shade I generated
-	colors := []string{
-		// Green
-		"#3cc223",
-		"#55dc3d",
-		"#7be468",
-	}
-
-	// Randomly choose one and return
-	return colors[rand.Intn(len(colors))]
-}
 
 func GetTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
@@ -141,10 +127,6 @@ func GetTemplateFunctions() template.FuncMap {
 				return fmt.Sprintf(`<img src="https://s.pximg.net/common/images/emoji/%s.png" alt="(%s)" class="emoji" />`, id, s)
 			})
 			return template.HTML(parsedString)
-		},
-
-		"randomColor": func() string {
-			return GetRandomColor()
 		},
 
 		"isEmpty": func(s string) bool {
