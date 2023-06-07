@@ -82,12 +82,8 @@ func (p *PixivClient) Request(URL string) (*http.Response, error) {
 		return resp, err
 	}
 
-	if resp.StatusCode == http.StatusNotFound {
-		return resp, errors.New("404 returned")
-	}
-
 	if resp.StatusCode != 200 {
-		return resp, errors.New(fmt.Sprintf("Server returned code: %d", resp.StatusCode))
+		return resp, errors.New(fmt.Sprintf("Pixiv returned code: %d for request ", resp.StatusCode))
 	}
 
 	return resp, nil
@@ -456,6 +452,10 @@ func (p *PixivClient) GetRanking(mode string, content string, page string) (mode
 	url := fmt.Sprintf(ArtworkRankingURL, mode, content, page)
 
 	s, err := p.TextRequest(url)
+
+	if err != nil {
+		return pr, err
+	}
 
 	err = json.Unmarshal([]byte(s), &pr)
 	if err != nil {

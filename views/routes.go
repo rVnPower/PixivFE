@@ -15,10 +15,33 @@ var PC *models.PixivClient
 
 func artwork_page(c *gin.Context) {
 	id := c.Param("id")
-	illust, _ := PC.GetArtworkByID(id)
+	if _, err := strconv.Atoi(id); err != nil {
+		c.HTML(http.StatusBadRequest, "error.html", gin.H{
+			"Title": "Bad request",
+			"Error": "Invalid artwork ID",
+		})
+		return
+	}
+
+	illust, err := PC.GetArtworkByID(id)
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "error.html", gin.H{
+			"Title": "An error occured",
+			"Error": err,
+		})
+		return
+	}
+
 	related, _ := PC.GetRelatedArtworks(id)
 	comments, _ := PC.GetArtworkComments(id)
-	artist_info, _ := PC.GetUserInformation(illust.UserID, 1)
+	artist_info, err := PC.GetUserInformation(illust.UserID, 1)
+
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "error.html", gin.H{
+			"Title": "An error occured",
+			"Error": err,
+		})
+	}
 
 	c.HTML(http.StatusOK, "artwork.html", gin.H{
 		"Illust":   illust,
@@ -44,6 +67,13 @@ func index_page(c *gin.Context) {
 
 func user_page(c *gin.Context) {
 	id := c.Param("id")
+	if _, err := strconv.Atoi(id); err != nil {
+		c.HTML(http.StatusBadRequest, "error.html", gin.H{
+			"Title": "Bad request",
+			"Error": "Invalid user ID",
+		})
+		return
+	}
 	page, ok := c.GetQuery("page")
 
 	if !ok {
@@ -80,7 +110,14 @@ func ranking_page(c *gin.Context) {
 
 	pageInt, _ := strconv.Atoi(page)
 
-	response, _ := PC.GetRanking(mode, content, page)
+	response, err := PC.GetRanking(mode, content, page)
+	if err != nil {
+		c.HTML(http.StatusBadRequest, "error.html", gin.H{
+			"Title": "An error occured",
+			"Error": err,
+		})
+		return
+	}
 
 	c.HTML(http.StatusOK, "rank.html", gin.H{"Items": response.Artworks,
 		"Mode":    mode,
@@ -88,7 +125,7 @@ func ranking_page(c *gin.Context) {
 		"Page":    pageInt})
 }
 
-func newestArtworksPage(c *gin.Context) {
+func newest_artworks_page(c *gin.Context) {
 	worktype, ok := c.GetQuery("type")
 
 	if !ok {
@@ -100,7 +137,14 @@ func newestArtworksPage(c *gin.Context) {
 		r18 = "false"
 	}
 
-	works, _ := PC.GetNewestArtworks(worktype, r18)
+	works, err := PC.GetNewestArtworks(worktype, r18)
+	if err != nil {
+		c.HTML(http.StatusBadRequest, "error.html", gin.H{
+			"Title": "An error occured",
+			"Error": err,
+		})
+		return
+	}
 
 	c.HTML(http.StatusOK, "newest.html", gin.H{"Items": works})
 }
@@ -132,8 +176,22 @@ func search_page(c *gin.Context) {
 		category = "artworks"
 	}
 
-	tag, _ := PC.GetTagData(name)
+	tag, err := PC.GetTagData(name)
+	if err != nil {
+		c.HTML(http.StatusBadRequest, "error.html", gin.H{
+			"Title": "An error occured",
+			"Error": err,
+		})
+		return
+	}
 	result, _ := PC.GetSearch(category, name, order, mode, page)
+	if err != nil {
+		c.HTML(http.StatusBadRequest, "error.html", gin.H{
+			"Title": "An error occured",
+			"Error": err,
+		})
+		return
+	}
 
 	queries := map[string]string{
 		"Page":     page,
@@ -157,7 +215,15 @@ func discovery_page(c *gin.Context) {
 		mode = "safe"
 	}
 
-	artworks, _ := PC.GetDiscoveryArtwork(mode, 300)
+	artworks, err := PC.GetDiscoveryArtwork(mode, 300)
+	if err != nil {
+		c.HTML(http.StatusBadRequest, "error.html", gin.H{
+			"Title": "An error occured",
+			"Error": err,
+		})
+		return
+	}
+
 	c.HTML(http.StatusOK, "discovery.html", gin.H{"Artworks": artworks})
 }
 
@@ -192,7 +258,7 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("/", index_page)
 	r.GET("artworks/:id", artwork_page)
 	r.GET("users/:id", user_page)
-	r.GET("newest", newestArtworksPage)
+	r.GET("newest", newest_artworks_page)
 	r.GET("ranking", ranking_page)
 	r.GET("tags/:name", search_page)
 	r.GET("discovery", discovery_page)
