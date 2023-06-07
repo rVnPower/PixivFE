@@ -124,15 +124,15 @@ func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {
 
 	err := json.Unmarshal([]byte(s), &pr)
 	if err != nil {
-		return images, errors.New(fmt.Sprintf("Failed to extract data from JSON response from server. %s", err))
+		return images, err
 	}
 	if pr.Error {
-		return images, errors.New(fmt.Sprintf("Server refuses to return data. %s", err))
+		return images, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 
 	err = json.Unmarshal([]byte(pr.Body), &resp)
 	if err != nil {
-		return images, errors.New(fmt.Sprintf("Failed to extract images for illust. %s", err))
+		return images, err
 	}
 
 	// Extract and proxy every images
@@ -153,16 +153,16 @@ func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {
 func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 	s, _ := p.TextRequest(fmt.Sprintf(ArtworkInformationURL, id))
 
-	var resp models.PixivResponse
+	var pr models.PixivResponse
 	var images []models.Image
 
 	// Parse Pixiv response body
-	err := json.Unmarshal([]byte(s), &resp)
+	err := json.Unmarshal([]byte(s), &pr)
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("Failed to extract data from JSON response from server. %s", err))
+		return nil, err
 	}
-	if resp.Error {
-		return nil, errors.New(fmt.Sprintf("Server refuses to return data. %s", err))
+	if pr.Error {
+		return nil, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 
 	var illust struct {
@@ -171,12 +171,15 @@ func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 	}
 
 	// Parse basic illust information
-	err = json.Unmarshal([]byte(resp.Body), &illust)
+	err = json.Unmarshal([]byte(pr.Body), &illust)
+	if err != nil {
+		return nil, err
+	}
 
 	// Get illust images
 	images, err = p.GetArtworkImages(id)
 	if err != nil {
-		fmt.Printf("%s\n", err)
+		return nil, err
 	}
 
 	illust.Images = images
@@ -190,7 +193,6 @@ func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 	}
 	err = json.Unmarshal(illust.RawTags, &tags)
 	if err != nil {
-		fmt.Printf("%s\n", err)
 		return nil, err
 	}
 
@@ -216,10 +218,10 @@ func (p *PixivClient) GetArtworkComments(id string) ([]models.Comment, error) {
 	err := json.Unmarshal([]byte(s), &pr)
 
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("Failed to extract data from JSON response from server. %s", err))
+		return nil, err
 	}
 	if pr.Error {
-		return nil, errors.New(pr.Message)
+		return nil, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 
 	err = json.Unmarshal([]byte(pr.Body), &body)
@@ -235,10 +237,10 @@ func (p *PixivClient) GetUserArtworksID(id string, page int) (*string, error) {
 	err := json.Unmarshal([]byte(s), &pr)
 
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("Failed to extract data from JSON response from server. %s", err))
+		return nil, err
 	}
 	if pr.Error {
-		return nil, errors.New(pr.Message)
+		return nil, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 
 	var ids []int
@@ -247,6 +249,9 @@ func (p *PixivClient) GetUserArtworksID(id string, page int) (*string, error) {
 		Illusts map[int]string `json:"illusts"`
 	}
 	err = json.Unmarshal(pr.Body, &body)
+	if err != nil {
+		return nil, err
+	}
 
 	// Get the keys, because Pixiv only returns IDs (very evil)
 	for k := range body.Illusts {
@@ -281,16 +286,19 @@ func (p *PixivClient) GetUserArtworksCount(id string) (int, error) {
 	err := json.Unmarshal([]byte(s), &pr)
 
 	if err != nil {
-		return -1, errors.New(fmt.Sprintf("Failed to extract data from JSON response from server. %s", err))
+		return -1, err
 	}
 	if pr.Error {
-		return -1, errors.New(pr.Message)
+		return -1, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 
 	var body struct {
 		Illusts map[int]string `json:"illusts"`
 	}
 	err = json.Unmarshal(pr.Body, &body)
+	if err != nil {
+		return -1, err
+	}
 
 	return len(body.Illusts), nil
 }
@@ -299,16 +307,15 @@ func (p *PixivClient) GetRelatedArtworks(id string) ([]models.IllustShort, error
 	url := fmt.Sprintf(ArtworkRelatedURL, id, 30)
 
 	var pr models.PixivResponse
-
-	s, err := p.TextRequest(url)
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal([]byte(s), &pr)
-
 	var body struct {
 		Illusts []models.IllustShort `json:"illusts"`
+	}
+
+	s, _ := p.TextRequest(url)
+
+	err := json.Unmarshal([]byte(s), &pr)
+	if err != nil {
+		return nil, err
 	}
 
 	err = json.Unmarshal([]byte(pr.Body), &body)
@@ -324,20 +331,27 @@ func (p *PixivClient) GetUserArtworks(id string, page int) ([]models.IllustShort
 	if err != nil {
 		return nil, err
 	}
+
 	url := fmt.Sprintf(UserArtworksFullURL, id, *ids)
 
 	var pr models.PixivResponse
 	var works []models.IllustShort
 
-	s, err := p.TextRequest(url)
+	s, _ := p.TextRequest(url)
 
 	err = json.Unmarshal([]byte(s), &pr)
+	if err != nil {
+		return nil, err
+	}
 
 	var body struct {
 		Illusts map[int]json.RawMessage `json:"works"`
 	}
 
 	err = json.Unmarshal(pr.Body, &body)
+	if err != nil {
+		return nil, err
+	}
 
 	for _, v := range body.Illusts {
 		var illust models.IllustShort
@@ -365,10 +379,10 @@ func (p *PixivClient) GetUserInformation(id string, page int) (*models.User, err
 	err := json.Unmarshal([]byte(s), &pr)
 
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("Failed to extract data from JSON response from server. %s", err))
+		return nil, err
 	}
 	if pr.Error {
-		return nil, errors.New(pr.Message)
+		return nil, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 
 	var body struct {
@@ -378,6 +392,9 @@ func (p *PixivClient) GetUserInformation(id string, page int) (*models.User, err
 
 	// Basic user information
 	err = json.Unmarshal([]byte(pr.Body), &body)
+	if err != nil {
+		return nil, err
+	}
 
 	user = body.User
 
@@ -411,6 +428,9 @@ func (p *PixivClient) GetNewestArtworks(worktype string, r18 string) ([]models.I
 		}
 
 		err = json.Unmarshal([]byte(s), &pr)
+		if err != nil {
+			return nil, err
+		}
 
 		var body struct {
 			Illusts []models.IllustShort `json:"illusts"`
@@ -426,8 +446,6 @@ func (p *PixivClient) GetNewestArtworks(worktype string, r18 string) ([]models.I
 		lastID = body.LastID
 	}
 
-	println(len(newWorks))
-
 	return newWorks, nil
 }
 
@@ -440,8 +458,9 @@ func (p *PixivClient) GetRanking(mode string, content string, page string) (mode
 	s, err := p.TextRequest(url)
 
 	err = json.Unmarshal([]byte(s), &pr)
-
-	_ = err
+	if err != nil {
+		return pr, err
+	}
 
 	return pr, nil
 }
@@ -457,14 +476,17 @@ func (p *PixivClient) GetTagData(name string) (models.TagDetail, error) {
 	err = json.Unmarshal([]byte(s), &pr)
 
 	if err != nil {
-		return tag, errors.New("Error")
+		return tag, err
 	}
 
 	if pr.Error {
-		return tag, errors.New(pr.Message)
+		return tag, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 
 	err = json.Unmarshal([]byte(pr.Body), &tag)
+	if err != nil {
+		return tag, err
+	}
 
 	return tag, nil
 }
@@ -495,10 +517,16 @@ func (p *PixivClient) GetSearch(artworkType string, name string, order string, a
 	var result *models.SearchResult
 
 	err = json.Unmarshal([]byte(temp), &resultRaw)
+	if err != nil {
+		return nil, err
+	}
 
 	result = resultRaw.SearchResult
 
 	err = json.Unmarshal([]byte(resultRaw.ArtworksRaw), &artworks)
+	if err != nil {
+		return nil, err
+	}
 
 	result.Artworks = artworks
 
@@ -532,12 +560,18 @@ func (p *PixivClient) GetDiscoveryArtwork(mode string, count int) ([]models.Illu
 		}
 
 		err = json.Unmarshal([]byte(pr.Body), &thumbnail)
+		if err != nil {
+			return nil, err
+		}
 
 		var body struct {
 			Artworks []models.IllustShort `json:"illust"`
 		}
 
 		err = json.Unmarshal([]byte(thumbnail.Data), &body)
+		if err != nil {
+			return nil, err
+		}
 
 		artworks = append(artworks, body.Artworks...)
 	}
