@@ -365,6 +365,13 @@ body {
   height: 144px;
   border-radius: 50%;
 }
+.user-page .user-details .user-comment {
+  font-size: 0.9em;
+}
+.user-page .user-details .user-comment a {
+  color: #3d7699;
+  text-decoration: none;
+}
 
 .tag-header {
   display: flex;

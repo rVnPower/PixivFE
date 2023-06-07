@@ -424,6 +424,15 @@ body {
       height: 144px;
       border-radius: 50%;
     }
+
+    .user-comment {
+      font-size: 0.9em;
+
+      a {
+        color: $blue;
+        text-decoration: none;
+      }
+    }
   }
 }
 
