@@ -161,6 +161,13 @@ func discovery_page(c *gin.Context) {
 	c.HTML(http.StatusOK, "discovery.html", gin.H{"Artworks": artworks})
 }
 
+func not_found_page(c *gin.Context) {
+	c.HTML(http.StatusNotFound, "error.html", gin.H{
+		"Title": "Not found",
+		"Error": "Route " + c.Request.URL.Path + " not found.",
+	})
+}
+
 func NewPixivClient(timeout int) *models.PixivClient {
 	transport := &http.Transport{Proxy: http.ProxyFromEnvironment}
 	client := &http.Client{
@@ -190,4 +197,7 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("tags/:name", search_page)
 	r.GET("discovery", discovery_page)
 	r.POST("tags", search)
+
+	// 404 page
+	r.NoRoute(not_found_page)
 }
