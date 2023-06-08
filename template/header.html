@@ -10,9 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:site_name" content="PixivFE" />
     {{ if .Image }}
-    <meta property="og:image" content="{{ .Image }}" />
+    <meta property="og:image" content="{{ proxyImage .Image }}" />
     {{ end }}
-    <meta name="description" content="{{ .Description }}" />
     <link rel="alternate" hreflang="en" href="{{ .Url }}" />
     <link href="/css/style.css" rel="stylesheet" />
     <link href="/css/template.css" rel="stylesheet" />
