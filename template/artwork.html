@@ -18,7 +18,7 @@
       <p>{{ .Description }}</p>
 
       <div class="artwork-tags">
-        {{ if eq .AiType 1 }}
+        {{ if eq .AiType 2 }}
         <span class="artwork-tag-name emphasize">AI-generated</span>
         {{ end }} {{ range .Tags }} {{ if isEmphasize .Name }}
         <span class="artwork-tag-name emphasize">{{ .Name }}</span>
