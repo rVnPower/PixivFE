@@ -8,6 +8,8 @@ import (
 	"strconv"
 	"time"
 
+	cache "github.com/chenyahui/gin-cache"
+	"github.com/chenyahui/gin-cache/persist"
 	"github.com/gin-gonic/gin"
 )
 
@@ -268,12 +270,15 @@ func SetupRoutes(r *gin.Engine) {
 	PC = NewPixivClient(5000)
 	PC.SetSessionID(configs.Token)
 	PC.SetUserAgent(configs.UserAgent)
+
+	store := persist.NewMemoryStore(1 * time.Minute)
+
 	r.GET("/", index_page)
-	r.GET("artworks/:id", artwork_page)
-	r.GET("users/:id", user_page)
+	r.GET("artworks/:id", cache.CacheByRequestURI(store, 6*time.Hour), artwork_page)
+	r.GET("users/:id", cache.CacheByRequestURI(store, 6*time.Hour), user_page)
 	r.GET("newest", newest_artworks_page)
-	r.GET("ranking", ranking_page)
-	r.GET("tags/:name", search_page)
+	r.GET("ranking", cache.CacheByRequestURI(store, 6*time.Hour), ranking_page)
+	r.GET("tags/:name", cache.CacheByRequestURI(store, 1*time.Hour), search_page)
 	r.GET("discovery", discovery_page)
 	r.POST("tags", search)
 

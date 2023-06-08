@@ -78,7 +78,7 @@ User page ([URL to this page](https://pixivfe.exozy.me/users/11764388)):
 - [ ] Settings
   - [ ] Login
   - [ ] Local history
-  - [ ] Toggling R-18, R-18G, AI
+  - [ ] Toggling R-18, R-18G, AI (?)
   - [ ] Custom `pximg` proxy
 - [ ] Optimization
   - [x] Split web components into smaller templates
