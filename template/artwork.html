@@ -1,4 +1,4 @@
-{{ template "header.html" }} {{ $parent := . }}
+{{ template "header.html" .Context }} {{ $parent := . }}
 <div class="container">
   <div class="artwork-page">
     {{ with .Illust }}

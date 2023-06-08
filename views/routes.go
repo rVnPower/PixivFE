@@ -13,6 +13,13 @@ import (
 
 var PC *handler.PixivClient
 
+type Context struct {
+	Title       string
+	Url         string
+	Description string
+	Image       string
+}
+
 func artwork_page(c *gin.Context) {
 	id := c.Param("id")
 	if _, err := strconv.Atoi(id); err != nil {
@@ -43,11 +50,19 @@ func artwork_page(c *gin.Context) {
 		})
 	}
 
+	context := Context{
+		illust.Title,
+		c.Request.Host + c.Request.URL.Path,
+		string(illust.Description),
+		illust.Images[0].Large,
+	}
+
 	c.HTML(http.StatusOK, "artwork.html", gin.H{
 		"Illust":   illust,
 		"Related":  related,
 		"Artist":   artist_info,
 		"Comments": comments,
+		"Context":  context,
 	})
 }
 
