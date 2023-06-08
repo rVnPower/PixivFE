@@ -15,34 +15,17 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck
 - No bloat - we only serve HTML and CSS
 - Open source - you can trust me!
 
-## Installation
+## Hosting
 
-Run these commands below.
-
-```
-git clone https://codeberg.org/VnPower/pixivfe.git
-cd pixivfe
-go get -u github.com/gin-gonic/gin
-cp config.example.yml config.yml # config file
-```
-
-You will have to add your own `PHPSESSID` in order to run. Go to `config.yml` for more details.
-
-After that, execute the code.
-
-```
-go run main.go
-```
-
-By default, if you did not configure the port, the site will run on localhost:8080
-
-## Self-host guide
-
-WIP
+Check out the [wiki](https://codeberg.org/VnPower/pixivfe/wiki/Home)
 
 ## Instances
 
-Official instance: [https://pixivfe.exozy.me](https://pixivfe.exozy.me)
+| Name               | Cloudflare? | URL                      |
+| ------------------ | ----------- | ------------------------ |
+| exozyme (Official) | No          | https://pixivfe.exozy.me |
+
+Hosted one yourself? Create a pull request to add it here!
 
 ## Previews
 
