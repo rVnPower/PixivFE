@@ -3,18 +3,24 @@
   <head>
     {{ if not .Title }}
     <title>PixivFE</title>
+    <meta name="twitter:title" content="PixivFE" />
     {{ else }}
     <title>{{ .Title }} - PixivFE</title>
+    <meta name="twitter:title" content="{{ .Title }}" />
     {{ end }}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:site_name" content="PixivFE" />
     {{ if .Image }}
     <meta property="og:image" content="{{ proxyImage .Image }}" />
+    <meta name="twitter:image:src" content="{{ proxyImage .Image }}" />
     {{ end }}
+    <meta name="description" content="{{ .Description }}" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://{{ .Url }}" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="PixivFE" />
+    <meta name="twitter:description" content="{{ .Description }}" />
     <link rel="alternate" hreflang="en" href="https://{{ .Url }}" />
     <link href="/css/style.css" rel="stylesheet" />
     <link href="/css/template.css" rel="stylesheet" />
