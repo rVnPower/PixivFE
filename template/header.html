@@ -12,7 +12,10 @@
     {{ if .Image }}
     <meta property="og:image" content="{{ proxyImage .Image }}" />
     {{ end }}
-    <link rel="alternate" hreflang="en" href="{{ .Url }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://{{ .Url }}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="alternate" hreflang="en" href="https://{{ .Url }}" />
     <link href="/css/style.css" rel="stylesheet" />
     <link href="/css/template.css" rel="stylesheet" />
   </head>
