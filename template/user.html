@@ -1,4 +1,4 @@
-{{ template "header.html" }} {{ if isEmpty .User.BackgroundImage }}
+{{ template "header.html" .Title}} {{ if isEmpty .User.BackgroundImage }}
 <div class="user-background-placeholder"></div>
 {{ else }}
 <div class="user-background">

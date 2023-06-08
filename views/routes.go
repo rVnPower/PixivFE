@@ -94,7 +94,7 @@ func user_page(c *gin.Context) {
 	worksCount, _ := PC.GetUserArtworksCount(id)
 	pageLimit := math.Ceil(float64(worksCount)/30.0) + 1.0
 
-	c.HTML(http.StatusOK, "user.html", gin.H{"User": user, "PageLimit": int(pageLimit), "Page": pageInt})
+	c.HTML(http.StatusOK, "user.html", gin.H{"Title": user.Name, "User": user, "PageLimit": int(pageLimit), "Page": pageInt})
 }
 
 func ranking_page(c *gin.Context) {
@@ -127,7 +127,9 @@ func ranking_page(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "rank.html", gin.H{"Items": response.Artworks,
+	c.HTML(http.StatusOK, "rank.html", gin.H{
+		"Title":   "Ranking",
+		"Items":   response.Artworks,
 		"Mode":    mode,
 		"Content": content,
 		"Page":    pageInt})
@@ -154,7 +156,10 @@ func newest_artworks_page(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "newest.html", gin.H{"Items": works})
+	c.HTML(http.StatusOK, "newest.html", gin.H{
+		"Items": works,
+		"Title": "Newest works",
+	})
 }
 
 func search_page(c *gin.Context) {
@@ -207,7 +212,7 @@ func search_page(c *gin.Context) {
 		"Mode":     mode,
 		"Category": category,
 	}
-	c.HTML(http.StatusOK, "tag.html", gin.H{"Tag": tag, "Data": result, "Queries": queries})
+	c.HTML(http.StatusOK, "tag.html", gin.H{"Title": "Results for " + tag.Name, "Tag": tag, "Data": result, "Queries": queries})
 }
 
 func search(c *gin.Context) {
@@ -232,7 +237,7 @@ func discovery_page(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "discovery.html", gin.H{"Artworks": artworks})
+	c.HTML(http.StatusOK, "discovery.html", gin.H{"Title": "Discovery", "Artworks": artworks})
 }
 
 func not_found_page(c *gin.Context) {
