@@ -1,0 +1,37 @@
+{{ template "header.html" .Title }}
+
+<div class="container">
+  <h2>Settings</h2>
+  <form action="/settings" method="post">
+    <fieldset class="settings-fieldset">
+      <legend>Proxy server {{ .Settings.Proxy }}</legend>
+      <input type="radio" name="image-proxy-server" id="image-proxy-server" value="i.pixiv.cat" />
+      <label for="image-proxy-server">i.pixiv.cat</label>
+      <br />
+      <input type="radio" name="image-proxy-server" id="image-proxy-server" value="px2.rainchan.win" />
+      <label for="image-proxy-server">px2.rainchan.win</label>
+      <br />
+      <input type="radio" name="image-proxy-server" id="image-proxy-server" value="px3.rainchan.win" />
+      <label for="image-proxy-server">px3.rainchan.win</label>
+      <br />
+      <input type="radio" name="image-proxy-server" id="image-proxy-server" value="px.s.rainchan.win" />
+      <label for="image-proxy-server">px.s.rainchan.win</label>
+      <br />
+      <input type="radio" name="image-proxy-server" id="image-proxy-server" value="sex.nyan.xyz" />
+      <label for="image-proxy-server">___.nyan.xyz</label>
+      <br />
+      <input type="radio" name="image-proxy-server" id="image-proxy-server" value="pximg.wjghj.cn" />
+      <label for="image-proxy-server">pximg.wjghj.cn</label>
+      <br />
+      <br />
+      <label for="image-proxy-server">Custom image proxy server</label>
+      <br />
+      <input type="text" name="image-proxy-server" id="image-proxy-server" placeholder="Paste the address here..."
+        autocomplete="off" />
+      <br />
+      <input type="submit" value="Apply" />
+    </fieldset>
+  </form>
+</div>
+
+{{ template "footer.html" }}

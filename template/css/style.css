@@ -452,16 +452,22 @@ body {
   .search-bar {
     display: none;
   }
+  .artwork-thumbnail-small {
+    height: auto;
+  }
 }
 @media screen and (min-width: 400px) and (max-width: 800px) {
   /* 400px <= device width <= 800px */
   .artwork-mobile {
-    width: 45vw;
+    width: 47.4%;
+    aspect-ratio: 1/1;
   }
 }
 @media screen and (max-width: 400px) {
   .artwork-mobile {
     width: 100%;
+    object-fit: cover;
+    aspect-ratio: 1/1;
   }
 }
 
