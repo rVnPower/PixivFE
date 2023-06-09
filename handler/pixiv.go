@@ -11,6 +11,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/tidwall/gjson"
 )
 
 type PixivClient struct {
@@ -96,6 +98,20 @@ func Min(x, y int) int {
 	return y
 }
 
+func GetInnerJSON(json string, key string) string {
+	return gjson.Get(json, key).String()
+}
+
+func StringFromRawJSON(raw json.RawMessage) string {
+	str, err := json.Marshal(raw)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return string(str)
+}
+
 func (p *PixivClient) TextRequest(URL string) (string, error) {
 	resp, err := p.Request(URL)
 	if err != nil {
@@ -115,7 +131,6 @@ func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {
 	s, _ := p.TextRequest(fmt.Sprintf(ArtworkImagesURL, id))
 
 	var pr models.PixivResponse
-	var resp []models.ImageResponse
 	var images []models.Image
 
 	err := json.Unmarshal([]byte(s), &pr)
@@ -126,19 +141,17 @@ func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {
 		return images, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 
-	err = json.Unmarshal([]byte(pr.Body), &resp)
-	if err != nil {
-		return images, err
-	}
+	str := StringFromRawJSON(pr.Body)
 
 	// Extract and proxy every images
-	for _, imageRaw := range resp {
+	for _, imageRaw := range gjson.Get(str, "#.urls").Array() {
 		var image models.Image
+		data := imageRaw.String()
 
-		image.Small = imageRaw.Urls["thumb_mini"]
-		image.Medium = imageRaw.Urls["small"]
-		image.Large = imageRaw.Urls["regular"]
-		image.Original = imageRaw.Urls["original"]
+		image.Small = GetInnerJSON(data, "thumb_mini")
+		image.Medium = GetInnerJSON(data, "small")
+		image.Large = GetInnerJSON(data, "regular")
+		image.Original = GetInnerJSON(data, "original")
 
 		images = append(images, image)
 	}
