@@ -303,7 +303,7 @@ body {
 }
 .artwork-page .artwork-images .artwork-image-page {
   margin: 10px auto;
-  max-height: 578px;
+  max-height: 1000px;
   width: auto;
   max-width: 100%;
 }
