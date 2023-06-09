@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"math"
 	"net/http"
@@ -11,6 +12,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/tidwall/gjson"
 )
@@ -98,12 +100,37 @@ func Min(x, y int) int {
 	return y
 }
 
-func ParseJSONToString(json string, key string) string {
+func ParseJSONToString(json, key string) string {
 	return gjson.Get(json, key).String()
 }
 
-func ParseJSON(json string, key string) gjson.Result {
+func ParseJSONToInt(json, key string) int {
+	return int(gjson.Get(json, key).Int())
+}
+
+func ParseJSON(json, key string) gjson.Result {
 	return gjson.Get(json, key)
+}
+
+func ExtractImageURL(data string, mode int) models.Image {
+	// 1 => thumb_mini, small, regular, original
+	// 2 => mini, thumb, small, regular, original
+	var image models.Image
+
+	switch mode {
+	case 1:
+		image.Small = ParseJSONToString(data, "thumb_mini")
+		image.Medium = ParseJSONToString(data, "small")
+		image.Large = ParseJSONToString(data, "regular")
+		image.Original = ParseJSONToString(data, "original")
+	case 2:
+		image.Small = ParseJSONToString(data, "thumb")
+		image.Medium = ParseJSONToString(data, "small")
+		image.Large = ParseJSONToString(data, "regular")
+		image.Original = ParseJSONToString(data, "original")
+	}
+
+	return image
 }
 
 func (p *PixivClient) TextRequest(URL string) (string, error) {
@@ -132,13 +159,8 @@ func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {
 
 	// Extract and proxy every images
 	for _, imageRaw := range gjson.Get(s, "body.#.urls").Array() {
-		var image models.Image
 		data := imageRaw.String()
-
-		image.Small = ParseJSONToString(data, "thumb_mini")
-		image.Medium = ParseJSONToString(data, "small")
-		image.Large = ParseJSONToString(data, "regular")
-		image.Original = ParseJSONToString(data, "original")
+		image := ExtractImageURL(data, 1)
 
 		images = append(images, image)
 	}
@@ -146,61 +168,45 @@ func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {
 	return images, nil
 }
 
-func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
+func (p *PixivClient) GetArtworkByID(id string) (models.Illust, error) {
 	s, _ := p.TextRequest(fmt.Sprintf(ArtworkInformationURL, id))
 
-	var pr models.PixivResponse
-	var images []models.Image
+	var artwork models.Illust
 
-	// Parse Pixiv response body
-	err := json.Unmarshal([]byte(s), &pr)
-	if err != nil {
-		return nil, err
-	}
-	if pr.Error {
-		return nil, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
+	if ParseJSON(s, "error").Bool() {
+		return artwork, errors.New(fmt.Sprintf("Pixiv returned error message: %s", ParseJSONToString(s, "message")))
 	}
 
-	var illust struct {
-		*models.Illust
-		RawTags json.RawMessage `json:"tags"`
+	body := ParseJSONToString(s, "body")
+
+	artwork.ID = ParseJSONToString(body, "id")
+	artwork.Title = ParseJSONToString(body, "title")
+	artwork.Description = template.HTML(ParseJSONToString(body, "description"))
+	artwork.UserID = ParseJSONToString(body, "userId")
+	artwork.UserName = ParseJSONToString(body, "userName")
+	artwork.UserAccount = ParseJSONToString(body, "userAccount")
+	artwork.Date, _ = time.Parse("2006-01-02T03:04:00+00:00", ParseJSONToString(body, "uploadDate"))
+	artwork.Images, _ = p.GetArtworkImages(id)
+	artwork.Pages = ParseJSONToInt(body, "pageCount")
+	artwork.Bookmarks = ParseJSONToInt(body, "bookmarkCount")
+	artwork.Likes = ParseJSONToInt(body, "likeCount")
+	artwork.Comments = ParseJSONToInt(body, "commentCount")
+	artwork.Views = ParseJSONToInt(body, "viewCount")
+	artwork.XRestrict = ParseJSONToInt(body, "xRestrict")
+	artwork.AiType = ParseJSONToInt(body, "aiType")
+	artwork.Tags = make([]models.Tag, 0)
+
+	for _, rawTag := range ParseJSON(body, "tags.tags").Array() {
+		var tag models.Tag
+		data := rawTag.String()
+
+		tag.Name = ParseJSONToString(data, "tag")
+		tag.TranslatedName = ParseJSONToString(data, "tag.translation.en")
+
+		artwork.Tags = append(artwork.Tags, tag)
 	}
 
-	// Parse basic illust information
-	err = json.Unmarshal([]byte(pr.Body), &illust)
-	if err != nil {
-		return nil, err
-	}
-
-	// Get illust images
-	images, err = p.GetArtworkImages(id)
-	if err != nil {
-		return nil, err
-	}
-
-	illust.Images = images
-
-	// Extract tags
-	var tags struct {
-		Tags []struct {
-			Tag         string            `json:"tag"`
-			Translation map[string]string `json:"translation"`
-		} `json:"tags"`
-	}
-	err = json.Unmarshal(illust.RawTags, &tags)
-	if err != nil {
-		return nil, err
-	}
-
-	for _, tag := range tags.Tags {
-		var newTag models.Tag
-		newTag.Name = tag.Tag
-		newTag.TranslatedName = tag.Translation["en"]
-
-		illust.Tags = append(illust.Tags, newTag)
-	}
-
-	return illust.Illust, nil
+	return artwork, nil
 }
 
 func (p *PixivClient) GetArtworkComments(id string) ([]models.Comment, error) {

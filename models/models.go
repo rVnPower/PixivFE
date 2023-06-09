@@ -102,8 +102,8 @@ type Illust struct {
 	Likes       int           `json:"likeCount"`
 	Comments    int           `json:"commentCount"`
 	Views       int           `json:"viewCount"`
-	XRestrict   xRestrict     `json:"xRestrict"`
-	AiType      aiType        `json:"aiType"`
+	XRestrict   int           `json:"xRestrict"`
+	AiType      int           `json:"aiType"`
 }
 
 type IllustShort struct {

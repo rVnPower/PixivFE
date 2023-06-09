@@ -242,6 +242,31 @@ func discovery_page(c *gin.Context) {
 	c.HTML(http.StatusOK, "discovery.html", gin.H{"Title": "Discovery", "Artworks": artworks})
 }
 
+func settings_page(c *gin.Context) {
+	setting_object := make(map[string]string, 0)
+
+	if value, err := c.Cookie("proxy"); err == nil {
+		setting_object["Proxy"] = value
+	} else {
+		c.SetCookie("proxy", configs.ProxyServer, 3600*12*30*24*60*60, "/", c.Request.Host, true, true)
+		setting_object["Proxy"] = configs.ProxyServer
+	}
+
+	c.HTML(http.StatusOK, "settings.html", gin.H{
+		"Title":    "Settings",
+		"Settings": setting_object,
+	})
+}
+
+func settings(c *gin.Context) {
+	if imageProxyServer := c.PostForm("image-proxy-server"); imageProxyServer != "" {
+		// Validate
+		c.SetCookie("proxy", imageProxyServer, 3600*12*30*24*60*60, "/", c.Request.Host, false, true)
+	}
+
+	c.Redirect(http.StatusFound, "/settings")
+}
+
 func not_found_page(c *gin.Context) {
 	c.HTML(http.StatusNotFound, "error.html", gin.H{
 		"Title": "Not found",
@@ -280,6 +305,10 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("ranking", cache.CacheByRequestURI(store, 6*time.Hour), ranking_page)
 	r.GET("tags/:name", cache.CacheByRequestURI(store, 1*time.Hour), search_page)
 	r.GET("discovery", discovery_page)
+
+	r.GET("settings", settings_page)
+
+	r.POST("settings", settings)
 	r.POST("tags", search)
 
 	// 404 page
