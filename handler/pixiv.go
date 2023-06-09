@@ -9,6 +9,7 @@ import (
 	"math"
 	"net/http"
 	"pixivfe/models"
+	"pixivfe/utils"
 	"sort"
 	"strconv"
 	"strings"
@@ -119,15 +120,15 @@ func ExtractImageURL(data string, mode int) models.Image {
 
 	switch mode {
 	case 1:
-		image.Small = ParseJSONToString(data, "thumb_mini")
-		image.Medium = ParseJSONToString(data, "small")
-		image.Large = ParseJSONToString(data, "regular")
-		image.Original = ParseJSONToString(data, "original")
+		image.Small = utils.ProxyImage(ParseJSONToString(data, "thumb_mini"))
+		image.Medium = utils.ProxyImage(ParseJSONToString(data, "small"))
+		image.Large = utils.ProxyImage(ParseJSONToString(data, "regular"))
+		image.Original = utils.ProxyImage(ParseJSONToString(data, "original"))
 	case 2:
-		image.Small = ParseJSONToString(data, "thumb")
-		image.Medium = ParseJSONToString(data, "small")
-		image.Large = ParseJSONToString(data, "regular")
-		image.Original = ParseJSONToString(data, "original")
+		image.Small = utils.ProxyImage(ParseJSONToString(data, "thumb"))
+		image.Medium = utils.ProxyImage(ParseJSONToString(data, "small"))
+		image.Large = utils.ProxyImage(ParseJSONToString(data, "regular"))
+		image.Original = utils.ProxyImage(ParseJSONToString(data, "original"))
 	}
 
 	return image
@@ -210,25 +211,29 @@ func (p *PixivClient) GetArtworkByID(id string) (models.Illust, error) {
 }
 
 func (p *PixivClient) GetArtworkComments(id string) ([]models.Comment, error) {
-	var pr models.PixivResponse
-	var body struct {
-		Comments []models.Comment `json:"comments"`
-	}
+	comments := make([]models.Comment, 0)
 
 	s, _ := p.TextRequest(fmt.Sprintf(ArtworkCommentsURL, id))
 
-	err := json.Unmarshal([]byte(s), &pr)
-
-	if err != nil {
-		return nil, err
-	}
-	if pr.Error {
-		return nil, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
+	if ParseJSON(s, "error").Bool() {
+		return comments, errors.New(fmt.Sprintf("Pixiv returned error message: %s", ParseJSONToString(s, "message")))
 	}
 
-	err = json.Unmarshal([]byte(pr.Body), &body)
+	for _, rawComment := range ParseJSON(s, "body.comments").Array() {
+		data := rawComment.String()
+		var comment models.Comment
 
-	return body.Comments, nil
+		comment.AuthorID = ParseJSONToString(data, "userId")
+		comment.AuthorName = ParseJSONToString(data, "userName")
+		comment.Avatar = utils.ProxyImage(ParseJSONToString(data, "img"))
+		comment.Context = ParseJSONToString(data, "comment")
+		comment.Stamp = ParseJSONToString(data, "stampId")
+		comment.Date = ParseJSONToString(data, "commentDate")
+
+		comments = append(comments, comment)
+	}
+
+	return comments, nil
 }
 
 func (p *PixivClient) GetUserArtworksID(id string, page int) (*string, error) {
