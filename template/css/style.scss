@@ -423,6 +423,8 @@ body {
       width: 144px;
       height: 144px;
       border-radius: 50%;
+      object-fit: cover;
+      object-position: center center;
     }
 
     .user-comment {

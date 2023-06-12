@@ -89,7 +89,7 @@
   <div>{{ include "small-tn" Data.Artworks.Artworks }}</div>
 
   <div class="pagination">
-    {{ if toInt (.Queries.Page) == 1 }}
+    {{ if toInt (Queries.Page) == 1 }}
     <a href="#" class="pagination-button disabled">First</a>
     <a href="#" class="pagination-button disabled">Previous</a>
     {{ else }}
@@ -105,7 +105,7 @@
     >
     {{ end }}
 
-    <a href="#" class="pagination-button disabled">{{ .Queries.Page }}</a>
+    <a href="#" class="pagination-button disabled">{{ Queries.Page }}</a>
 
     <a
       href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode={{ Queries.Mode }}&page={{ inc(toInt(Queries.Page)) }}"
