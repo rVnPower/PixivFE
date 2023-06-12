@@ -6,6 +6,7 @@ import (
 	"pixivfe/views"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/template/html/v2"
 )
 
@@ -16,8 +17,11 @@ func setupRouter() *fiber.App {
 	handler.GetTemplateFunctions(engine)
 
 	server := fiber.New(fiber.Config{
-		Views: engine,
+		Views:   engine,
+		Prefork: true,
 	})
+
+	server.Use(logger.New())
 
 	// Static files
 	server.Static("/favicon.ico", "./template/favicon.ico")

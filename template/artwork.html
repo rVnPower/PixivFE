@@ -1,4 +1,4 @@
-{{ template "header.html" .Title }} {{ $parent := . }}
+{{ template "header" .Title }} {{ $parent := . }}
 <div class="container">
   <div class="artwork-page">
     {{ with .Illust }}
@@ -43,7 +43,7 @@
       <div class="thumbnail-container">
         {{ range $parent.Artist.Artworks }}
         <div class="artwork-thumbnail-small artwork-thumbnail">
-          {{ template "thumbnail-dt.html" . }}
+          {{ template "thumbnail-dt" . }}
         </div>
         {{ end }}
       </div>
@@ -76,7 +76,7 @@
     {{ end }}
   </div>
   <h2>Related works</h2>
-  <div>{{ template "small-tn.html" .Related }}</div>
+  <div>{{ template "small-tn" .Related }}</div>
 </div>
 
-{{ template "footer.html" }}
+{{ template "footer" }}

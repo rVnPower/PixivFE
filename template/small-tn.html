@@ -1,6 +1,6 @@
 {{ range . }} {{ if not (isEmpty .ID) }}
 <div class="artwork-thumbnail-small artwork-thumbnail artwork-mobile">
-  {{ template "thumbnail-dt.html" . }} {{ template "thumbnail-tt.html" . }} {{
-  template "thumbnail-at.html" . }}
+  {{ template "thumbnail-dt" . }} {{ template "thumbnail-tt" . }} {{ template
+  "thumbnail-at" . }}
 </div>
 {{ end }} {{ end }}
