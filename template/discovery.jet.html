@@ -1,5 +1,3 @@
-{{ template "header.html" .Title}}
-
 <div class="container">
   <h2>Discover works</h2>
   <div class="switcher">
@@ -8,10 +6,8 @@
     <a href="/discovery?mode=safe" class="switch-button">Safe</a>
     <a href="/discovery?mode=r18" class="switch-button">R-18</a>
   </div>
-  <div>{{ template "small-tn.html" .Artworks }}</div>
+  <div>{{ include "small-tn" Artworks }}</div>
   <div class="pagination">
     <a href="" class="pagination-button">Reload</a>
   </div>
 </div>
-
-{{ template "footer.html" }}

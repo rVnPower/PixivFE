@@ -8,10 +8,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gofiber/template/html/v2"
+	"github.com/gofiber/template/jet/v2"
 )
 
-func GetTemplateFunctions(engine *html.Engine) {
+func GetTemplateFunctions(engine *jet.Engine) {
 	engine.AddFunc("inc", func(n int) int {
 		// For rankings to increment a number by 1
 		return n + 1

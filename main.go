@@ -5,7 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/gofiber/template/html/v2"
+	"github.com/gofiber/template/jet/v2"
 	"pixivfe/configs"
 	"pixivfe/handler"
 	"pixivfe/views"
@@ -13,7 +13,7 @@ import (
 
 func setupRouter() *fiber.App {
 	// HTML templates, automatically loaded
-	engine := html.New("./template", ".html")
+	engine := jet.New("./template", ".jet.html")
 
 	handler.GetTemplateFunctions(engine)
 

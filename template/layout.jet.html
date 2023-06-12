@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {{ if not . }}
-    <title>PixivFE</title>
+    {{ if isset(Title) }}
+    <title>{{ Title }} - PixivFE</title>
     {{ else }}
-    <title>{{ . }} - PixivFE</title>
+    <title>PixivFE</title>
     {{ end }}
     <meta charset="UTF-8" />
     <meta name="description" content="View this page on PixivFE." />
@@ -78,5 +78,12 @@
         </li>
       </ul>
     </nav>
+    {{ embed() }}
+
+    <div class="footer">
+      <a href="https://codeberg.org/VnPower/pixivfe">
+        <p>Join the development on Codeberg!</p>
+      </a>
+    </div>
   </body>
 </html>

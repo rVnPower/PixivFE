@@ -1,0 +1,14 @@
+{{ if .XRestrict != 0 }}
+<div class="artwork-profanity-label">
+  <span>{{ if .XRestrict == 1 }}R-18{{ else }}R-18G{{ end }}</span>
+</div>
+{{ end }} {{ if .Pages > 1 }}
+<div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
+{{ end }}
+<a href="/artworks/{{ .ID }}">
+  <img
+    src="{{ proxyImage(.Thumbnail) }}"
+    alt="{{ .Title }}"
+    class="artwork-master-image"
+  />
+</a>
