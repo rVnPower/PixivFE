@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  pixivfe:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    restart: 'always'
+    environment:
+      - PIXIVFE_TOKEN=TOKEN HERE
