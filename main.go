@@ -5,27 +5,30 @@ import (
 	"pixivfe/handler"
 	"pixivfe/views"
 
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/template/html/v2"
 )
 
-func setupRouter() *gin.Engine {
-	server := gin.Default()
+func setupRouter() *fiber.App {
+	// HTML templates, automatically loaded
+	engine := html.New("./template", ".html")
 
-	server.SetFuncMap(handler.GetTemplateFunctions())
+	handler.GetTemplateFunctions(engine)
+
+	server := fiber.New(fiber.Config{
+		Views: engine,
+	})
 
 	// Static files
-	server.StaticFile("/favicon.ico", "./template/favicon.ico")
+	server.Static("/favicon.ico", "./template/favicon.ico")
 	server.Static("css/", "./template/css")
 	server.Static("assets/", "./template/assets")
-
-	// HTML templates, automatically loaded
-	server.LoadHTMLGlob("template/*.html")
 
 	// Routes/Views
 	views.SetupRoutes(server)
 
 	// Disable trusted proxies since we do not use any for now
-	server.SetTrustedProxies(nil)
+	// server.SetTrustedProxies(nil)
 
 	return server
 }
@@ -39,5 +42,5 @@ func main() {
 
 	r := setupRouter()
 
-	r.Run(":" + configs.Port)
+	r.Listen(":" + configs.Port)
 }
