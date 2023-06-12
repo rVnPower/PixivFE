@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/template/html/v2"
 	"pixivfe/configs"
@@ -24,6 +25,7 @@ func setupRouter() *fiber.App {
 	})
 
 	server.Use(logger.New())
+	server.Use(cache.New())
 
 	// Static files
 	server.Static("/favicon.ico", "./template/favicon.ico")
