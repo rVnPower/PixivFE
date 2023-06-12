@@ -1,13 +1,13 @@
 package main
 
 import (
-	"pixivfe/configs"
-	"pixivfe/handler"
-	"pixivfe/views"
-
+	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/template/html/v2"
+	"pixivfe/configs"
+	"pixivfe/handler"
+	"pixivfe/views"
 )
 
 func setupRouter() *fiber.App {
@@ -17,8 +17,10 @@ func setupRouter() *fiber.App {
 	handler.GetTemplateFunctions(engine)
 
 	server := fiber.New(fiber.Config{
-		Views:   engine,
-		Prefork: true,
+		Views:       engine,
+		Prefork:     true,
+		JSONEncoder: json.Marshal,
+		JSONDecoder: json.Unmarshal,
 	})
 
 	server.Use(logger.New())

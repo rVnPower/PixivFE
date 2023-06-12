@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/goccy/go-json"
 	"io/ioutil"
 	"math"
 	"net/http"
