@@ -151,7 +151,9 @@ func search(c *fiber.Ctx) error {
 func discovery_page(c *fiber.Ctx) error {
 	mode := c.Query("mode", "safe")
 
-	artworks, err := PC.GetDiscoveryArtwork(mode, 300)
+	println("Start")
+	artworks, err := PC.GetDiscoveryArtwork(mode, 100)
+	println("End")
 	if err != nil {
 		return err
 	}
