@@ -1,14 +1,16 @@
 package main
 
 import (
+	"pixivfe/configs"
+	"pixivfe/handler"
+	"pixivfe/views"
+
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/utils"
 	"github.com/gofiber/template/jet/v2"
-	"pixivfe/configs"
-	"pixivfe/handler"
-	"pixivfe/views"
 )
 
 func setupRouter() *fiber.App {
@@ -25,7 +27,13 @@ func setupRouter() *fiber.App {
 	})
 
 	server.Use(logger.New())
-	server.Use(cache.New())
+	server.Use(cache.New(
+		cache.Config{
+			KeyGenerator: func(c *fiber.Ctx) string {
+				return utils.CopyString(c.OriginalURL())
+			},
+		},
+	))
 
 	// Static files
 	server.Static("/favicon.ico", "./template/favicon.ico")

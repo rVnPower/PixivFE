@@ -2,11 +2,7 @@
   <div class="tag-header">
     {{ if Tag.Metadata.id }}
     <a href="/artworks/{{ Tag.Metadata.id }}">
-      <img
-        class="tag-thumbnail"
-        src="{{ proxyImage(Tag.Metadata.image) }}"
-        alt="{{ Tag.Name }}"
-      />
+      <img class="tag-thumbnail" src="{{ proxyImage(Tag.Metadata.image) }}" alt="{{ Tag.Name }}" />
     </a>
     {{ end }}
 
@@ -29,52 +25,28 @@
 
   <div class="switcher">
     <span class="switch-title">Type</span>
-    <a
-      href="/tags/{{ Tag.Name }}?category=artworks&order={{ Queries.Order }}&mode={{ Queries.Mode }}&p=1"
-      class="switch-button"
-      >All</a
-    >
-    <a
-      href="/tags/{{ Tag.Name }}?category=illustrations&order={{ Queries.Order }}&mode={{ Queries.Mode }}&p=1"
-      class="switch-button"
-      >Illustrations</a
-    >
-    <a
-      href="/tags/{{ Tag.Name }}?category=manga&order={{ Queries.Order }}&mode={{ Queries.Mode }}&p=1"
-      class="switch-button"
-      >Manga</a
-    >
+    <a href="/tags/{{ Tag.Name }}?category=artworks&order={{ Queries.Order }}&mode={{ Queries.Mode }}&page=1"
+      class="switch-button">All</a>
+    <a href="/tags/{{ Tag.Name }}?category=illustrations&order={{ Queries.Order }}&mode={{ Queries.Mode }}&page=1"
+      class="switch-button">Illustrations</a>
+    <a href="/tags/{{ Tag.Name }}?category=manga&order={{ Queries.Order }}&mode={{ Queries.Mode }}&page=1"
+      class="switch-button">Manga</a>
   </div>
   <div class="switcher">
     <span class="switch-title">Order</span>
-    <a
-      href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order=date_d&mode={{ Queries.Mode }}&p=1"
-      class="switch-button"
-      >Newest</a
-    >
-    <a
-      href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order=date&mode={{ Queries.Mode }}&p=1"
-      class="switch-button"
-      >Oldest</a
-    >
+    <a href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order=date_d&mode={{ Queries.Mode }}&page=1"
+      class="switch-button">Newest</a>
+    <a href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order=date&mode={{ Queries.Mode }}&page=1"
+      class="switch-button">Oldest</a>
   </div>
   <div class="switcher">
     <span class="switch-title">Filter</span>
-    <a
-      href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode=all&p=1"
-      class="switch-button"
-      >All</a
-    >
-    <a
-      href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode=safe&p=1"
-      class="switch-button"
-      >Safe</a
-    >
-    <a
-      href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode=r18&p=1"
-      class="switch-button"
-      >R18</a
-    >
+    <a href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode=all&page=1"
+      class="switch-button">All</a>
+    <a href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode=safe&page=1"
+      class="switch-button">Safe</a>
+    <a href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode=r18&page=1"
+      class="switch-button">R18</a>
   </div>
   {{ if Data.Popular.Recent }}
   <h2>Popular artworks</h2>
@@ -93,24 +65,15 @@
     <a href="#" class="pagination-button disabled">First</a>
     <a href="#" class="pagination-button disabled">Previous</a>
     {{ else }}
-    <a
-      href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode={{ Queries.Mode }}&page=1"
-      class="pagination-button"
-      >First</a
-    >
-    <a
-      href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode={{ Queries.Mode }}&page={{ dec(toInt(Queries.Page)) }}"
-      class="pagination-button"
-      >Previous</a
-    >
+    <a href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode={{ Queries.Mode }}&page=1"
+      class="pagination-button">First</a>
+    <a href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode={{ Queries.Mode }}&page={{ dec(toInt(Queries.Page)) }}"
+      class="pagination-button">Previous</a>
     {{ end }}
 
     <a href="#" class="pagination-button disabled">{{ Queries.Page }}</a>
 
-    <a
-      href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode={{ Queries.Mode }}&page={{ inc(toInt(Queries.Page)) }}"
-      class="pagination-button"
-      >Next</a
-    >
+    <a href="/tags/{{ Tag.Name }}?category={{ Queries.Category }}&order={{ Queries.Order }}&mode={{ Queries.Mode }}&page={{ inc(toInt(Queries.Page)) }}"
+      class="pagination-button">Next</a>
   </div>
 </div>
