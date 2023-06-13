@@ -20,10 +20,13 @@ func setupRouter() *fiber.App {
 	handler.GetTemplateFunctions(engine)
 
 	server := fiber.New(fiber.Config{
-		Views:       engine,
-		Prefork:     true,
-		JSONEncoder: json.Marshal,
-		JSONDecoder: json.Unmarshal,
+		AppName:               "PixivFE",
+		DisableStartupMessage: true,
+		Views:                 engine,
+		Prefork:               true,
+		JSONEncoder:           json.Marshal,
+		JSONDecoder:           json.Unmarshal,
+		ViewsLayout:           "layout",
 	})
 
 	server.Use(logger.New())

@@ -39,7 +39,7 @@ func artwork_page(c *fiber.Ctx) error {
 		"Artist":   artist_info,
 		"Comments": comments,
 		"Title":    illust.Title,
-	}, "layout")
+	})
 }
 
 func index_page(c *fiber.Ctx) error {
@@ -53,7 +53,7 @@ func index_page(c *fiber.Ctx) error {
 	// 	"Spotlights":  spotlight,
 	// 	"Newest":      newest,
 	// })
-	return c.Render("temp", fiber.Map{"Title": "Test"}, "layout")
+	return c.Render("temp", fiber.Map{"Title": "Test"})
 }
 
 func user_page(c *fiber.Ctx) error {
@@ -72,7 +72,7 @@ func user_page(c *fiber.Ctx) error {
 	worksCount, _ := PC.GetUserArtworksCount(id)
 	pageLimit := math.Ceil(float64(worksCount)/30.0) + 1.0
 
-	return c.Render("user", fiber.Map{"Title": user.Name, "User": user, "PageLimit": int(pageLimit), "Page": pageInt}, "layout")
+	return c.Render("user", fiber.Map{"Title": user.Name, "User": user, "PageLimit": int(pageLimit), "Page": pageInt})
 }
 
 func ranking_page(c *fiber.Ctx) error {
@@ -94,7 +94,7 @@ func ranking_page(c *fiber.Ctx) error {
 		"Items":   response.Artworks,
 		"Mode":    mode,
 		"Content": content,
-		"Page":    pageInt}, "layout")
+		"Page":    pageInt})
 }
 
 func newest_artworks_page(c *fiber.Ctx) error {
@@ -110,7 +110,7 @@ func newest_artworks_page(c *fiber.Ctx) error {
 	return c.Render("newest", fiber.Map{
 		"Items": works,
 		"Title": "Newest works",
-	}, "layout")
+	})
 }
 
 func search_page(c *fiber.Ctx) error {
@@ -139,7 +139,7 @@ func search_page(c *fiber.Ctx) error {
 		"Mode":     mode,
 		"Category": category,
 	}
-	return c.Render("tag", fiber.Map{"Title": "Results for " + tag.Name, "Tag": tag, "Data": result, "Queries": queries}, "layout")
+	return c.Render("tag", fiber.Map{"Title": "Results for " + tag.Name, "Tag": tag, "Data": result, "Queries": queries})
 }
 
 func search(c *fiber.Ctx) error {
@@ -156,7 +156,7 @@ func discovery_page(c *fiber.Ctx) error {
 		return err
 	}
 
-	return c.Render("discovery", fiber.Map{"Title": "Discovery", "Artworks": artworks}, "layout")
+	return c.Render("discovery", fiber.Map{"Title": "Discovery", "Artworks": artworks})
 }
 
 // func not_found_page(c *fiber.Ctx) {
