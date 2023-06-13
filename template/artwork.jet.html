@@ -4,16 +4,12 @@
       <div class="artwork-images">
         {{ range index := Illust.Images }}
         <a href="{{ proxyImage(.Original) }}" target="_blank">
-          <img
-            src="{{ proxyImage(.Large) }}"
-            alt="Page {{ index }}"
-            class="artwork-image-page"
-          />
+          <img src="{{ proxyImage(.Large) }}" alt="Page {{ index }}" class="artwork-image-page" />
         </a>
         {{ end }}
       </div>
       <h2>{{ Illust.Title }}</h2>
-      <p>{{ Illust.Description }}</p>
+      <p>{{ raw: Illust.Description }}</p>
 
       <div class="artwork-tags">
         {{ if Illust.AiType == 2 }}
@@ -21,8 +17,8 @@
         {{ end }} {{ range Illust.Tags }} {{ if isEmphasize(.Name) }}
         <span class="artwork-tag-name emphasize">{{ .Name }}</span>
         {{ else }}
-        <a href="/tags/{{ .Name }}" class="artwork-tag-name">#{{ .Name }}</a
-        ><span class="artwork-tag-altname">{{ .TranslatedName }}</span>
+        <a href="/tags/{{ .Name }}" class="artwork-tag-name">#{{ .Name }}</a><span class="artwork-tag-altname">{{
+          .TranslatedName }}</span>
         {{ end }} {{ end }}
       </div>
       <br />
@@ -30,14 +26,9 @@
       <br />
       <small>{{ Illust.Date }}</small>
 
-      <a href="/users/{{ Artist.ID }}" class="artwork-artist flex"
-        ><img
-          src="{{ proxyImage(Artist.Avatar) }}"
-          alt="{{ Artist.Name }}"
-          class="artwork-artist-avatar border-rounded"
-        />
-        {{ Artist.Name }}</a
-      >
+      <a href="/users/{{ Artist.ID }}" class="artwork-artist flex"><img src="{{ proxyImage(Artist.Avatar) }}"
+          alt="{{ Artist.Name }}" class="artwork-artist-avatar border-rounded" />
+        {{ Artist.Name }}</a>
       <div class="thumbnail-container">
         {{ range Artist.Artworks }}
         <div class="artwork-thumbnail-small artwork-thumbnail">
@@ -49,20 +40,13 @@
       <h2>Comments</h2>
       {{ range Comments }}
       <div class="comment">
-        <img
-          class="comment-avatar"
-          src="{{ proxyImage(.Avatar) }}"
-          alt="{{ .AuthorName }}"
-        />
+        <img class="comment-avatar" src="{{ proxyImage(.Avatar) }}" alt="{{ .AuthorName }}" />
         <div class="comment-context">
           <b>{{ .AuthorName }}</b>
           <p>
             {{ if .Stamp }}
-            <img
-              class="stamp"
-              src="https://s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg"
-              alt="https://s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg"
-            />
+            <img class="stamp" src="https://s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg"
+              alt="https://s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg" />
             {{ else }} {{ raw: parseEmojis(.Context) }} {{ end }}
           </p>
 
