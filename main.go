@@ -1,9 +1,11 @@
 package main
 
 import (
+	"net"
 	"pixivfe/configs"
 	"pixivfe/handler"
 	"pixivfe/views"
+	"strings"
 
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
@@ -61,5 +63,12 @@ func main() {
 
 	r := setupRouter()
 
+	if strings.Contains(configs.Port, "/") {
+		ln, err := net.Listen("unix", configs.Port)
+		if err != nil {
+			panic("Failed to listen to " + configs.Port)
+		}
+		r.Listener(ln)
+	}
 	r.Listen(":" + configs.Port)
 }
