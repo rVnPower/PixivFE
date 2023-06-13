@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {{ if not . }}
-    <title>PixivFE</title>
+    {{ if isset(Title) }}
+    <title>{{ Title }} - PixivFE</title>
     {{ else }}
-    <title>{{ . }} - PixivFE</title>
+    <title>PixivFE</title>
     {{ end }}
     <meta charset="UTF-8" />
     <meta name="description" content="View this page on PixivFE." />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:site_name" content="PixivFE" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'" />
+    <meta name="referrer" content="no-referrer, same-origin" />
     <link href="/css/style.css" rel="stylesheet" />
     <link href="/css/template.css" rel="stylesheet" />
   </head>
@@ -78,5 +80,12 @@
         </li>
       </ul>
     </nav>
+    {{ embed() }}
+
+    <div class="footer">
+      <a href="https://codeberg.org/VnPower/pixivfe">
+        <p>Join the development on Codeberg!</p>
+      </a>
+    </div>
   </body>
 </html>

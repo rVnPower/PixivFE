@@ -1,31 +1,42 @@
 package main
 
 import (
+	"github.com/goccy/go-json"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cache"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/template/jet/v2"
 	"pixivfe/configs"
 	"pixivfe/handler"
 	"pixivfe/views"
-
-	"github.com/gin-gonic/gin"
 )
 
-func setupRouter() *gin.Engine {
-	server := gin.Default()
+func setupRouter() *fiber.App {
+	// HTML templates, automatically loaded
+	engine := jet.New("./template", ".jet.html")
 
-	server.SetFuncMap(handler.GetTemplateFunctions())
+	handler.GetTemplateFunctions(engine)
+
+	server := fiber.New(fiber.Config{
+		Views:       engine,
+		Prefork:     true,
+		JSONEncoder: json.Marshal,
+		JSONDecoder: json.Unmarshal,
+	})
+
+	server.Use(logger.New())
+	server.Use(cache.New())
 
 	// Static files
-	server.StaticFile("/favicon.ico", "./template/favicon.ico")
+	server.Static("/favicon.ico", "./template/favicon.ico")
 	server.Static("css/", "./template/css")
 	server.Static("assets/", "./template/assets")
-
-	// HTML templates, automatically loaded
-	server.LoadHTMLGlob("template/*.html")
 
 	// Routes/Views
 	views.SetupRoutes(server)
 
 	// Disable trusted proxies since we do not use any for now
-	server.SetTrustedProxies(nil)
+	// server.SetTrustedProxies(nil)
 
 	return server
 }
@@ -39,5 +50,5 @@ func main() {
 
 	r := setupRouter()
 
-	r.Run(":" + configs.Port)
+	r.Listen(":" + configs.Port)
 }

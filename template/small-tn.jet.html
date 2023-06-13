@@ -1,0 +1,6 @@
+{{ range . }} {{ if .ID }}
+<div class="artwork-thumbnail-small artwork-thumbnail artwork-mobile">
+  {{ include "thumbnail-dt" . }} {{ include "thumbnail-tt" . }} {{ include
+  "thumbnail-at" . }}
+</div>
+{{ end }} {{ end }}

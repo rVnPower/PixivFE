@@ -1,6 +1,7 @@
 package views
 
 import (
+	"errors"
 	"math"
 	"net/http"
 	"pixivfe/configs"
@@ -8,30 +9,20 @@ import (
 	"strconv"
 	"time"
 
-	cache "github.com/chenyahui/gin-cache"
-	"github.com/chenyahui/gin-cache/persist"
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
 var PC *handler.PixivClient
 
-func artwork_page(c *gin.Context) {
-	id := c.Param("id")
+func artwork_page(c *fiber.Ctx) error {
+	id := c.Params("id")
 	if _, err := strconv.Atoi(id); err != nil {
-		c.HTML(http.StatusBadRequest, "error.html", gin.H{
-			"Title": "Bad request",
-			"Error": "Invalid artwork ID",
-		})
-		return
+		return errors.New("Bad id")
 	}
 
 	illust, err := PC.GetArtworkByID(id)
 	if err != nil {
-		c.HTML(http.StatusInternalServerError, "error.html", gin.H{
-			"Title": "An error occured",
-			"Error": err,
-		})
-		return
+		return err
 	}
 
 	related, _ := PC.GetRelatedArtworks(id)
@@ -39,173 +30,107 @@ func artwork_page(c *gin.Context) {
 	artist_info, err := PC.GetUserInformation(illust.UserID, 1)
 
 	if err != nil {
-		c.HTML(http.StatusInternalServerError, "error.html", gin.H{
-			"Title": "An error occured",
-			"Error": err,
-		})
+		return err
 	}
 
-	c.HTML(http.StatusOK, "artwork.html", gin.H{
+	return c.Render("artwork", fiber.Map{
 		"Illust":   illust,
 		"Related":  related,
 		"Artist":   artist_info,
 		"Comments": comments,
 		"Title":    illust.Title,
-	})
+	}, "layout")
 }
 
-func index_page(c *gin.Context) {
+func index_page(c *fiber.Ctx) error {
 	// recommended, _ := handler.GetRecommendedIllust(c)
 	// ranking, _ := handler.GetRankingIllust(c, "day")
 	// spotlight := handler.GetSpotlightArticle(c)
 	// newest, _ := handler.GetNewestIllust(c)
-	// c.HTML(http.StatusOK, "index.html", gin.H{
+	// return c.Render(http.StatusOK, "index.html", fiber.Map{
 	// 	"Recommended": recommended,
 	// 	"Rankings":    ranking,
 	// 	"Spotlights":  spotlight,
 	// 	"Newest":      newest,
 	// })
-	c.HTML(http.StatusOK, "temp.html", gin.H{})
+	return c.Render("temp", fiber.Map{"Title": "Test"}, "layout")
 }
 
-func user_page(c *gin.Context) {
-	id := c.Param("id")
+func user_page(c *fiber.Ctx) error {
+	id := c.Params("id")
 	if _, err := strconv.Atoi(id); err != nil {
-		c.HTML(http.StatusBadRequest, "error.html", gin.H{
-			"Title": "Bad request",
-			"Error": "Invalid user ID",
-		})
-		return
+		return err
 	}
-	page, ok := c.GetQuery("page")
-
-	if !ok {
-		page = "1"
-	}
+	page := c.Query("page", "1")
 
 	pageInt, _ := strconv.Atoi(page)
 	user, err := PC.GetUserInformation(id, pageInt)
 	if err != nil {
-		c.HTML(http.StatusInternalServerError, "error.html", gin.H{
-			"Title": "An error occured",
-			"Error": err,
-		})
-		return
+		return err
 	}
 
 	worksCount, _ := PC.GetUserArtworksCount(id)
 	pageLimit := math.Ceil(float64(worksCount)/30.0) + 1.0
 
-	c.HTML(http.StatusOK, "user.html", gin.H{"Title": user.Name, "User": user, "PageLimit": int(pageLimit), "Page": pageInt})
+	return c.Render("user", fiber.Map{"Title": user.Name, "User": user, "PageLimit": int(pageLimit), "Page": pageInt}, "layout")
 }
 
-func ranking_page(c *gin.Context) {
-	mode, ok := c.GetQuery("mode")
+func ranking_page(c *fiber.Ctx) error {
+	mode := c.Query("mode", "daily")
 
-	if !ok {
-		mode = "daily"
-	}
+	content := c.Query("content", "all")
 
-	content, ok := c.GetQuery("content")
-
-	if !ok {
-		content = "all"
-	}
-
-	page, ok := c.GetQuery("page")
-
-	if !ok {
-		page = "1"
-	}
+	page := c.Query("page", "1")
 
 	pageInt, _ := strconv.Atoi(page)
 
 	response, err := PC.GetRanking(mode, content, page)
 	if err != nil {
-		c.HTML(http.StatusBadRequest, "error.html", gin.H{
-			"Title": "An error occured",
-			"Error": err,
-		})
-		return
+		return err
 	}
 
-	c.HTML(http.StatusOK, "rank.html", gin.H{
+	return c.Render("rank", fiber.Map{
 		"Title":   "Ranking",
 		"Items":   response.Artworks,
 		"Mode":    mode,
 		"Content": content,
-		"Page":    pageInt})
+		"Page":    pageInt}, "layout")
 }
 
-func newest_artworks_page(c *gin.Context) {
-	worktype, ok := c.GetQuery("type")
+func newest_artworks_page(c *fiber.Ctx) error {
+	worktype := c.Query("type", "illust")
 
-	if !ok {
-		worktype = "illust"
-	}
-	r18, ok := c.GetQuery("r18")
-
-	if !ok {
-		r18 = "false"
-	}
+	r18 := c.Query("r18", "false")
 
 	works, err := PC.GetNewestArtworks(worktype, r18)
 	if err != nil {
-		c.HTML(http.StatusBadRequest, "error.html", gin.H{
-			"Title": "An error occured",
-			"Error": err,
-		})
-		return
+		return err
 	}
 
-	c.HTML(http.StatusOK, "newest.html", gin.H{
+	return c.Render("newest", fiber.Map{
 		"Items": works,
 		"Title": "Newest works",
-	})
+	}, "layout")
 }
 
-func search_page(c *gin.Context) {
-	name := c.Param("name")
+func search_page(c *fiber.Ctx) error {
+	name := c.Params("name")
 
-	page, ok := c.GetQuery("page")
+	page := c.Query("page", "1")
 
-	if !ok {
-		page = "1"
-	}
+	order := c.Query("order", "date_d")
 
-	order, ok := c.GetQuery("order")
+	mode := c.Query("mode", "safe")
 
-	if !ok {
-		order = "date_d"
-	}
-
-	mode, ok := c.GetQuery("mode")
-
-	if !ok {
-		mode = "safe"
-	}
-
-	category, ok := c.GetQuery("category")
-
-	if !ok {
-		category = "artworks"
-	}
+	category := c.Query("category", "artworks")
 
 	tag, err := PC.GetTagData(name)
 	if err != nil {
-		c.HTML(http.StatusBadRequest, "error.html", gin.H{
-			"Title": "An error occured",
-			"Error": err,
-		})
-		return
+		return err
 	}
-	result, _ := PC.GetSearch(category, name, order, mode, page)
+	result, err := PC.GetSearch(category, name, order, mode, page)
 	if err != nil {
-		c.HTML(http.StatusBadRequest, "error.html", gin.H{
-			"Title": "An error occured",
-			"Error": err,
-		})
-		return
+		return err
 	}
 
 	queries := map[string]string{
@@ -214,65 +139,32 @@ func search_page(c *gin.Context) {
 		"Mode":     mode,
 		"Category": category,
 	}
-	c.HTML(http.StatusOK, "tag.html", gin.H{"Title": "Results for " + tag.Name, "Tag": tag, "Data": result, "Queries": queries})
+	return c.Render("tag", fiber.Map{"Title": "Results for " + tag.Name, "Tag": tag, "Data": result, "Queries": queries}, "layout")
 }
 
-func search(c *gin.Context) {
-	name := c.PostForm("name")
+func search(c *fiber.Ctx) error {
+	name := c.FormValue("name")
 
-	c.Redirect(http.StatusFound, "/tags/"+name)
+	return c.Redirect("/tags/"+name, http.StatusFound)
 }
 
-func discovery_page(c *gin.Context) {
-	mode, ok := c.GetQuery("mode")
-
-	if !ok {
-		mode = "safe"
-	}
+func discovery_page(c *fiber.Ctx) error {
+	mode := c.Query("mode", "safe")
 
 	artworks, err := PC.GetDiscoveryArtwork(mode, 300)
 	if err != nil {
-		c.HTML(http.StatusBadRequest, "error.html", gin.H{
-			"Title": "An error occured",
-			"Error": err,
-		})
-		return
+		return err
 	}
 
-	c.HTML(http.StatusOK, "discovery.html", gin.H{"Title": "Discovery", "Artworks": artworks})
+	return c.Render("discovery", fiber.Map{"Title": "Discovery", "Artworks": artworks}, "layout")
 }
 
-func settings_page(c *gin.Context) {
-	setting_object := make(map[string]string, 0)
-
-	if value, err := c.Cookie("proxy"); err == nil {
-		setting_object["Proxy"] = value
-	} else {
-		c.SetCookie("proxy", configs.ProxyServer, 3600*12*30*24*60*60, "/", c.Request.Host, true, true)
-		setting_object["Proxy"] = configs.ProxyServer
-	}
-
-	c.HTML(http.StatusOK, "settings.html", gin.H{
-		"Title":    "Settings",
-		"Settings": setting_object,
-	})
-}
-
-func settings(c *gin.Context) {
-	if imageProxyServer := c.PostForm("image-proxy-server"); imageProxyServer != "" {
-		// Validate
-		c.SetCookie("proxy", imageProxyServer, 3600*12*30*24*60*60, "/", c.Request.Host, false, true)
-	}
-
-	c.Redirect(http.StatusFound, "/settings")
-}
-
-func not_found_page(c *gin.Context) {
-	c.HTML(http.StatusNotFound, "error.html", gin.H{
-		"Title": "Not found",
-		"Error": "Route " + c.Request.URL.Path + " not found.",
-	})
-}
+// func not_found_page(c *fiber.Ctx) {
+// 	return c.Render(http.StatusNotFound, "error.html", fiber.Map{
+// 		"Title": "Not found",
+// 		"Error": "Route " + c.Request.URL.Path + " not found.",
+// 	})
+// }
 
 func NewPixivClient(timeout int) *handler.PixivClient {
 	transport := &http.Transport{Proxy: http.ProxyFromEnvironment}
@@ -291,26 +183,20 @@ func NewPixivClient(timeout int) *handler.PixivClient {
 	return pc
 }
 
-func SetupRoutes(r *gin.Engine) {
+func SetupRoutes(r *fiber.App) {
 	PC = NewPixivClient(5000)
 	PC.SetSessionID(configs.Token)
 	PC.SetUserAgent(configs.UserAgent)
 
-	store := persist.NewMemoryStore(1 * time.Minute)
-
-	r.GET("/", index_page)
-	r.GET("artworks/:id", cache.CacheByRequestURI(store, 6*time.Hour), artwork_page)
-	r.GET("users/:id", cache.CacheByRequestURI(store, 6*time.Hour), user_page)
-	r.GET("newest", newest_artworks_page)
-	r.GET("ranking", cache.CacheByRequestURI(store, 6*time.Hour), ranking_page)
-	r.GET("tags/:name", cache.CacheByRequestURI(store, 1*time.Hour), search_page)
-	r.GET("discovery", discovery_page)
-
-	r.GET("settings", settings_page)
-
-	r.POST("settings", settings)
-	r.POST("tags", search)
+	r.Get("/", index_page)
+	r.Get("artworks/:id", artwork_page)
+	r.Get("users/:id", user_page)
+	r.Get("newest", newest_artworks_page)
+	r.Get("ranking", ranking_page)
+	r.Get("tags/:name", search_page)
+	r.Get("discovery", discovery_page)
+	r.Post("tags", search)
 
 	// 404 page
-	r.NoRoute(not_found_page)
+	// r.NoRoute(not_found_page)
 }

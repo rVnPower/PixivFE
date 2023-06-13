@@ -1,21 +1,16 @@
 package handler
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
-	"html/template"
+	"github.com/goccy/go-json"
 	"io/ioutil"
 	"math"
 	"net/http"
 	"pixivfe/models"
-	"pixivfe/utils"
 	"sort"
 	"strconv"
 	"strings"
-	"time"
-
-	"github.com/tidwall/gjson"
 )
 
 type PixivClient struct {
@@ -101,39 +96,6 @@ func Min(x, y int) int {
 	return y
 }
 
-func ParseJSONToString(json, key string) string {
-	return gjson.Get(json, key).String()
-}
-
-func ParseJSONToInt(json, key string) int {
-	return int(gjson.Get(json, key).Int())
-}
-
-func ParseJSON(json, key string) gjson.Result {
-	return gjson.Get(json, key)
-}
-
-func ExtractImageURL(data string, mode int) models.Image {
-	// 1 => thumb_mini, small, regular, original
-	// 2 => mini, thumb, small, regular, original
-	var image models.Image
-
-	switch mode {
-	case 1:
-		image.Small = utils.ProxyImage(ParseJSONToString(data, "thumb_mini"))
-		image.Medium = utils.ProxyImage(ParseJSONToString(data, "small"))
-		image.Large = utils.ProxyImage(ParseJSONToString(data, "regular"))
-		image.Original = utils.ProxyImage(ParseJSONToString(data, "original"))
-	case 2:
-		image.Small = utils.ProxyImage(ParseJSONToString(data, "thumb"))
-		image.Medium = utils.ProxyImage(ParseJSONToString(data, "small"))
-		image.Large = utils.ProxyImage(ParseJSONToString(data, "regular"))
-		image.Original = utils.ProxyImage(ParseJSONToString(data, "original"))
-	}
-
-	return image
-}
-
 func (p *PixivClient) TextRequest(URL string) (string, error) {
 	resp, err := p.Request(URL)
 	if err != nil {
@@ -152,16 +114,31 @@ func (p *PixivClient) TextRequest(URL string) (string, error) {
 func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {
 	s, _ := p.TextRequest(fmt.Sprintf(ArtworkImagesURL, id))
 
+	var pr models.PixivResponse
+	var resp []models.ImageResponse
 	var images []models.Image
 
-	if ParseJSON(s, "error").Bool() {
-		return images, errors.New(fmt.Sprintf("Pixiv returned error message: %s", ParseJSONToString(s, "message")))
+	err := json.Unmarshal([]byte(s), &pr)
+	if err != nil {
+		return images, err
+	}
+	if pr.Error {
+		return images, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
+	}
+
+	err = json.Unmarshal([]byte(pr.Body), &resp)
+	if err != nil {
+		return images, err
 	}
 
 	// Extract and proxy every images
-	for _, imageRaw := range gjson.Get(s, "body.#.urls").Array() {
-		data := imageRaw.String()
-		image := ExtractImageURL(data, 1)
+	for _, imageRaw := range resp {
+		var image models.Image
+
+		image.Small = imageRaw.Urls["thumb_mini"]
+		image.Medium = imageRaw.Urls["small"]
+		image.Large = imageRaw.Urls["regular"]
+		image.Original = imageRaw.Urls["original"]
 
 		images = append(images, image)
 	}
@@ -169,71 +146,83 @@ func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {
 	return images, nil
 }
 
-func (p *PixivClient) GetArtworkByID(id string) (models.Illust, error) {
+func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 	s, _ := p.TextRequest(fmt.Sprintf(ArtworkInformationURL, id))
 
-	var artwork models.Illust
+	var pr models.PixivResponse
+	var images []models.Image
 
-	if ParseJSON(s, "error").Bool() {
-		return artwork, errors.New(fmt.Sprintf("Pixiv returned error message: %s", ParseJSONToString(s, "message")))
+	// Parse Pixiv response body
+	err := json.Unmarshal([]byte(s), &pr)
+	if err != nil {
+		return nil, err
+	}
+	if pr.Error {
+		return nil, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 
-	body := ParseJSONToString(s, "body")
-
-	artwork.ID = ParseJSONToString(body, "id")
-	artwork.Title = ParseJSONToString(body, "title")
-	artwork.Description = template.HTML(ParseJSONToString(body, "description"))
-	artwork.UserID = ParseJSONToString(body, "userId")
-	artwork.UserName = ParseJSONToString(body, "userName")
-	artwork.UserAccount = ParseJSONToString(body, "userAccount")
-	artwork.Date, _ = time.Parse("2006-01-02T03:04:00+00:00", ParseJSONToString(body, "uploadDate"))
-	artwork.Images, _ = p.GetArtworkImages(id)
-	artwork.Pages = ParseJSONToInt(body, "pageCount")
-	artwork.Bookmarks = ParseJSONToInt(body, "bookmarkCount")
-	artwork.Likes = ParseJSONToInt(body, "likeCount")
-	artwork.Comments = ParseJSONToInt(body, "commentCount")
-	artwork.Views = ParseJSONToInt(body, "viewCount")
-	artwork.XRestrict = ParseJSONToInt(body, "xRestrict")
-	artwork.AiType = ParseJSONToInt(body, "aiType")
-	artwork.Tags = make([]models.Tag, 0)
-
-	for _, rawTag := range ParseJSON(body, "tags.tags").Array() {
-		var tag models.Tag
-		data := rawTag.String()
-
-		tag.Name = ParseJSONToString(data, "tag")
-		tag.TranslatedName = ParseJSONToString(data, "tag.translation.en")
-
-		artwork.Tags = append(artwork.Tags, tag)
+	var illust struct {
+		*models.Illust
+		RawTags json.RawMessage `json:"tags"`
 	}
 
-	return artwork, nil
+	// Parse basic illust information
+	err = json.Unmarshal([]byte(pr.Body), &illust)
+	if err != nil {
+		return nil, err
+	}
+
+	// Get illust images
+	images, err = p.GetArtworkImages(id)
+	if err != nil {
+		return nil, err
+	}
+
+	illust.Images = images
+
+	// Extract tags
+	var tags struct {
+		Tags []struct {
+			Tag         string            `json:"tag"`
+			Translation map[string]string `json:"translation"`
+		} `json:"tags"`
+	}
+	err = json.Unmarshal(illust.RawTags, &tags)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, tag := range tags.Tags {
+		var newTag models.Tag
+		newTag.Name = tag.Tag
+		newTag.TranslatedName = tag.Translation["en"]
+
+		illust.Tags = append(illust.Tags, newTag)
+	}
+
+	return illust.Illust, nil
 }
 
 func (p *PixivClient) GetArtworkComments(id string) ([]models.Comment, error) {
-	comments := make([]models.Comment, 0)
+	var pr models.PixivResponse
+	var body struct {
+		Comments []models.Comment `json:"comments"`
+	}
 
 	s, _ := p.TextRequest(fmt.Sprintf(ArtworkCommentsURL, id))
 
-	if ParseJSON(s, "error").Bool() {
-		return comments, errors.New(fmt.Sprintf("Pixiv returned error message: %s", ParseJSONToString(s, "message")))
+	err := json.Unmarshal([]byte(s), &pr)
+
+	if err != nil {
+		return nil, err
+	}
+	if pr.Error {
+		return nil, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 
-	for _, rawComment := range ParseJSON(s, "body.comments").Array() {
-		data := rawComment.String()
-		var comment models.Comment
+	err = json.Unmarshal([]byte(pr.Body), &body)
 
-		comment.AuthorID = ParseJSONToString(data, "userId")
-		comment.AuthorName = ParseJSONToString(data, "userName")
-		comment.Avatar = utils.ProxyImage(ParseJSONToString(data, "img"))
-		comment.Context = ParseJSONToString(data, "comment")
-		comment.Stamp = ParseJSONToString(data, "stampId")
-		comment.Date = ParseJSONToString(data, "commentDate")
-
-		comments = append(comments, comment)
-	}
-
-	return comments, nil
+	return body.Comments, nil
 }
 
 func (p *PixivClient) GetUserArtworksID(id string, page int) (*string, error) {

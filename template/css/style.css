@@ -364,6 +364,8 @@ body {
   width: 144px;
   height: 144px;
   border-radius: 50%;
+  object-fit: cover;
+  object-position: center center;
 }
 .user-page .user-details .user-comment {
   font-size: 0.9em;

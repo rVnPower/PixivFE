@@ -1,26 +1,24 @@
-{{ template "header.html" .Title }} {{ $parent := . }}
 <div class="container">
   <div class="artwork-page">
-    {{ with .Illust }}
     <div class="artwork-content">
       <div class="artwork-images">
-        {{ range .Images }}
-        <a href="{{ proxyImage .Original }}" target="_blank">
+        {{ range index := Illust.Images }}
+        <a href="{{ proxyImage(.Original) }}" target="_blank">
           <img
-            src="{{ proxyImage .Large }}"
-            alt="{{ proxyImage .Original }}"
+            src="{{ proxyImage(.Large) }}"
+            alt="Page {{ index }}"
             class="artwork-image-page"
           />
         </a>
         {{ end }}
       </div>
-      <h2>{{ .Title }}</h2>
-      <p>{{ .Description }}</p>
+      <h2>{{ Illust.Title }}</h2>
+      <p>{{ Illust.Description }}</p>
 
       <div class="artwork-tags">
-        {{ if eq .AiType 2 }}
+        {{ if Illust.AiType == 2 }}
         <span class="artwork-tag-name emphasize">AI-generated</span>
-        {{ end }} {{ range .Tags }} {{ if isEmphasize .Name }}
+        {{ end }} {{ range Illust.Tags }} {{ if isEmphasize(.Name) }}
         <span class="artwork-tag-name emphasize">{{ .Name }}</span>
         {{ else }}
         <a href="/tags/{{ .Name }}" class="artwork-tag-name">#{{ .Name }}</a
@@ -28,32 +26,32 @@
         {{ end }} {{ end }}
       </div>
       <br />
-      <span>{{ .Views }} views | {{ .Bookmarks }} bookmarks</span>
+      <span>{{ Illust.Views }} views | {{ Illust.Bookmarks }} bookmarks</span>
       <br />
-      <small>{{ .Date }}</small>
+      <small>{{ Illust.Date }}</small>
 
-      <a href="/users/{{ $parent.Artist.ID }}" class="artwork-artist flex"
+      <a href="/users/{{ Artist.ID }}" class="artwork-artist flex"
         ><img
-          src="{{ proxyImage $parent.Artist.Avatar }}"
-          alt="{{ $parent.Artist.Name }}"
+          src="{{ proxyImage(Artist.Avatar) }}"
+          alt="{{ Artist.Name }}"
           class="artwork-artist-avatar border-rounded"
         />
-        {{ $parent.Artist.Name }}</a
+        {{ Artist.Name }}</a
       >
       <div class="thumbnail-container">
-        {{ range $parent.Artist.Artworks }}
+        {{ range Artist.Artworks }}
         <div class="artwork-thumbnail-small artwork-thumbnail">
-          {{ template "thumbnail-dt.html" . }}
+          {{ include "thumbnail-dt" . }}
         </div>
         {{ end }}
       </div>
       <hr />
       <h2>Comments</h2>
-      {{ range $parent.Comments }}
+      {{ range Comments }}
       <div class="comment">
         <img
           class="comment-avatar"
-          src="{{ proxyImage .Avatar }}"
+          src="{{ proxyImage(.Avatar) }}"
           alt="{{ .AuthorName }}"
         />
         <div class="comment-context">
@@ -65,7 +63,7 @@
               src="https://s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg"
               alt="https://s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg"
             />
-            {{ else }} {{ parseEmojis .Context }} {{ end }}
+            {{ else }} {{ raw: parseEmojis(.Context) }} {{ end }}
           </p>
 
           <small>{{ .Date }}</small>
@@ -73,10 +71,7 @@
       </div>
       {{ end }}
     </div>
-    {{ end }}
   </div>
   <h2>Related works</h2>
-  <div>{{ template "small-tn.html" .Related }}</div>
+  <div>{{ include "small-tn" Related }}</div>
 </div>
-
-{{ template "footer.html" }}
