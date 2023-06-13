@@ -6,6 +6,7 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "8080:8080"
-    restart: 'always'
+    restart: "always"
     environment:
       - PIXIVFE_TOKEN=TOKEN HERE
+    pid: "host"
