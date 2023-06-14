@@ -27,12 +27,13 @@ func artwork_page(c *fiber.Ctx) error {
 
 	related, _ := PC.GetRelatedArtworks(id)
 	comments, _ := PC.GetArtworkComments(id)
-	artist_info, err := PC.GetUserInformation(illust.UserID, 1)
+	artist_info, err := PC.GetUserInformation(illust.UserID, "all", 1)
 
 	if err != nil {
 		return err
 	}
 
+	// Optimize this
 	return c.Render("artwork", fiber.Map{
 		"Illust":   illust,
 		"Related":  related,
@@ -61,15 +62,19 @@ func user_page(c *fiber.Ctx) error {
 	if _, err := strconv.Atoi(id); err != nil {
 		return err
 	}
+	category := c.Params("category", "artworks")
+	if !(category == "artworks" || category == "illustrations" || category == "manga") {
+		return errors.New("Invalid work category: only illustrations, manga and artworks are available")
+	}
 	page := c.Query("page", "1")
 
 	pageInt, _ := strconv.Atoi(page)
-	user, err := PC.GetUserInformation(id, pageInt)
+	user, err := PC.GetUserInformation(id, category, pageInt)
 	if err != nil {
 		return err
 	}
 
-	worksCount, _ := PC.GetUserArtworksCount(id)
+	worksCount, _ := PC.GetUserArtworksCount(id, category)
 	pageLimit := math.Ceil(float64(worksCount)/30.0) + 1.0
 
 	return c.Render("user", fiber.Map{"Title": user.Name, "User": user, "PageLimit": int(pageLimit), "Page": pageInt})
@@ -189,8 +194,9 @@ func SetupRoutes(r *fiber.App) {
 	PC.SetUserAgent(configs.UserAgent)
 
 	r.Get("/", index_page)
-	r.Get("artworks/:id", artwork_page)
-	r.Get("users/:id", user_page)
+	r.Get("artworks/:id/", artwork_page)
+	r.Get("users/:id/", user_page)
+	r.Get("users/:id/:category", user_page)
 	r.Get("newest", newest_artworks_page)
 	r.Get("ranking", ranking_page)
 	r.Get("tags/:name", search_page)

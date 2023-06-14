@@ -20,23 +20,42 @@
       <p class="user-comment">{{ raw: User.Comment }}</p>
     </div>
   </div>
-  <div>
-    {{ range User.FrequentTags }}
-    <a href="/tags/{{ .Name }}">
-      <div class="tag-container" style="background-color: {{ randomColor() }}">
-        {{ if ! .TranslatedName }}
-        <div class="main">{{ .Name }}</div>
-        <div class="sub">#</div>
-        {{ else }}
-        <div class="main">{{ .TranslatedName }}</div>
-        <div class="sub">#{{ .Name }}</div>
-        {{ end }}
-      </div>
-    </a>
-    {{ end }}
+  <div class="switcher">
+    <span class="switch-title">Category</span>
+    <a href="/users/{{ User.ID }}/artworks#checkpoint" class="switch-button"
+      >All</a
+    >
+    <a
+      href="/users/{{ User.ID }}/illustrations#checkpoint"
+      class="switch-button"
+      >Illustrations</a
+    >
+    <a href="/users/{{ User.ID }}/manga#checkpoint" class="switch-button"
+      >Mangas</a
+    >
   </div>
   <div>
-    <h1>Illustrations and Mangas</h1>
+    <h1 id="checkpoint">Illustrations and Mangas</h1>
+
+    <div>
+      {{ range User.FrequentTags }}
+      <a href="/tags/{{ .Name }}">
+        <div
+          class="tag-container"
+          style="background-color: {{ randomColor() }}"
+        >
+          {{ if ! .TranslatedName }}
+          <div class="main">{{ .Name }}</div>
+          <div class="sub">#</div>
+          {{ else }}
+          <div class="main">{{ .TranslatedName }}</div>
+          <div class="sub">#{{ .Name }}</div>
+          {{ end }}
+        </div>
+      </a>
+      {{ end }}
+    </div>
+
     {{ include "small-tn" User.Artworks }}
   </div>
   <div class="pagination">

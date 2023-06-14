@@ -248,7 +248,7 @@ func (p *PixivClient) GetArtworkComments(id string) ([]models.Comment, error) {
 	return body.Comments, nil
 }
 
-func (p *PixivClient) GetUserArtworksID(id string, page int) (*string, error) {
+func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (*string, error) {
 	s, _ := p.TextRequest(fmt.Sprintf(UserArtworksURL, id))
 
 	var pr models.PixivResponse
@@ -266,6 +266,7 @@ func (p *PixivClient) GetUserArtworksID(id string, page int) (*string, error) {
 	var idsString string
 	var body struct {
 		Illusts map[int]string `json:"illusts"`
+		Mangas  map[int]string `json:"manga"`
 	}
 	err = json.Unmarshal(pr.Body, &body)
 	if err != nil {
@@ -273,8 +274,15 @@ func (p *PixivClient) GetUserArtworksID(id string, page int) (*string, error) {
 	}
 
 	// Get the keys, because Pixiv only returns IDs (very evil)
-	for k := range body.Illusts {
-		ids = append(ids, k)
+	if category == "illustrations" || category == "artworks" {
+		for k := range body.Illusts {
+			ids = append(ids, k)
+		}
+	}
+	if category == "manga" || category == "artworks" {
+		for k := range body.Mangas {
+			ids = append(ids, k)
+		}
 	}
 
 	// Reverse sort the ids
@@ -297,7 +305,7 @@ func (p *PixivClient) GetUserArtworksID(id string, page int) (*string, error) {
 	return &idsString, nil
 }
 
-func (p *PixivClient) GetUserArtworksCount(id string) (int, error) {
+func (p *PixivClient) GetUserArtworksCount(id string, category string) (int, error) {
 	s, _ := p.TextRequest(fmt.Sprintf(UserArtworksURL, id))
 
 	var pr models.PixivResponse
@@ -310,16 +318,25 @@ func (p *PixivClient) GetUserArtworksCount(id string) (int, error) {
 	if pr.Error {
 		return -1, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
-
 	var body struct {
 		Illusts map[int]string `json:"illusts"`
+		Mangas  map[int]string `json:"manga"`
 	}
 	err = json.Unmarshal(pr.Body, &body)
 	if err != nil {
 		return -1, err
 	}
 
-	return len(body.Illusts), nil
+	count := 0
+
+	if category == "illustrations" || category == "artworks" {
+		count += len(body.Illusts)
+	}
+	if category == "manga" || category == "artworks" {
+		count += len(body.Mangas)
+	}
+
+	return count, nil
 }
 
 func (p *PixivClient) GetRelatedArtworks(id string) ([]models.IllustShort, error) {
@@ -385,11 +402,11 @@ func (p *PixivClient) GetUserArtworks(id string, ids string) ([]models.IllustSho
 	return works, nil
 }
 
-func (p *PixivClient) GetUserInformation(id string, page int) (*models.User, error) {
+func (p *PixivClient) GetUserInformation(id string, category string, page int) (*models.User, error) {
 	var user *models.User
 	var pr models.PixivResponse
 
-	ids, err := p.GetUserArtworksID(id, page)
+	ids, err := p.GetUserArtworksID(id, category, page)
 	if err != nil {
 		return nil, err
 	}
