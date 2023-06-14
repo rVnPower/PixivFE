@@ -83,7 +83,7 @@ func (p *PixivClient) Request(URL string) (*http.Response, error) {
 	}
 
 	if resp.StatusCode != 200 {
-		return resp, errors.New(fmt.Sprintf("Pixiv returned code: %d for request ", resp.StatusCode))
+		return resp, errors.New(fmt.Sprintf("Pixiv returned code: %d for request %s", resp.StatusCode, URL))
 	}
 
 	return resp, nil

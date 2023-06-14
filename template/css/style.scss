@@ -107,6 +107,7 @@ body {
   width: 200px;
   transform: translateX(-200px);
   transition: transform 250ms ease-in-out;
+  z-index: 999;
 
   .sidebar-list {
     list-style-type: none;
