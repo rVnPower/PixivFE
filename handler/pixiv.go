@@ -35,6 +35,7 @@ const (
 	UserInformationURL    = "https://www.pixiv.net/ajax/user/%s?full=1"
 	UserArtworksURL       = "https://www.pixiv.net/ajax/user/%s/profile/all"
 	UserArtworksFullURL   = "https://www.pixiv.net/ajax/user/%s/profile/illusts?work_category=illustManga&is_first_page=0&lang=en%s"
+	FrequentTagsURL       = "https://www.pixiv.net/ajax/tags/frequent/illust?%s"
 )
 
 func (p *PixivClient) SetHeader(header map[string]string) {
@@ -144,6 +145,28 @@ func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {
 	}
 
 	return images, nil
+}
+
+func (p *PixivClient) GetFrequentTags(ids string) ([]models.FrequentTag, error) {
+	s, _ := p.TextRequest(fmt.Sprintf(FrequentTagsURL, ids))
+
+	var pr models.PixivResponse
+	var tags []models.FrequentTag
+	// Parse Pixiv response body
+	err := json.Unmarshal([]byte(s), &pr)
+	if err != nil {
+		return nil, err
+	}
+	if pr.Error {
+		return nil, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
+	}
+
+	err = json.Unmarshal([]byte(pr.Body), &tags)
+	if err != nil {
+		return nil, err
+	}
+
+	return tags, nil
 }
 
 func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
@@ -322,20 +345,16 @@ func (p *PixivClient) GetRelatedArtworks(id string) ([]models.IllustShort, error
 	return body.Illusts, nil
 }
 
-func (p *PixivClient) GetUserArtworks(id string, page int) ([]models.IllustShort, error) {
-	ids, err := p.GetUserArtworksID(id, page)
-	if err != nil {
-		return nil, err
-	}
+func (p *PixivClient) GetUserArtworks(id string, ids string) ([]models.IllustShort, error) {
 
-	url := fmt.Sprintf(UserArtworksFullURL, id, *ids)
+	url := fmt.Sprintf(UserArtworksFullURL, id, ids)
 
 	var pr models.PixivResponse
 	var works []models.IllustShort
 
 	s, _ := p.TextRequest(url)
 
-	err = json.Unmarshal([]byte(s), &pr)
+	err := json.Unmarshal([]byte(s), &pr)
 	if err != nil {
 		return nil, err
 	}
@@ -370,9 +389,14 @@ func (p *PixivClient) GetUserInformation(id string, page int) (*models.User, err
 	var user *models.User
 	var pr models.PixivResponse
 
+	ids, err := p.GetUserArtworksID(id, page)
+	if err != nil {
+		return nil, err
+	}
+
 	s, _ := p.TextRequest(fmt.Sprintf(UserInformationURL, id))
 
-	err := json.Unmarshal([]byte(s), &pr)
+	err = json.Unmarshal([]byte(s), &pr)
 
 	if err != nil {
 		return nil, err
@@ -395,7 +419,7 @@ func (p *PixivClient) GetUserInformation(id string, page int) (*models.User, err
 	user = body.User
 
 	// Artworks
-	works, _ := p.GetUserArtworks(id, page)
+	works, _ := p.GetUserArtworks(id, *ids)
 	user.Artworks = works
 
 	// Background image
@@ -405,6 +429,9 @@ func (p *PixivClient) GetUserInformation(id string, page int) (*models.User, err
 
 	// Artworks count
 	// user.ArtworksCount, _ = p.GetUserArtworksCount(id)
+
+	// Frequent tags
+	user.FrequentTags, err = p.GetFrequentTags(*ids)
 
 	return user, nil
 }

@@ -87,6 +87,11 @@ type Tag struct {
 	TranslatedName string `json:"translation"`
 }
 
+type FrequentTag struct {
+	Name           string `json:"tag"`
+	TranslatedName string `json:"tag_translation"`
+}
+
 type Illust struct {
 	ID          string        `json:"id"`
 	Title       string        `json:"title"`
@@ -139,6 +144,7 @@ type User struct {
 	Comment         template.HTML `json:"commentHtml"`
 	Artworks        []IllustShort `json:"artworks"`
 	ArtworksCount   int
+	FrequentTags    []FrequentTag
 }
 
 type RankedArtwork struct {
