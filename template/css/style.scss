@@ -1,5 +1,5 @@
 $bg: #131516;
-$fg: #d8d4cf;
+$fg: #f5f5f5;
 $bg-alt: #262a2b;
 $bg-alt-dimmed: #262a2b99;
 $blue: #3d7699;
@@ -461,12 +461,28 @@ body {
 
 .tag-container {
   background-color: $bg-alt;
-  display: inline-block;
-  padding: 5px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin-bottom: 4px;
   text-decoration: none;
+  text-align: center;
   color: $fg;
   font-weight: bold;
+  font-size: 1rem;
+  border-radius: 4px;
+
+  .main {
+    font-size: 0.8em;
+  }
+  .sub {
+    font-size: 0.7em;
+    font-weight: normal;
+  }
 }
 
 .switcher {

@@ -19,7 +19,7 @@ func setupRouter() *fiber.App {
 	// HTML templates, automatically loaded
 	engine := jet.New("./template", ".jet.html")
 
-	handler.GetTemplateFunctions(engine)
+	engine.AddFuncMap(handler.GetTemplateFunctions())
 
 	server := fiber.New(fiber.Config{
 		AppName:               "PixivFE",
