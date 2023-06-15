@@ -250,7 +250,6 @@ func (p *PixivClient) GetArtworkComments(id string) ([]models.Comment, error) {
 
 func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (string, int, error) {
 	s, _ := p.TextRequest(fmt.Sprintf(UserArtworksURL, id))
-	println(fmt.Sprintf(UserArtworksURL, id))
 
 	var pr models.PixivResponse
 

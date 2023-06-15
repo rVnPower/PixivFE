@@ -27,7 +27,7 @@ func artwork_page(c *fiber.Ctx) error {
 
 	related, _ := PC.GetRelatedArtworks(id)
 	comments, _ := PC.GetArtworkComments(id)
-	artist_info, err := PC.GetUserInformation(illust.UserID, "all", 1)
+	artist_info, err := PC.GetUserInformation(illust.UserID, "artworks", 1)
 
 	if err != nil {
 		return err
