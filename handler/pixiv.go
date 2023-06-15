@@ -248,7 +248,7 @@ func (p *PixivClient) GetArtworkComments(id string) ([]models.Comment, error) {
 	return body.Comments, nil
 }
 
-func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (*string, error) {
+func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (string, int, error) {
 	s, _ := p.TextRequest(fmt.Sprintf(UserArtworksURL, id))
 	println(fmt.Sprintf(UserArtworksURL, id))
 
@@ -257,10 +257,10 @@ func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (*
 	err := json.Unmarshal([]byte(s), &pr)
 
 	if err != nil {
-		return nil, err
+		return "", -1, err
 	}
 	if pr.Error {
-		return nil, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
+		return "", -1, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 
 	var ids []int
@@ -272,11 +272,12 @@ func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (*
 
 	err = json.Unmarshal(pr.Body, &body)
 	if err != nil {
-		return nil, err
+		return "", -1, err
 	}
 
 	var illusts map[int]string
 	var mangas map[int]string
+	count := 0
 
 	if err = json.Unmarshal(body.Illusts, &illusts); err != nil {
 		illusts = make(map[int]string)
@@ -289,22 +290,24 @@ func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (*
 	if category == "illustrations" || category == "artworks" {
 		for k := range illusts {
 			ids = append(ids, k)
+			count++
 		}
 	}
 	if category == "manga" || category == "artworks" {
 		for k := range mangas {
 			ids = append(ids, k)
+			count++
 		}
 	}
 
 	// Reverse sort the ids
 	sort.Sort(sort.Reverse(sort.IntSlice(ids)))
 
-	worksNumber := float64(len(ids))
+	worksNumber := float64(count)
 	worksPerPage := 30.0
 
 	if page < 1 || float64(page) > math.Ceil(worksNumber/worksPerPage)+1.0 {
-		return nil, errors.New("Page overflow")
+		return "", -1, errors.New("Page overflow")
 	}
 
 	start := (page - 1) * int(worksPerPage)
@@ -314,53 +317,7 @@ func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (*
 		idsString += fmt.Sprintf("&ids[]=%d", k)
 	}
 
-	return &idsString, nil
-}
-
-func (p *PixivClient) GetUserArtworksCount(id string, category string) (int, error) {
-	s, _ := p.TextRequest(fmt.Sprintf(UserArtworksURL, id))
-
-	var pr models.PixivResponse
-
-	err := json.Unmarshal([]byte(s), &pr)
-
-	if err != nil {
-		return -1, err
-	}
-	if pr.Error {
-		return -1, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
-	}
-	var body struct {
-		Illusts json.RawMessage `json:"illusts"`
-		Mangas  json.RawMessage `json:"manga"`
-	}
-	err = json.Unmarshal(pr.Body, &body)
-	if err != nil {
-		return -1, err
-	}
-
-	var illusts map[int]string
-	var mangas map[int]string
-
-	count := 0
-
-	if err = json.Unmarshal(body.Illusts, &illusts); err != nil {
-		illusts = make(map[int]string)
-	}
-	if err = json.Unmarshal(body.Mangas, &mangas); err != nil {
-		mangas = make(map[int]string)
-	}
-
-	if category == "illustrations" || category == "artworks" {
-		count += len(illusts)
-	}
-	if category == "manga" || category == "artworks" {
-		count += len(mangas)
-	}
-
-	println(count)
-
-	return count, nil
+	return idsString, count, nil
 }
 
 func (p *PixivClient) GetRelatedArtworks(id string) ([]models.IllustShort, error) {
@@ -430,7 +387,7 @@ func (p *PixivClient) GetUserInformation(id string, category string, page int) (
 	var user *models.User
 	var pr models.PixivResponse
 
-	ids, err := p.GetUserArtworksID(id, category, page)
+	ids, count, err := p.GetUserArtworksID(id, category, page)
 	if err != nil {
 		return nil, err
 	}
@@ -460,7 +417,7 @@ func (p *PixivClient) GetUserInformation(id string, category string, page int) (
 	user = body.User
 
 	// Artworks
-	works, _ := p.GetUserArtworks(id, *ids)
+	works, _ := p.GetUserArtworks(id, ids)
 	user.Artworks = works
 
 	// Background image
@@ -469,10 +426,10 @@ func (p *PixivClient) GetUserInformation(id string, category string, page int) (
 	}
 
 	// Artworks count
-	// user.ArtworksCount, _ = p.GetUserArtworksCount(id)
+	user.ArtworksCount = count
 
 	// Frequent tags
-	user.FrequentTags, err = p.GetFrequentTags(*ids)
+	user.FrequentTags, err = p.GetFrequentTags(ids)
 
 	return user, nil
 }
