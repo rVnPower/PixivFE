@@ -3,7 +3,6 @@ package handler
 import (
 	"errors"
 	"fmt"
-	"github.com/goccy/go-json"
 	"io/ioutil"
 	"math"
 	"net/http"
@@ -11,6 +10,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/goccy/go-json"
 )
 
 type PixivClient struct {
@@ -22,20 +23,21 @@ type PixivClient struct {
 }
 
 const (
-	ArtworkInformationURL = "https://www.pixiv.net/ajax/illust/%s"
-	ArtworkImagesURL      = "https://www.pixiv.net/ajax/illust/%s/pages"
-	ArtworkRelatedURL     = "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=%d"
-	ArtworkCommentsURL    = "https://www.pixiv.net/ajax/illusts/comments/roots?illust_id=%s&limit=100"
-	ArtworkNewestURL      = "https://www.pixiv.net/ajax/illust/new?limit=30&type=%s&r18=%s&lastId=%s"
-	ArtworkRankingURL     = "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&p=%s"
-	ArtworkDiscoveryURL   = "https://www.pixiv.net/ajax/discovery/artworks?mode=%s&limit=%d"
-	SearchTagURL          = "https://www.pixiv.net/ajax/search/tags/%s"
-	SearchArtworksURL     = "https://www.pixiv.net/ajax/search/%s/%s?order=%s&mode=%s&p=%s"
-	SearchTopURL          = "https://www.pixiv.net/ajax/search/top/%s"
-	UserInformationURL    = "https://www.pixiv.net/ajax/user/%s?full=1"
-	UserArtworksURL       = "https://www.pixiv.net/ajax/user/%s/profile/all"
-	UserArtworksFullURL   = "https://www.pixiv.net/ajax/user/%s/profile/illusts?work_category=illustManga&is_first_page=0&lang=en%s"
-	FrequentTagsURL       = "https://www.pixiv.net/ajax/tags/frequent/illust?%s"
+	ArtworkInformationURL   = "https://www.pixiv.net/ajax/illust/%s"
+	ArtworkImagesURL        = "https://www.pixiv.net/ajax/illust/%s/pages"
+	ArtworkRelatedURL       = "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=%d"
+	ArtworkCommentsURL      = "https://www.pixiv.net/ajax/illusts/comments/roots?illust_id=%s&limit=100"
+	ArtworkNewestURL        = "https://www.pixiv.net/ajax/illust/new?limit=30&type=%s&r18=%s&lastId=%s"
+	ArtworkRankingURL       = "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&p=%s"
+	ArtworkDiscoveryURL     = "https://www.pixiv.net/ajax/discovery/artworks?mode=%s&limit=%d"
+	SearchTagURL            = "https://www.pixiv.net/ajax/search/tags/%s"
+	SearchArtworksURL       = "https://www.pixiv.net/ajax/search/%s/%s?order=%s&mode=%s&p=%s"
+	SearchTopURL            = "https://www.pixiv.net/ajax/search/top/%s"
+	UserInformationURL      = "https://www.pixiv.net/ajax/user/%s?full=1"
+	UserBasicInformationURL = "https://www.pixiv.net/ajax/user/%s"
+	UserArtworksURL         = "https://www.pixiv.net/ajax/user/%s/profile/all"
+	UserArtworksFullURL     = "https://www.pixiv.net/ajax/user/%s/profile/illusts?work_category=illustManga&is_first_page=0&lang=en%s"
+	FrequentTagsURL         = "https://www.pixiv.net/ajax/tags/frequent/illust?%s"
 )
 
 func (p *PixivClient) SetHeader(header map[string]string) {
@@ -186,6 +188,8 @@ func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 
 	var illust struct {
 		*models.Illust
+
+		Recent  map[int]any     `json:"userIllusts"`
 		RawTags json.RawMessage `json:"tags"`
 	}
 
@@ -202,6 +206,36 @@ func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 	}
 
 	illust.Images = images
+
+	// Get recent artworks
+	var ids []int
+	idsString := ""
+
+	for k := range illust.Recent {
+		ids = append(ids, k)
+	}
+
+	sort.Sort(sort.Reverse(sort.IntSlice(ids)))
+
+	count := len(ids)
+	for i := 0; i < 30 && i < count; i++ {
+		idsString += fmt.Sprintf("&ids[]=%d", ids[i])
+	}
+
+	recent, err := p.GetUserArtworks(illust.UserID, idsString)
+	if err != nil {
+		return nil, err
+	}
+
+	illust.RecentWorks = recent
+
+	// Get basic user information (the URL above does not contain avatars)
+	userInfo, err := p.GetUserBasicInformation(illust.UserID)
+	if err != nil {
+		return nil, err
+	}
+
+	illust.User = userInfo
 
 	// Extract tags
 	var tags struct {
@@ -343,15 +377,17 @@ func (p *PixivClient) GetRelatedArtworks(id string) ([]models.IllustShort, error
 }
 
 func (p *PixivClient) GetUserArtworks(id string, ids string) ([]models.IllustShort, error) {
-
 	url := fmt.Sprintf(UserArtworksFullURL, id, ids)
 
 	var pr models.PixivResponse
 	var works []models.IllustShort
 
-	s, _ := p.TextRequest(url)
+	s, err := p.TextRequest(url)
+	if err != nil {
+		return nil, err
+	}
 
-	err := json.Unmarshal([]byte(s), &pr)
+	err = json.Unmarshal([]byte(s), &pr)
 	if err != nil {
 		return nil, err
 	}
@@ -372,14 +408,29 @@ func (p *PixivClient) GetUserArtworks(id string, ids string) ([]models.IllustSho
 		works = append(works, illust)
 	}
 
-	// IDK but the order got shuffled even though Pixiv sorted the IDs in the response
-	sort.Slice(works[:], func(i, j int) bool {
-		left, _ := strconv.Atoi(works[i].ID)
-		right, _ := strconv.Atoi(works[j].ID)
-		return left > right
-	})
-
 	return works, nil
+}
+
+func (p *PixivClient) GetUserBasicInformation(id string) (models.UserShort, error) {
+	var pr models.PixivResponse
+	var user models.UserShort
+
+	s, _ := p.TextRequest(fmt.Sprintf(UserBasicInformationURL, id))
+
+	err := json.Unmarshal([]byte(s), &pr)
+	if err != nil {
+		return user, err
+	}
+	if pr.Error {
+		return user, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
+	}
+
+	err = json.Unmarshal([]byte(pr.Body), &user)
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
 }
 
 func (p *PixivClient) GetUserInformation(id string, category string, page int) (*models.User, error) {
@@ -417,6 +468,12 @@ func (p *PixivClient) GetUserInformation(id string, category string, page int) (
 
 	// Artworks
 	works, _ := p.GetUserArtworks(id, ids)
+	// IDK but the order got shuffled even though Pixiv sorted the IDs in the response
+	sort.Slice(works[:], func(i, j int) bool {
+		left, _ := strconv.Atoi(works[i].ID)
+		right, _ := strconv.Atoi(works[j].ID)
+		return left > right
+	})
 	user.Artworks = works
 
 	// Background image

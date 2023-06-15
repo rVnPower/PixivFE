@@ -109,6 +109,8 @@ type Illust struct {
 	Views       int           `json:"viewCount"`
 	XRestrict   xRestrict     `json:"xRestrict"`
 	AiType      aiType        `json:"aiType"`
+	User        UserShort
+	RecentWorks []IllustShort
 }
 
 type IllustShort struct {
@@ -145,6 +147,12 @@ type User struct {
 	Artworks        []IllustShort `json:"artworks"`
 	ArtworksCount   int
 	FrequentTags    []FrequentTag
+}
+
+type UserShort struct {
+	ID     string `json:"userId"`
+	Name   string `json:"name"`
+	Avatar string `json:"imageBig"`
 }
 
 type RankedArtwork struct {

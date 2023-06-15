@@ -27,7 +27,6 @@ func artwork_page(c *fiber.Ctx) error {
 
 	related, _ := PC.GetRelatedArtworks(id)
 	comments, _ := PC.GetArtworkComments(id)
-	artist_info, err := PC.GetUserInformation(illust.UserID, "artworks", 1)
 
 	if err != nil {
 		return err
@@ -37,7 +36,6 @@ func artwork_page(c *fiber.Ctx) error {
 	return c.Render("artwork", fiber.Map{
 		"Illust":   illust,
 		"Related":  related,
-		"Artist":   artist_info,
 		"Comments": comments,
 		"Title":    illust.Title,
 	})
