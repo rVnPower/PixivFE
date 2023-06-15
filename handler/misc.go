@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"errors"
 	"fmt"
 	"pixivfe/models"
 	"strings"
@@ -10,19 +9,13 @@ import (
 )
 
 func (p *PixivClient) GetNewestArtworks(worktype string, r18 string) ([]models.IllustShort, error) {
-	var pr models.PixivResponse
 	var newWorks []models.IllustShort
 	lastID := "0"
 
 	for i := 0; i < 10; i++ {
-		url := fmt.Sprintf(ArtworkNewestURL, worktype, r18, lastID)
+		URL := fmt.Sprintf(ArtworkNewestURL, worktype, r18, lastID)
 
-		s, err := p.TextRequest(url)
-		if err != nil {
-			return nil, err
-		}
-
-		err = json.Unmarshal([]byte(s), &pr)
+		response, err := p.PixivRequest(URL)
 		if err != nil {
 			return nil, err
 		}
@@ -32,7 +25,7 @@ func (p *PixivClient) GetNewestArtworks(worktype string, r18 string) ([]models.I
 			LastID  string               `json:"lastId"`
 		}
 
-		err = json.Unmarshal([]byte(pr.Body), &body)
+		err = json.Unmarshal([]byte(response), &body)
 		if err != nil {
 			return nil, err
 		}
@@ -65,20 +58,15 @@ func (p *PixivClient) GetRanking(mode string, content string, page string) (mode
 }
 
 func (p *PixivClient) GetSearch(artworkType string, name string, order string, age_settings string, page string) (*models.SearchResult, error) {
-	var pr models.PixivResponse
+	URL := fmt.Sprintf(SearchArtworksURL, artworkType, name, order, age_settings, page)
 
-	url := fmt.Sprintf(SearchArtworksURL, artworkType, name, order, age_settings, page)
-
-	s, err := p.TextRequest(url)
-
-	err = json.Unmarshal([]byte(s), &pr)
-
+	response, err := p.PixivRequest(URL)
 	if err != nil {
 		return nil, err
 	}
 
 	// IDK how to do better than this lol
-	temp := strings.ReplaceAll(string(pr.Body), `"illust"`, `"works"`)
+	temp := strings.ReplaceAll(string(response), `"illust"`, `"works"`)
 	temp = strings.ReplaceAll(temp, `"manga"`, `"works"`)
 	temp = strings.ReplaceAll(temp, `"illustManga"`, `"works"`)
 
@@ -110,29 +98,22 @@ func (p *PixivClient) GetDiscoveryArtwork(mode string, count int) ([]models.Illu
 	var artworks []models.IllustShort
 
 	for count > 0 {
-		var pr models.PixivResponse
 		itemsForRequest := Min(100, count)
 
 		count -= itemsForRequest
 
-		url := fmt.Sprintf(ArtworkDiscoveryURL, mode, itemsForRequest)
-		s, err := p.TextRequest(url)
+		URL := fmt.Sprintf(ArtworkDiscoveryURL, mode, itemsForRequest)
 
+		response, err := p.PixivRequest(URL)
 		if err != nil {
-			return artworks, err
-		}
-
-		err = json.Unmarshal([]byte(s), &pr)
-
-		if pr.Error {
-			return artworks, errors.New(pr.Message)
+			return nil, err
 		}
 
 		var thumbnail struct {
 			Data json.RawMessage `json:"thumbnails"`
 		}
 
-		err = json.Unmarshal([]byte(pr.Body), &thumbnail)
+		err = json.Unmarshal([]byte(response), &thumbnail)
 		if err != nil {
 			return nil, err
 		}

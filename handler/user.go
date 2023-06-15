@@ -12,17 +12,11 @@ import (
 )
 
 func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (string, int, error) {
-	s, _ := p.TextRequest(fmt.Sprintf(UserArtworksURL, id))
+	URL := fmt.Sprintf(UserArtworksURL, id)
 
-	var pr models.PixivResponse
-
-	err := json.Unmarshal([]byte(s), &pr)
-
+	response, err := p.PixivRequest(URL)
 	if err != nil {
 		return "", -1, err
-	}
-	if pr.Error {
-		return "", -1, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 
 	var ids []int
@@ -32,7 +26,7 @@ func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (s
 		Mangas  json.RawMessage `json:"manga"`
 	}
 
-	err = json.Unmarshal(pr.Body, &body)
+	err = json.Unmarshal(response, &body)
 	if err != nil {
 		return "", -1, err
 	}
@@ -83,17 +77,11 @@ func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (s
 }
 
 func (p *PixivClient) GetUserArtworks(id string, ids string) ([]models.IllustShort, error) {
-	url := fmt.Sprintf(UserArtworksFullURL, id, ids)
-
-	var pr models.PixivResponse
 	var works []models.IllustShort
 
-	s, err := p.TextRequest(url)
-	if err != nil {
-		return nil, err
-	}
+	URL := fmt.Sprintf(UserArtworksFullURL, id, ids)
 
-	err = json.Unmarshal([]byte(s), &pr)
+	response, err := p.PixivRequest(URL)
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +90,7 @@ func (p *PixivClient) GetUserArtworks(id string, ids string) ([]models.IllustSho
 		Illusts map[int]json.RawMessage `json:"works"`
 	}
 
-	err = json.Unmarshal(pr.Body, &body)
+	err = json.Unmarshal(response, &body)
 	if err != nil {
 		return nil, err
 	}
@@ -118,20 +106,16 @@ func (p *PixivClient) GetUserArtworks(id string, ids string) ([]models.IllustSho
 }
 
 func (p *PixivClient) GetUserBasicInformation(id string) (models.UserShort, error) {
-	var pr models.PixivResponse
 	var user models.UserShort
 
-	s, _ := p.TextRequest(fmt.Sprintf(UserBasicInformationURL, id))
+	URL := fmt.Sprintf(UserBasicInformationURL, id)
 
-	err := json.Unmarshal([]byte(s), &pr)
+	response, err := p.PixivRequest(URL)
 	if err != nil {
 		return user, err
 	}
-	if pr.Error {
-		return user, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
-	}
 
-	err = json.Unmarshal([]byte(pr.Body), &user)
+	err = json.Unmarshal([]byte(response), &user)
 	if err != nil {
 		return user, err
 	}
@@ -141,22 +125,17 @@ func (p *PixivClient) GetUserBasicInformation(id string) (models.UserShort, erro
 
 func (p *PixivClient) GetUserInformation(id string, category string, page int) (*models.User, error) {
 	var user *models.User
-	var pr models.PixivResponse
 
 	ids, count, err := p.GetUserArtworksID(id, category, page)
 	if err != nil {
 		return nil, err
 	}
 
-	s, _ := p.TextRequest(fmt.Sprintf(UserInformationURL, id))
+	URL := fmt.Sprintf(UserInformationURL, id)
 
-	err = json.Unmarshal([]byte(s), &pr)
-
+	response, err := p.PixivRequest(URL)
 	if err != nil {
-		return nil, err
-	}
-	if pr.Error {
-		return nil, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
+		return user, err
 	}
 
 	var body struct {
@@ -165,7 +144,7 @@ func (p *PixivClient) GetUserInformation(id string, category string, page int) (
 	}
 
 	// Basic user information
-	err = json.Unmarshal([]byte(pr.Body), &body)
+	err = json.Unmarshal([]byte(response), &body)
 	if err != nil {
 		return nil, err
 	}

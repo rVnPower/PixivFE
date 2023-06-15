@@ -1,10 +1,12 @@
 package handler
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"pixivfe/models"
 )
 
 type PixivClient struct {
@@ -68,6 +70,7 @@ func (p *PixivClient) Request(URL string) (*http.Response, error) {
 }
 
 func (p *PixivClient) TextRequest(URL string) (string, error) {
+	/// Make a request to a URL and return the response's string body
 	resp, err := p.Request(URL)
 	if err != nil {
 		return "", err
@@ -80,4 +83,25 @@ func (p *PixivClient) TextRequest(URL string) (string, error) {
 	}
 
 	return string(body), nil
+}
+
+func (p *PixivClient) PixivRequest(URL string) (json.RawMessage, error) {
+	/// Make a request to a Pixiv API URL with a standard response, handle errors and return the raw JSON response
+	var response models.PixivResponse
+
+	body, err := p.TextRequest(URL)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal([]byte(body), &response)
+	if err != nil {
+		return nil, err
+	}
+	if response.Error {
+		// Pixiv returned an error
+		return nil, errors.New("Pixiv responded: " + response.Message)
+	}
+
+	return response.Body, nil
 }

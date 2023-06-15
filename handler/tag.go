@@ -1,31 +1,22 @@
 package handler
 
 import (
-	"errors"
 	"fmt"
 	"github.com/goccy/go-json"
 	"pixivfe/models"
 )
 
 func (p *PixivClient) GetTagData(name string) (models.TagDetail, error) {
-	var pr models.PixivResponse
 	var tag models.TagDetail
 
-	url := fmt.Sprintf(SearchTagURL, name)
+	URL := fmt.Sprintf(SearchTagURL, name)
 
-	s, err := p.TextRequest(url)
-
-	err = json.Unmarshal([]byte(s), &pr)
-
+	response, err := p.PixivRequest(URL)
 	if err != nil {
 		return tag, err
 	}
 
-	if pr.Error {
-		return tag, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
-	}
-
-	err = json.Unmarshal([]byte(pr.Body), &tag)
+	err = json.Unmarshal([]byte(response), &tag)
 	if err != nil {
 		return tag, err
 	}
@@ -34,20 +25,13 @@ func (p *PixivClient) GetTagData(name string) (models.TagDetail, error) {
 }
 
 func (p *PixivClient) GetFrequentTags(ids string) ([]models.FrequentTag, error) {
-	s, _ := p.TextRequest(fmt.Sprintf(FrequentTagsURL, ids))
-
-	var pr models.PixivResponse
 	var tags []models.FrequentTag
-	// Parse Pixiv response body
-	err := json.Unmarshal([]byte(s), &pr)
-	if err != nil {
-		return nil, err
-	}
-	if pr.Error {
-		return nil, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
-	}
 
-	err = json.Unmarshal([]byte(pr.Body), &tags)
+	URL := fmt.Sprintf(FrequentTagsURL, ids)
+
+	response, err := p.PixivRequest(URL)
+
+	err = json.Unmarshal([]byte(response), &tags)
 	if err != nil {
 		return nil, err
 	}
