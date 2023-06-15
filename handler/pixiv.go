@@ -250,6 +250,7 @@ func (p *PixivClient) GetArtworkComments(id string) ([]models.Comment, error) {
 
 func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (*string, error) {
 	s, _ := p.TextRequest(fmt.Sprintf(UserArtworksURL, id))
+	println(fmt.Sprintf(UserArtworksURL, id))
 
 	var pr models.PixivResponse
 
@@ -265,22 +266,33 @@ func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (*
 	var ids []int
 	var idsString string
 	var body struct {
-		Illusts map[int]string `json:"illusts"`
-		Mangas  map[int]string `json:"manga"`
+		Illusts json.RawMessage `json:"illusts"`
+		Mangas  json.RawMessage `json:"manga"`
 	}
+
 	err = json.Unmarshal(pr.Body, &body)
 	if err != nil {
 		return nil, err
 	}
 
+	var illusts map[int]string
+	var mangas map[int]string
+
+	if err = json.Unmarshal(body.Illusts, &illusts); err != nil {
+		illusts = make(map[int]string)
+	}
+	if err = json.Unmarshal(body.Mangas, &mangas); err != nil {
+		mangas = make(map[int]string)
+	}
+
 	// Get the keys, because Pixiv only returns IDs (very evil)
 	if category == "illustrations" || category == "artworks" {
-		for k := range body.Illusts {
+		for k := range illusts {
 			ids = append(ids, k)
 		}
 	}
 	if category == "manga" || category == "artworks" {
-		for k := range body.Mangas {
+		for k := range mangas {
 			ids = append(ids, k)
 		}
 	}
@@ -319,22 +331,34 @@ func (p *PixivClient) GetUserArtworksCount(id string, category string) (int, err
 		return -1, errors.New(fmt.Sprintf("Pixiv returned error message: %s", pr.Message))
 	}
 	var body struct {
-		Illusts map[int]string `json:"illusts"`
-		Mangas  map[int]string `json:"manga"`
+		Illusts json.RawMessage `json:"illusts"`
+		Mangas  json.RawMessage `json:"manga"`
 	}
 	err = json.Unmarshal(pr.Body, &body)
 	if err != nil {
 		return -1, err
 	}
 
+	var illusts map[int]string
+	var mangas map[int]string
+
 	count := 0
 
+	if err = json.Unmarshal(body.Illusts, &illusts); err != nil {
+		illusts = make(map[int]string)
+	}
+	if err = json.Unmarshal(body.Mangas, &mangas); err != nil {
+		mangas = make(map[int]string)
+	}
+
 	if category == "illustrations" || category == "artworks" {
-		count += len(body.Illusts)
+		count += len(illusts)
 	}
 	if category == "manga" || category == "artworks" {
-		count += len(body.Mangas)
+		count += len(mangas)
 	}
+
+	println(count)
 
 	return count, nil
 }
