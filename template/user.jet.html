@@ -67,12 +67,12 @@
     <a href="#" class="pagination-button disabled">Previous</a>
     {{ else }}
     <a
-      href="/users/{{ User.ID }}/{{ Category }}?page=1"
+      href="/users/{{ User.ID }}/{{ Category }}?page=1#checkpoint"
       class="pagination-button"
       >First</a
     >
     <a
-      href="/users/{{ User.ID }}/{{ Category }}?page={{ dec(Page) }}"
+      href="/users/{{ User.ID }}/{{ Category }}?page={{ dec(Page) }}#checkpoint"
       class="pagination-button"
       >Previous</a
     >
@@ -85,12 +85,12 @@
     <a href="#" class="pagination-button disabled">Last</a>
     {{ else }}
     <a
-      href="/users/{{ User.ID }}/{{ Category }}?page={{ inc(Page) }}"
+      href="/users/{{ User.ID }}/{{ Category }}?page={{ inc(Page) }}#checkpoint"
       class="pagination-button"
       >Next</a
     >
     <a
-      href="/users/{{ User.ID }}/{{ Category }}?page={{ dec(PageLimit) }}"
+      href="/users/{{ User.ID }}/{{ Category }}?page={{ dec(PageLimit) }}#checkpoint"
       class="pagination-button"
       >Last</a
     >

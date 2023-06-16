@@ -213,6 +213,11 @@ func (p *PixivClient) GetUserBookmarks(id string, mode string, page int) ([]mode
 
 		err = json.Unmarshal([]byte(value), &artwork)
 		if err != nil {
+			artworks[index] = models.IllustShort{
+				ID:        "#",
+				Title:     "Deleted or Private",
+				Thumbnail: "https://s.pximg.net/common/images/limit_unknown_360.png",
+			}
 			continue
 		}
 		artworks[index] = artwork
