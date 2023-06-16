@@ -15,5 +15,6 @@ const (
 	UserBasicInformationURL = "https://www.pixiv.net/ajax/user/%s"
 	UserArtworksURL         = "https://www.pixiv.net/ajax/user/%s/profile/all"
 	UserArtworksFullURL     = "https://www.pixiv.net/ajax/user/%s/profile/illusts?work_category=illustManga&is_first_page=0&lang=en%s"
+	UserBookmarksURL        = "https://www.pixiv.net/ajax/user/%s/illusts/bookmarks?tag=&offset=%d&limit=48&rest=%s"
 	FrequentTagsURL         = "https://www.pixiv.net/ajax/tags/frequent/illust?%s"
 )

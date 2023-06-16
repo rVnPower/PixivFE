@@ -61,21 +61,24 @@ func user_page(c *fiber.Ctx) error {
 		return err
 	}
 	category := c.Params("category", "artworks")
-	if !(category == "artworks" || category == "illustrations" || category == "manga") {
-		return errors.New("Invalid work category: only illustrations, manga and artworks are available")
+	if !(category == "artworks" || category == "illustrations" || category == "manga" || category == "bookmarks") {
+		return errors.New("Invalid work category: only illustrations, manga, artworks and bookmarks are available")
 	}
-	page := c.Query("page", "1")
 
+	page := c.Query("page", "1")
 	pageInt, _ := strconv.Atoi(page)
+
 	user, err := PC.GetUserInformation(id, category, pageInt)
 	if err != nil {
 		return err
 	}
 
-	worksCount := user.ArtworksCount
+	var worksCount int
+
+	worksCount = user.ArtworksCount
 	pageLimit := math.Ceil(float64(worksCount)/30.0) + 1.0
 
-	return c.Render("user", fiber.Map{"Title": user.Name, "User": user, "PageLimit": int(pageLimit), "Page": pageInt})
+	return c.Render("user", fiber.Map{"Title": user.Name, "User": user, "Category": category, "PageLimit": int(pageLimit), "Page": pageInt})
 }
 
 func ranking_page(c *fiber.Ctx) error {

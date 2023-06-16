@@ -126,11 +126,6 @@ func (p *PixivClient) GetUserBasicInformation(id string) (models.UserShort, erro
 func (p *PixivClient) GetUserInformation(id string, category string, page int) (*models.User, error) {
 	var user *models.User
 
-	ids, count, err := p.GetUserArtworksID(id, category, page)
-	if err != nil {
-		return nil, err
-	}
-
 	URL := fmt.Sprintf(UserInformationURL, id)
 
 	response, err := p.PixivRequest(URL)
@@ -151,26 +146,77 @@ func (p *PixivClient) GetUserInformation(id string, category string, page int) (
 
 	user = body.User
 
-	// Artworks
-	works, _ := p.GetUserArtworks(id, ids)
-	// IDK but the order got shuffled even though Pixiv sorted the IDs in the response
-	sort.Slice(works[:], func(i, j int) bool {
-		left, _ := strconv.Atoi(works[i].ID)
-		right, _ := strconv.Atoi(works[j].ID)
-		return left > right
-	})
-	user.Artworks = works
+	if category != "bookmarks" {
+		// Artworks
+		ids, count, err := p.GetUserArtworksID(id, category, page)
+		if err != nil {
+			return nil, err
+		}
+		works, _ := p.GetUserArtworks(id, ids)
+		// IDK but the order got shuffled even though Pixiv sorted the IDs in the response
+		sort.Slice(works[:], func(i, j int) bool {
+			left, _ := strconv.Atoi(works[i].ID)
+			right, _ := strconv.Atoi(works[j].ID)
+			return left > right
+		})
+		user.Artworks = works
+
+		// Artworks count
+		user.ArtworksCount = count
+
+		// Frequent tags
+		user.FrequentTags, err = p.GetFrequentTags(ids)
+	} else {
+		// Bookmarks
+		works, count, err := p.GetUserBookmarks(id, "show", page)
+		if err != nil {
+			return nil, err
+		}
+
+		user.Artworks = works
+
+		// Public bookmarks count
+		user.ArtworksCount = count
+	}
 
 	// Background image
 	if body.Background != nil {
 		user.BackgroundImage = body.Background["url"].(string)
 	}
 
-	// Artworks count
-	user.ArtworksCount = count
-
-	// Frequent tags
-	user.FrequentTags, err = p.GetFrequentTags(ids)
-
 	return user, nil
+}
+
+func (p *PixivClient) GetUserBookmarks(id string, mode string, page int) ([]models.IllustShort, int, error) {
+	page--
+	URL := fmt.Sprintf(UserBookmarksURL, id, page*48, mode)
+
+	response, err := p.PixivRequest(URL)
+	if err != nil {
+		return nil, -1, err
+	}
+
+	var body struct {
+		Artworks []json.RawMessage `json:"works"`
+		Total    int               `json:"total"`
+	}
+
+	err = json.Unmarshal([]byte(response), &body)
+	if err != nil {
+		return nil, -1, err
+	}
+
+	artworks := make([]models.IllustShort, len(body.Artworks))
+
+	for index, value := range body.Artworks {
+		var artwork models.IllustShort
+
+		err = json.Unmarshal([]byte(value), &artwork)
+		if err != nil {
+			continue
+		}
+		artworks[index] = artwork
+	}
+
+	return artworks, body.Total, nil
 }

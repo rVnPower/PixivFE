@@ -72,8 +72,7 @@ func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 	illust.Images = images
 
 	// Get recent artworks
-	var ids []int
-	idsString := ""
+	ids := make([]int, len(illust.Recent))
 
 	for k := range illust.Recent {
 		ids = append(ids, k)
@@ -81,8 +80,10 @@ func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 
 	sort.Sort(sort.Reverse(sort.IntSlice(ids)))
 
-	count := len(ids)
-	for i := 0; i < 30 && i < count; i++ {
+	idsString := ""
+	count := Min(len(ids), 30)
+
+	for i := 0; i < count; i++ {
 		idsString += fmt.Sprintf("&ids[]=%d", ids[i])
 	}
 
