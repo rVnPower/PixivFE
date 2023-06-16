@@ -151,7 +151,7 @@ func (p *PixivClient) GetRelatedArtworks(id string) ([]models.IllustShort, error
 		Illusts []models.IllustShort `json:"illusts"`
 	}
 
-	URL := fmt.Sprintf(ArtworkCommentsURL, id)
+	URL := fmt.Sprintf(ArtworkRelatedURL, id, 96)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {

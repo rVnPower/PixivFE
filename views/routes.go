@@ -25,12 +25,12 @@ func artwork_page(c *fiber.Ctx) error {
 		return err
 	}
 
-	related, _ := PC.GetRelatedArtworks(id)
-	comments, _ := PC.GetArtworkComments(id)
-
+	related, err := PC.GetRelatedArtworks(id)
 	if err != nil {
 		return err
 	}
+
+	comments, _ := PC.GetArtworkComments(id)
 
 	// Optimize this
 	return c.Render("artwork", fiber.Map{

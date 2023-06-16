@@ -93,24 +93,25 @@ type FrequentTag struct {
 }
 
 type Illust struct {
-	ID          string        `json:"id"`
-	Title       string        `json:"title"`
-	Description template.HTML `json:"description"`
-	UserID      string        `json:"userId"`
-	UserName    string        `json:"userName"`
-	UserAccount string        `json:"userAccount"`
-	Date        time.Time     `json:"uploadDate"`
-	Images      []Image       `json:"images"`
-	Tags        []Tag         `json:"tags"`
-	Pages       int           `json:"pageCount"`
-	Bookmarks   int           `json:"bookmarkCount"`
-	Likes       int           `json:"likeCount"`
-	Comments    int           `json:"commentCount"`
-	Views       int           `json:"viewCount"`
-	XRestrict   xRestrict     `json:"xRestrict"`
-	AiType      aiType        `json:"aiType"`
-	User        UserShort
-	RecentWorks []IllustShort
+	ID              string        `json:"id"`
+	Title           string        `json:"title"`
+	Description     template.HTML `json:"description"`
+	UserID          string        `json:"userId"`
+	UserName        string        `json:"userName"`
+	UserAccount     string        `json:"userAccount"`
+	Date            time.Time     `json:"uploadDate"`
+	Images          []Image       `json:"images"`
+	Tags            []Tag         `json:"tags"`
+	Pages           int           `json:"pageCount"`
+	Bookmarks       int           `json:"bookmarkCount"`
+	Likes           int           `json:"likeCount"`
+	Comments        int           `json:"commentCount"`
+	Views           int           `json:"viewCount"`
+	CommentDisabled int           `json:"commentOff"`
+	XRestrict       xRestrict     `json:"xRestrict"`
+	AiType          aiType        `json:"aiType"`
+	User            UserShort
+	RecentWorks     []IllustShort
 }
 
 type IllustShort struct {
