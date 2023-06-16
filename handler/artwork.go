@@ -72,7 +72,7 @@ func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 	illust.Images = images
 
 	// Get recent artworks
-	ids := make([]int, len(illust.Recent))
+	ids := make([]int, 0)
 
 	for k := range illust.Recent {
 		ids = append(ids, k)
