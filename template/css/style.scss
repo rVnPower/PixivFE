@@ -543,11 +543,13 @@ body {
   }
 }
 
-@media screen and (min-width: 400px) and (max-width: 800px) {
+@media screen and (max-width: 800px) {
   .search-bar {
     display: none;
   }
+}
 
+@media screen and (min-width: 400px) and (max-width: 800px) {
   .artwork-thumbnail-small {
     height: auto;
   }
