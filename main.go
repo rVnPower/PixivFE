@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net"
 	"pixivfe/configs"
 	"pixivfe/handler"
@@ -23,7 +24,7 @@ func setupRouter() *fiber.App {
 
 	server := fiber.New(fiber.Config{
 		AppName:               "PixivFE",
-		DisableStartupMessage: true,
+		DisableStartupMessage: false,
 		Views:                 engine,
 		Prefork:               true,
 		JSONEncoder:           json.Marshal,

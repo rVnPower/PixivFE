@@ -52,7 +52,7 @@ func index_page(c *fiber.Ctx) error {
 	// 	"Spotlights":  spotlight,
 	// 	"Newest":      newest,
 	// })
-	return c.Render("temp", fiber.Map{"Title": "Test"})
+	return c.Render("temp", fiber.Map{"Title": "Landing"})
 }
 
 func user_page(c *fiber.Ctx) error {
