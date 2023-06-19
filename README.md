@@ -2,8 +2,6 @@
 
 A privacy-respecting alternative front-end for Pixiv that doesn't suck
 
-**Notice Jun 10**: I am intending to rewrite the codebase from Gin to Fiber for better performance and workflow. I will begin rewriting after a few days.
-
 <p>
 <a href="https://codeberg.org/vnpower/pixivfe">
 <img alt="Get it on Codeberg" src="https://get-it-on.codeberg.org/get-it-on-blue-on-white.png" height="60">
