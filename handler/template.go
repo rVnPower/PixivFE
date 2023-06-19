@@ -4,10 +4,8 @@ import (
 	"fmt"
 	"html/template"
 	"math/rand"
-	"pixivfe/configs"
 	"regexp"
 	"strconv"
-	"strings"
 )
 
 func GetRandomColor() string {
@@ -59,15 +57,16 @@ func GetTemplateFunctions() template.FuncMap {
 		},
 
 		"proxyImage": func(url string) string {
-			if strings.Contains(url, "s.pximg.net") {
-				// This subdomain didn't get proxied
-				return url
-			}
+			// if strings.Contains(url, "s.pximg.net") {
+			// 	// This subdomain didn't get proxied
+			// 	return url
+			// }
 
-			regex := regexp.MustCompile(`.*?pximg\.net`)
-			proxy := "https://" + configs.ProxyServer
+			// regex := regexp.MustCompile(`.*?pximg\.net`)
+			// proxy := "https://" + configs.ProxyServer
 
-			return regex.ReplaceAllString(url, proxy)
+			// return regex.ReplaceAllString(url, proxy)
+			return url
 		},
 		"parseEmojis": func(s string) template.HTML {
 			regex := regexp.MustCompile(`\(([^)]+)\)`)
