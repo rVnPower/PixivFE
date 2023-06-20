@@ -40,6 +40,17 @@ func setupRouter() *fiber.App {
 		},
 	))
 
+	// Global headers (from GotHub)
+	server.Use(func(c *fiber.Ctx) error {
+		c.Set("X-Frame-Options", "SAMEORIGIN")
+		c.Set("X-XSS-Protection", "1; mode=block")
+		c.Set("X-Content-Type-Options", "nosniff")
+		c.Set("Referrer-Policy", "no-referrer")
+		c.Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
+
+		return c.Next()
+	})
+
 	// Static files
 	server.Static("/favicon.ico", "./template/favicon.ico")
 	server.Static("css/", "./template/css")
