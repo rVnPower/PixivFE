@@ -52,6 +52,16 @@ func index_page(c *fiber.Ctx) error {
 	// 	"Spotlights":  spotlight,
 	// 	"Newest":      newest,
 	// })
+	sess, err := configs.Store.Get(c)
+	if err != nil {
+		panic(err)
+	}
+	token := sess.Get("token")
+
+	if token != nil {
+		println(token.(string))
+	}
+
 	return c.Render("temp", fiber.Map{"Title": "Landing"})
 }
 
@@ -165,6 +175,28 @@ func discovery_page(c *fiber.Ctx) error {
 	return c.Render("discovery", fiber.Map{"Title": "Discovery", "Artworks": artworks})
 }
 
+func settings_page(c *fiber.Ctx) error {
+	return c.Render("settings", fiber.Map{})
+}
+
+func settings_handler(c *fiber.Ctx) error {
+	sess, err := configs.Store.Get(c)
+	if err != nil {
+		panic(err)
+	}
+
+	token := c.FormValue("token")
+	if token != "" {
+		sess.Set("token", token)
+
+		if err := sess.Save(); err != nil {
+			panic(err)
+		}
+		return c.Redirect("/settings/", http.StatusAccepted)
+	}
+	return c.Redirect("/settings/", http.StatusNoContent)
+}
+
 // func not_found_page(c *fiber.Ctx) {
 // 	return c.Render(http.StatusNotFound, "error.html", fiber.Map{
 // 		"Title": "Not found",
@@ -203,6 +235,9 @@ func SetupRoutes(r *fiber.App) {
 	r.Get("tags/:name", search_page)
 	r.Get("discovery", discovery_page)
 	r.Post("tags", search)
+
+	r.Get("settings", settings_page)
+	r.Post("setting", settings_handler)
 
 	// 404 page
 	// r.NoRoute(not_found_page)
