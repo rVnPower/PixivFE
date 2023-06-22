@@ -6,11 +6,14 @@ import (
 	"pixivfe/handler"
 	"pixivfe/views"
 	"strings"
+	"time"
 
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/utils"
 	"github.com/gofiber/template/jet/v2"
 )
@@ -22,23 +25,37 @@ func setupRouter() *fiber.App {
 	engine.AddFuncMap(handler.GetTemplateFunctions())
 
 	server := fiber.New(fiber.Config{
-		AppName:               "PixivFE",
-		DisableStartupMessage: false,
-		Views:                 engine,
-		Prefork:               true,
-		JSONEncoder:           json.Marshal,
-		JSONDecoder:           json.Unmarshal,
-		ViewsLayout:           "layout",
+		AppName:                 "PixivFE",
+		DisableStartupMessage:   false,
+		Views:                   engine,
+		Prefork:                 false,
+		JSONEncoder:             json.Marshal,
+		JSONDecoder:             json.Unmarshal,
+		ViewsLayout:             "layout",
+		EnableTrustedProxyCheck: true,
+		TrustedProxies:          []string{"0.0.0.0/0"},
+		ProxyHeader:             fiber.HeaderXForwardedFor,
 	})
 
 	server.Use(logger.New())
 	server.Use(cache.New(
 		cache.Config{
+			Expiration: 5 * time.Minute,
+
 			KeyGenerator: func(c *fiber.Ctx) string {
 				return utils.CopyString(c.OriginalURL())
 			},
 		},
 	))
+	server.Use(recover.New())
+
+	server.Use(limiter.New(limiter.Config{
+		Max:        30,
+		Expiration: 5 * time.Minute,
+		LimitReached: func(c *fiber.Ctx) error {
+			return c.SendString("Rate limited")
+		},
+	}))
 
 	// Global headers (from GotHub)
 	server.Use(func(c *fiber.Ctx) error {
