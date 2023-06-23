@@ -18,7 +18,7 @@ import (
 	"github.com/gofiber/template/jet/v2"
 )
 
-func setupRouter() *fiber.App {
+func setup_router() *fiber.App {
 	// HTML templates, automatically loaded
 	engine := jet.New("./template", ".jet.html")
 
@@ -67,6 +67,32 @@ func setupRouter() *fiber.App {
 
 		return c.Next()
 	})
+	// server.Use(func(c *fiber.Ctx) error {
+	// 	sess, err := configs.Store.Get(c)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+
+	// 	var token_string, image_string string
+
+	// 	token := sess.Get("token")
+	// 	if token != nil {
+	// 		token_string = token.(string)
+	// 	} else {
+	// 		token_string = configs.ProxyServer
+	// 	}
+
+	// 	image := sess.Get("image-proxy")
+	// 	if image != nil {
+	// 		image_string = image.(string)
+	// 	}
+
+	// 	c.Bind(fiber.Map{
+	// 		"Token":      token_string,
+	// 		"ImageProxy": image_string,
+	// 	})
+	// 	return c.Next()
+	// })
 
 	// Static files
 	server.Static("/favicon.ico", "./template/favicon.ico")
@@ -90,7 +116,7 @@ func main() {
 		panic(err)
 	}
 
-	r := setupRouter()
+	r := setup_router()
 
 	if strings.Contains(configs.Port, "/") {
 		ln, err := net.Listen("unix", configs.Port)

@@ -6,9 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"pixivfe/configs"
 	"pixivfe/models"
-	"strings"
 )
 
 type PixivClient struct {
@@ -92,7 +90,7 @@ func (p *PixivClient) PixivRequest(URL string) (json.RawMessage, error) {
 	var response models.PixivResponse
 
 	body, err := p.TextRequest(URL)
-	body = strings.ReplaceAll(body, "i.pximg.net", configs.ProxyServer)
+	// body = strings.ReplaceAll(body, "i.pximg.net", configs.ProxyServer)
 	if err != nil {
 		return nil, err
 	}

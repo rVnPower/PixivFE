@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 func GetRandomColor() string {
@@ -56,17 +57,16 @@ func GetTemplateFunctions() template.FuncMap {
 			return n
 		},
 
-		"proxyImage": func(url string) string {
-			// if strings.Contains(url, "s.pximg.net") {
-			// 	// This subdomain didn't get proxied
-			// 	return url
-			// }
+		"proxyImage": func(url string, target string) string {
+			if strings.Contains(url, "s.pximg.net") {
+				// This subdomain didn't get proxied
+				return url
+			}
 
-			// regex := regexp.MustCompile(`.*?pximg\.net`)
-			// proxy := "https://" + configs.ProxyServer
+			regex := regexp.MustCompile(`.*?pximg\.net`)
+			proxy := "https://" + target
 
-			// return regex.ReplaceAllString(url, proxy)
-			return url
+			return regex.ReplaceAllString(url, proxy)
 		},
 		"parseEmojis": func(s string) template.HTML {
 			regex := regexp.MustCompile(`\(([^)]+)\)`)

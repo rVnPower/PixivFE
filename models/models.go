@@ -114,6 +114,19 @@ type Illust struct {
 	RecentWorks     []IllustShort
 }
 
+func (s *Illust) ProxyImages(proxy string) {
+	for i := range s.Images {
+		s.Images[i].Small = ProxyImage(s.Images[i].Small, proxy)
+		s.Images[i].Medium = ProxyImage(s.Images[i].Medium, proxy)
+		s.Images[i].Large = ProxyImage(s.Images[i].Large, proxy)
+		s.Images[i].Original = ProxyImage(s.Images[i].Original, proxy)
+	}
+	for i := range s.RecentWorks {
+		s.RecentWorks[i].Thumbnail = ProxyImage(s.RecentWorks[i].Thumbnail, proxy)
+	}
+	s.User.Avatar = ProxyImage(s.User.Avatar, proxy)
+}
+
 type IllustShort struct {
 	ID           string        `json:"id"`
 	Title        string        `json:"title"`
@@ -148,6 +161,12 @@ type User struct {
 	Artworks        []IllustShort `json:"artworks"`
 	ArtworksCount   int
 	FrequentTags    []FrequentTag
+}
+
+func (s *User) ProxyImages(proxy string) {
+	s.Avatar = ProxyImage(s.Avatar, proxy)
+	s.BackgroundImage = ProxyImage(s.BackgroundImage, proxy)
+	s.Artworks = ProxyShortArtworkSlice(s.Artworks, proxy)
 }
 
 type UserShort struct {
@@ -187,4 +206,10 @@ type SearchResult struct {
 	Artworks    SearchArtworks
 	Popular     PopularArtworks `json:"popular"`
 	RelatedTags []string        `json:"relatedTags"`
+}
+
+func (s *SearchResult) ProxyImages(proxy string) {
+	s.Artworks.Artworks = ProxyShortArtworkSlice(s.Artworks.Artworks, proxy)
+	s.Popular.Permanent = ProxyShortArtworkSlice(s.Popular.Permanent, proxy)
+	s.Popular.Recent = ProxyShortArtworkSlice(s.Popular.Recent, proxy)
 }
