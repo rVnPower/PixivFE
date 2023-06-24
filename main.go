@@ -40,6 +40,10 @@ func setup_router() *fiber.App {
 	server.Use(logger.New())
 	server.Use(cache.New(
 		cache.Config{
+			Next: func(c *fiber.Ctx) bool {
+				// Disable cache for settings page
+				return strings.Contains(c.Path(), "/settings")
+			},
 			Expiration: 5 * time.Minute,
 
 			KeyGenerator: func(c *fiber.Ctx) string {

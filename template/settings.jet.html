@@ -1,5 +1,8 @@
 <div class="container">
     <h2>Settings</h2>
+    {{ if isset(Message) }}
+    {{ Message }}
+    {{ end }}
     <form action="/settings/token" method="post">
         <fieldset class="settings-fieldset">
             <legend>Custom token</legend>

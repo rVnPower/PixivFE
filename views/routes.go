@@ -52,8 +52,7 @@ func SetupRoutes(r *fiber.App) {
 
 	settings := r.Group("settings")
 	settings.Get("/", settings_page)
-	settings.Post("/token", set_token)
-	settings.Post("/image_server", set_image_server)
+	settings.Post("/:type", settings_post)
 
 	// 404 page
 	// r.NoRoute(not_found_page)
