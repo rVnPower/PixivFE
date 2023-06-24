@@ -122,7 +122,6 @@ func ranking_page(c *fiber.Ctx) error {
 	if image_proxy == nil {
 		image_proxy = &configs.ProxyServer
 	}
-
 	mode := c.Query("mode", "daily")
 
 	content := c.Query("content", "all")

@@ -35,6 +35,26 @@ func setup_router() *fiber.App {
 		EnableTrustedProxyCheck: true,
 		TrustedProxies:          []string{"0.0.0.0/0"},
 		ProxyHeader:             fiber.HeaderXForwardedFor,
+		ErrorHandler: func(c *fiber.Ctx, err error) error {
+			// Status code defaults to 500
+			code := fiber.StatusInternalServerError
+
+			// // Retrieve the custom status code if it's a *fiber.Error
+			// var e *fiber.Error
+			// if errors.As(err, &e) {
+			// 	code = e.Code
+			// }
+
+			// Send custom error page
+			err = c.Status(code).Render("error", fiber.Map{"Title": code, "Error": err})
+			if err != nil {
+				// In case the SendFile fails
+				return c.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")
+			}
+
+			// Return from handler
+			return nil
+		},
 	})
 
 	server.Use(logger.New())
