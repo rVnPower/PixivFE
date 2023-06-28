@@ -213,3 +213,8 @@ func (s *SearchResult) ProxyImages(proxy string) {
 	s.Popular.Permanent = ProxyShortArtworkSlice(s.Popular.Permanent, proxy)
 	s.Popular.Recent = ProxyShortArtworkSlice(s.Popular.Recent, proxy)
 }
+
+type LandingArtworks struct {
+	Commissions []IllustShort
+	Following   []IllustShort
+}

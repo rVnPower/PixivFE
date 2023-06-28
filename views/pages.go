@@ -61,6 +61,10 @@ func artwork_page(c *fiber.Ctx) error {
 }
 
 func index_page(c *fiber.Ctx) error {
+	image_proxy := get_session_value(c, "image-proxy")
+	if image_proxy == nil {
+		image_proxy = &configs.ProxyServer
+	}
 	// recommended, _ := handler.GetRecommendedIllust(c)
 	// ranking, _ := handler.GetRankingIllust(c, "day")
 	// spotlight := handler.GetSpotlightArticle(c)
@@ -71,16 +75,15 @@ func index_page(c *fiber.Ctx) error {
 	// 	"Spotlights":  spotlight,
 	// 	"Newest":      newest,
 	// })
-	sess, err := configs.Store.Get(c)
-	if err != nil {
-		panic(err)
-	}
-	token := sess.Get("token")
+	// artworks, err := PC.GetLandingPage("all")
+	// if err != nil {
+	// 	return err
+	// }
 
-	if token != nil {
-		println(token.(string))
-	}
+	// artworks.Following = models.ProxyShortArtworkSlice(artworks.Following, *image_proxy)
+	// artworks.Commissions = models.ProxyShortArtworkSlice(artworks.Commissions, *image_proxy)
 
+	// return c.Render("index", fiber.Map{"Title": "Landing", "Artworks": artworks})
 	return c.Render("temp", fiber.Map{"Title": "Landing"})
 }
 
