@@ -544,8 +544,14 @@ body {
 }
 
 @media screen and (max-width: 800px) {
-  .search-bar {
-    display: none;
+  .navbar {
+    .navbar-buttons {
+      display: none;
+    }
+
+    .search-bar {
+      width: 75px;
+    }
   }
 }
 
