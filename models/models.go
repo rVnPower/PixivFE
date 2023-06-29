@@ -214,7 +214,25 @@ func (s *SearchResult) ProxyImages(proxy string) {
 	s.Popular.Recent = ProxyShortArtworkSlice(s.Popular.Recent, proxy)
 }
 
+type Pixivision struct {
+	ID        string `json:"id"`
+	Title     string `json:"title"`
+	Thumbnail string `json:"thumbnailUrl"`
+	URL       string `json:"url"`
+}
+
+type LandingRecommendByTags struct {
+	Name     string `json:"tag"`
+	Artworks []IllustShort
+}
+
 type LandingArtworks struct {
-	Commissions []IllustShort
-	Following   []IllustShort
+	Commissions     []IllustShort
+	Following       []IllustShort
+	Recommended     []IllustShort
+	Newest          []IllustShort
+	Rankings        []IllustShort
+	Users           []IllustShort
+	Pixivision      []Pixivision
+	RecommendByTags []LandingRecommendByTags
 }

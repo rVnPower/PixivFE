@@ -6,7 +6,6 @@ import (
 )
 
 func ProxyImage(URL string, target string) string {
-
 	if strings.Contains(URL, "s.pximg.net") {
 		// This subdomain didn't get proxied
 		return URL
@@ -27,9 +26,23 @@ func ProxyShortArtworkSlice(artworks []IllustShort, proxy string) []IllustShort 
 	return artworks
 }
 
+func ProxyRecommendedByTagsSlice(artworks []LandingRecommendByTags, proxy string) []LandingRecommendByTags {
+	for i := range artworks {
+		artworks[i].Artworks = ProxyShortArtworkSlice(artworks[i].Artworks, proxy)
+	}
+	return artworks
+}
+
 func ProxyCommentsSlice(comments []Comment, proxy string) []Comment {
 	for i := range comments {
 		comments[i].Avatar = ProxyImage(comments[i].Avatar, proxy)
 	}
 	return comments
+}
+
+func ProxyPixivisionSlice(articles []Pixivision, proxy string) []Pixivision {
+	for i := range articles {
+		articles[i].Thumbnail = ProxyImage(articles[i].Thumbnail, proxy)
+	}
+	return articles
 }

@@ -75,16 +75,22 @@ func index_page(c *fiber.Ctx) error {
 	// 	"Spotlights":  spotlight,
 	// 	"Newest":      newest,
 	// })
-	// artworks, err := PC.GetLandingPage("all")
-	// if err != nil {
-	// 	return err
-	// }
+	artworks, err := PC.GetLandingPage("all")
+	if err != nil {
+		return err
+	}
 
-	// artworks.Following = models.ProxyShortArtworkSlice(artworks.Following, *image_proxy)
-	// artworks.Commissions = models.ProxyShortArtworkSlice(artworks.Commissions, *image_proxy)
+	artworks.Following = models.ProxyShortArtworkSlice(artworks.Following, *image_proxy)
+	artworks.Commissions = models.ProxyShortArtworkSlice(artworks.Commissions, *image_proxy)
+	artworks.Recommended = models.ProxyShortArtworkSlice(artworks.Recommended, *image_proxy)
+	artworks.Newest = models.ProxyShortArtworkSlice(artworks.Newest, *image_proxy)
+	artworks.Rankings = models.ProxyShortArtworkSlice(artworks.Rankings, *image_proxy)
+	artworks.Users = models.ProxyShortArtworkSlice(artworks.Users, *image_proxy)
+	artworks.Pixivision = models.ProxyPixivisionSlice(artworks.Pixivision, *image_proxy)
+	artworks.RecommendByTags = models.ProxyRecommendedByTagsSlice(artworks.RecommendByTags, *image_proxy)
 
-	// return c.Render("index", fiber.Map{"Title": "Landing", "Artworks": artworks})
-	return c.Render("temp", fiber.Map{"Title": "Landing"})
+	return c.Render("index", fiber.Map{"Title": "Landing", "Artworks": artworks})
+	// return c.Render("temp", fiber.Map{"Title": "Landing"})
 }
 
 func user_page(c *fiber.Ctx) error {
