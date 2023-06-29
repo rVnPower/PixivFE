@@ -267,6 +267,7 @@ body {
 
 .artwork-page {
   background: #262a2b;
+  border-radius: 8px;
 }
 .artwork-page .artwork-content {
   margin: 0 20px;
