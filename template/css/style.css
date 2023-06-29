@@ -19,6 +19,10 @@ body {
   padding-left: 10px;
   padding-right: 10px;
 }
+.container h2 {
+  font-size: 20px;
+  margin-bottom: 0;
+}
 
 .thumbnail-container {
   overflow-x: scroll;
@@ -26,6 +30,8 @@ body {
   white-space: nowrap;
   margin-top: 5px;
   margin-bottom: 5px;
+  padding-bottom: 3px;
+  scrollbar-width: thin;
 }
 
 .navbar {
@@ -195,6 +201,7 @@ body {
   width: 100%;
   height: 100%;
   object-position: center center;
+  border-radius: 8px;
 }
 .artwork-thumbnail .artwork-thumbnail-artist {
   max-width: 100%;
