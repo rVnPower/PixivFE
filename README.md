@@ -80,7 +80,7 @@ User page ([URL to this page](https://pixivfe.exozy.me/users/11764388)):
   - [ ] Local history
   - [ ] Toggling R-18, R-18G, AI (?)
   - [x] Custom `pximg` proxy
-- [x] Optimization
+- [ ] Optimization
   - [x] Split web components into smaller templates
   - [x] Clean the models + JSON
   - [x] Navigation between pages
