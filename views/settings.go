@@ -38,7 +38,6 @@ func test_request(URL string) error {
 	// 	req.Header.Add(k, v)
 	// }
 	// for k, v := range p.Cookie {
-	// 	req.AddCookie(&http.Cookie{Name: k, Value: v})
 	// }
 	// Make a request
 	resp, err := client.Do(req)
@@ -54,22 +53,28 @@ func test_request(URL string) error {
 	return nil
 }
 
-func set_token(c *fiber.Ctx) error {
+func set_token(c *fiber.Ctx) string {
 	name := "token"
 	sess := get_storage(c)
 
 	// Parse the value from the form
 	token := c.FormValue(name)
 	if token != "" {
+		client := NewPixivClient(3000)
+		client.SetSessionID(token)
+		client.SetUserAgent(configs.UserAgent)
+
 		// If token is valid, save it
+		if _, err := client.PixivRequest("https://www.pixiv.net/ajax/top/illust?mode=r18"); err != nil {
+			return "Invalid token"
+		}
 		sess.Set(name, token)
 
 		save_storage(sess)
 
-		return c.Redirect("/settings", http.StatusFound)
+		return ""
 	}
-	c.Redirect("/settings", http.StatusNoContent)
-	return nil
+	return "Empty form"
 }
 
 func set_image_server(c *fiber.Ctx) string {

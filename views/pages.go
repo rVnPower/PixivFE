@@ -70,7 +70,13 @@ func index_page(c *fiber.Ctx) error {
 		return c.Render("temp", fiber.Map{"Title": "Landing"})
 	}
 
-	artworks, err := PC.GetLandingPage("all")
+	PC := NewPixivClient(5000)
+	PC.SetSessionID(*token)
+	PC.SetUserAgent("Mozilla/5.0")
+
+	mode := c.Query("mode", "all")
+
+	artworks, err := PC.GetLandingPage(mode)
 	if err != nil {
 		return err
 	}
@@ -244,8 +250,13 @@ func settings_post(c *fiber.Ctx) error {
 	t := c.Params("type")
 	error := ""
 
-	if t == "image_server" {
+	switch t {
+	case "image_server":
 		error = set_image_server(c)
+	case "token":
+		error = set_token(c)
+	default:
+		error = "No method available"
 	}
 
 	if error != "" {
