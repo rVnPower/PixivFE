@@ -76,17 +76,18 @@ User page ([URL to this page](https://pixivfe.exozy.me/users/11764388)):
   - [x] Search results
   - [x] Switcher
 - [ ] Settings
-  - [ ] Login
+  - [x] Login
   - [ ] Local history
   - [ ] Toggling R-18, R-18G, AI (?)
-  - [ ] Custom `pximg` proxy
-- [ ] Optimization
+  - [x] Custom `pximg` proxy
+- [x] Optimization
   - [x] Split web components into smaller templates
   - [x] Clean the models + JSON
   - [x] Navigation between pages
   - [x] Lazy load images
-  - [ ] Better error handling
+  - [x] Better error handling
   - [x] Fully proxy images from Pixiv
+  - [ ] Optimize pagination code
 
 ## License
 
