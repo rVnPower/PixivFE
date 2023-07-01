@@ -74,7 +74,7 @@ func setup_router() *fiber.App {
 	server.Use(recover.New())
 
 	server.Use(limiter.New(limiter.Config{
-		Max:        30,
+		Max:        25,
 		Expiration: 5 * time.Minute,
 		LimitReached: func(c *fiber.Ctx) error {
 			return c.SendString("Rate limited")
