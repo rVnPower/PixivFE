@@ -27,23 +27,6 @@ Check out the [wiki](https://codeberg.org/VnPower/pixivfe/wiki/Home)
 
 Hosted one yourself? Create a pull request to add it here!
 
-## Previews
-
-Landing page: currently borked :(
-
-Most pages are very similar to each other. So I will only take screenshots of the artwork page and the user page, since they are the most unique.
-
-Artwork page ([URL to this page](https://pixivfe.exozy.me/artworks/108672057)):
-![Artwork](https://files.catbox.moe/c3l1vm.png)
-![Artwork](https://files.catbox.moe/f9o0h0.png)
-![Artwork](https://files.catbox.moe/9yc2yk.png)
-
-User page ([URL to this page](https://pixivfe.exozy.me/users/11764388)):
-![User](https://files.catbox.moe/tdc234.png)
-
-<!-- ![Homepage](https://files.catbox.moe/053fzh.png) -->
-<!-- ![Homepage](https://files.catbox.moe/m64h7s.png) -->
-
 ## To-do
 
 - [x] Base
@@ -56,9 +39,6 @@ User page ([URL to this page](https://pixivfe.exozy.me/users/11764388)):
   - [x] Recommended artworks
   - [x] Daily rankings
   - [x] Spotlight (pixivision)
-  - [ ] Discovery
-    - [x] Artworks
-    - [ ] Users
   - [x] Newest by all
   - [ ] Trending tags
   - [ ] Switcher (illusts/mangas)
