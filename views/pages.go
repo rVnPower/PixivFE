@@ -202,6 +202,9 @@ func search_page(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
+	if len(tag.Metadata) > 0 {
+		tag.Metadata["image"] = models.ProxyImage(tag.Metadata["image"], *image_proxy)
+	}
 	result, err := PC.GetSearch(category, name, order, mode, page)
 	if err != nil {
 		return err
