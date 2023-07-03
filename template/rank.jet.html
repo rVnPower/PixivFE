@@ -41,23 +41,23 @@
     {{ end }}
 
     <div class="pagination">
-        {{ if Page >= 1 }}
-        <a href="#" class="pagination-button disabled">First</a>
-        <a href="#" class="pagination-button disabled">Previous</a>
-        {{ else }}
-        <a href="/ranking?content={{ Content }}&mode={{ Mode }}&page=1" class="pagination-button">First</a>
-        <a href="/ranking?content={{ Content }}&mode={{ Mode }}&page={{ dec(Page) }}"
-            class="pagination-button">Previous</a>
-        {{ end }}
+        {{ if Page <= 1 }} <a href="#" class="pagination-button disabled">First</a>
+            <a href="#" class="pagination-button disabled">Previous</a>
+            {{ else }}
+            <a href="/ranking?content={{ Content }}&mode={{ Mode }}&page=1" class="pagination-button">First</a>
+            <a href="/ranking?content={{ Content }}&mode={{ Mode }}&page={{ dec(Page) }}"
+                class="pagination-button">Previous</a>
+            {{ end }}
 
-        <a href="#" class="pagination-button disabled">{{ Page }}</a>
+            <a href="#" class="pagination-button disabled">{{ Page }}</a>
 
-        {{ if Page == 10 }}
-        <a href="#" class="pagination-button disabled">Next</a>
-        <a href="#" class="pagination-button disabled">Last</a>
-        {{ else }}
-        <a href="/ranking?content={{ Content }}&mode={{ Mode }}&page={{ inc(Page) }}" class="pagination-button">Next</a>
-        <a href="/ranking?content={{ Content }}&mode={{ Mode }}&page=10" class="pagination-button">Last</a>
-        {{ end }}
+            {{ if Page == 10 }}
+            <a href="#" class="pagination-button disabled">Next</a>
+            <a href="#" class="pagination-button disabled">Last</a>
+            {{ else }}
+            <a href="/ranking?content={{ Content }}&mode={{ Mode }}&page={{ inc(Page) }}"
+                class="pagination-button">Next</a>
+            <a href="/ranking?content={{ Content }}&mode={{ Mode }}&page=10" class="pagination-button">Last</a>
+            {{ end }}
     </div>
 </div>
