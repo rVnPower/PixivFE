@@ -18,20 +18,10 @@
   </div>
   <div class="switcher">
     <span class="switch-title">Category</span>
-    <a href="/users/{{ User.ID }}/artworks#checkpoint" class="switch-button"
-      >All</a
-    >
-    <a
-      href="/users/{{ User.ID }}/illustrations#checkpoint"
-      class="switch-button"
-      >Illustrations</a
-    >
-    <a href="/users/{{ User.ID }}/manga#checkpoint" class="switch-button"
-      >Mangas</a
-    >
-    <a href="/users/{{ User.ID }}/bookmarks#checkpoint" class="switch-button"
-      >Bookmarks</a
-    >
+    <a href="/users/{{ User.ID }}/artworks#checkpoint" class="switch-button">All</a>
+    <a href="/users/{{ User.ID }}/illustrations#checkpoint" class="switch-button">Illustrations</a>
+    <a href="/users/{{ User.ID }}/manga#checkpoint" class="switch-button">Mangas</a>
+    <a href="/users/{{ User.ID }}/bookmarks#checkpoint" class="switch-button">Bookmarks</a>
   </div>
   <div>
     <h1 id="checkpoint">Illustrations and Mangas</h1>
@@ -39,10 +29,7 @@
     <div>
       {{ range User.FrequentTags }}
       <a href="/tags/{{ .Name }}">
-        <div
-          class="tag-container"
-          style="background-color: {{ randomColor() }}"
-        >
+        <div class="tag-container" style="background-color: {{ randomColor() }}">
           {{ if ! .TranslatedName }}
           <div class="main">{{ .Name }}</div>
           <div class="sub">#</div>
@@ -58,38 +45,23 @@
     {{ include "small-tn" User.Artworks }}
   </div>
   <div class="pagination">
-    {{ if Page == 1 }}
+    {{ url := "/users/" + User.ID + "/" + Category + "?page="}} {{ if Page == 1
+    }}
     <a href="#" class="pagination-button disabled">First</a>
     <a href="#" class="pagination-button disabled">Previous</a>
     {{ else }}
-    <a
-      href="/users/{{ User.ID }}/{{ Category }}?page=1#checkpoint"
-      class="pagination-button"
-      >First</a
-    >
-    <a
-      href="/users/{{ User.ID }}/{{ Category }}?page={{ dec(Page) }}#checkpoint"
-      class="pagination-button"
-      >Previous</a
-    >
+    <a href="{{ url }}1#checkpoint" class="pagination-button">First</a>
+    <a href="{{ url }}{{ Page - 1 }}#checkpoint" class="pagination-button">Previous</a>
     {{ end }}
 
     <a href="#" class="pagination-button disabled">{{ Page }}</a>
 
-    {{ if Page == dec(PageLimit) }}
+    {{ if Page == PageLimit - 1 }}
     <a href="#" class="pagination-button disabled">Next</a>
     <a href="#" class="pagination-button disabled">Last</a>
     {{ else }}
-    <a
-      href="/users/{{ User.ID }}/{{ Category }}?page={{ inc(Page) }}#checkpoint"
-      class="pagination-button"
-      >Next</a
-    >
-    <a
-      href="/users/{{ User.ID }}/{{ Category }}?page={{ dec(PageLimit) }}#checkpoint"
-      class="pagination-button"
-      >Last</a
-    >
+    <a href="{{ url }}{{ Page + 1 }}#checkpoint" class="pagination-button">Next</a>
+    <a href="{{ url }}{{ PageLimit - 1 }}#checkpoint" class="pagination-button">Last</a>
     {{ end }}
   </div>
 </div>
