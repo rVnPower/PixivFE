@@ -131,15 +131,15 @@ func ranking_page(c *fiber.Ctx) error {
 	if image_proxy == nil {
 		image_proxy = &configs.ProxyServer
 	}
-	mode := c.Query("mode", "daily")
 
-	content := c.Query("content", "all")
+	queries := make(map[string]string, 3)
+	queries["Mode"] = c.Query("mode", "daily")
+	queries["Content"] = c.Query("content", "all")
 
 	page := c.Query("page", "1")
-
 	pageInt, _ := strconv.Atoi(page)
 
-	response, err := PC.GetRanking(mode, content, page)
+	response, err := PC.GetRanking(queries["Mode"], queries["Content"], page)
 	if err != nil {
 		return err
 	}
@@ -154,9 +154,9 @@ func ranking_page(c *fiber.Ctx) error {
 	return c.Render("rank", fiber.Map{
 		"Title":   "Ranking",
 		"Items":   artworks,
-		"Mode":    mode,
-		"Content": content,
-		"Page":    pageInt})
+		"Queries": queries,
+		"Page":    pageInt,
+	})
 }
 
 func newest_artworks_page(c *fiber.Ctx) error {
@@ -188,15 +188,15 @@ func search_page(c *fiber.Ctx) error {
 		image_proxy = &configs.ProxyServer
 	}
 
+	queries := make(map[string]string, 3)
+	queries["Mode"] = c.Query("mode", "safe")
+	queries["Category"] = c.Query("category", "artworks")
+	queries["Order"] = c.Query("order", "date_d")
+
 	name := c.Params("name")
 
 	page := c.Query("page", "1")
-
-	order := c.Query("order", "date_d")
-
-	mode := c.Query("mode", "safe")
-
-	category := c.Query("category", "artworks")
+	pageInt, _ := strconv.Atoi(page)
 
 	tag, err := PC.GetTagData(name)
 	if err != nil {
@@ -205,20 +205,14 @@ func search_page(c *fiber.Ctx) error {
 	if len(tag.Metadata) > 0 {
 		tag.Metadata["image"] = models.ProxyImage(tag.Metadata["image"], *image_proxy)
 	}
-	result, err := PC.GetSearch(category, name, order, mode, page)
+	result, err := PC.GetSearch(queries["Category"], name, queries["Order"], queries["Mode"], page)
 	if err != nil {
 		return err
 	}
 
 	result.ProxyImages(*image_proxy)
 
-	queries := map[string]string{
-		"Page":     page,
-		"Order":    order,
-		"Mode":     mode,
-		"Category": category,
-	}
-	return c.Render("tag", fiber.Map{"Title": "Results for " + tag.Name, "Tag": tag, "Data": result, "Queries": queries})
+	return c.Render("tag", fiber.Map{"Title": "Results for " + tag.Name, "Tag": tag, "Data": result, "Queries": queries, "Page": pageInt})
 }
 
 func search(c *fiber.Ctx) error {

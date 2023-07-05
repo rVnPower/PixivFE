@@ -2,7 +2,11 @@
   <div class="tag-header">
     {{ if Tag.Metadata.id }}
     <a href="/artworks/{{ Tag.Metadata.id }}">
-      <img class="tag-thumbnail" src="{{ Tag.Metadata.image }}" alt="{{ Tag.Name }}" />
+      <img
+        class="tag-thumbnail"
+        src="{{ Tag.Metadata.image }}"
+        alt="{{ Tag.Name }}"
+      />
     </a>
     {{ end }}
 
@@ -60,17 +64,16 @@
 
   <div class="pagination">
     {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&order="
-    + Queries.Order + "&mode=" + Queries.Mode + "&page=" }} {{ if toInt
-    (Queries.Page) == 1 }}
+    + Queries.Order + "&mode=" + Queries.Mode + "&page=" }} {{ if Page == 1 }}
     <a href="#" class="pagination-button disabled">First</a>
     <a href="#" class="pagination-button disabled">Previous</a>
     {{ else }}
     <a href="{{url}}1" class="pagination-button">First</a>
-    <a href="{{url}}{{ toInt(Queries.Page) - 1 }}" class="pagination-button">Previous</a>
+    <a href="{{url}}{{ Page - 1 }}" class="pagination-button">Previous</a>
     {{ end }}
 
-    <a href="#" class="pagination-button disabled">{{ Queries.Page }}</a>
+    <a href="#" class="pagination-button disabled">{{ Page }}</a>
 
-    <a href="{{url}}{{ toInt(Queries.Page) + 1 }}" class="pagination-button">Next</a>
+    <a href="{{url}}{{ Page + 1 }}" class="pagination-button">Next</a>
   </div>
 </div>

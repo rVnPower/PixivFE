@@ -2,7 +2,7 @@
   <h2>{{ Title }}</h2>
 
   <div class="switcher">
-    {{ url := "/ranking?mode=" + Mode + "&page=1&content=" }}
+    {{ url := "/ranking?mode=" + Queries.Mode + "&page=1&content=" }}
     <span class="switch-title">Content</span>
     <a href="{{ url }}all" class="switch-button">Overall</a>
     <a href="{{ url }}illust" class="switch-button">Illustrations</a>
@@ -11,7 +11,7 @@
   <br />
 
   <div class="switcher">
-    {{ url := "/ranking?content=" + Content + "&page=1&mode=" }}
+    {{ url := "/ranking?content=" + Queries.Content + "&page=1&mode=" }}
     <span class="switch-title">Modes</span>
     <a href="{{ url }}daily" class="switch-button">Daily</a>
     <a href="{{ url }}weekly" class="switch-button">Weekly</a>
@@ -36,29 +36,35 @@
     <a class="artwork-thumbnail-title" href="/artworks/{{ .ID }}">
       <h3 class="no-margin">{{ .Title }}</h3>
     </a>
-    <a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"><img src="{{ .ArtistAvatar }}"
-        alt="{{ .ArtistName }}" class="artwork-thumbnail-artist-avatar border-rounded" />
-      {{ .ArtistName }}</a>
+    <a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"
+      ><img
+        src="{{ .ArtistAvatar }}"
+        alt="{{ .ArtistName }}"
+        class="artwork-thumbnail-artist-avatar border-rounded"
+      />
+      {{ .ArtistName }}</a
+    >
   </div>
   {{ end }}
 
   <div class="pagination">
-    {{ url := "/ranking?content=" + Content + "&mode=" + Mode + "&page=" }} {{
-    if Page <= 1 }} <a href="#" class="pagination-button disabled">First</a>
-      <a href="#" class="pagination-button disabled">Previous</a>
-      {{ else }}
-      <a href="{{ url }}1" class="pagination-button">First</a>
-      <a href="{{ url }}{{ Page - 1 }}" class="pagination-button">Previous</a>
-      {{ end }}
+    {{ url := "/ranking?content=" + Queries.Content + "&mode=" + Queries.Mode +
+    "&page=" }} {{ if Page <= 1 }}
+    <a href="#" class="pagination-button disabled">First</a>
+    <a href="#" class="pagination-button disabled">Previous</a>
+    {{ else }}
+    <a href="{{ url }}1" class="pagination-button">First</a>
+    <a href="{{ url }}{{ Page - 1 }}" class="pagination-button">Previous</a>
+    {{ end }}
 
-      <a href="#" class="pagination-button disabled">{{ Page }}</a>
+    <a href="#" class="pagination-button disabled">{{ Page }}</a>
 
-      {{ if Page == 10 }}
-      <a href="#" class="pagination-button disabled">Next</a>
-      <a href="#" class="pagination-button disabled">Last</a>
-      {{ else }}
-      <a href="{{ url }}{{ Page + 1 }}" class="pagination-button">Next</a>
-      <a href="{{ url }}10" class="pagination-button">Last</a>
-      {{ end }}
+    {{ if Page == 10 }}
+    <a href="#" class="pagination-button disabled">Next</a>
+    <a href="#" class="pagination-button disabled">Last</a>
+    {{ else }}
+    <a href="{{ url }}{{ Page + 1 }}" class="pagination-button">Next</a>
+    <a href="{{ url }}10" class="pagination-button">Last</a>
+    {{ end }}
   </div>
 </div>

@@ -96,32 +96,6 @@ func setup_router() *fiber.App {
 
 		return c.Next()
 	})
-	// server.Use(func(c *fiber.Ctx) error {
-	// 	sess, err := configs.Store.Get(c)
-	// 	if err != nil {
-	// 		return err
-	// 	}
-
-	// 	var token_string, image_string string
-
-	// 	token := sess.Get("token")
-	// 	if token != nil {
-	// 		token_string = token.(string)
-	// 	} else {
-	// 		token_string = configs.ProxyServer
-	// 	}
-
-	// 	image := sess.Get("image-proxy")
-	// 	if image != nil {
-	// 		image_string = image.(string)
-	// 	}
-
-	// 	c.Bind(fiber.Map{
-	// 		"Token":      token_string,
-	// 		"ImageProxy": image_string,
-	// 	})
-	// 	return c.Next()
-	// })
 
 	// Static files
 	server.Static("/favicon.ico", "./template/favicon.ico")

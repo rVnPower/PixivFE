@@ -40,16 +40,8 @@ func GetRandomColor() string {
 
 func GetTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
-		"inc": func(n int) int {
-			// For rankings to increment a number by 1
-			return n + 1
-		},
 		"add": func(a int, b int) int {
 			return a + b
-		},
-
-		"dec": func(n int) int {
-			return n - 1
 		},
 
 		"toInt": func(s string) int {
