@@ -17,9 +17,9 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck
 
 ## Hosting
 
-With [Docker](https://codeberg.org/VnPower/pixivfe/wiki/Hosting-with-Docker) or with [Caddy](https://codeberg.org/VnPower/pixivfe/wiki/Hosting-with-Caddy).
+Check out [this page.](https://codeberg.org/VnPower/pixivfe/wiki/Hosting). We currently have guides for Docker and Caddy.
 
-Many thanks to [dragongoose](https://codeberg.org/dragongoose) for writing the Docker page!
+Many thanks to [dragongoose](https://codeberg.org/dragongoose) for writing the Docker guide!
 
 ## Instances
 
