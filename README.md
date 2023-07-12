@@ -17,13 +17,16 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck
 
 ## Hosting
 
-Check out the [wiki](https://codeberg.org/VnPower/pixivfe/wiki/Home)
+With [Docker](https://codeberg.org/VnPower/pixivfe/wiki/Hosting-with-Docker) or with [Caddy](https://codeberg.org/VnPower/pixivfe/wiki/Hosting-with-Caddy).
+
+Many thanks to [dragongoose](https://codeberg.org/dragongoose) for writing the Docker page!
 
 ## Instances
 
-| Name               | Cloudflare? | URL                      |
-| ------------------ | ----------- | ------------------------ |
-| exozyme (Official) | No          | https://pixivfe.exozy.me |
+| Name               | Cloudflare? | URL                            |
+|--------------------|-------------|--------------------------------|
+| exozyme (Official) | No          | https://pixivfe.exozy.me       |
+| dragongoose        | No          | https://pixivfe.dragongoose.us |
 
 Hosted one yourself? Create a pull request to add it here!
 
