@@ -27,6 +27,7 @@ Many thanks to [dragongoose](https://codeberg.org/dragongoose) for writing the D
 |--------------------|-------------|--------------------------------|
 | exozyme (Official) | No          | https://pixivfe.exozy.me       |
 | dragongoose        | No          | https://pixivfe.dragongoose.us |
+| WhateverItWorks    | Yes         | https://art.whateveritworks.org |
 
 Hosted one yourself? Create a pull request to add it here!
 
