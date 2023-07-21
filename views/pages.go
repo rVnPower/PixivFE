@@ -7,6 +7,7 @@ import (
 	"pixivfe/configs"
 	"pixivfe/models"
 	"strconv"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -239,6 +240,10 @@ func discovery_page(c *fiber.Ctx) error {
 	return c.Render("discovery", fiber.Map{"Title": "Discovery", "Artworks": artworks})
 }
 
+func login_page(c *fiber.Ctx) error {
+	return c.Render("login", fiber.Map{})
+}
+
 func settings_page(c *fiber.Ctx) error {
 	return c.Render("settings", fiber.Map{})
 }
@@ -260,5 +265,22 @@ func settings_post(c *fiber.Ctx) error {
 		return errors.New(error)
 	}
 	c.Redirect("/settings")
+	return nil
+}
+
+func get_logged_in_user(c *fiber.Ctx) error {
+	image_proxy := get_session_value(c, "image-proxy")
+	if image_proxy == nil {
+		image_proxy = &configs.ProxyServer
+	}
+	token := get_session_value(c, "token")
+	if token == nil {
+		return c.Redirect("/login")
+	}
+
+	// The left part of the token is the member ID
+	userId := strings.Split(*token, "_")
+
+	c.Redirect("/users/" + userId[0])
 	return nil
 }
