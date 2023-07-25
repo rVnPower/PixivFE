@@ -18,4 +18,5 @@ const (
 	UserBookmarksURL        = "https://www.pixiv.net/ajax/user/%s/illusts/bookmarks?tag=&offset=%d&limit=48&rest=%s"
 	FrequentTagsURL         = "https://www.pixiv.net/ajax/tags/frequent/illust?%s"
 	LandingPageURL          = "https://www.pixiv.net/ajax/top/illust?mode=%s"
+	NewestFromFollowURL     = "https://www.pixiv.net/ajax/follow_latest/%s?mode=%s&p=%s"
 )

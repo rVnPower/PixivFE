@@ -240,6 +240,29 @@ func discovery_page(c *fiber.Ctx) error {
 	return c.Render("discovery", fiber.Map{"Title": "Discovery", "Artworks": artworks})
 }
 
+func following_works_page(c *fiber.Ctx) error {
+	image_proxy := get_session_value(c, "image-proxy")
+	if image_proxy == nil {
+		image_proxy = &configs.ProxyServer
+	}
+	token := get_session_value(c, "token")
+	if token == nil {
+		return c.Redirect("/login")
+	}
+	queries := make(map[string]string, 2)
+	queries["Mode"] = c.Query("mode", "all")
+	queries["Page"] = c.Query("page", "1")
+	pageInt, _ := strconv.Atoi(queries["Page"])
+
+	artworks, err := PC.GetNewestFromFollowing(queries["Mode"], queries["Page"], *token)
+	if err != nil {
+		return err
+	}
+	artworks = models.ProxyShortArtworkSlice(artworks, *image_proxy)
+
+	return c.Render("following", fiber.Map{"Title": "Following works", "Queries": queries, "Artworks": artworks, "Page": pageInt})
+}
+
 func login_page(c *fiber.Ctx) error {
 	return c.Render("login", fiber.Map{})
 }
@@ -269,10 +292,6 @@ func settings_post(c *fiber.Ctx) error {
 }
 
 func get_logged_in_user(c *fiber.Ctx) error {
-	image_proxy := get_session_value(c, "image-proxy")
-	if image_proxy == nil {
-		image_proxy = &configs.ProxyServer
-	}
 	token := get_session_value(c, "token")
 	if token == nil {
 		return c.Redirect("/login")

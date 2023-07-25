@@ -45,16 +45,22 @@ func (p *PixivClient) SetLang(lang string) {
 	p.Lang = lang
 }
 
-func (p *PixivClient) Request(URL string) (*http.Response, error) {
+func (p *PixivClient) Request(URL string, token ...string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", URL, nil)
 
 	// Add headers
 	for k, v := range p.Header {
 		req.Header.Add(k, v)
 	}
+
 	for k, v := range p.Cookie {
 		req.AddCookie(&http.Cookie{Name: k, Value: v})
 	}
+
+	if token != nil {
+		req.AddCookie(&http.Cookie{Name: "PHPSESSID", Value: token[0]})
+	}
+
 	// Make a request
 	resp, err := p.Client.Do(req)
 
@@ -69,9 +75,15 @@ func (p *PixivClient) Request(URL string) (*http.Response, error) {
 	return resp, nil
 }
 
-func (p *PixivClient) TextRequest(URL string) (string, error) {
+func (p *PixivClient) TextRequest(URL string, tokens ...string) (string, error) {
+	var token string
+
+	if len(token) > 0 {
+		token = tokens[0]
+	}
+
 	/// Make a request to a URL and return the response's string body
-	resp, err := p.Request(URL)
+	resp, err := p.Request(URL, token)
 	if err != nil {
 		return "", err
 	}
@@ -85,11 +97,16 @@ func (p *PixivClient) TextRequest(URL string) (string, error) {
 	return string(body), nil
 }
 
-func (p *PixivClient) PixivRequest(URL string) (json.RawMessage, error) {
+func (p *PixivClient) PixivRequest(URL string, tokens ...string) (json.RawMessage, error) {
 	/// Make a request to a Pixiv API URL with a standard response, handle errors and return the raw JSON response
 	var response models.PixivResponse
+	var token string
 
-	body, err := p.TextRequest(URL)
+	if len(token) > 0 {
+		token = tokens[0]
+	}
+
+	body, err := p.TextRequest(URL, token)
 	// body = strings.ReplaceAll(body, "i.pximg.net", configs.ProxyServer)
 	if err != nil {
 		return nil, err

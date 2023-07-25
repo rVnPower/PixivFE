@@ -48,7 +48,10 @@ func SetupRoutes(r *fiber.App) {
 	r.Get("ranking", ranking_page)
 	r.Get("tags/:name", search_page)
 	r.Get("discovery", discovery_page)
-	r.Get("self", get_logged_in_user)
+
+	self := r.Group("self")
+	self.Get("/", get_logged_in_user)
+	self.Get("/following_works", following_works_page)
 	r.Get("login", login_page)
 	r.Post("tags", search)
 
