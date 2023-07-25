@@ -31,48 +31,33 @@ Many thanks to [dragongoose](https://codeberg.org/dragongoose) for writing the D
 
 Hosted one yourself? Create a pull request to add it here!
 
-## To-do
-
-- [x] Base
-  - [x] Navigation bar
-  - [x] Searching
-  - [x] Pagination
-  - [x] Configuration file
-  - [x] Write a real independent API
-- [ ] Index page
-  - [x] Recommended artworks
-  - [x] Daily rankings
-  - [x] Spotlight (pixivision)
-  - [x] Newest by all
-  - [ ] Trending tags
-  - [ ] Switcher (illusts/mangas)
-- [ ] Single pages
-  - [x] User
-  - [x] Artwork
-  - [ ] Spotlight
-- [ ] List pages
-  - [ ] Recommended artworks
-  - [x] Daily rankings
-  - [ ] Discovery
-    - [x] Artworks
-    - [ ] Users
-  - [x] Newest by all
-  - [x] Search results
-  - [x] Switcher
-- [ ] Settings
-  - [x] Login
-  - [ ] Local history
-  - [ ] Toggling R-18, R-18G, AI (?)
-  - [x] Custom `pximg` proxy
-- [ ] Optimization
-  - [x] Split web components into smaller templates
-  - [x] Clean the models + JSON
-  - [x] Navigation between pages
-  - [x] Lazy load images
-  - [x] Better error handling
-  - [x] Fully proxy images from Pixiv
-  - [ ] Optimize pagination code
-
 ## License
 
 [AGPL3](https://www.gnu.org/licenses/agpl-3.0.txt)
+
+## Note
+Features like following an user, bookmarking and/or liking an artwork won't be added anytime soon.
+
+API routes:
+- Following an user: `https://www.pixiv.net/bookmark_add.php`
+- Bookmarking an artwork: `https://www.pixiv.net/ajax/illusts/bookmarks/add`
+
+This is because for these endpoints to work, we must pass in a header called `x-csrf-token`.
+The token was stored directly inside any Pixiv's pages (ex: https://www.pixiv.net) in a variable called `pixiv.context.token`.
+We could easily get this token using `curl`:
+
+![curl https://www.pixiv.net --silent | grep pixiv.context.token](https://files.catbox.moe/pbjqtu.png)
+
+The problem is, we cannot use this token, because when we were using `curl` to fetch the page, we weren't authenticated.
+Each user has their own token, generated every time they logout (i think).
+If we try to authenticate with `PHPSESSID`, Cloudflare will stop us and we get a challenge page.
+
+![Challenge page](https://files.catbox.moe/c1e0kp.png)
+
+Unless we find out a way to fetch a `x-csrf-token` that works, these features will probably never be added.
+
+If you found out a way to fetch it, please tell me. You can test the token using this command:
+`curl -H "x-csrf-token: your_csrf_token" -X POST -d "mode=add&type=user&user_id=36055573&tag=&restrict=0&format=json" "https://www.pixiv.net/bookmark_add.php" --cookie "PHPSESSID=your_token" -A "Mozilla/5.0"`
+
+It will return an empty JSON array if success, like this:
+![Successfully followed](https://files.catbox.moe/oiwx4u.png)
