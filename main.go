@@ -47,7 +47,7 @@ func setup_router() *fiber.App {
 			// }
 
 			// Send custom error page
-			err = c.Status(code).Render("error", fiber.Map{"Title": code, "Error": err})
+			err = c.Status(code).Render("pages/error", fiber.Map{"Title": code, "Error": err})
 			if err != nil {
 				// In case the SendFile fails
 				return c.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")

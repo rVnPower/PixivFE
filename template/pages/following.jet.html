@@ -6,7 +6,7 @@
         <a href="/following_works?mode=safe&page=1" class="switch-button">Safe</a>
         <a href="/following_works?mode=r18&page=1" class="switch-button">R-18</a>
     </div>
-    <div>{{ include "small-tn" Artworks }}</div>
+    <div>{{ include "components/small-tn" Artworks }}</div>
     <div class="pagination">
         {{ url := "/following_works/" + "&mode=" + Queries.Mode + "&page=" }} {{ if Page == 1 }}
         <a href="#" class="pagination-button disabled">First</a>

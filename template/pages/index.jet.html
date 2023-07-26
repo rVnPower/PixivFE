@@ -6,13 +6,13 @@
         <a href="/?mode=r18" class="switch-button">R-18</a>
     </div>
     <h2>Newest works by users you follow</h2>
-    <div class="thumbnail-container">{{ include "small-tn" Artworks.Following }}</div>
+    <div class="thumbnail-container">{{ include "components/small-tn" Artworks.Following }}</div>
     <br>
     <h2>Recently completed commissions</h2>
-    <div class="thumbnail-container">{{ include "small-tn" Artworks.Commissions }}</div>
+    <div class="thumbnail-container">{{ include "components/small-tn" Artworks.Commissions }}</div>
     <br>
     <h2>Recommended works</h2>
-    <div>{{ include "small-tn" Artworks.Recommended }}</div>
+    <div>{{ include "components/small-tn" Artworks.Recommended }}</div>
     <br>
 
     <h2>Daily rankings</h2>
@@ -53,16 +53,16 @@
 
     <h2>Works by recommended users</h2>
     <div>
-        {{ include "small-tn" Artworks.Users }}
+        {{ include "components/small-tn" Artworks.Users }}
     </div>
     <br />
     {{ range Artworks.RecommendByTags }}
     <h2>Recommended illustrations tagged #{{.Name}}</h2>
-    {{ include "small-tn" .Artworks }}
+    {{ include "components/small-tn" .Artworks }}
     <br>
     {{ end }}
     <h2>Newest works</h2>
-    <div class="thumbnail-container">{{ include "small-tn" Artworks.Newest }}</div>
+    <div class="thumbnail-container">{{ include "components/small-tn" Artworks.Newest }}</div>
     {{ else }}
     <p><a href="/login">Login</a> to access more features!</p>
     <h2>Daily rankings</h2>

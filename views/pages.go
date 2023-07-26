@@ -53,7 +53,7 @@ func artwork_page(c *fiber.Ctx) error {
 	comments = models.ProxyCommentsSlice(comments, *image_proxy)
 
 	// Optimize this
-	return c.Render("artwork", fiber.Map{
+	return c.Render("pages/artwork", fiber.Map{
 		"Illust":   illust,
 		"Related":  related,
 		"Comments": comments,
@@ -93,7 +93,7 @@ func index_page(c *fiber.Ctx) error {
 	artworks.Pixivision = models.ProxyPixivisionSlice(artworks.Pixivision, *image_proxy)
 	artworks.RecommendByTags = models.ProxyRecommendedByTagsSlice(artworks.RecommendByTags, *image_proxy)
 
-	return c.Render("index", fiber.Map{"Title": "Landing", "Artworks": artworks, "Token": had_token})
+	return c.Render("pages/index", fiber.Map{"Title": "Landing", "Artworks": artworks, "Token": had_token})
 }
 
 func user_page(c *fiber.Ctx) error {
@@ -126,7 +126,7 @@ func user_page(c *fiber.Ctx) error {
 	worksCount = user.ArtworksCount
 	pageLimit := math.Ceil(float64(worksCount)/30.0) + 1.0
 
-	return c.Render("user", fiber.Map{"Title": user.Name, "User": user, "Category": category, "PageLimit": int(pageLimit), "Page": pageInt})
+	return c.Render("pages/user", fiber.Map{"Title": user.Name, "User": user, "Category": category, "PageLimit": int(pageLimit), "Page": pageInt})
 }
 
 func ranking_page(c *fiber.Ctx) error {
@@ -154,7 +154,7 @@ func ranking_page(c *fiber.Ctx) error {
 		artworks[i].ArtistAvatar = models.ProxyImage(artworks[i].ArtistAvatar, *image_proxy)
 	}
 
-	return c.Render("rank", fiber.Map{
+	return c.Render("pages/rank", fiber.Map{
 		"Title":   "Ranking",
 		"Items":   artworks,
 		"Queries": queries,
@@ -179,7 +179,7 @@ func newest_artworks_page(c *fiber.Ctx) error {
 
 	works = models.ProxyShortArtworkSlice(works, *image_proxy)
 
-	return c.Render("newest", fiber.Map{
+	return c.Render("pages/newest", fiber.Map{
 		"Items": works,
 		"Title": "Newest works",
 	})
@@ -215,7 +215,7 @@ func search_page(c *fiber.Ctx) error {
 
 	result.ProxyImages(*image_proxy)
 
-	return c.Render("tag", fiber.Map{"Title": "Results for " + tag.Name, "Tag": tag, "Data": result, "Queries": queries, "Page": pageInt})
+	return c.Render("pages/tag", fiber.Map{"Title": "Results for " + tag.Name, "Tag": tag, "Data": result, "Queries": queries, "Page": pageInt})
 }
 
 func search(c *fiber.Ctx) error {
@@ -239,7 +239,7 @@ func discovery_page(c *fiber.Ctx) error {
 	}
 	artworks = models.ProxyShortArtworkSlice(artworks, *image_proxy)
 
-	return c.Render("discovery", fiber.Map{"Title": "Discovery", "Artworks": artworks})
+	return c.Render("pages/discovery", fiber.Map{"Title": "Discovery", "Artworks": artworks})
 }
 
 func following_works_page(c *fiber.Ctx) error {
@@ -262,15 +262,15 @@ func following_works_page(c *fiber.Ctx) error {
 	}
 	artworks = models.ProxyShortArtworkSlice(artworks, *image_proxy)
 
-	return c.Render("following", fiber.Map{"Title": "Following works", "Queries": queries, "Artworks": artworks, "Page": pageInt})
+	return c.Render("pages/following", fiber.Map{"Title": "Following works", "Queries": queries, "Artworks": artworks, "Page": pageInt})
 }
 
 func login_page(c *fiber.Ctx) error {
-	return c.Render("login", fiber.Map{})
+	return c.Render("pages/login", fiber.Map{})
 }
 
 func settings_page(c *fiber.Ctx) error {
-	return c.Render("settings", fiber.Map{})
+	return c.Render("pages/settings", fiber.Map{})
 }
 
 func settings_post(c *fiber.Ctx) error {

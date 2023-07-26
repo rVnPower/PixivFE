@@ -33,7 +33,7 @@
             <div class="thumbnail-container">
                 {{ range Illust.RecentWorks }}
                 <div class="artwork-thumbnail-small artwork-thumbnail">
-                    {{ include "thumbnail-dt" . }}
+                    {{ include "components/thumbnail-dt" . }}
                 </div>
                 {{ end }}
             </div>
@@ -63,5 +63,5 @@
         </div>
     </div>
     <h2>Related works</h2>
-    <div>{{ include "small-tn" Related }}</div>
+    <div>{{ include "components/small-tn" Related }}</div>
 </div>
