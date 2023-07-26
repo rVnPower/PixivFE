@@ -62,13 +62,15 @@ func artwork_page(c *fiber.Ctx) error {
 }
 
 func index_page(c *fiber.Ctx) error {
+	had_token := true
 	image_proxy := get_session_value(c, "image-proxy")
 	if image_proxy == nil {
 		image_proxy = &configs.ProxyServer
 	}
 	token := get_session_value(c, "token")
 	if token == nil {
-		return c.Render("temp", fiber.Map{"Title": "Landing"})
+		had_token = false
+		token = &configs.Token
 	}
 
 	PC := NewPixivClient(5000)
@@ -91,7 +93,7 @@ func index_page(c *fiber.Ctx) error {
 	artworks.Pixivision = models.ProxyPixivisionSlice(artworks.Pixivision, *image_proxy)
 	artworks.RecommendByTags = models.ProxyRecommendedByTagsSlice(artworks.RecommendByTags, *image_proxy)
 
-	return c.Render("index", fiber.Map{"Title": "Landing", "Artworks": artworks})
+	return c.Render("index", fiber.Map{"Title": "Landing", "Artworks": artworks, "Token": had_token})
 }
 
 func user_page(c *fiber.Ctx) error {

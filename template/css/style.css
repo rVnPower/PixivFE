@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+a {
+  color: #7aa2f7;
+  text-decoration: none;
+}
+
 body {
   top: 0;
   margin: 0;
@@ -379,10 +384,6 @@ body {
 }
 .user-page .user-details .user-comment {
   font-size: 0.9em;
-}
-.user-page .user-details .user-comment a {
-  color: #7aa2f7;
-  text-decoration: none;
 }
 
 .tag-header {
