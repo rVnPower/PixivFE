@@ -265,6 +265,19 @@ func following_works_page(c *fiber.Ctx) error {
 	return c.Render("pages/following", fiber.Map{"Title": "Following works", "Queries": queries, "Artworks": artworks, "Page": pageInt})
 }
 
+func your_bookmark_page(c *fiber.Ctx) error {
+	token := get_session_value(c, "token")
+	if token == nil {
+		return c.Redirect("/login")
+	}
+
+	// The left part of the token is the member ID
+	userId := strings.Split(*token, "_")
+
+	c.Redirect("/users/" + userId[0] + "/bookmarks#checkpoint")
+	return nil
+}
+
 func login_page(c *fiber.Ctx) error {
 	return c.Render("pages/login", fiber.Map{})
 }
