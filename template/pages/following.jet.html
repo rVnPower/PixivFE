@@ -8,7 +8,7 @@
     </div>
     <div>{{ include "components/small-tn" Artworks }}</div>
     <div class="pagination">
-        {{ url := "/following_works/" + "?mode=" + Queries.Mode + "&page=" }} {{ if Page == 1 }}
+        {{ url := "/self/following_works" + "?mode=" + Queries.Mode + "&page=" }} {{ if Page == 1 }}
         <a href="#" class="pagination-button disabled">First</a>
         <a href="#" class="pagination-button disabled">Previous</a>
         {{ else }}
