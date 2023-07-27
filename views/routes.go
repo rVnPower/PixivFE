@@ -42,8 +42,7 @@ func SetupRoutes(r *fiber.App) {
 
 	r.Get("/", index_page)
 	r.Get("artworks/:id/", artwork_page)
-	r.Get("users/:id/", user_page)
-	r.Get("users/:id/:category", user_page)
+	r.Get("users/:id/:category?", user_page)
 	r.Get("newest", newest_artworks_page)
 	r.Get("ranking", ranking_page)
 	r.Get("tags/:name", search_page)
