@@ -2,19 +2,56 @@
 <html lang="en">
 
 <head>
+    {{ title := "PixivFE" }}
     {{ if isset(Title) }}
-    <title>{{ Title }} - PixivFE</title>
-    {{ else }}
-    <title>PixivFE</title>
+    {{ title = Title + " - PixivFE" }}
     {{ end }}
+    <title>{{ title }}</title>
     <meta charset="UTF-8" />
     <meta name="description" content="View this page on PixivFE." />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:site_name" content="PixivFE" />
     <meta http-equiv="Content-Security-Policy" content="script-src 'self'" />
     <meta name="referrer" content="no-referrer, same-origin" />
     <link href="/css/style.css" rel="stylesheet" />
     <link href="/css/template.css" rel="stylesheet" />
+    {{ if BaseURL }}
+    <meta property="og:site_name" content="PixivFE" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="{{ FullURL }}">
+    <meta property="og:image" content="{{ BaseURL }}/banner.jpg">
+    {{ if isset(PageType) }}
+
+    {{ if PageType == "artwork" }}
+
+    {{ if Illust.XRestrict }}
+    <meta property="og:description" content="(Explicit) View this artwork on PixivFE.">
+    {{ else }}
+
+    {{ if Illust.SanityLevel == 6 }}
+    <meta property="og:description" content="(Sensitive) View this artwork on PixivFE.">
+    {{ else }}
+    <meta property="og:description" content="(Safe) View this artwork on PixivFE.">
+    <meta property="og:image" content="{{ Illust.Images[0].Original }}">
+    {{ end }}
+    {{ end }}
+
+
+    {{ else if PageType == "user" }}
+    <meta property="og:description" content="View this user's profile on PixivFE.">
+    {{ if User.BackgroundImage }}
+    <meta property="og:image" content="{{ User.BackgroundImage }}">
+    {{ end }}
+
+    {{ else }}
+    <meta property="og:description" content="View this page on PixivFE.">
+    {{ end }}
+
+    {{ else }}
+    <meta property="og:description" content="View this page on PixivFE.">
+    {{ end }}
+    {{ end }}
 </head>
 
 <body>

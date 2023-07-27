@@ -108,6 +108,7 @@ type Illust struct {
 	Comments        int           `json:"commentCount"`
 	Views           int           `json:"viewCount"`
 	CommentDisabled int           `json:"commentOff"`
+	SanityLevel     int           `json:"sl"`
 	XRestrict       xRestrict     `json:"xRestrict"`
 	AiType          aiType        `json:"aiType"`
 	User            UserShort

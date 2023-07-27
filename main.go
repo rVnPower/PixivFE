@@ -97,6 +97,15 @@ func setup_router() *fiber.App {
 		return c.Next()
 	})
 
+	server.Use(func(c *fiber.Ctx) error {
+		var baseURL string
+		if configs.BaseURL != "localhost" {
+			baseURL = "https://" + configs.BaseURL
+		}
+		c.Bind(fiber.Map{"FullURL": baseURL + c.OriginalURL(), "BaseURL": baseURL})
+		return c.Next()
+	})
+
 	// Static files
 	server.Static("/favicon.ico", "./template/favicon.ico")
 	server.Static("css/", "./template/css")

@@ -58,6 +58,7 @@ func artwork_page(c *fiber.Ctx) error {
 		"Related":  related,
 		"Comments": comments,
 		"Title":    illust.Title,
+		"PageType": "artwork",
 	})
 }
 

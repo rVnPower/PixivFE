@@ -5,13 +5,13 @@ import (
 	"os"
 )
 
-var Token, Port, UserAgent, ProxyServer string
+var Token, BaseURL, Port, UserAgent, ProxyServer string
 
 func parseEnv(key string) (string, error) {
 	value, ok := os.LookupEnv(key)
 
 	if !ok {
-		return "", errors.New("Failed to get environment variable" + key)
+		return value, errors.New("Failed to get environment variable" + key)
 	}
 
 	return value, nil
@@ -36,6 +36,7 @@ func ParseConfig() error {
 		return err
 	}
 
+	BaseURL = parseEnvWithDefault("PIXIVFE_BASEURL", "localhost")
 	Port = parseEnvWithDefault("PIXIVFE_PORT", "8080")
 	UserAgent = parseEnvWithDefault("PIXIVFE_USERAGENT", "Mozilla/5.0")
 	ProxyServer = parseEnvWithDefault("PIXIVFE_IMAGEPROXY", "px2.rainchan.win")
