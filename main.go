@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net"
 	"pixivfe/configs"
 	"pixivfe/handler"
@@ -47,7 +48,7 @@ func setup_router() *fiber.App {
 			// }
 
 			// Send custom error page
-			err = c.Status(code).Render("pages/error", fiber.Map{"Title": code, "Error": err})
+			err = c.Status(code).Render("pages/error", fiber.Map{"Title": "Error", "Error": err})
 			if err != nil {
 				// In case the SendFile fails
 				return c.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")
