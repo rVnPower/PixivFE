@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net"
 	"pixivfe/configs"
 	"pixivfe/handler"
