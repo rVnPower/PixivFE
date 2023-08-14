@@ -26,7 +26,7 @@ func setup_router() *fiber.App {
 
 	server := fiber.New(fiber.Config{
 		AppName:                 "PixivFE",
-		DisableStartupMessage:   false,
+		DisableStartupMessage:   true,
 		Views:                   engine,
 		Prefork:                 false,
 		JSONEncoder:             json.Marshal,
@@ -128,5 +128,6 @@ func main() {
 		}
 		r.Listener(ln)
 	}
+	println("PixivFE is up and running on port " + configs.Port + "!")
 	r.Listen(":" + configs.Port)
 }
