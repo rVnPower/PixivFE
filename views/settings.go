@@ -96,3 +96,13 @@ func set_image_server(c *fiber.Ctx) string {
 	}
 	return "Empty form"
 }
+
+func set_logout(c *fiber.Ctx) string {
+	name := "token"
+	sess := get_storage(c)
+
+	sess.Delete(name)
+	save_storage(sess)
+
+	return ""
+}

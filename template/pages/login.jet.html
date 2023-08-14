@@ -1,12 +1,28 @@
 <div class="container">
-    <h2>Login with your account</h2>
-    <p>In order to enable the landing page and other features, you will have to login.
-    </p>
-    <p>You can only login using your account's cookie, check out <a
-            href="https://codeberg.org/VnPower/pixivfe/wiki/How-to-get-the-cookie-%28PIXIVFE_TOKEN%29">this page</a> to
-        see how to get it.</p>
-    <form action="/settings/token" method="post">
-        <input type="text" name="token" autocomplete="off" />
-        <input type="submit" value="Apply" />
-    </form>
+  <h2>Login with your account</h2>
+  <p>
+    In order to enable the landing page and other features, you will have to
+    login.
+  </p>
+  <p>
+    You can only login using your account's cookie, check out
+    <a
+      href="https://codeberg.org/VnPower/pixivfe/wiki/How-to-get-the-cookie-%28PIXIVFE_TOKEN%29"
+      >this page</a
+    >
+    to see how to get it.
+  </p>
+  <form action="/settings/token" method="post">
+    <input type="text" name="token" autocomplete="off" />
+    <input type="submit" value="Apply" />
+  </form>
+  <hr />
+  <h2>Logout</h2>
+  <p>
+    You can safely logout here. This button will just delete the token directly
+    from this session.
+  </p>
+  <form action="/settings/logout" method="post">
+    <input type="submit" value="Logout!" />
+  </form>
 </div>

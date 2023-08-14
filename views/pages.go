@@ -299,6 +299,8 @@ func settings_post(c *fiber.Ctx) error {
 		error = set_image_server(c)
 	case "token":
 		error = set_token(c)
+	case "logout":
+		error = set_logout(c)
 	default:
 		error = "No method available"
 	}
