@@ -98,7 +98,7 @@ func (p *PixivClient) GetDiscoveryArtwork(mode string, count int) ([]models.Illu
 	var artworks []models.IllustShort
 
 	for count > 0 {
-		itemsForRequest := Min(100, count)
+		itemsForRequest := min(100, count)
 
 		count -= itemsForRequest
 

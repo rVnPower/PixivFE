@@ -81,7 +81,7 @@ func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 	sort.Sort(sort.Reverse(sort.IntSlice(ids)))
 
 	idsString := ""
-	count := Min(len(ids), 30)
+	count := min(len(ids), 30)
 
 	for i := 0; i < count; i++ {
 		idsString += fmt.Sprintf("&ids[]=%d", ids[i])

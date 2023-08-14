@@ -67,7 +67,7 @@ func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (s
 	}
 
 	start := (page - 1) * int(worksPerPage)
-	end := int(math.Min(float64(page)*worksPerPage, worksNumber)) // no overflow
+	end := int(min(float64(page)*worksPerPage, worksNumber)) // no overflow
 
 	for _, k := range ids[start:end] {
 		idsString += fmt.Sprintf("&ids[]=%d", k)

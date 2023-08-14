@@ -85,7 +85,7 @@ func (p *PixivClient) GetLandingPage(mode string) (models.LandingArtworks, error
 
 	for i := 0; i < len(pages.RecommendedByTags); i++ {
 		temp := pages.RecommendedByTags[i]
-		temp.Artworks = artworks.Artworks[count : count+Min(len(temp.Ids), 18)]
+		temp.Artworks = artworks.Artworks[count : count+min(len(temp.Ids), 18)]
 
 		context.RecommendByTags = append(context.RecommendByTags, temp.LandingRecommendByTags)
 		count += len(temp.Ids)
