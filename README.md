@@ -8,6 +8,8 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck
 </a>
 </p>
 
+Questions? Feedbacks? You can [PM me](https://matrix.to/#/@vnpower:exozy.me) on Matrix!
+
 ## Features
 
 - Lightweight - both the interface and the code
