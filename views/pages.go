@@ -43,20 +43,9 @@ func artwork_page(c *fiber.Ctx) error {
 
 	illust.ProxyImages(*image_proxy)
 
-	related, err := PC.GetRelatedArtworks(id)
-	if err != nil {
-		return err
-	}
-	related = models.ProxyShortArtworkSlice(related, *image_proxy)
-
-	comments, _ := PC.GetArtworkComments(id)
-	comments = models.ProxyCommentsSlice(comments, *image_proxy)
-
 	// Optimize this
 	return c.Render("pages/artwork", fiber.Map{
 		"Illust":   illust,
-		"Related":  related,
-		"Comments": comments,
 		"Title":    illust.Title,
 		"PageType": "artwork",
 	})

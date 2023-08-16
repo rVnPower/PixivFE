@@ -63,69 +63,105 @@ func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 		return nil, err
 	}
 
-	// Get illust images
-	images, err = p.GetArtworkImages(id)
-	if err != nil {
-		return nil, err
-	}
+	// Begin testing here
 
-	illust.Images = images
+	c1 := make(chan []models.Image)
+	c2 := make(chan []models.IllustShort)
+	c3 := make(chan models.UserShort)
+	c4 := make(chan []models.Tag)
+	c5 := make(chan []models.IllustShort)
+	c6 := make(chan []models.Comment)
 
-	// Get recent artworks
-	ids := make([]int, 0)
+	go func() {
+		// Get illust images
+		images, err = p.GetArtworkImages(id)
+		if err != nil {
+			c1 <- nil
+		}
+		c1 <- images
+	}()
 
-	for k := range illust.Recent {
-		ids = append(ids, k)
-	}
+	go func() {
+		// Get recent artworks
+		ids := make([]int, 0)
 
-	sort.Sort(sort.Reverse(sort.IntSlice(ids)))
+		for k := range illust.Recent {
+			ids = append(ids, k)
+		}
 
-	idsString := ""
-	count := min(len(ids), 20)
+		sort.Sort(sort.Reverse(sort.IntSlice(ids)))
 
-	for i := 0; i < count; i++ {
-		idsString += fmt.Sprintf("&ids[]=%d", ids[i])
-	}
+		idsString := ""
+		count := min(len(ids), 20)
 
-	recent, err := p.GetUserArtworks(illust.UserID, idsString)
-	if err != nil {
-		return nil, err
-	}
-	sort.Slice(recent[:], func(i, j int) bool {
-		left, _ := strconv.Atoi(recent[i].ID)
-		right, _ := strconv.Atoi(recent[j].ID)
-		return left > right
-	})
+		for i := 0; i < count; i++ {
+			idsString += fmt.Sprintf("&ids[]=%d", ids[i])
+		}
 
-	illust.RecentWorks = recent
+		recent, err := p.GetUserArtworks(illust.UserID, idsString)
+		if err != nil {
+			c2 <- nil
+		}
+		sort.Slice(recent[:], func(i, j int) bool {
+			left, _ := strconv.Atoi(recent[i].ID)
+			right, _ := strconv.Atoi(recent[j].ID)
+			return left > right
+		})
+		c2 <- recent
 
-	// Get basic user information (the URL above does not contain avatars)
-	userInfo, err := p.GetUserBasicInformation(illust.UserID)
-	if err != nil {
-		return nil, err
-	}
+	}()
 
-	illust.User = userInfo
+	go func() {
+		// Get basic user information (the URL above does not contain avatars)
+		userInfo, err := p.GetUserBasicInformation(illust.UserID)
+		if err != nil {
+			//
+		}
+		c3 <- userInfo
+	}()
 
-	// Extract tags
-	var tags struct {
-		Tags []struct {
-			Tag         string            `json:"tag"`
-			Translation map[string]string `json:"translation"`
-		} `json:"tags"`
-	}
-	err = json.Unmarshal(illust.RawTags, &tags)
-	if err != nil {
-		return nil, err
-	}
+	go func() {
+		var tagsList []models.Tag
+		// Extract tags
+		var tags struct {
+			Tags []struct {
+				Tag         string            `json:"tag"`
+				Translation map[string]string `json:"translation"`
+			} `json:"tags"`
+		}
+		err = json.Unmarshal(illust.RawTags, &tags)
+		if err != nil {
+			c4 <- nil
+		}
 
-	for _, tag := range tags.Tags {
-		var newTag models.Tag
-		newTag.Name = tag.Tag
-		newTag.TranslatedName = tag.Translation["en"]
+		for _, tag := range tags.Tags {
+			var newTag models.Tag
+			newTag.Name = tag.Tag
+			newTag.TranslatedName = tag.Translation["en"]
 
-		illust.Tags = append(illust.Tags, newTag)
-	}
+			tagsList = append(tagsList, newTag)
+		}
+		c4 <- tagsList
+	}()
+
+	go func() {
+		related, _ := p.GetRelatedArtworks(id)
+		// Error handling...
+		c5 <- related
+	}()
+
+	go func() {
+		comments, _ := p.GetArtworkComments(id)
+		// Error handling...
+		c6 <- comments
+	}()
+
+	illust.Images = <-c1
+	illust.RecentWorks = <-c2
+	illust.User = <-c3
+	illust.Tags = <-c4
+	illust.RelatedWorks = <-c5
+	illust.CommentsList = <-c6
 
 	return illust.Illust, nil
 }

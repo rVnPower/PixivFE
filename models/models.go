@@ -113,9 +113,11 @@ type Illust struct {
 	AiType          aiType        `json:"aiType"`
 	User            UserShort
 	RecentWorks     []IllustShort
+	RelatedWorks    []IllustShort
+	CommentsList    []Comment
 }
 
-func (s Illust) ProxyImages(proxy string) {
+func (s *Illust) ProxyImages(proxy string) {
 	for i := range s.Images {
 		s.Images[i].Small = ProxyImage(s.Images[i].Small, proxy)
 		s.Images[i].Medium = ProxyImage(s.Images[i].Medium, proxy)
@@ -125,6 +127,8 @@ func (s Illust) ProxyImages(proxy string) {
 	for i := range s.RecentWorks {
 		s.RecentWorks[i].Thumbnail = ProxyImage(s.RecentWorks[i].Thumbnail, proxy)
 	}
+	s.RelatedWorks = ProxyShortArtworkSlice(s.RelatedWorks, proxy)
+	s.CommentsList = ProxyCommentsSlice(s.CommentsList, proxy)
 	s.User.Avatar = ProxyImage(s.User.Avatar, proxy)
 }
 

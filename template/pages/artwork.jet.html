@@ -1,67 +1,84 @@
 <div class="container">
-    <div class="artwork-page">
-        <div class="artwork-content">
-            <div class="artwork-images">
-                {{ range index := Illust.Images }}
-                <a href="{{ .Original }}" target="_blank">
-                    <img src="{{ .Large }}" alt="Page {{ index }}" class="artwork-image-page" />
-                </a>
-                {{ end }}
-            </div>
-            <h2>{{ Illust.Title }}</h2>
-            <p>{{ raw: Illust.Description }}</p>
+  <div class="artwork-page">
+    <div class="artwork-content">
+      <div class="artwork-images">
+        {{ range index := Illust.Images }}
+        <a href="{{ .Original }}" target="_blank">
+          <img
+            src="{{ .Large }}"
+            alt="Page {{ index }}"
+            class="artwork-image-page"
+          />
+        </a>
+        {{ end }}
+      </div>
+      <h2>{{ Illust.Title }}</h2>
+      <p>{{ raw: Illust.Description }}</p>
 
-            <div class="artwork-tags">
-                {{ if Illust.AiType == 2 }}
-                <span class="artwork-tag-name emphasize">AI-generated</span>
-                {{ end }} {{ range Illust.Tags }} {{ if isEmphasize(.Name) }}
-                <span class="artwork-tag-name emphasize">{{ .Name }}</span>
-                {{ else }}
-                <a href="/tags/{{ .Name }}" class="artwork-tag-name">#{{ .Name }}</a><span
-                    class="artwork-tag-altname">{{ .TranslatedName }}</span>
-                {{ end }} {{ end }}
-            </div>
-            <br />
-            <span>{{ Illust.Views }} views | {{ Illust.Bookmarks }} bookmarks | {{
-                Illust.Likes }} likes</span>
-            <br />
-            <small>{{ Illust.Date }}</small>
+      <div class="artwork-tags">
+        {{ if Illust.AiType == 2 }}
+        <span class="artwork-tag-name emphasize">AI-generated</span>
+        {{ end }} {{ range Illust.Tags }} {{ if isEmphasize(.Name) }}
+        <span class="artwork-tag-name emphasize">{{ .Name }}</span>
+        {{ else }}
+        <a href="/tags/{{ .Name }}" class="artwork-tag-name">#{{ .Name }}</a
+        ><span class="artwork-tag-altname">{{ .TranslatedName }}</span>
+        {{ end }} {{ end }}
+      </div>
+      <br />
+      <span
+        >{{ Illust.Views }} views | {{ Illust.Bookmarks }} bookmarks | {{
+        Illust.Likes }} likes</span
+      >
+      <br />
+      <small>{{ Illust.Date }}</small>
 
-            <a href="/users/{{ Illust.User.ID }}" class="artwork-artist flex"><img src="{{ Illust.User.Avatar }}"
-                    alt="{{ Illust.User.Name }}" class="artwork-artist-avatar border-rounded" />
-                {{ Illust.User.Name }}</a>
-            <div class="thumbnail-container">
-                {{ range Illust.RecentWorks }}
-                <div class="artwork-thumbnail-small artwork-thumbnail">
-                    {{ include "components/thumbnail-dt" . }}
-                </div>
-                {{ end }}
-            </div>
-            <hr />
-            <h2>Comments</h2>
-            {{ if Illust.CommentDisabled == 1 }}
-            <p>The creator turned comments off</p>
-            {{ else if Illust.Comments == 0 }}
-            <p>There is no comment yet</p>
-            {{ else }} {{ range Comments }}
-            <div class="comment">
-                <img class="comment-avatar" src="{{ .Avatar }}" alt="{{ .AuthorName }}" />
-                <div class="comment-context">
-                    <b>{{ .AuthorName }}</b>
-                    <p>
-                        {{ if .Stamp }}
-                        <img class="stamp"
-                            src="https://s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg"
-                            alt="https://s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg" />
-                        {{ else }} {{ raw: parseEmojis(.Context) }} {{ end }}
-                    </p>
-
-                    <small>{{ .Date }}</small>
-                </div>
-            </div>
-            {{ end }} {{ end }}
+      <a href="/users/{{ Illust.User.ID }}" class="artwork-artist flex"
+        ><img
+          src="{{ Illust.User.Avatar }}"
+          alt="{{ Illust.User.Name }}"
+          class="artwork-artist-avatar border-rounded"
+        />
+        {{ Illust.User.Name }}</a
+      >
+      <div class="thumbnail-container">
+        {{ range Illust.RecentWorks }}
+        <div class="artwork-thumbnail-small artwork-thumbnail">
+          {{ include "components/thumbnail-dt" . }}
         </div>
+        {{ end }}
+      </div>
+      <hr />
+      <h2>Comments</h2>
+      {{ if Illust.CommentDisabled == 1 }}
+      <p>The creator turned comments off</p>
+      {{ else if Illust.Comments == 0 }}
+      <p>There is no comment yet</p>
+      {{ else }} {{ range Illust.CommentsList }}
+      <div class="comment">
+        <img
+          class="comment-avatar"
+          src="{{ .Avatar }}"
+          alt="{{ .AuthorName }}"
+        />
+        <div class="comment-context">
+          <b>{{ .AuthorName }}</b>
+          <p>
+            {{ if .Stamp }}
+            <img
+              class="stamp"
+              src="https://s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg"
+              alt="https://s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg"
+            />
+            {{ else }} {{ raw: parseEmojis(.Context) }} {{ end }}
+          </p>
+
+          <small>{{ .Date }}</small>
+        </div>
+      </div>
+      {{ end }} {{ end }}
     </div>
-    <h2>Related works</h2>
-    <div>{{ include "components/small-tn" Related }}</div>
+  </div>
+  <h2>Related works</h2>
+  <div>{{ include "components/small-tn" Illust.RelatedWorks }}</div>
 </div>
