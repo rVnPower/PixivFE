@@ -115,7 +115,7 @@ type Illust struct {
 	RecentWorks     []IllustShort
 }
 
-func (s *Illust) ProxyImages(proxy string) {
+func (s Illust) ProxyImages(proxy string) {
 	for i := range s.Images {
 		s.Images[i].Small = ProxyImage(s.Images[i].Small, proxy)
 		s.Images[i].Medium = ProxyImage(s.Images[i].Medium, proxy)
