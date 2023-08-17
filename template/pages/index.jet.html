@@ -1,104 +1,143 @@
 <div class="container">
-    {{ if Token }}
-    <div class="switcher">
-        <span class="switch-title">Filter</span>
-        <a href="/?mode=all" class="switch-button">All</a>
-        <a href="/?mode=r18" class="switch-button">R-18</a>
-    </div>
+  {{ if Token }}
+  <div class="switcher">
+    <span class="switch-title">Filter</span>
+    <a href="/?mode=all" class="switch-button">All</a>
+    <a href="/?mode=r18" class="switch-button">R-18</a>
+  </div>
+  <div class="component-header">
     <h2>Newest works by users you follow</h2>
-    <div class="thumbnail-container">{{ include "components/small-tn" Artworks.Following }}</div>
-    <br>
-    <h2>Recently completed commissions</h2>
-    <div class="thumbnail-container">{{ include "components/small-tn" Artworks.Commissions }}</div>
-    <br>
-    <h2>Recommended works</h2>
-    <div>{{ include "components/small-tn" Artworks.Recommended }}</div>
-    <br>
+    <a href="/self/following_works">See more</a>
+  </div>
+  <div class="thumbnail-container">
+    {{ include "components/small-tn" Artworks.Following }}
+  </div>
+  <br />
+  <h2>Recently completed commissions</h2>
+  <div class="thumbnail-container">
+    {{ include "components/small-tn" Artworks.Commissions }}
+  </div>
+  <br />
+  <h2>Recommended works</h2>
+  <div>{{ include "components/small-tn" Artworks.Recommended }}</div>
+  <br />
 
+  <div class="component-header">
     <h2>Daily rankings</h2>
-    <div class="thumbnail-container">
-        {{ range rank := Artworks.Rankings }}
-        <div class="artwork-thumbnail-large artwork-thumbnail">
-            <div class="artwork-rank-circle">{{ rank + 1 }}</div>
-            {{ if toInt(.Pages) > 1 }}
-            <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
-            {{ end }}
-            <a href="/artworks/{{ .ID }}">
-                <img src="{{ .Thumbnail }}" alt="{{ .Title }}" class="artwork-master-image" />
-            </a>
+    <a href="/ranking">See more</a>
+  </div>
+  <div class="thumbnail-container">
+    {{ range rank := Artworks.Rankings }}
+    <div class="artwork-thumbnail-large artwork-thumbnail">
+      <div class="artwork-rank-circle">{{ rank + 1 }}</div>
+      {{ if toInt(.Pages) > 1 }}
+      <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
+      {{ end }}
+      <a href="/artworks/{{ .ID }}">
+        <img
+          src="{{ .Thumbnail }}"
+          alt="{{ .Title }}"
+          class="artwork-master-image"
+        />
+      </a>
 
-            <a class="artwork-thumbnail-title" href="/artworks/{{ .ID }}">
-                <h3 class="no-margin">{{ .Title }}</h3>
-            </a>
-            <a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"><img src="{{ .ArtistAvatar }}"
-                    alt="{{ .ArtistName }}" class="artwork-thumbnail-artist-avatar border-rounded" />
-                {{ .ArtistName }}</a>
-        </div>
-        {{ end }}
+      <a class="artwork-thumbnail-title" href="/artworks/{{ .ID }}">
+        <h3 class="no-margin">{{ .Title }}</h3>
+      </a>
+      <a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"
+        ><img
+          src="{{ .ArtistAvatar }}"
+          alt="{{ .ArtistName }}"
+          class="artwork-thumbnail-artist-avatar border-rounded"
+        />
+        {{ .ArtistName }}</a
+      >
     </div>
-    <br />
-
-    <h2>Pixivision</h2>
-    <div class="thumbnail-container">
-        {{ range Artworks.Pixivision }}
-        <a href="{{ .URL }}" class="spotlight-thumbnail">
-            <img src="{{ .Thumbnail }}" alt="{{ .Title }}" class="spotlight-master-image" />
-            <div class="spotlight-title-wrapper">
-                <h2 class="spotlight-title">{{ .Title }}</h2>
-            </div>
-        </a>
-        {{ end }}
-    </div>
-    <br />
-
-    <h2>Works by recommended users</h2>
-    <div>
-        {{ include "components/small-tn" Artworks.Users }}
-    </div>
-    <br />
-    {{ range Artworks.RecommendByTags }}
-    <h2>Recommended illustrations tagged #{{.Name}}</h2>
-    {{ include "components/small-tn" .Artworks }}
-    <br>
     {{ end }}
-    <h2>Newest works</h2>
-    <div class="thumbnail-container">{{ include "components/small-tn" Artworks.Newest }}</div>
-    {{ else }}
-    <p><a href="/login">Login</a> to access more features!</p>
+  </div>
+  <br />
+
+  <h2>Pixivision</h2>
+  <div class="thumbnail-container">
+    {{ range Artworks.Pixivision }}
+    <a href="{{ .URL }}" class="spotlight-thumbnail">
+      <img
+        src="{{ .Thumbnail }}"
+        alt="{{ .Title }}"
+        class="spotlight-master-image"
+      />
+      <div class="spotlight-title-wrapper">
+        <h2 class="spotlight-title">{{ .Title }}</h2>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+  <br />
+
+  <h2>Works by recommended users</h2>
+  <div>{{ include "components/small-tn" Artworks.Users }}</div>
+  <br />
+  {{ range Artworks.RecommendByTags }}
+  <h2>Recommended illustrations tagged #{{.Name}}</h2>
+  {{ include "components/small-tn" .Artworks }}
+  <br />
+  {{ end }}
+  <h2>Newest works</h2>
+  <div class="thumbnail-container">
+    {{ include "components/small-tn" Artworks.Newest }}
+  </div>
+  {{ else }}
+  <p><a href="/login">Login</a> to access more features!</p>
+  <div class="component-header">
     <h2>Daily rankings</h2>
-    <div class="thumbnail-container">
-        {{ range rank := Artworks.Rankings }}
-        <div class="artwork-thumbnail-large artwork-thumbnail">
-            <div class="artwork-rank-circle">{{ rank + 1 }}</div>
-            {{ if toInt(.Pages) > 1 }}
-            <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
-            {{ end }}
-            <a href="/artworks/{{ .ID }}">
-                <img src="{{ .Thumbnail }}" alt="{{ .Title }}" class="artwork-master-image" />
-            </a>
+    <a href="/ranking">See more</a>
+  </div>
+  <div class="thumbnail-container">
+    {{ range rank := Artworks.Rankings }}
+    <div class="artwork-thumbnail-large artwork-thumbnail">
+      <div class="artwork-rank-circle">{{ rank + 1 }}</div>
+      {{ if toInt(.Pages) > 1 }}
+      <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
+      {{ end }}
+      <a href="/artworks/{{ .ID }}">
+        <img
+          src="{{ .Thumbnail }}"
+          alt="{{ .Title }}"
+          class="artwork-master-image"
+        />
+      </a>
 
-            <a class="artwork-thumbnail-title" href="/artworks/{{ .ID }}">
-                <h3 class="no-margin">{{ .Title }}</h3>
-            </a>
-            <a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"><img src="{{ .ArtistAvatar }}"
-                    alt="{{ .ArtistName }}" class="artwork-thumbnail-artist-avatar border-rounded" />
-                {{ .ArtistName }}</a>
-        </div>
-        {{ end }}
+      <a class="artwork-thumbnail-title" href="/artworks/{{ .ID }}">
+        <h3 class="no-margin">{{ .Title }}</h3>
+      </a>
+      <a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"
+        ><img
+          src="{{ .ArtistAvatar }}"
+          alt="{{ .ArtistName }}"
+          class="artwork-thumbnail-artist-avatar border-rounded"
+        />
+        {{ .ArtistName }}</a
+      >
     </div>
-    <br />
-
-    <h2>Pixivision</h2>
-    <div class="thumbnail-container">
-        {{ range Artworks.Pixivision }}
-        <a href="{{ .URL }}" class="spotlight-thumbnail">
-            <img src="{{ .Thumbnail }}" alt="{{ .Title }}" class="spotlight-master-image" />
-            <div class="spotlight-title-wrapper">
-                <h2 class="spotlight-title">{{ .Title }}</h2>
-            </div>
-        </a>
-        {{ end }}
-    </div>
-    <br />
     {{ end }}
+  </div>
+  <br />
+
+  <h2>Pixivision</h2>
+  <div class="thumbnail-container">
+    {{ range Artworks.Pixivision }}
+    <a href="{{ .URL }}" class="spotlight-thumbnail">
+      <img
+        src="{{ .Thumbnail }}"
+        alt="{{ .Title }}"
+        class="spotlight-master-image"
+      />
+      <div class="spotlight-title-wrapper">
+        <h2 class="spotlight-title">{{ .Title }}</h2>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+  <br />
+  {{ end }}
 </div>

@@ -39,6 +39,14 @@ body {
   scrollbar-width: thin;
 }
 
+.component-header {
+  display: flex;
+  justify-content: space-between;
+}
+.component-header h2 {
+  margin: 0;
+  display: inline-block;
+}
 .navbar {
   margin-left: 2rem;
   margin-right: 2rem;
