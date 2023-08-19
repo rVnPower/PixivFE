@@ -37,7 +37,7 @@ func ParseConfig() error {
 	}
 
 	BaseURL = parseEnvWithDefault("PIXIVFE_BASEURL", "localhost")
-	Port = parseEnvWithDefault("PIXIVFE_PORT", "8080")
+	Port = parseEnvWithDefault("PIXIVFE_PORT", "8282")
 	UserAgent = parseEnvWithDefault("PIXIVFE_USERAGENT", "Mozilla/5.0")
 	ProxyServer = parseEnvWithDefault("PIXIVFE_IMAGEPROXY", "px2.rainchan.win")
 
