@@ -6,7 +6,7 @@ const (
 	ArtworkRelatedURL       = "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=%d"
 	ArtworkCommentsURL      = "https://www.pixiv.net/ajax/illusts/comments/roots?illust_id=%s&limit=100"
 	ArtworkNewestURL        = "https://www.pixiv.net/ajax/illust/new?limit=30&type=%s&r18=%s&lastId=%s"
-	ArtworkRankingURL       = "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&p=%s"
+	ArtworkRankingURL       = "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&date=%s&p=%s"
 	ArtworkDiscoveryURL     = "https://www.pixiv.net/ajax/discovery/artworks?mode=%s&limit=%d"
 	SearchTagURL            = "https://www.pixiv.net/ajax/search/tags/%s"
 	SearchArtworksURL       = "https://www.pixiv.net/ajax/search/%s/%s?order=%s&mode=%s&p=%s"

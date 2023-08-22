@@ -128,14 +128,15 @@ func ranking_page(c *fiber.Ctx) error {
 		image_proxy = &configs.ProxyServer
 	}
 
-	queries := make(map[string]string, 3)
+	queries := make(map[string]string, 4)
 	queries["Mode"] = c.Query("mode", "daily")
 	queries["Content"] = c.Query("content", "all")
+	queries["Date"] = c.Query("date", "")
 
 	page := c.Query("page", "1")
 	pageInt, _ := strconv.Atoi(page)
 
-	response, err := PC.GetRanking(queries["Mode"], queries["Content"], page)
+	response, err := PC.GetRanking(queries["Mode"], queries["Content"], queries["Date"], page)
 	if err != nil {
 		return err
 	}
