@@ -26,10 +26,12 @@
     {{ if isset(PageType) }}
 
     {{ if PageType == "artwork" }}
-    <meta property="og:description" content="View this artwork by {{ Illust.User.Name }} on PixivFE.">
     {{ if ! Illust.XRestrict }}
+    <meta property="og:description" content="View this artwork by {{ Illust.User.Name }} on PixivFE.">
     <meta property="og:image" content="{{ Illust.Images[0].Large }}">
     {{ else }}
+    <meta property="og:description" content="View this (explicit) artwork by {{ Illust.User.Name }} on PixivFE.">
+    <meta property="og:image" content="{{ Illust.User.Avatar }}">
     {{ end }}
 
 
@@ -45,7 +47,7 @@
 
     {{ else }}
     <meta property="og:description" content="View this page on PixivFE. A privacy respecting frontend for Pixiv.">
-    <meta property="og:image" content="/assets/banner.jpg">
+    <meta property="og:image" content="{{ BaseURL }}/assets/banner.jpg">
     {{ end }}
     {{ end }}
 </head>
