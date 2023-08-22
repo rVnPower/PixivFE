@@ -14,6 +14,8 @@
     <meta name="referrer" content="no-referrer, same-origin" />
     <link href="/css/style.css" rel="stylesheet" />
     <link href="/css/template.css" rel="stylesheet" />
+
+
     {{ if BaseURL }}
     <meta property="og:site_name" content="PixivFE" />
     <meta property="og:title" content="{{ title }}">
@@ -22,22 +24,28 @@
     <meta name="twitter:card" content="summary_large_image">
 
     {{ if isset(PageType) }}
-    {{ if PageType == "artwork" }}
 
-    {{ if Illust.XRestrict }}
-    <meta property="og:description" content="(Explicit) View this artwork on PixivFE.">
-    {{ else }}
+    {{ if PageType == "artwork" }}
+    <meta property="og:description" content="View this artwork by {{ Illust.User.Name }} on PixivFE.">
+    {{ if ! Illust.XRestrict }}
     <meta property="og:image" content="{{ Illust.Images[0].Large }}">
-    <meta property="og:description" content="View this artwork on PixivFE.">
+    {{ else }}
     {{ end }}
 
 
     {{ else if PageType == "user" }}
     <meta property="og:description" content="View this user's profile on PixivFE.">
+    {{ if User.BackgroundImage }}
+    <meta property="og:image" content="{{ User.BackgroundImage }}">
+    {{ else }}
+    <meta property="og:image" content="{{ User.Avatar }}">
+    {{ end }}
     {{ end }}
 
+
     {{ else }}
-    <meta property="og:description" content="View this page on PixivFE.">
+    <meta property="og:description" content="View this page on PixivFE. A privacy respecting frontend for Pixiv.">
+    <meta property="og:image" content="/assets/banner.jpg">
     {{ end }}
     {{ end }}
 </head>
