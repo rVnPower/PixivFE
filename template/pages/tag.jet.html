@@ -1,19 +1,19 @@
 <div class="container">
     <div class="tag-header">
-        {{ if Tag.Metadata.id }}
-        <a href="/artworks/{{ Tag.Metadata.id }}">
-            <img class="tag-thumbnail" src="{{ Tag.Metadata.image }}" alt="{{ Tag.Name }}" />
+        {{ if Tag.Metadata.ID }}
+        <a href="/artworks/{{ Tag.Metadata.ID }}">
+            <img class="tag-thumbnail" src="{{ Tag.Metadata.Image }}" alt="{{ Tag.Name }}" />
         </a>
         {{ end }}
 
         <div class="tag-details">
             <b class="main-tag">#{{ Tag.Name }}</b>
-            <span class="translated-tag">{{ Tag.Metadata.tag }}</span>
+            <span class="translated-tag">{{ Tag.Metadata.Name }}</span>
             <br />
             <br />
             <span><b>{{ Data.Artworks.Total }}</b> works</span>
 
-            <p class="tag-description">{{ Tag.Metadata.abstract }}</p>
+            <p class="tag-description">{{ Tag.Metadata.Detail }}</p>
         </div>
     </div>
 

@@ -191,10 +191,17 @@ type RankedArtwork struct {
 	ArtistAvatar string `json:"profile_img"`
 }
 
+type TagMetadata struct {
+	Detail string      `json:"abstract"`
+	Image  string      `json:"image"`
+	Name   string      `json:"tag"`
+	ID     json.Number `json:"id"`
+}
+
 type TagDetail struct {
-	Name            string            `json:"tag"`
-	AlternativeName string            `json:"word"`
-	Metadata        map[string]string `json:"pixpedia"`
+	Name            string      `json:"tag"`
+	AlternativeName string      `json:"word"`
+	Metadata        TagMetadata `json:"pixpedia"`
 }
 
 type PopularArtworks struct {
