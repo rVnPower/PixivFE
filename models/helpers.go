@@ -33,6 +33,14 @@ func ProxyRecommendedByTagsSlice(artworks []LandingRecommendByTags, proxy string
 	return artworks
 }
 
+func ProxyRankedArtworkSlice(artworks []RankedArtwork, proxy string) []RankedArtwork {
+	for i := range artworks {
+		artworks[i].Image = ProxyImage(artworks[i].Image, proxy)
+		artworks[i].ArtistAvatar = ProxyImage(artworks[i].ArtistAvatar, proxy)
+	}
+	return artworks
+}
+
 func ProxyCommentsSlice(comments []Comment, proxy string) []Comment {
 	for i := range comments {
 		comments[i].Avatar = ProxyImage(comments[i].Avatar, proxy)

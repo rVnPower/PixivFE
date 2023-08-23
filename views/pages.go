@@ -141,16 +141,11 @@ func ranking_page(c *fiber.Ctx) error {
 		return err
 	}
 
-	artworks := response.Artworks
-
-	for i := range artworks {
-		artworks[i].Image = models.ProxyImage(artworks[i].Image, *image_proxy)
-		artworks[i].ArtistAvatar = models.ProxyImage(artworks[i].ArtistAvatar, *image_proxy)
-	}
+	response.ProxyImages(*image_proxy)
 
 	return c.Render("pages/rank", fiber.Map{
 		"Title":   "Ranking",
-		"Items":   artworks,
+		"Data":    response,
 		"Queries": queries,
 		"Page":    pageInt,
 	})

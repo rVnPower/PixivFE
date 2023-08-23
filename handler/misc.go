@@ -41,6 +41,10 @@ func (p *PixivClient) GetRanking(mode string, content string, date string, page 
 	// Ranking data is formatted differently
 	var pr models.RankingResponse
 
+	if len(date) > 0 {
+		date = "&date=" + date
+	}
+
 	url := fmt.Sprintf(ArtworkRankingURL, mode, content, date, page)
 
 	s, err := p.TextRequest(url)
@@ -53,6 +57,8 @@ func (p *PixivClient) GetRanking(mode string, content string, date string, page 
 	if err != nil {
 		return pr, err
 	}
+	pr.PrevDate = strings.ReplaceAll(string(pr.PrevDateRaw[:]), "\"", "")
+	pr.NextDate = strings.ReplaceAll(string(pr.NextDateRaw[:]), "\"", "")
 
 	return pr, nil
 }

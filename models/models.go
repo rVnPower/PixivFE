@@ -20,9 +20,18 @@ type PixivResponse struct {
 }
 
 type RankingResponse struct {
-	Artworks []RankedArtwork `json:"contents"`
-	Mode     string          `json:"mode"`
-	Content  string          `json:"content"`
+	Artworks    []RankedArtwork `json:"contents"`
+	Mode        string          `json:"mode"`
+	Content     string          `json:"content"`
+	CurrentDate string          `json:"date"`
+	PrevDateRaw json.RawMessage `json:"prev_date"`
+	NextDateRaw json.RawMessage `json:"next_date"`
+	PrevDate    string
+	NextDate    string
+}
+
+func (s *RankingResponse) ProxyImages(proxy string) {
+	s.Artworks = ProxyRankedArtworkSlice(s.Artworks, proxy)
 }
 
 type ImageResponse struct {
