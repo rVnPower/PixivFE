@@ -167,5 +167,11 @@ func GetTemplateFunctions() template.FuncMap {
 			}
 			return false
 		},
+		"reformatDate": func(s string) string {
+			if len(s) != 8 {
+				return s
+			}
+			return fmt.Sprintf("%s-%s-%s", s[4:], s[2:4], s[:2])
+		},
 	}
 }
