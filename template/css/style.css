@@ -434,6 +434,47 @@ body {
   font-weight: normal;
 }
 
+#calendar {
+  width: 100%;
+  height: auto;
+}
+
+.calendar-weeks,
+.calendar-board {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.calendar-weeks div {
+  width: 128px;
+  text-align: center;
+}
+
+.calendar-node {
+  width: 128px;
+  height: 128px;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  background-color: #24283b;
+  position: relative;
+}
+.calendar-node span {
+  font-size: small;
+  color: #c0caf5;
+  background-color: rgba(26, 27, 38, 0.6);
+  position: absolute;
+  top: 0.3rem;
+  left: 0.3rem;
+  padding: 0.05rem 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .switcher {
   border-radius: 10px;
 }

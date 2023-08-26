@@ -516,6 +516,48 @@ body {
   }
 }
 
+#calendar {
+  width: 100%;
+  height: auto;
+}
+
+.calendar-weeks,
+.calendar-board {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.calendar-weeks div {
+  width: 128px;
+  text-align: center;
+}
+
+.calendar-node {
+  width: 128px;
+  height: 128px;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  background-color: $bg-alt;
+  position: relative;
+
+  span {
+    font-size: small;
+    color: $fg;
+    background-color: $bg-alt-dimmed;
+    position: absolute;
+    top: 0.3rem;
+    left: 0.3rem;
+    padding: 0.05rem 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .switcher {
   border-radius: 10px;
 

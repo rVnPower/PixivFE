@@ -231,6 +231,23 @@ func discovery_page(c *fiber.Ctx) error {
 	return c.Render("pages/discovery", fiber.Map{"Title": "Discovery", "Artworks": artworks})
 }
 
+func ranking_log_page(c *fiber.Ctx) error {
+	image_proxy := get_session_value(c, "image-proxy")
+	if image_proxy == nil {
+		image_proxy = &configs.ProxyServer
+	}
+
+	mode := c.Query("mode", "daily")
+	date := c.Query("date", "")
+
+	render, err := PC.GetRankingLog(mode, date, *image_proxy)
+	if err != nil {
+		return err
+	}
+
+	return c.Render("pages/ranking_log", fiber.Map{"Title": "Ranking calendar", "Render": render})
+}
+
 func following_works_page(c *fiber.Ctx) error {
 	image_proxy := get_session_value(c, "image-proxy")
 	if image_proxy == nil {

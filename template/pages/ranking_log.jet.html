@@ -1,0 +1,24 @@
+<div class="container">
+    <h2>Ranking calendar</h2>
+    <!-- <div class="switcher">
+            {{ url := "/discovery?mode=" }}
+            <span class="switch-title">Filter</span>
+            <a href="{{url}}all" class="switch-button">All</a>
+            <a href="{{url}}safe" class="switch-button">Safe</a>
+            <a href="{{url}}r18" class="switch-button">R-18</a>
+        </div> -->
+    <div id="calendar">
+        <div class="calendar-weeks">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+        </div>
+        <div class="calendar-board">
+            {{ raw: Render }}
+        </div>
+    </div>
+</div>

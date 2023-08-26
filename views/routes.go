@@ -39,12 +39,14 @@ func SetupRoutes(r *fiber.App) {
 	PC = NewPixivClient(5000)
 	PC.SetSessionID(configs.Token)
 	PC.SetUserAgent(configs.UserAgent)
+	PC.AddHeader("Accept-Language", "en-US,en;q=0.5")
 
 	r.Get("/", index_page)
 	r.Get("artworks/:id/", artwork_page)
 	r.Get("users/:id/:category?", user_page)
 	r.Get("newest", newest_artworks_page)
 	r.Get("ranking", ranking_page)
+	r.Get("ranking_log", ranking_log_page)
 	r.Get("tags/:name", search_page)
 	r.Get("discovery", discovery_page)
 
