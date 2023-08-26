@@ -8,6 +8,7 @@ import (
 	"pixivfe/models"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -240,12 +241,35 @@ func ranking_log_page(c *fiber.Ctx) error {
 	mode := c.Query("mode", "daily")
 	date := c.Query("date", "")
 
-	render, err := PC.GetRankingLog(mode, date, *image_proxy)
+	var year int
+	var month int
+	var monthLit string
+
+	if len(date) == 6 {
+		var err error
+		year, err = strconv.Atoi(date[:4])
+		if err != nil {
+			return err
+		}
+		month, err = strconv.Atoi(date[4:])
+		if err != nil {
+			return err
+		}
+	} else {
+		now := time.Now()
+		year = now.Year()
+		month = int(now.Month())
+	}
+
+	realDate := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC)
+	monthLit = realDate.Month().String()
+
+	render, err := PC.GetRankingLog(mode, year, month, *image_proxy)
 	if err != nil {
 		return err
 	}
 
-	return c.Render("pages/ranking_log", fiber.Map{"Title": "Ranking calendar", "Render": render})
+	return c.Render("pages/ranking_log", fiber.Map{"Title": "Ranking calendar", "Render": render, "Month": monthLit, "Year": year})
 }
 
 func following_works_page(c *fiber.Ctx) error {

@@ -1,12 +1,16 @@
 <div class="container">
-    <h2>Ranking calendar</h2>
-    <!-- <div class="switcher">
-            {{ url := "/discovery?mode=" }}
-            <span class="switch-title">Filter</span>
-            <a href="{{url}}all" class="switch-button">All</a>
-            <a href="{{url}}safe" class="switch-button">Safe</a>
-            <a href="{{url}}r18" class="switch-button">R-18</a>
-        </div> -->
+    <h2>Ranking calendar ({{ Month }} {{ Year }})</h2>
+    <div class="switcher">
+        {{ url := "/ranking_log?mode=" }}
+        <span class="switch-title">Modes</span>
+        <a href="{{ url }}daily" class="switch-button">Daily</a>
+        <a href="{{ url }}weekly" class="switch-button">Weekly</a>
+        <a href="{{ url }}monthly" class="switch-button">Monthly</a>
+        <a href="{{ url }}rookie" class="switch-button">Rookie</a>
+        <span class="switch-seperator"></span>
+        <a href="{{ url }}daily_r18" class="switch-button">Daily (R-18)</a>
+        <a href="{{ url }}weekly_r18" class="switch-button">Weekly (R-18)</a>
+    </div>
     <div id="calendar">
         <div class="calendar-weeks">
             <div>Sun</div>

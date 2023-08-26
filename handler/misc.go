@@ -163,8 +163,9 @@ func (p *PixivClient) GetDiscoveryArtwork(mode string, count int) ([]models.Illu
 	return artworks, nil
 }
 
-func (p *PixivClient) GetRankingLog(mode string, date string, image_proxy string) (template.HTML, error) {
-	resp, err := http.Get("https://www.pixiv.net/ranking_log.php?mode=daily&date=202308")
+func (p *PixivClient) GetRankingLog(mode string, year, month int, image_proxy string) (template.HTML, error) {
+	url := fmt.Sprintf("https://www.pixiv.net/ranking_log.php?mode=%s&date=%d%02d", mode, year, month)
+	resp, err := http.Get(url)
 	if err != nil {
 		return "", err
 	}
@@ -196,14 +197,14 @@ func (p *PixivClient) GetRankingLog(mode string, date string, image_proxy string
 	}
 	link(doc)
 
-	now := time.Now()
-	year := now.Year()
-	month := now.Month()
-	lastMonth := time.Date(year, month, 0, 0, 0, 0, 0, time.UTC)
-	thisMonth := time.Date(year, month+1, 0, 0, 0, 0, 0, time.UTC)
+	// now := time.Now()
+	// yearNow := now.Year()
+	// monthNow := now.Month()
+	lastMonth := time.Date(year, time.Month(month), 0, 0, 0, 0, 0, time.UTC)
+	thisMonth := time.Date(year, time.Month(month+1), 0, 0, 0, 0, 0, time.UTC)
 
 	renderString := ""
-	for i := 0; i <= get_weekday(lastMonth.Weekday()); i++ {
+	for i := 0; i < get_weekday(lastMonth.Weekday()); i++ {
 		renderString += "<div class=\"calendar-node\"></div>"
 	}
 	for i := 0; i < thisMonth.Day(); i++ {
