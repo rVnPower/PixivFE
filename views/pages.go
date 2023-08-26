@@ -268,6 +268,7 @@ func ranking_log_page(c *fiber.Ctx) error {
 
 	monthBefore := realDate.AddDate(0, -1, 0)
 	monthAfter := realDate.AddDate(0, 1, 0)
+	thisMonthLink := fmt.Sprintf("%d%02d", realDate.Year(), realDate.Month())
 	monthBeforeLink := fmt.Sprintf("%d%02d", monthBefore.Year(), monthBefore.Month())
 	monthAfterLink := fmt.Sprintf("%d%02d", monthAfter.Year(), monthAfter.Month())
 
@@ -276,7 +277,7 @@ func ranking_log_page(c *fiber.Ctx) error {
 		return err
 	}
 
-	return c.Render("pages/ranking_log", fiber.Map{"Title": "Ranking calendar", "Render": render, "Mode": mode, "Month": monthLit, "Year": year, "MonthBefore": monthBeforeLink, "MonthAfter": monthAfterLink})
+	return c.Render("pages/ranking_log", fiber.Map{"Title": "Ranking calendar", "Render": render, "Mode": mode, "Month": monthLit, "Year": year, "MonthBefore": monthBeforeLink, "MonthAfter": monthAfterLink, "ThisMonth": thisMonthLink})
 }
 
 func following_works_page(c *fiber.Ctx) error {
