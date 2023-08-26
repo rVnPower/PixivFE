@@ -2,6 +2,7 @@ package views
 
 import (
 	"errors"
+	"fmt"
 	"math"
 	"net/http"
 	"pixivfe/configs"
@@ -245,6 +246,7 @@ func ranking_log_page(c *fiber.Ctx) error {
 	var month int
 	var monthLit string
 
+	// If the user supplied a date
 	if len(date) == 6 {
 		var err error
 		year, err = strconv.Atoi(date[:4])
@@ -264,12 +266,17 @@ func ranking_log_page(c *fiber.Ctx) error {
 	realDate := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC)
 	monthLit = realDate.Month().String()
 
+	monthBefore := realDate.AddDate(0, -1, 0)
+	monthAfter := realDate.AddDate(0, 1, 0)
+	monthBeforeLink := fmt.Sprintf("%d%02d", monthBefore.Year(), monthBefore.Month())
+	monthAfterLink := fmt.Sprintf("%d%02d", monthAfter.Year(), monthAfter.Month())
+
 	render, err := PC.GetRankingLog(mode, year, month, *image_proxy)
 	if err != nil {
 		return err
 	}
 
-	return c.Render("pages/ranking_log", fiber.Map{"Title": "Ranking calendar", "Render": render, "Month": monthLit, "Year": year})
+	return c.Render("pages/ranking_log", fiber.Map{"Title": "Ranking calendar", "Render": render, "Mode": mode, "Month": monthLit, "Year": year, "MonthBefore": monthBeforeLink, "MonthAfter": monthAfterLink})
 }
 
 func following_works_page(c *fiber.Ctx) error {
