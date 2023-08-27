@@ -2,10 +2,13 @@
 <html lang="en">
 
 <head>
-    {{ if !isset(Title) }}
-    {{ Title := "PixivFE" }}
+    {{ title := "" }}
+    {{ if isset(Title) }}
+    {{ title = Title }}
+    {{ else }}
+    {{ title = "PixivFE" }}
     {{ end }}
-    <title>{{ Title }} - PixivFE</title>
+    <title>{{ title }} - PixivFE</title>
     <meta charset="UTF-8" />
     <meta name="description" content="View this page on PixivFE." />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,7 +20,7 @@
 
     {{ if BaseURL }}
     <meta property="og:site_name" content="PixivFE" />
-    <meta property="og:title" content="{{ Title }}">
+    <meta property="og:title" content="{{ title }}">
     <meta property="og:type" content="article" />
     <meta property="og:url" content="{{ FullURL }}">
     <meta name="twitter:card" content="summary_large_image">
