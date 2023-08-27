@@ -205,7 +205,7 @@ func (p *PixivClient) GetRankingLog(mode string, year, month int, image_proxy st
 
 	renderString := ""
 	for i := 0; i < get_weekday(lastMonth.Weekday()); i++ {
-		renderString += "<div class=\"calendar-node\"></div>"
+		renderString += "<div class=\"calendar-node calendar-node-empty\"></div>"
 	}
 	for i := 0; i < thisMonth.Day(); i++ {
 		date := fmt.Sprintf("%d%02d%02d", year, month, i+1)

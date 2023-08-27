@@ -446,6 +446,8 @@ body {
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
 }
 
@@ -455,6 +457,7 @@ body {
 }
 
 .calendar-node {
+  aspect-ratio: 1/1;
   width: 128px;
   height: 128px;
   border-radius: 8px;
@@ -548,6 +551,10 @@ body {
   }
   .navbar .search-bar {
     width: 75px;
+  }
+  .calendar-weeks,
+  .calendar-node-empty {
+    display: none;
   }
 }
 @media screen and (min-width: 400px) and (max-width: 800px) {
