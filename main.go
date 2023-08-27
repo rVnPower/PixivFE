@@ -64,7 +64,8 @@ func setup_router() *fiber.App {
 				// Disable cache for settings page
 				return strings.Contains(c.Path(), "/settings") || c.Path() == "/"
 			},
-			Expiration: 5 * time.Minute,
+			Expiration:   5 * time.Minute,
+			CacheControl: true,
 
 			KeyGenerator: func(c *fiber.Ctx) string {
 				return utils.CopyString(c.OriginalURL())
