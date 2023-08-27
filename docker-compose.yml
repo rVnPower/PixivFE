@@ -15,6 +15,6 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "127.0.0.1:8282"
+      - "8282:8282"
     environment:
       - PIXIVFE_TOKEN=changethis
