@@ -4,4 +4,4 @@ steps:
     commands:
       - go get
       - go build
-      - go test -v test/*
+      - go test -v "handler/*"
