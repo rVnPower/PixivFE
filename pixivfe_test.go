@@ -1,20 +1,21 @@
-package handler
+package main
 
 import (
 	"net/http"
 	"os"
+	"pixivfe/handler"
 	"testing"
 	"time"
 )
 
-func generate_test_client() *PixivClient {
+func generate_test_client() *handler.PixivClient {
 	transport := &http.Transport{Proxy: http.ProxyFromEnvironment}
 	client := &http.Client{
 		Timeout:   time.Duration(5000) * time.Millisecond,
 		Transport: transport,
 	}
 
-	pc := &PixivClient{
+	pc := &handler.PixivClient{
 		Client: client,
 		Header: make(map[string]string),
 		Cookie: make(map[string]string),
