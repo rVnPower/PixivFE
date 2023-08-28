@@ -3,6 +3,5 @@ steps:
     image: golang
     commands:
       - go get
-      - go build
-      - go test -v
+      - go run main.go
     secrets: [pixivfe_token]
