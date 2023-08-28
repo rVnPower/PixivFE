@@ -446,8 +446,6 @@ body {
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
   gap: 5px;
 }
 
@@ -544,16 +542,21 @@ body {
   text-decoration: none;
 }
 
+@media screen and (max-width: 950px) {
+  .calendar-board {
+    justify-content: center;
+  }
+  .calendar-weeks,
+  .calendar-node-empty {
+    display: none;
+  }
+}
 @media screen and (max-width: 800px) {
   .navbar .navbar-buttons {
     display: none;
   }
   .navbar .search-bar {
     width: 75px;
-  }
-  .calendar-weeks,
-  .calendar-node-empty {
-    display: none;
   }
 }
 @media screen and (min-width: 400px) and (max-width: 800px) {

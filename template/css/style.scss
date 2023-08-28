@@ -525,8 +525,6 @@ body {
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
   gap: 5px;
 }
 
@@ -632,6 +630,17 @@ body {
   }
 }
 
+@media screen and (max-width: 950px) {
+  .calendar-board {
+    justify-content: center;
+  }
+
+  .calendar-weeks,
+  .calendar-node-empty {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .navbar {
     .navbar-buttons {
@@ -643,10 +652,6 @@ body {
     }
   }
 
-  .calendar-weeks,
-  .calendar-node-empty {
-    display: none;
-  }
 }
 
 @media screen and (min-width: 400px) and (max-width: 800px) {
