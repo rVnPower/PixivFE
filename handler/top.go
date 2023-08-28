@@ -2,8 +2,8 @@ package handler
 
 import (
 	"fmt"
-	"pixivfe/models"
 
+	"codeberg.org/vnpower/pixivfe/models"
 	"github.com/goccy/go-json"
 )
 

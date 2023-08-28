@@ -2,10 +2,10 @@ package views
 
 import (
 	"net/http"
-	"pixivfe/configs"
-	"pixivfe/handler"
 	"time"
 
+	"codeberg.org/vnpower/pixivfe/configs"
+	"codeberg.org/vnpower/pixivfe/handler"
 	"github.com/gofiber/fiber/v2"
 )
 

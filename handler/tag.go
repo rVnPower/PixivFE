@@ -2,8 +2,9 @@ package handler
 
 import (
 	"fmt"
+
+	"codeberg.org/vnpower/pixivfe/models"
 	"github.com/goccy/go-json"
-	"pixivfe/models"
 )
 
 func (p *PixivClient) GetTagData(name string) (models.TagDetail, error) {

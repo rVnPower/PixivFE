@@ -6,7 +6,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"pixivfe/models"
+
+	"codeberg.org/vnpower/pixivfe/models"
 )
 
 type PixivClient struct {

@@ -1,4 +1,4 @@
-module pixivfe
+module codeberg.org/vnpower/pixivfe
 
 go 1.21
 

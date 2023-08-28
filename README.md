@@ -8,6 +8,8 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck
 </a>
 </p>
 
+![CI badge](https://ci.codeberg.org/api/badges/12556/status.svg)
+
 Questions? Feedbacks? You can [PM me](https://matrix.to/#/@vnpower:exozy.me) on
 Matrix!
 
@@ -23,7 +25,7 @@ You can keep track of this project's development
 
 ## Hosting
 
-Check out [this page.](https://codeberg.org/VnPower/pixivfe/wiki/Hosting). We
+Check out [this page](https://codeberg.org/VnPower/pixivfe/wiki/Hosting). We
 currently have guides for Docker and Caddy.
 
 Many thanks to [dragongoose](https://codeberg.org/dragongoose) for writing the

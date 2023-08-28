@@ -2,12 +2,12 @@ package main
 
 import (
 	"net"
-	"pixivfe/configs"
-	"pixivfe/handler"
-	"pixivfe/views"
 	"strings"
 	"time"
 
+	"codeberg.org/vnpower/pixivfe/configs"
+	"codeberg.org/vnpower/pixivfe/handler"
+	"codeberg.org/vnpower/pixivfe/views"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"

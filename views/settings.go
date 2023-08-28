@@ -2,9 +2,9 @@ package views
 
 import (
 	"net/http"
-	"pixivfe/configs"
 	"time"
 
+	"codeberg.org/vnpower/pixivfe/configs"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/session"
 )

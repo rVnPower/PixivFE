@@ -4,10 +4,10 @@ import (
 	"errors"
 	"fmt"
 	"math"
-	"pixivfe/models"
 	"sort"
 	"strconv"
 
+	"codeberg.org/vnpower/pixivfe/models"
 	"github.com/goccy/go-json"
 )
 

@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"pixivfe/models"
 	"strings"
 	"time"
 
+	"codeberg.org/vnpower/pixivfe/models"
 	"github.com/goccy/go-json"
 	"golang.org/x/net/html"
 )

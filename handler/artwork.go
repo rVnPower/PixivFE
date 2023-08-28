@@ -5,8 +5,8 @@ import (
 	"sort"
 	"strconv"
 
+	"codeberg.org/vnpower/pixivfe/models"
 	"github.com/goccy/go-json"
-	"pixivfe/models"
 )
 
 func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {

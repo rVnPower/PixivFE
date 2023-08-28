@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"math"
 	"net/http"
-	"pixivfe/configs"
-	"pixivfe/models"
 	"strconv"
 	"strings"
 	"time"
 
+	"codeberg.org/vnpower/pixivfe/configs"
+	"codeberg.org/vnpower/pixivfe/models"
 	"github.com/gofiber/fiber/v2"
 )
 
