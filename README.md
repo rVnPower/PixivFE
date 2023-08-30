@@ -9,6 +9,7 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck
 </p>
 
 ![CI badge](https://ci.codeberg.org/api/badges/12556/status.svg)
+[![Go Report Card](https://goreportcard.com/badge/codeberg.org/vnpower/pixivfe)](https://goreportcard.com/report/codeberg.org/vnpower/pixivfe)
 
 Questions? Feedbacks? You can [PM me](https://matrix.to/#/@vnpower:exozy.me) on
 Matrix!
