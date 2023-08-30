@@ -4,5 +4,6 @@ steps:
     commands:
       - go get
       - go run main.go &
+      - sleep 5
       - go test -v
     secrets: [pixivfe_token]
