@@ -31,6 +31,9 @@ func (p *PixivClient) GetFrequentTags(ids string) ([]models.FrequentTag, error) 
 	URL := fmt.Sprintf(FrequentTagsURL, ids)
 
 	response, err := p.PixivRequest(URL)
+	if err != nil {
+		return nil, err
+	}
 
 	err = json.Unmarshal([]byte(response), &tags)
 	if err != nil {

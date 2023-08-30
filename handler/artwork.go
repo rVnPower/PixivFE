@@ -179,6 +179,9 @@ func (p *PixivClient) GetArtworkComments(id string) ([]models.Comment, error) {
 	}
 
 	err = json.Unmarshal([]byte(response), &body)
+	if err != nil {
+		return nil, err
+	}
 
 	return body.Comments, nil
 }

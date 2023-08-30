@@ -99,6 +99,10 @@ func (p *PixivClient) GetUserArtworks(id string, ids string) ([]models.IllustSho
 		var illust models.IllustShort
 		err = json.Unmarshal(v, &illust)
 
+		if err != nil {
+			return nil, err
+		}
+
 		works = append(works, illust)
 	}
 
@@ -166,6 +170,10 @@ func (p *PixivClient) GetUserInformation(id string, category string, page int) (
 
 		// Frequent tags
 		user.FrequentTags, err = p.GetFrequentTags(ids)
+
+		if err != nil {
+			return nil, err
+		}
 	} else {
 		// Bookmarks
 		works, count, err := p.GetUserBookmarks(id, "show", page)
