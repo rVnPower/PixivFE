@@ -6,7 +6,6 @@ import (
 	"math/rand"
 	"regexp"
 	"strconv"
-	"strings"
 )
 
 func GetRandomColor() string {
@@ -38,116 +37,68 @@ func GetRandomColor() string {
 	return colors[rand.Intn(len(colors))]
 }
 
+func ParseEmojis(s string) template.HTML {
+	emojiList := map[string]string{
+		"normal":        "101",
+		"surprise":      "102",
+		"serious":       "103",
+		"heaven":        "104",
+		"happy":         "105",
+		"excited":       "106",
+		"sing":          "107",
+		"cry":           "108",
+		"normal2":       "201",
+		"shame2":        "202",
+		"love2":         "203",
+		"interesting2":  "204",
+		"blush2":        "205",
+		"fire2":         "206",
+		"angry2":        "207",
+		"shine2":        "208",
+		"panic2":        "209",
+		"normal3":       "301",
+		"satisfaction3": "302",
+		"surprise3":     "303",
+		"smile3":        "304",
+		"shock3":        "305",
+		"gaze3":         "306",
+		"wink3":         "307",
+		"happy3":        "308",
+		"excited3":      "309",
+		"love3":         "310",
+		"normal4":       "401",
+		"surprise4":     "402",
+		"serious4":      "403",
+		"love4":         "404",
+		"shine4":        "405",
+		"sweat4":        "406",
+		"shame4":        "407",
+		"sleep4":        "408",
+		"heart":         "501",
+		"teardrop":      "502",
+		"star":          "503",
+	}
+
+	regex := regexp.MustCompile(`\(([^)]+)\)`)
+
+	parsedString := regex.ReplaceAllStringFunc(s, func(s string) string {
+		s = s[1 : len(s)-1] // Get the string inside
+		id := emojiList[s]
+
+		return fmt.Sprintf(`<img src="https://s.pximg.net/common/images/emoji/%s.png" alt="(%s)" class="emoji" />`, id, s)
+	})
+	return template.HTML(parsedString)
+}
+
 func GetTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
-		"add": func(a int, b int) int {
-			return a + b
-		},
-
 		"toInt": func(s string) int {
 			n, _ := strconv.Atoi(s)
 			return n
 		},
 
-		"proxyImage": func(url string, target string) string {
-			if strings.Contains(url, "s.pximg.net") {
-				// This subdomain didn't get proxied
-				return url
-			}
-
-			regex := regexp.MustCompile(`.*?pximg\.net`)
-			proxy := "https://" + target
-
-			return regex.ReplaceAllString(url, proxy)
-		},
 		"parseEmojis": func(s string) template.HTML {
-			regex := regexp.MustCompile(`\(([^)]+)\)`)
-
-			parsedString := regex.ReplaceAllStringFunc(s, func(s string) string {
-				s = s[1 : len(s)-1] // Get the string inside
-				var id string
-
-				switch s {
-				case "normal":
-					id = "101"
-				case "surprise":
-					id = "102"
-				case "serious":
-					id = "103"
-				case "heaven":
-					id = "104"
-				case "happy":
-					id = "105"
-				case "excited":
-					id = "106"
-				case "sing":
-					id = "107"
-				case "cry":
-					id = "108"
-				case "normal2":
-					id = "201"
-				case "shame2":
-					id = "202"
-				case "love2":
-					id = "203"
-				case "interesting2":
-					id = "204"
-				case "blush2":
-					id = "205"
-				case "fire2":
-					id = "206"
-				case "angry2":
-					id = "207"
-				case "shine2":
-					id = "208"
-				case "panic2":
-					id = "209"
-				case "normal3":
-					id = "301"
-				case "satisfaction3":
-					id = "302"
-				case "surprise3":
-					id = "303"
-				case "smile3":
-					id = "304"
-				case "shock3":
-					id = "305"
-				case "gaze3":
-					id = "306"
-				case "wink3":
-					id = "307"
-				case "happy3":
-					id = "308"
-				case "excited3":
-					id = "309"
-				case "love3":
-					id = "310"
-				case "normal4":
-					id = "401"
-				case "surprise4":
-					id = "402"
-				case "serious4":
-					id = "403"
-				case "love4":
-					id = "404"
-				case "shine4":
-					id = "405"
-				case "sweat4":
-					id = "406"
-				case "shame4":
-					id = "407"
-				case "sleep4":
-					id = "408"
-				case "heart":
-					id = "501"
-				case "teardrop":
-					id = "502"
-				case "star":
-					id = "503"
-				}
-				return fmt.Sprintf(`<img src="https://s.pximg.net/common/images/emoji/%s.png" alt="(%s)" class="emoji" />`, id, s)
-			})
-			return template.HTML(parsedString)
+			return ParseEmojis(s)
 		},
 
 		"randomColor": func() string {
