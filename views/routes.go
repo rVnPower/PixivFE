@@ -7,6 +7,7 @@ import (
 	"codeberg.org/vnpower/pixivfe/configs"
 	"codeberg.org/vnpower/pixivfe/handler"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
 )
 
 var PC *handler.PixivClient
@@ -41,8 +42,12 @@ func SetupRoutes(r *fiber.App) {
 	PC.SetUserAgent(configs.UserAgent)
 	PC.AddHeader("Accept-Language", "en-US,en;q=0.5")
 
+	limit := limiter.New(limiter.Config{
+		Max: 10,
+	})
+
 	r.Get("/", index_page)
-	r.Get("artworks/:id/", artwork_page)
+	r.Get("artworks/:id/", limit, artwork_page)
 	r.Get("users/:id/:category?", user_page)
 	r.Get("newest", newest_artworks_page)
 	r.Get("ranking", ranking_page)
