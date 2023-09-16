@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
+	"strings"
 
 	"codeberg.org/vnpower/pixivfe/models"
 	"github.com/goccy/go-json"
@@ -162,6 +163,9 @@ func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 	illust.Tags = <-c4
 	illust.RelatedWorks = <-c5
 	illust.CommentsList = <-c6
+
+	// If this artwork is an ugoira
+	illust.IsUgoira = strings.Contains(illust.Images[0].Original, "ugoira")
 
 	return illust.Illust, nil
 }

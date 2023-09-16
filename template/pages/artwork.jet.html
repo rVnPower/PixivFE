@@ -12,6 +12,11 @@
         </a>
         {{ end }}
       </div>
+      {{ if Illust.IsUgoira }}
+      <a href="https://ugoira.com/i/{{ Illust.ID }}"
+        >Go to ugoira.com to render this artwork</a
+      >
+      {{ end }}
       <h2>{{ Illust.Title }}</h2>
       <p>{{ raw: Illust.Description }}</p>
 

@@ -124,6 +124,7 @@ type Illust struct {
 	RecentWorks     []IllustShort
 	RelatedWorks    []IllustShort
 	CommentsList    []Comment
+	IsUgoira        bool
 }
 
 func (s *Illust) ProxyImages(proxy string) {
