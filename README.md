@@ -37,7 +37,7 @@ Docker guide!
 | Name               | Cloudflare? | URL                             |
 | ------------------ | ----------- | ------------------------------- |
 | exozyme (Official) | No          | https://pixivfe.exozy.me        |
-| dragongoose        | No          | https://pixivfe.dragongoose.us  |
+| dragongoose        | No          | https://pixivfe.drgns.space  |
 | WhateverItWorks    | Yes         | https://art.whateveritworks.org |
 
 Hosted one yourself? Create a pull request to add it here!
