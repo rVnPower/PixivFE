@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"codeberg.org/vnpower/pixivfe/models"
@@ -90,7 +90,7 @@ func (p *PixivClient) TextRequest(URL string, tokens ...string) (string, error) 
 	}
 
 	// Extract the bytes from server's response
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return string(body), err
 	}
