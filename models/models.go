@@ -201,22 +201,15 @@ type RankedArtwork struct {
 	ArtistAvatar string `json:"profile_img"`
 }
 
-type TagMetadata struct {
-	Detail string      `json:"abstract"`
-	Image  string      `json:"image"`
-	Name   string      `json:"tag"`
-	ID     json.Number `json:"id"`
-}
-
 type TagDetail struct {
-	Name            string      `json:"tag"`
-	AlternativeName string      `json:"word"`
-	Metadata        TagMetadata `json:"pixpedia"`
-}
-
-type PopularArtworks struct {
-	Permanent []IllustShort `json:"permanent"`
-	Recent    []IllustShort `json:"recent"`
+	Name            string `json:"tag"`
+	AlternativeName string `json:"word"`
+	Metadata        struct {
+		Detail string      `json:"abstract"`
+		Image  string      `json:"image"`
+		Name   string      `json:"tag"`
+		ID     json.Number `json:"id"`
+	} `json:"pixpedia"`
 }
 
 type SearchArtworks struct {
@@ -225,9 +218,12 @@ type SearchArtworks struct {
 }
 
 type SearchResult struct {
-	Artworks    SearchArtworks
-	Popular     PopularArtworks `json:"popular"`
-	RelatedTags []string        `json:"relatedTags"`
+	Artworks SearchArtworks
+	Popular  struct {
+		Permanent []IllustShort `json:"permanent"`
+		Recent    []IllustShort `json:"recent"`
+	} `json:"popular"`
+	RelatedTags []string `json:"relatedTags"`
 }
 
 func (s *SearchResult) ProxyImages(proxy string) {
