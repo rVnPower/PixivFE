@@ -1,6 +1,7 @@
 <div class="container">
   <div class="artwork-page">
     <div class="artwork-content">
+      {{ if !Illust.IsUgoira }}
       <div class="artwork-images">
         {{ range index := Illust.Images }}
         <a href="{{ .Original }}" target="_blank">
@@ -10,12 +11,17 @@
             class="artwork-image-page"
           />
         </a>
-        {{ end }}
       </div>
-      {{ if Illust.IsUgoira }}
-      <a href="https://ugoira.com/i/{{ Illust.ID }}"
-        >Go to ugoira.com to render this artwork</a
-      >
+        {{ end }}
+      {{ else }}
+        <div class="artwork-images">
+            <a href="https://ugoira.com/i/{{ Illust.ID }}" target="_blank">
+              <video autoplay loop muted disablepictureinpicture playsinline poster="{{ Illust.Images[0].Large }}" src="https://ugoira.com/api/mp4/{{ Illust.ID }}">
+                Unable to load ugoira.
+              </video>
+            </a>
+        </div>
+        <a href="https://ugoira.com/i/{{ Illust.ID }}">Go to ugoira.com for more options</a>
       {{ end }}
       <h2>{{ Illust.Title }}</h2>
       <p>{{ raw: Illust.Description }}</p>
