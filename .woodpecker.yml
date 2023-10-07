@@ -3,7 +3,9 @@ steps:
     image: golang
     commands:
       - go get
-      - go run main.go &
-      - sleep 5
+      - go mod download
+      - CGO_ENABLED=0 GOOS=linux go build -mod=readonly -o pixivfe
+      - ./pixivfe &
+      - sleep 3
       - go test -v
     secrets: [pixivfe_token]
