@@ -102,6 +102,7 @@ func setup_router() *fiber.App {
 	server.Static("/favicon.ico", "./template/favicon.ico")
 	server.Static("css/", "./template/css")
 	server.Static("assets/", "./template/assets")
+	server.Static("/robots.txt", "./template/robots.txt")
 
 	// Routes/Views
 	views.SetupRoutes(server)
