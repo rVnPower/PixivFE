@@ -90,6 +90,16 @@ func ParseEmojis(s string) template.HTML {
 	return template.HTML(parsedString)
 }
 
+func ParsePixivRedirect(s string) template.HTML {
+	regex := regexp.MustCompile(`\/jump\.php\?(http[^"]+)`)
+
+	parsedString := regex.ReplaceAllStringFunc(s, func(s string) string {
+		s = s[10:]
+		return s
+	})
+	return template.HTML(parsedString)
+}
+
 func GetTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
 		"toInt": func(s string) int {
@@ -99,6 +109,10 @@ func GetTemplateFunctions() template.FuncMap {
 
 		"parseEmojis": func(s string) template.HTML {
 			return ParseEmojis(s)
+		},
+
+		"parsePixivRedirect": func(s string) template.HTML {
+			return ParsePixivRedirect(s)
 		},
 
 		"randomColor": func() string {

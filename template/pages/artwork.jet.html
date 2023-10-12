@@ -24,7 +24,7 @@
         <a href="https://ugoira.com/i/{{ Illust.ID }}">Go to ugoira.com for more options</a>
       {{ end }}
       <h2>{{ Illust.Title }}</h2>
-      <p>{{ raw: Illust.Description }}</p>
+      <p>{{ raw: parsePixivRedirect(Illust.Description) }}</p>
 
       <div class="artwork-tags">
         {{ if Illust.AiType == 2 }}

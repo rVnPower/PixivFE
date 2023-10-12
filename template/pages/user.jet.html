@@ -13,7 +13,7 @@
             <p class="user-id">
                 {{ User.Following }} Following | {{ User.MyPixiv }} MyPixiv
             </p>
-            <p class="user-comment">{{ raw: User.Comment }}</p>
+            <p class="user-comment">{{ raw: parsePixivRedirect(User.Comment) }}</p>
         </div>
     </div>
     <div class="switcher">
