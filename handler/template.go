@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"math/rand"
+	"net/url"
 	"regexp"
 	"strconv"
 )
@@ -97,7 +98,11 @@ func ParsePixivRedirect(s string) template.HTML {
 		s = s[10:]
 		return s
 	})
-	return template.HTML(parsedString)
+	escaped, err := url.QueryUnescape(parsedString)
+	if err != nil {
+		return template.HTML(s)
+	}
+	return template.HTML(escaped)
 }
 
 func GetTemplateFunctions() template.FuncMap {
