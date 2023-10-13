@@ -106,7 +106,6 @@ func (p *PixivClient) PixivRequest(URL string, tokens ...string) (json.RawMessag
 	if len(token) > 0 {
 		token = tokens[0]
 	}
-
 	body, err := p.TextRequest(URL, token)
 	// body = strings.ReplaceAll(body, "i.pximg.net", configs.ProxyServer)
 	if err != nil {
