@@ -574,5 +574,16 @@ body {
     width: 47%;
   }
 }
+.border-rounded {
+  border-radius: 50%;
+}
+
+.flex {
+  display: flex;
+}
+
+.no-margin {
+  margin: 0;
+}
 
 /*# sourceMappingURL=style.css.map */
