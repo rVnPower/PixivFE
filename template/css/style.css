@@ -93,7 +93,9 @@ a em,
 a i,
 a strong,
 button,
-input[type=submit] {
+input[type=submit],
+.switch-button,
+.pagination-button {
   border-radius: 5px;
   display: inline-block;
   font-size: medium;
@@ -104,17 +106,23 @@ input[type=submit] {
 }
 
 button,
-input[type=submit] {
+input[type=submit],
+.switch-button,
+.pagination-button {
   font-family: "Roboto", "Open Sans", "Noto Sans", sans-serif, "Noto Sans CJK JP";
 }
 
 button:active,
-input[type=submit]:active {
+input[type=submit]:active,
+.switch-button,
+.pagination-button {
   filter: brightness(0.85);
 }
 
 button:hover,
-input[type=submit]:hover {
+input[type=submit]:hover,
+.switch-button,
+.pagination-button {
   cursor: pointer;
   filter: brightness(1.2);
 }
@@ -122,7 +130,9 @@ input[type=submit]:hover {
 a b,
 a strong,
 button,
-input[type=submit] {
+input[type=submit],
+.switch-button,
+.pagination-button {
   background-color: #118bee;
   border: 2px solid #118bee;
   color: #fff;
@@ -130,6 +140,15 @@ input[type=submit] {
 
 input[type=submit][hidden] {
   display: none;
+}
+
+.switch-seperator {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.pagination {
+  text-align: center;
 }
 
 nav {
@@ -230,19 +249,17 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 }
 
 .artwork-container {
-  justify-content: center;
-  flex-flow: row wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(199px, 1fr));
+  align-items: center;
 }
 
 .artwork-container-scroll {
+  display: flex;
   overflow: hidden;
   overflow-x: scroll;
 }
 
-.artwork-container,
-.artwork-container-scroll {
-  display: flex;
-}
 .artwork-container a,
 .artwork-container-scroll a {
   text-decoration: none;
@@ -261,6 +278,10 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 .artwork-container-scroll .artwork-large .artwork-author {
   max-width: 288px;
 }
+.artwork-container .artwork-large .artwork-author a,
+.artwork-container-scroll .artwork-large .artwork-author a {
+  max-width: 184px;
+}
 .artwork-container .artwork-small img,
 .artwork-container-scroll .artwork-small img {
   width: 184px;
@@ -272,6 +293,10 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 }
 .artwork-container .artwork-small .artwork-author,
 .artwork-container-scroll .artwork-small .artwork-author {
+  max-width: 184px;
+}
+.artwork-container .artwork-small .artwork-author a,
+.artwork-container-scroll .artwork-small .artwork-author a {
   max-width: 184px;
 }
 .artwork-container .artwork,
@@ -351,7 +376,6 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 .artwork-container-scroll .artwork .artwork-author {
   display: flex;
   align-items: center;
-  max-width: 288px;
 }
 .artwork-container .artwork .artwork-author a,
 .artwork-container-scroll .artwork .artwork-author a {
@@ -371,6 +395,10 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 .artwork-container .artwork .artwork-author a span,
 .artwork-container-scroll .artwork .artwork-author a span {
   font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 22px;
 }
 
 .illust {

@@ -115,7 +115,9 @@ a em,
 a i,
 a strong,
 button,
-input[type="submit"] {
+input[type="submit"],
+.switch-button,
+.pagination-button {
   border-radius: $border-radius;
   display: inline-block;
   font-size: medium;
@@ -126,17 +128,24 @@ input[type="submit"] {
 }
 
 button,
-input[type="submit"] {
+input[type="submit"],
+.switch-button,
+.pagination-button  {
   font-family: $font-family;
 }
 
 button:active,
-input[type="submit"]:active {
+input[type="submit"]:active,
+.switch-button,
+.pagination-button {
   filter: brightness($active-brightness);
 }
 
 button:hover,
-input[type="submit"]:hover {
+input[type="submit"]:hover,
+.switch-button,
+.pagination-button  {
+
   cursor: pointer;
   filter: brightness($hover-brightness);
 }
@@ -144,7 +153,9 @@ input[type="submit"]:hover {
 a b,
 a strong,
 button,
-input[type="submit"] {
+input[type="submit"],
+.switch-button,
+.pagination-button  {
   background-color: $link;
   border: 2px solid $link;
   color: $fg;
@@ -152,6 +163,15 @@ input[type="submit"] {
 
 input[type="submit"][hidden] {
   display: none;
+}
+
+.switch-seperator {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.pagination {
+  text-align: center;
 }
 
 nav {
@@ -286,19 +306,19 @@ nav {
 }
 
 .artwork-container {
-  justify-content: center;
-  flex-flow: row wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc($small-artwork-width + 15px), 1fr));
+  align-items: center;
 }
 
 .artwork-container-scroll {
+  display: flex;
   overflow: hidden;
   overflow-x: scroll;
 }
 
 .artwork-container,
 .artwork-container-scroll {
-  display: flex;
-
   a {
     text-decoration: none;
     color: $fg;
@@ -316,6 +336,10 @@ nav {
 
     .artwork-author {
       max-width: $large-artwork-width;
+      a {
+
+      max-width: $small-artwork-width;
+      }
     }
   }
 
@@ -331,6 +355,11 @@ nav {
 
     .artwork-author {
       max-width: $small-artwork-width;
+
+      a {
+
+      max-width: $small-artwork-width;
+      }
     }
   }
 
@@ -409,7 +438,6 @@ line-height: 10px;
     .artwork-author {
       display: flex;
       align-items: center;
-      max-width: $large-artwork-width;
 
       a {
         display: flex;
@@ -426,7 +454,12 @@ line-height: 10px;
         }
 
         span {
+
           font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 22px;
         }
       }
     }
