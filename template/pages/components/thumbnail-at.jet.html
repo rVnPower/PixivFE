@@ -1,3 +1,6 @@
-<a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"><img src="{{ .ArtistAvatar }}"
-        alt="{{ .ArtistName }}" class="artwork-thumbnail-artist-avatar border-rounded" loading="lazy" />
-    {{ .ArtistName }}</a>
+<div class="artwork-author">
+  <a href="/users/{{ .ArtistID }}"
+    ><img src="{{ .ArtistAvatar }}" alt="{{ .ArtistName }}" />
+    <span>{{ .ArtistName }}</span></a
+  >
+</div>
