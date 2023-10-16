@@ -1,67 +1,83 @@
 {{ if ! User.BackgroundImage }}
-<div class="user-background-placeholder"></div>
+<div class="background-cover"></div>
 {{ else }}
-<div class="user-background">
-    <img src="{{ User.BackgroundImage }}" alt="{{ User.Name }}" />
+<div class="background-cover" id="hasbg">
+  <img src="{{ User.BackgroundImage }}" alt="{{ User.Name }}" />
 </div>
 {{ end }}
-<div class="container">
-    <div class="user-page">
-        <div class="user-details">
-            <img src="{{ User.Avatar }}" alt="avatar" class="user-avatar" />
-            <h2 class="user-name">{{ User.Name }}</h2>
-            <p class="user-id">
-                {{ User.Following }} Following | {{ User.MyPixiv }} MyPixiv
-            </p>
-            <p class="user-comment">{{ raw: parsePixivRedirect(User.Comment) }}</p>
-        </div>
-    </div>
-    <div class="switcher">
-        <span class="switch-title">Category</span>
-        <a href="/users/{{ User.ID }}/artworks#checkpoint" class="switch-button">All</a>
-        <a href="/users/{{ User.ID }}/illustrations#checkpoint" class="switch-button">Illustrations</a>
-        <a href="/users/{{ User.ID }}/manga#checkpoint" class="switch-button">Mangas</a>
-        <a href="/users/{{ User.ID }}/bookmarks#checkpoint" class="switch-button">Bookmarks</a>
-    </div>
-    <div>
-        <h1 id="checkpoint">Illustrations and Mangas</h1>
+<div class="container user">
+  <div class="user-avatar">
+    <img src="{{ User.Avatar }}" alt="avatar" />
+  </div>
+  <div class="user-details">
+    <h2>{{ User.Name }}</h2>
+    <small> {{ User.Following }} Following | {{ User.MyPixiv }} MyPixiv </small>
+    <p>{{ raw: parsePixivRedirect(User.Comment) }}</p>
+  </div>
+  <div class="switcher">
+    <div class="switch-title">Category</div>
+    <a href="/users/{{ User.ID }}/artworks#checkpoint" class="switch-button"
+      >All</a
+    >
+    <a
+      href="/users/{{ User.ID }}/illustrations#checkpoint"
+      class="switch-button"
+      >Illustrations</a
+    >
+    <a href="/users/{{ User.ID }}/manga#checkpoint" class="switch-button"
+      >Mangas</a
+    >
+    <a href="/users/{{ User.ID }}/bookmarks#checkpoint" class="switch-button"
+      >Bookmarks</a
+    >
+  </div>
+  <div>
+    <h1 id="checkpoint">Illustrations and Mangas</h1>
 
-        <div>
-            {{ range User.FrequentTags }}
-            <a href="/tags/{{ .Name }}">
-                <div class="tag-container" style="background-color: {{ randomColor() }}">
-                    {{ if ! .TranslatedName }}
-                    <div class="main">{{ .Name }}</div>
-                    <div class="sub">#</div>
-                    {{ else }}
-                    <div class="main">{{ .TranslatedName }}</div>
-                    <div class="sub">#{{ .Name }}</div>
+    <!-- <div>
+                    {{ range User.FrequentTags }}
+                    <a href="/tags/{{ .Name }}">
+                        <div class="tag-container" style="background-color: {{ randomColor() }}">
+                            {{ if ! .TranslatedName }}
+                            <div class="main">{{ .Name }}</div>
+                            <div class="sub">#</div>
+                            {{ else }}
+                            <div class="main">{{ .TranslatedName }}</div>
+                            <div class="sub">#{{ .Name }}</div>
+                            {{ end }}
+                        </div>
+                    </a>
                     {{ end }}
-                </div>
-            </a>
-            {{ end }}
-        </div>
+                </div> -->
 
-        {{ include "components/small-tn" User.Artworks }}
+    <div class="artwork-container">
+      {{ include "components/small-tn" User.Artworks }}
     </div>
-    <div class="pagination">
-        {{ url := "/users/" + User.ID + "/" + Category + "?page="}} {{ if Page == 1
-        }}
-        <a href="#" class="pagination-button disabled">First</a>
-        <a href="#" class="pagination-button disabled">Previous</a>
-        {{ else }}
-        <a href="{{ url }}1#checkpoint" class="pagination-button">First</a>
-        <a href="{{ url }}{{ Page - 1 }}#checkpoint" class="pagination-button">Previous</a>
-        {{ end }}
+  </div>
+  <div class="pagination">
+    {{ url := "/users/" + User.ID + "/" + Category + "?page="}} {{ if Page == 1
+    }}
+    <a href="#" class="pagination-button disabled">First</a>
+    <a href="#" class="pagination-button disabled">Previous</a>
+    {{ else }}
+    <a href="{{ url }}1#checkpoint" class="pagination-button">First</a>
+    <a href="{{ url }}{{ Page - 1 }}#checkpoint" class="pagination-button"
+      >Previous</a
+    >
+    {{ end }}
 
-        <a href="#" class="pagination-button disabled">{{ Page }}</a>
+    <a href="#" class="pagination-button disabled">{{ Page }}</a>
 
-        {{ if Page == PageLimit - 1 }}
-        <a href="#" class="pagination-button disabled">Next</a>
-        <a href="#" class="pagination-button disabled">Last</a>
-        {{ else }}
-        <a href="{{ url }}{{ Page + 1 }}#checkpoint" class="pagination-button">Next</a>
-        <a href="{{ url }}{{ PageLimit - 1 }}#checkpoint" class="pagination-button">Last</a>
-        {{ end }}
-    </div>
+    {{ if Page == PageLimit - 1 }}
+    <a href="#" class="pagination-button disabled">Next</a>
+    <a href="#" class="pagination-button disabled">Last</a>
+    {{ else }}
+    <a href="{{ url }}{{ Page + 1 }}#checkpoint" class="pagination-button"
+      >Next</a
+    >
+    <a href="{{ url }}{{ PageLimit - 1 }}#checkpoint" class="pagination-button"
+      >Last</a
+    >
+    {{ end }}
+  </div>
 </div>
