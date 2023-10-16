@@ -21,9 +21,13 @@
     </div>
   </div>
 
-  <div class="artwork-container">
+  <div class="artwork-container-scroll">
     {{ range Data.RelatedTags }}
-    <a class="tag-container" href="/tags/{{ . }}">#{{ . }}</a>
+    <a href="/tags/{{ . }}">
+      <div class="tag-container">
+        <div class="main">#{{ . }}</div>
+      </div>
+    </a>
     {{ end }}
   </div>
 
@@ -52,7 +56,7 @@
   </div>
   {{ if Data.Popular.Recent }}
   <h2>Popular artworks</h2>
-  <div class="artwork-container">
+  <div class="artwork-container-scroll">
     {{ include "components/small-tn" Data.Popular.Recent }} {{ include
     "components/small-tn" Data.Popular.Permanent }}
   </div>
@@ -60,7 +64,9 @@
   <!-- Switchers here -->
   <br />
   <h2>Works</h2>
-  <div>{{ include "components/small-tn" Data.Artworks.Artworks }}</div>
+  <div class="artwork-container">
+    {{ include "components/small-tn" Data.Artworks.Artworks }}
+  </div>
 
   <div class="pagination">
     {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&order="

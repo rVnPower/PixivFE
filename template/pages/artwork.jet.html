@@ -37,7 +37,9 @@
     </a>
     <div class="attr-wrap">
       <div class="illust-title">{{ Illust.Title }}</div>
-      <div class="illust-author">{{ Illust.User.Name }}</div>
+      <div class="illust-author">
+        <a href="/users/{{ Illust.User.ID }}">{{ Illust.User.Name }}</a>
+      </div>
     </div>
   </div>
 
@@ -84,8 +86,9 @@
   <br />
   <div class="illust-other-works">
     <a href="/users/{{ Illust.User.ID }}"
-      ><img src="{{ Illust.User.Avatar }}" alt="{{ Illust.User.Name }}" />
-      Other works by {{ Illust.User.Name }}
+      ><img src="{{ Illust.User.Avatar }}" alt="{{ Illust.User.Name }}" /> Other
+      works by {{ Illust.User.Name }}
+      <span class="special-symbol">&raquo;</span>
     </a>
     <div class="artwork-container-scroll">
       {{ range Illust.RecentWorks }}
@@ -100,7 +103,7 @@
   {{ if Illust.CommentDisabled == 1 }}
   <p>The creator turned comments off</p>
   {{ else if Illust.Comments == 0 }}
-  <p>There is no comment yet</p>
+  <p>There are no comments yet</p>
   {{ else }} {{ range Illust.CommentsList }}
   <div class="comment">
     <img class="comment-avatar" src="{{ .Avatar }}" alt="{{ .AuthorName }}" />
