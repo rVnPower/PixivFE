@@ -1,75 +1,85 @@
 <div class="container">
-    <div class="tag-header">
-        {{ if Tag.Metadata.ID }}
-        <a href="/artworks/{{ Tag.Metadata.ID }}">
-            <img class="tag-thumbnail" src="{{ Tag.Metadata.Image }}" alt="{{ Tag.Name }}" />
-        </a>
-        {{ end }}
-
-        <div class="tag-details">
-            <b class="main-tag">#{{ Tag.Name }}</b>
-            <span class="translated-tag">{{ Tag.Metadata.Name }}</span>
-            <br />
-            <br />
-            <span><b>{{ Data.Artworks.Total }}</b> works</span>
-
-            <p class="tag-description">{{ Tag.Metadata.Detail }}</p>
-        </div>
-    </div>
-
-    <div class="thumbnail-container">
-        {{ range Data.RelatedTags }}
-        <a class="tag-container" href="/tags/{{ . }}">#{{ . }}</a>
-        {{ end }}
-    </div>
-
-    <div class="switcher">
-        {{ url := "/tags/" + Tag.Name + "?order=" + Queries.Order + "&mode=" +
-        Queries.Mode + "&page=1" + "&category=" }}
-        <span class="switch-title">Type</span>
-        <a href="{{url }}artworks" class="switch-button">All</a>
-        <a href="{{url }}illustrations" class="switch-button">Illustrations</a>
-        <a href="{{url }}manga" class="switch-button">Manga</a>
-    </div>
-    <div class="switcher">
-        {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&mode=" +
-        Queries.Mode + "&page=1" + "&order=" }}
-        <span class="switch-title">Order</span>
-        <a href="{{url }}date_d" class="switch-button">Newest</a>
-        <a href="{{url }}date" class="switch-button">Oldest</a>
-    </div>
-    <div class="switcher">
-        <span class="switch-title">Filter</span>
-        {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&order="
-        + Queries.Order + "&page=1" + "&mode=" }}
-        <a href="{{url }}all" class="switch-button">All</a>
-        <a href="{{url }}safe" class="switch-button">Safe</a>
-        <a href="{{url }}r18" class="switch-button">R-18</a>
-    </div>
-    {{ if Data.Popular.Recent }}
-    <h2>Popular artworks</h2>
-    <div class="thumbnail-container">
-        {{ include "components/small-tn-normal" Data.Popular.Recent }} {{ include
-        "components/small-tn-normal" Data.Popular.Permanent }}
-    </div>
+  <div class="tag-header">
+    {{ if Tag.Metadata.ID }}
+    <a href="/artworks/{{ Tag.Metadata.ID }}">
+      <img
+        class="tag-thumbnail"
+        src="{{ Tag.Metadata.Image }}"
+        alt="{{ Tag.Name }}"
+      />
+    </a>
     {{ end }}
-    <!-- Switchers here -->
-    <br />
-    <h2>Works</h2>
-    <div>{{ include "components/small-tn" Data.Artworks.Artworks }}</div>
 
-    <div class="pagination">
-        {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&order="
-        + Queries.Order + "&mode=" + Queries.Mode + "&page=" }} {{ if Page == 1 }}
-        <a href="#" class="pagination-button disabled">First</a>
-        <a href="#" class="pagination-button disabled">Previous</a>
-        {{ else }}
-        <a href="{{url}}1" class="pagination-button">First</a>
-        <a href="{{url}}{{ Page - 1 }}" class="pagination-button">Previous</a>
-        {{ end }}
+    <div class="tag-details">
+      <b class="main-tag">#{{ Tag.Name }}</b>
+      <span class="translated-tag">{{ Tag.Metadata.Name }}</span>
+      <br />
+      <br />
+      <span><b>{{ Data.Artworks.Total }}</b> works</span>
 
-        <a href="#" class="pagination-button disabled">{{ Page }}</a>
-
-        <a href="{{url}}{{ Page + 1 }}" class="pagination-button">Next</a>
+      <p class="tag-description">{{ Tag.Metadata.Detail }}</p>
     </div>
+  </div>
+
+  <div class="artwork-container-scroll">
+    {{ range Data.RelatedTags }}
+    <a href="/tags/{{ . }}">
+      <div class="tag-container">
+        <div class="main">#{{ . }}</div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+
+  <div class="switcher">
+    {{ url := "/tags/" + Tag.Name + "?order=" + Queries.Order + "&mode=" +
+    Queries.Mode + "&page=1" + "&category=" }}
+    <div class="switch-title">Type</div>
+    <a href="{{url }}artworks" class="switch-button">All</a>
+    <a href="{{url }}illustrations" class="switch-button">Illustrations</a>
+    <a href="{{url }}manga" class="switch-button">Manga</a>
+  </div>
+  <div class="switcher">
+    {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&mode=" +
+    Queries.Mode + "&page=1" + "&order=" }}
+    <div class="switch-title">Order</div>
+    <a href="{{url }}date_d" class="switch-button">Newest</a>
+    <a href="{{url }}date" class="switch-button">Oldest</a>
+  </div>
+  <div class="switcher">
+    <div class="switch-title">Filter</div>
+    {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&order="
+    + Queries.Order + "&page=1" + "&mode=" }}
+    <a href="{{url }}all" class="switch-button">All</a>
+    <a href="{{url }}safe" class="switch-button">Safe</a>
+    <a href="{{url }}r18" class="switch-button">R-18</a>
+  </div>
+  {{ if Data.Popular.Recent }}
+  <h2>Popular artworks</h2>
+  <div class="artwork-container-scroll">
+    {{ include "components/small-tn" Data.Popular.Recent }} {{ include
+    "components/small-tn" Data.Popular.Permanent }}
+  </div>
+  {{ end }}
+  <!-- Switchers here -->
+  <br />
+  <h2>Works</h2>
+  <div class="artwork-container">
+    {{ include "components/small-tn" Data.Artworks.Artworks }}
+  </div>
+
+  <div class="pagination">
+    {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&order="
+    + Queries.Order + "&mode=" + Queries.Mode + "&page=" }} {{ if Page == 1 }}
+    <a href="#" class="pagination-button disabled">First</a>
+    <a href="#" class="pagination-button disabled">Previous</a>
+    {{ else }}
+    <a href="{{url}}1" class="pagination-button">First</a>
+    <a href="{{url}}{{ Page - 1 }}" class="pagination-button">Previous</a>
+    {{ end }}
+
+    <a href="#" class="pagination-button disabled">{{ Page }}</a>
+
+    <a href="{{url}}{{ Page + 1 }}" class="pagination-button">Next</a>
+  </div>
 </div>

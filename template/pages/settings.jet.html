@@ -2,9 +2,9 @@
     <h2>Login</h2>
     <p>Go to <a href="/login">this page</a> to login</p>
     <h2>Settings</h2>
-    <fieldset class="settings-fieldset">
+    <div class="form-field">
+        <h3>Image proxy server</h3>
         <form action="/settings/image_server" method="post">
-            <legend>Image proxy server</legend>
             <input type="radio" name="image-proxy" id="image-proxy" value="i.pixiv.cat" />
             <label for="image-proxy">i.pixiv.cat</label>
             <br />
@@ -20,16 +20,14 @@
             <input type="radio" name="image-proxy" id="image-proxy" value="piv.deception.world" />
             <label for="image-proxy">piv.deception.world</label>
             <br />
-            <br />
             <input type="submit" value="Apply" />
         </form>
+        <br />
         <form action="/settings/image_server" method="post">
             <label for="image-proxy">Custom image proxy server</label>
-            <br />
             <input type="text" name="image-proxy" id="image-proxy" placeholder="Paste the address here..."
                 autocomplete="off" />
-            <br />
             <input type="submit" value="Apply" />
         </form>
-    </fieldset>
+    </div>
 </div>

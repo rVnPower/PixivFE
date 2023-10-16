@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"regexp"
 	"strconv"
+	"time"
 )
 
 func GetRandomColor() string {
@@ -105,6 +106,10 @@ func ParsePixivRedirect(s string) template.HTML {
 	return template.HTML(escaped)
 }
 
+func ParseTime(date time.Time) string {
+	return date.Format("2006-01-02 15:04")
+}
+
 func GetTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
 		"toInt": func(s string) int {
@@ -142,6 +147,9 @@ func GetTemplateFunctions() template.FuncMap {
 				return s
 			}
 			return fmt.Sprintf("%s-%s-%s", s[4:], s[2:4], s[:2])
+		},
+		"parseTime": func(date time.Time) string {
+			return ParseTime(date)
 		},
 	}
 }

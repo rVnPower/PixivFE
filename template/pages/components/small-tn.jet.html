@@ -1,16 +1,18 @@
 {{ range . }} {{ if .ID == "#" }}
-<div class="artwork-thumbnail-small artwork-thumbnail">
-    <img src="{{ .Thumbnail }}" alt="{{ .Title }}" class="artwork-master-image" loading="lazy" />
-    <a class="artwork-thumbnail-title">
-        <h3 class="no-margin">{{ .Title }}</h3>
-    </a>
-    <a class="artwork-thumbnail-artist flex"><img src="{{ .ArtistAvatar }}" alt="{{ .ArtistName }}"
-            class="artwork-thumbnail-artist-avatar border-rounded" loading="lazy" />
-        {{ .ArtistName }}</a>
+<div class="artwork-small artwork">
+  <img src="{{ .Thumbnail }}" alt="{{ .Title }}" loading="lazy" />
+  <div class="artwork-title">
+    <a>{{ .Title }}</a>
+  </div>
+  <div class="artwork-author"></div>
+  <a
+    ><img src="{{ .ArtistAvatar }}" alt="{{ .ArtistName }}" loading="lazy" />
+    <span>{{ .ArtistName }}</span></a
+  >
 </div>
 {{ else if .ID }}
-<div class="artwork-thumbnail-small artwork-thumbnail artwork-mobile">
-    {{ include "thumbnail-dt" . }} {{ include "thumbnail-tt" . }} {{ include
-    "thumbnail-at" . }}
+<div class="artwork-small artwork">
+  {{ include "thumbnail-dt" . }} {{ include "thumbnail-tt" . }} {{ include
+  "thumbnail-at" . }}
 </div>
 {{ end }} {{ end }}

@@ -88,42 +88,51 @@
   </div>
   {{ else }}
   <p><a href="/login">Login</a> to access more features!</p>
+  <p>
+    Enjoying this frontend so far? I need your opinions and ideas to improve
+    this UI! Share them
+    <a href="https://codeberg.org/VnPower/pixivfe/issues/21">here</a>!
+  </p>
   <div class="component-header">
     <h2>Daily rankings</h2>
     <a href="/ranking">See more</a>
   </div>
-  <div class="thumbnail-container">
+  <div class="artwork-container-scroll">
     {{ range rank := Artworks.Rankings }}
-    <div class="artwork-thumbnail-large artwork-thumbnail">
-      <div class="artwork-rank-circle">{{ rank + 1 }}</div>
-      {{ if toInt(.Pages) > 1 }}
-      <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
-      {{ end }}
+    <div class="artwork-large artwork">
+      <div class="artwork-additional">
+        <div class="artwork-position">{{ rank + 1 }}</div>
+
+        {{ if .Pages > 1 }}
+        <div class="artwork-page-count">
+          <span class="boxbox"> &boxbox;&nbsp; </span>
+          <span>2</span>
+        </div>
+        {{ end }}
+      </div>
       <a href="/artworks/{{ .ID }}">
-        <img
-          src="{{ .Thumbnail }}"
-          alt="{{ .Title }}"
-          class="artwork-master-image"
-        />
+        <img src="{{ .Thumbnail }}" alt="{{ .Title }}" />
       </a>
 
-      <a class="artwork-thumbnail-title" href="/artworks/{{ .ID }}">
-        <h3 class="no-margin">{{ .Title }}</h3>
-      </a>
-      <a href="/users/{{ .ArtistID }}" class="artwork-thumbnail-artist flex"
-        ><img
-          src="{{ .ArtistAvatar }}"
-          alt="{{ .ArtistName }}"
-          class="artwork-thumbnail-artist-avatar border-rounded"
-        />
-        {{ .ArtistName }}</a
-      >
+      <div class="artwork-title">
+        <a href="/artworks/{{ .ID }}"> {{ .Title }} </a>
+      </div>
+      <div class="artwork-author">
+        <a href="/users/{{ .ArtistID }}">
+          <img
+            src="{{ .ArtistAvatar }}"
+            alt="{{ .ArtistName }}"
+            class="artwork-thumbnail-artist-avatar border-rounded"
+          />
+          <span>{{ .ArtistName }}</span></a
+        >
+      </div>
     </div>
     {{ end }}
   </div>
   <br />
 
-  <h2>Pixivision</h2>
+  <!-- <h2>Pixivision</h2>
   <div class="thumbnail-container">
     {{ range Artworks.Pixivision }}
     <a href="{{ .URL }}" class="spotlight-thumbnail">
@@ -138,6 +147,7 @@
     </a>
     {{ end }}
   </div>
-  <br />
+  <br /> -->
+
   {{ end }}
 </div>
