@@ -245,6 +245,8 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .artwork-container {
@@ -445,13 +447,16 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   font-size: 0.8em;
   color: #aaa;
 }
+.illust .illust-description {
+  font-size: 0.9em;
+}
 .illust .illust-tags {
   font-size: 0.9em;
 }
 .illust .illust-tags .illust-tag-attr {
   display: inline-flex;
   align-items: center;
-  margin-right: 10px;
+  margin-right: 15px;
 }
 .illust .illust-tags .illust-tag-attr img {
   aspect-ratio: 1/1;
@@ -460,7 +465,7 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   margin-right: 5px;
 }
 .illust .illust-tags .illust-tag {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .illust .illust-tags .illust-tag #highlight {
   color: #fc365b;
@@ -468,19 +473,20 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 .illust .illust-tags .illust-tag .illust-tag-name {
   color: #118bee;
   font-weight: bold;
+  margin-right: 5px;
 }
-.illust .illust-other-works img {
+.illust .illust-other-works > a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+}
+.illust .illust-other-works > a > img {
   aspect-ratio: 1/1;
   width: 50px;
   height: 50px;
   border-radius: 50%;
   margin-right: 5px;
-}
-.illust .illust-other-works a {
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  color: #fff;
 }
 
 .background-cover {

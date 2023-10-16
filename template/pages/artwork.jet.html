@@ -54,7 +54,10 @@
       <img src="/assets/like.png" alt="Likes" />
       {{ Illust.Likes }}
     </span>
-    <small>{{ Illust.Date }}</small>
+    <span class="illust-tag-attr">
+      <img src="/assets/calendar.png" alt="Date" />
+      {{ parseTime: Illust.Date }}
+    </span>
   </div>
 
   <div class="illust-tags">
@@ -67,18 +70,22 @@
       <span class="illust-tag-name" id="highlight">{{ .Name }}</span>
     </span>
     {{ else }}
-    <span class="illust-tags">
+    <span class="illust-tag">
       <span class="illust-tag-name"
         ><a href="/tags/{{ .Name }}">#{{ .Name }}</a></span
       ><span class="illust-tag-translation">{{ .TranslatedName }}</span>
     </span>
     {{ end }} {{ end }}
   </div>
-  <div>{{ raw: parsePixivRedirect(Illust.Description) }}</div>
+  <br />
+  <div class="illust-description">
+    {{ raw: parsePixivRedirect(Illust.Description) }}
+  </div>
   <br />
   <div class="illust-other-works">
     <a href="/users/{{ Illust.User.ID }}"
       ><img src="{{ Illust.User.Avatar }}" alt="{{ Illust.User.Name }}" />
+      Other works by {{ Illust.User.Name }}
     </a>
     <div class="artwork-container-scroll">
       {{ range Illust.RecentWorks }}

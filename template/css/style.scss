@@ -302,6 +302,8 @@ nav {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .artwork-container {
@@ -515,13 +517,17 @@ line-height: 10px;
     }
   }
 
+  .illust-description {
+    font-size: 0.9em;
+  }
+
   .illust-tags {
     font-size: 0.9em;
 
     .illust-tag-attr {
       display: inline-flex;
       align-items: center;
-      margin-right: 10px;
+      margin-right: 15px;
 
       img {
         aspect-ratio: 1/1;
@@ -532,7 +538,7 @@ line-height: 10px;
     }
 
     .illust-tag {
-      margin-right: 5px;
+      margin-right: 10px;
 
       #highlight {
         color: $highlight;
@@ -541,25 +547,28 @@ line-height: 10px;
       .illust-tag-name {
         color: $link;
         font-weight: bold;
+        margin-right: 5px;
       }
     }
   }
 
   .illust-other-works {
-    img {
+    & > a {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: $fg;
+
+    & > img {
       aspect-ratio: 1/1;
       width: 50px;
       height: 50px;
       border-radius: 50%;
       margin-right: 5px;
     }
-
-    a {
-      display: inline-flex;
-      align-items: center;
-      text-decoration: none;
-      color: $fg;
     }
+
+
   }
 }
 
