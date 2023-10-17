@@ -110,6 +110,40 @@ func ParseTime(date time.Time) string {
 	return date.Format("2006-01-02 15:04")
 }
 
+func CreatePaginator(base, ending string, current_page, max_page int) template.HTML {
+	peek := 2
+	limit := peek*peek + 1
+	count := 0
+	pages := ""
+
+	pages += fmt.Sprintf(`<a href="%s1%s" class="pagination-button">&laquo;</a>`, base, ending)
+	pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button">&lsaquo;</a>`, base, max(1, current_page-1), ending)
+
+	for i := current_page - peek; (i <= max_page || max_page == -1) && count < limit; i++ {
+		if i < 1 {
+			continue
+		}
+		if i == current_page {
+			pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button" id="highlight">%d</a>`, base, i, ending, i)
+
+		} else {
+			pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button">%d</a>`, base, i, ending, i)
+
+		}
+		count++
+	}
+
+	pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button">&rsaquo;</a>`, base, min(max_page, current_page+1), ending)
+
+	if max_page == -1 {
+		pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button" id="disabled">&raquo;</a>`, base, max_page, ending)
+	} else {
+		pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button">&raquo;</a>`, base, max_page, ending)
+	}
+
+	return template.HTML(pages)
+}
+
 func GetTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
 		"toInt": func(s string) int {
@@ -150,6 +184,9 @@ func GetTemplateFunctions() template.FuncMap {
 		},
 		"parseTime": func(date time.Time) string {
 			return ParseTime(date)
+		},
+		"createPaginator": func(base, ending string, current_page, max_page int) template.HTML {
+			return CreatePaginator(base, ending, current_page, max_page)
 		},
 	}
 }

@@ -145,15 +145,15 @@ input[type="submit"],
 
 button:active,
 input[type="submit"]:active,
-.switch-button,
-.pagination-button {
+.switch-button:active,
+.pagination-button:active {
   filter: brightness($active-brightness);
 }
 
 button:hover,
 input[type="submit"]:hover,
-.switch-button,
-.pagination-button {
+.switch-button:hover,
+.pagination-button:hover {
   cursor: pointer;
   filter: brightness($hover-brightness);
 }
@@ -180,6 +180,20 @@ input[type="submit"][hidden] {
 
 .pagination {
   text-align: center;
+
+  .pagination-button {
+    margin-right: 5px;
+  }
+
+  #highlight {
+    filter: brightness($hover-brightness);
+  }
+
+  #disabled {
+    pointer-events: none;
+    background-color: $bg-secondary;
+    filter: brightness(1);
+  }
 }
 
 nav {

@@ -72,22 +72,9 @@
 
   <div class="pagination">
     {{ url := "/ranking?content=" + Queries.Content +"&date=" + Data.CurrentDate
-    + "&mode=" + Queries.Mode + "&page=" }} {{ if Page <= 1 }}
-    <a href="#" class="pagination-button disabled">First</a>
-    <a href="#" class="pagination-button disabled">Previous</a>
-    {{ else }}
-    <a href="{{ url }}1" class="pagination-button">First</a>
-    <a href="{{ url }}{{ Page - 1 }}" class="pagination-button">Previous</a>
-    {{ end }}
-
-    <a href="#" class="pagination-button disabled">{{ Page }}</a>
-
-    {{ if Page == 10 }}
-    <a href="#" class="pagination-button disabled">Next</a>
-    <a href="#" class="pagination-button disabled">Last</a>
-    {{ else }}
-    <a href="{{ url }}{{ Page + 1 }}" class="pagination-button">Next</a>
-    <a href="{{ url }}10" class="pagination-button">Last</a>
-    {{ end }}
+    + "&mode=" + Queries.Mode + "&page=" }}
+    <small>Page {{ Page }}/10</small>
+    <br />
+    {{ raw: createPaginator(url, "#checkpoint", Page, 10) }}
   </div>
 </div>

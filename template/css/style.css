@@ -125,15 +125,15 @@ input[type=submit],
 
 button:active,
 input[type=submit]:active,
-.switch-button,
-.pagination-button {
+.switch-button:active,
+.pagination-button:active {
   filter: brightness(0.85);
 }
 
 button:hover,
 input[type=submit]:hover,
-.switch-button,
-.pagination-button {
+.switch-button:hover,
+.pagination-button:hover {
   cursor: pointer;
   filter: brightness(1.2);
 }
@@ -160,6 +160,17 @@ input[type=submit][hidden] {
 
 .pagination {
   text-align: center;
+}
+.pagination .pagination-button {
+  margin-right: 5px;
+}
+.pagination #highlight {
+  filter: brightness(1.2);
+}
+.pagination #disabled {
+  pointer-events: none;
+  background-color: #222;
+  filter: brightness(1);
 }
 
 nav {

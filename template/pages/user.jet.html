@@ -55,29 +55,9 @@
     </div>
   </div>
   <div class="pagination">
-    {{ url := "/users/" + User.ID + "/" + Category + "?page="}} {{ if Page == 1
-    }}
-    <a href="#" class="pagination-button disabled">First</a>
-    <a href="#" class="pagination-button disabled">Previous</a>
-    {{ else }}
-    <a href="{{ url }}1#checkpoint" class="pagination-button">First</a>
-    <a href="{{ url }}{{ Page - 1 }}#checkpoint" class="pagination-button"
-      >Previous</a
-    >
-    {{ end }}
-
-    <a href="#" class="pagination-button disabled">{{ Page }}</a>
-
-    {{ if Page == PageLimit - 1 }}
-    <a href="#" class="pagination-button disabled">Next</a>
-    <a href="#" class="pagination-button disabled">Last</a>
-    {{ else }}
-    <a href="{{ url }}{{ Page + 1 }}#checkpoint" class="pagination-button"
-      >Next</a
-    >
-    <a href="{{ url }}{{ PageLimit - 1 }}#checkpoint" class="pagination-button"
-      >Last</a
-    >
-    {{ end }}
+    {{ url := "/users/" + User.ID + "/" + Category + "?page="}}
+    <small>Page {{ Page }}/{{ PageLimit }}</small>
+    <br />
+    {{ raw: createPaginator(url, "#checkpoint", Page, PageLimit) }}
   </div>
 </div>

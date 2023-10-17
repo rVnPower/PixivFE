@@ -70,16 +70,9 @@
 
   <div class="pagination">
     {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&order="
-    + Queries.Order + "&mode=" + Queries.Mode + "&page=" }} {{ if Page == 1 }}
-    <a href="#" class="pagination-button disabled">First</a>
-    <a href="#" class="pagination-button disabled">Previous</a>
-    {{ else }}
-    <a href="{{url}}1" class="pagination-button">First</a>
-    <a href="{{url}}{{ Page - 1 }}" class="pagination-button">Previous</a>
-    {{ end }}
-
-    <a href="#" class="pagination-button disabled">{{ Page }}</a>
-
-    <a href="{{url}}{{ Page + 1 }}" class="pagination-button">Next</a>
+    + Queries.Order + "&mode=" + Queries.Mode + "&page=" }}
+    <small>Page {{ Page }}</small>
+    <br />
+    {{ raw: createPaginator(url, "#checkpoint", Page, -1) }}
   </div>
 </div>

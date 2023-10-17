@@ -8,17 +8,9 @@
   </div>
   <div>{{ include "components/small-tn" Artworks }}</div>
   <div class="pagination">
-    {{ url := "/self/following_works" + "?mode=" + Queries.Mode + "&page=" }} {{
-    if Page == 1 }}
-    <a href="#" class="pagination-button disabled">First</a>
-    <a href="#" class="pagination-button disabled">Previous</a>
-    {{ else }}
-    <a href="{{url}}1" class="pagination-button">First</a>
-    <a href="{{url}}{{ Page - 1 }}" class="pagination-button">Previous</a>
-    {{ end }}
-
-    <a href="#" class="pagination-button disabled">{{ Page }}</a>
-
-    <a href="{{url}}{{ Page + 1 }}" class="pagination-button">Next</a>
+    {{ url := "/self/following_works" + "?mode=" + Queries.Mode + "&page=" }}
+    <small>Page {{ Page }}</small>
+    <br />
+    {{ raw: createPaginator(url, "#checkpoint", Page, -1) }}
   </div>
 </div>
