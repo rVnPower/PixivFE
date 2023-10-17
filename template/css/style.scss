@@ -322,6 +322,7 @@ nav {
     minmax(calc($small-artwork-width + 15px), 1fr)
   );
   align-items: center;
+  justify-items: center;
 }
 
 .artwork-container-scroll {
@@ -493,11 +494,15 @@ nav {
 
   .illust-images {
     display: flex;
-    flex-flow: column wrap;
     align-items: center;
+    flex-direction: column;
+    width: 100%;
 
     img {
       margin-top: 15px;
+      max-height: 1000px;
+      width: auto;
+      max-width: 100%;
     }
   }
 

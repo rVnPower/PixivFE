@@ -265,6 +265,7 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(199px, 1fr));
   align-items: center;
+  justify-items: center;
 }
 
 .artwork-container-scroll {
@@ -432,11 +433,15 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 }
 .illust .illust-images {
   display: flex;
-  flex-flow: column wrap;
   align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
 .illust .illust-images img {
   margin-top: 15px;
+  max-height: 1000px;
+  width: auto;
+  max-width: 100%;
 }
 .illust .illust-attr {
   display: flex;
