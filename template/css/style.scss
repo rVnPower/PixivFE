@@ -15,7 +15,6 @@ $small-artwork-width: 184px;
 $large-artwork-width: 288px;
 
 html {
-  scrollbar-color: #666 #201c29;
   font-size: 62.5%;
 }
 
@@ -37,6 +36,26 @@ body {
 a {
   color: $link;
   text-decoration: none;
+}
+
+/* Scrollbars */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: $link auto;
+}
+
+*::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: $link;
+    border-radius: 10px;
 }
 
 .special-symbol {
