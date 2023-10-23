@@ -40,7 +40,7 @@ func SetupRoutes(r *fiber.App) {
 	PC = NewPixivClient(5000)
 	PC.SetSessionID(configs.Token)
 	PC.SetUserAgent(configs.UserAgent)
-	PC.AddHeader("Accept-Language", "en-US,en;q=0.5")
+	PC.AddHeader("Accept-Language", configs.AcceptLanguage)
 
 	limit := limiter.New(limiter.Config{
 		Max: 10,

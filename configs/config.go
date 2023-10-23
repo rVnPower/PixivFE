@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-var Token, BaseURL, Port, UserAgent, ProxyServer, StartingTime, Version string
+var Token, BaseURL, Port, UserAgent, ProxyServer, StartingTime, Version, AcceptLanguage string
 
 func parseEnv(key string) (string, error) {
 	value, ok := os.LookupEnv(key)
@@ -41,6 +41,7 @@ func ParseConfig() error {
 	Port = parseEnvWithDefault("PIXIVFE_PORT", "8282")
 	UserAgent = parseEnvWithDefault("PIXIVFE_USERAGENT", "Mozilla/5.0")
 	ProxyServer = parseEnvWithDefault("PIXIVFE_IMAGEPROXY", "px2.rainchan.win")
+	AcceptLanguage = parseEnvWithDefault("PIXIVFE_ACCEPTLANGUAGE", "en-US,en;q=0.5")
 	StartingTime = time.Now().UTC().Format("2006-01-02 15:04")
 	Version = "v1.0.5"
 

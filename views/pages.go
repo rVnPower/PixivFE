@@ -68,7 +68,7 @@ func index_page(c *fiber.Ctx) error {
 	PC := NewPixivClient(5000)
 	PC.SetSessionID(*token)
 	PC.SetUserAgent(configs.UserAgent)
-	PC.AddHeader("Accept-Language", "en-US,en;q=0.5")
+	PC.AddHeader("Accept-Language", configs.AcceptLanguage)
 
 	mode := c.Query("mode", "all")
 
