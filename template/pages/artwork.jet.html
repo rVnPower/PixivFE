@@ -27,6 +27,7 @@
     >Go to ugoira.com for more options</a
   >
   {{ end }}
+
   <div class="illust-attr">
     <a href="/users/{{ Illust.User.ID }}"
       ><img
@@ -43,6 +44,12 @@
     </div>
   </div>
 
+  <div>
+    <a href="https://pixiv.net/i/{{ Illust.ID }}"
+      >pixiv.net/i/{{ Illust.ID }}</a
+    >
+    <br />
+  </div>
   <div class="illust-tags">
     <span class="illust-tag-attr">
       <img src="/assets/eye.png" alt="Views" />
