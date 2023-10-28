@@ -362,10 +362,11 @@ func get_logged_in_user(c *fiber.Ctx) error {
 
 func about_page(c *fiber.Ctx) error {
 	info := fiber.Map{
-		"Time":       configs.StartingTime,
-		"BaseURL":    configs.BaseURL,
-		"Version":    configs.Version,
-		"ImageProxy": configs.ProxyServer,
+		"Time":           configs.StartingTime,
+		"BaseURL":        configs.BaseURL,
+		"Version":        configs.Version,
+		"ImageProxy":     configs.ProxyServer,
+		"AcceptLanguage": configs.AcceptLanguage,
 	}
 	return c.Render("pages/about", info)
 }
