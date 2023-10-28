@@ -4,11 +4,12 @@
   <div class="artwork-title">
     <a>{{ .Title }}</a>
   </div>
-  <div class="artwork-author"></div>
-  <a
-    ><img src="{{ .ArtistAvatar }}" alt="{{ .ArtistName }}" loading="lazy" />
-    <span>{{ .ArtistName }}</span></a
-  >
+  <div class="artwork-author">
+    <a
+      ><img src="{{ .Thumbnail }}" alt="{{ .ArtistName }}" loading="lazy" />
+      <span>{{ .ArtistName }}</span></a
+    >
+  </div>
 </div>
 {{ else if .ID }}
 <div class="artwork-small artwork">
