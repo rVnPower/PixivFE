@@ -12,6 +12,20 @@
   <div class="user-details">
     <h2>{{ User.Name }}</h2>
     <small> {{ User.Following }} Following | {{ User.MyPixiv }} MyPixiv </small>
+    <div class="user-social">
+      {{ if User.Webpage }}
+      <span
+        ><a href="{{ User.Webpage }}"
+          ><img src="/assets/globe.png" alt="Webpage" /></a
+      ></span>
+      {{ end }} {{ range index, item := User.Social }}
+      <span>
+        <a href="{{ item.url }}">
+          <img src="/assets/{{ index }}.svg" alt="{{ index }}" />
+        </a>
+      </span>
+      {{ end }}
+    </div>
     <p>{{ raw: parsePixivRedirect(User.Comment) }}</p>
   </div>
   <div class="switcher">

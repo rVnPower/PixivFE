@@ -595,6 +595,14 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 .user .user-avatar img {
   border-radius: 50%;
 }
+.user .user-social {
+  text-align: center;
+}
+.user .user-social img {
+  aspect-ratio: 1/1;
+  width: 36px;
+  height: 36px;
+}
 .user .user-details {
   text-align: center;
 }

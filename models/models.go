@@ -166,14 +166,16 @@ type Comment struct {
 }
 
 type User struct {
-	ID              string        `json:"userId"`
-	Name            string        `json:"name"`
-	Avatar          string        `json:"imageBig"`
-	BackgroundImage string        `json:"background"`
-	Following       int           `json:"following"`
-	MyPixiv         int           `json:"mypixivCount"`
-	Comment         template.HTML `json:"commentHtml"`
-	Artworks        []IllustShort `json:"artworks"`
+	ID              string                       `json:"userId"`
+	Name            string                       `json:"name"`
+	Avatar          string                       `json:"imageBig"`
+	BackgroundImage string                       `json:"background"`
+	Following       int                          `json:"following"`
+	MyPixiv         int                          `json:"mypixivCount"`
+	Comment         template.HTML                `json:"commentHtml"`
+	Webpage         string                       `json:"webpage"`
+	Social          map[string]map[string]string `json:"social"`
+	Artworks        []IllustShort                `json:"artworks"`
 	ArtworksCount   int
 	FrequentTags    []FrequentTag
 }
