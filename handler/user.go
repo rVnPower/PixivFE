@@ -43,6 +43,7 @@ func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (s
 	}
 
 	// Get the keys, because Pixiv only returns IDs (very evil)
+
 	if category == "illustrations" || category == "artworks" {
 		for k := range illusts {
 			ids = append(ids, k)
@@ -150,6 +151,7 @@ func (p *PixivClient) GetUserInformation(id string, category string, page int) (
 
 	user = body.User
 
+
 	if category != "bookmarks" {
 		// Artworks
 		ids, count, err := p.GetUserArtworksID(id, category, page)
@@ -185,6 +187,9 @@ func (p *PixivClient) GetUserInformation(id string, category string, page int) (
 
 		// Public bookmarks count
 		user.ArtworksCount = count
+
+		// Parse social medias
+		user.ParseSocial()
 	}
 
 	// Background image
