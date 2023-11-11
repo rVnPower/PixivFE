@@ -7,5 +7,5 @@ steps:
       - CGO_ENABLED=0 GOOS=linux go build -mod=readonly -o pixivfe
       - ./pixivfe &
       - sleep 3
-      - go test -v
+      - go test -v -bench=. -count 5
     secrets: [pixivfe_token]

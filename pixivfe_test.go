@@ -5,58 +5,72 @@ import (
 	"testing"
 )
 
-func Test_Main(t *testing.T) {
-	_, err := http.Get("http://localhost:8282/")
+func Benchmark_Main(t *testing.B) {
+	r, err := http.Get("http://localhost:8282/")
+	if r.StatusCode != 200 {
+		t.Errorf("Status code not 200: was %d", r.StatusCode)
+	}
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("/ passed")
 }
 
-func Test_Settings(t *testing.T) {
-	_, err := http.Get("http://localhost:8282/settings")
+func Benchmark_Ranking(t *testing.B) {
+	r, err := http.Get("http://localhost:8282/ranking")
+	if r.StatusCode != 200 {
+		t.Errorf("Status code not 200: was %d", r.StatusCode)
+	}
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("Settings route passed")
 }
 
-func Test_Ranking(t *testing.T) {
-	_, err := http.Get("http://localhost:8282/ranking")
+func Benchmark_Ranking_Complex(t *testing.B) {
+	r, err := http.Get("http://localhost:8282/ranking?content=all&mode=daily_r18&page=1&date=20230826")
+	if r.StatusCode != 200 {
+		t.Errorf("Status code not 200: was %d", r.StatusCode)
+	}
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("Ranking route passed")
 }
 
-func Test_Ranking_Complex(t *testing.T) {
-	_, err := http.Get("https://pixivfe.exozy.me/ranking?content=all&mode=daily_r18&page=1&date=20230826")
+func Benchmark_Artwork(t *testing.B) {
+	r, err := http.Get("http://localhost:8282/artworks/111157207")
+	if r.StatusCode != 200 {
+		t.Errorf("Status code not 200: was %d", r.StatusCode)
+	}
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("Complex ranking route passed")
 }
 
-func Test_Artwork(t *testing.T) {
-	_, err := http.Get("http://localhost:8282/artworks/111157207")
+func Benchmark_Artwork_R18(t *testing.B) {
+	r, err := http.Get("http://localhost:8282/artworks/111130033")
+	if r.StatusCode != 200 {
+		t.Errorf("Status code not 200: was %d", r.StatusCode)
+	}
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("Artwork route passed")
 }
 
-func Test_Artwork_R18(t *testing.T) {
-	_, err := http.Get("http://localhost:8282/artworks/111130033")
+func Benchmark_User_NoSocial(t *testing.B) {
+	r, err := http.Get("http://localhost:8282/users/1035047")
+	if r.StatusCode != 200 {
+		t.Errorf("Status code not 200: was %d", r.StatusCode)
+	}
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("R18 Artwork route passed")
 }
 
-func Test_User(t *testing.T) {
-	_, err := http.Get("http://localhost:8282/users/1960050")
+func Benchmark_User_WithSocial(t *testing.B) {
+	r, err := http.Get("http://localhost:8282/users/59336265")
+	if r.StatusCode != 200 {
+		t.Errorf("Status code not 200: was %d", r.StatusCode)
+	}
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("User route passed")
 }
