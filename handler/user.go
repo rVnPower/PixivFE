@@ -189,8 +189,8 @@ func (p *PixivClient) GetUserInformation(id string, category string, page int) (
 		user.ArtworksCount = count
 
 		// Parse social medias
-		user.ParseSocial()
 	}
+	user.ParseSocial()
 
 	// Background image
 	if body.Background != nil {
