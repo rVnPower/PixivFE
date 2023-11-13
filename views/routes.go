@@ -47,8 +47,8 @@ func SetupRoutes(r *fiber.App) {
 	})
 
 	r.Get("/", index_page)
-	r.Get("/about", about_page)
-	r.Get("artworks/:id/", limit, artwork_page)
+	r.Get("about", about_page)
+	r.Get("artworks/:id/", limit, artwork_page).Name("artworks")
 	r.Get("users/:id/:category?", user_page)
 	r.Get("newest", newest_artworks_page)
 	r.Get("ranking", ranking_page)
@@ -66,6 +66,11 @@ func SetupRoutes(r *fiber.App) {
 	settings := r.Group("settings")
 	settings.Get("/", settings_page)
 	settings.Post("/:type", settings_post)
+
+	// Legacy illust URL
+	r.Get("member_illust.php", func(c *fiber.Ctx) error {
+		return c.Redirect("artworks/" + c.Query("illust_id"))
+	})
 
 	// 404 page
 	// r.NoRoute(not_found_page)
