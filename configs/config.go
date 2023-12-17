@@ -40,7 +40,7 @@ func ParseConfig() error {
 	BaseURL = parseEnvWithDefault("PIXIVFE_BASEURL", "localhost")
 	Port = parseEnvWithDefault("PIXIVFE_PORT", "8282")
 	UserAgent = parseEnvWithDefault("PIXIVFE_USERAGENT", "Mozilla/5.0")
-	ProxyServer = parseEnvWithDefault("PIXIVFE_IMAGEPROXY", "px2.rainchan.win")
+	ProxyServer = parseEnvWithDefault("PIXIVFE_IMAGEPROXY", "pximg.cocomi.cf")
 	AcceptLanguage = parseEnvWithDefault("PIXIVFE_ACCEPTLANGUAGE", "en-US,en;q=0.5")
 	StartingTime = time.Now().UTC().Format("2006-01-02 15:04")
 	Version = "v1.0.5"
