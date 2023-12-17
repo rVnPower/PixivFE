@@ -10,43 +10,37 @@
     <meta http-equiv="Content-Security-Policy" content="script-src 'self'" />
     <meta name="referrer" content="no-referrer, same-origin" />
     <link href="/css/style.css" rel="stylesheet" />
-
+        
     {{ if BaseURL }}
     <meta property="og:site_name" content="PixivFE" />
     <meta property="og:title" content="{{ title }}" />
-    <meta property="og:type" content="article" />
+    <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ FullURL }}" />
+    <meta property="twitter:url" content="{{ FullURL }}">
+    <meta name="twitter:title" content="{{ title }}" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="{{ BaseURL }}">
 
-    {{ if isset(PageType) }} {{ if PageType == "artwork" }} {{ if !
-    Illust.XRestrict }}
-    <meta
+    {{ if isset(PageType) }} {{ if PageType == "artwork" }}    <meta
       property="og:description"
       content="View this artwork by {{ Illust.User.Name }} on PixivFE."
     />
+    <meta name="twitter:description" content="View this artwork by {{ Illust.User.Name } on PixivFE.">
     <meta property="og:image" content="{{ Illust.Images[0].Large }}" />
-    {{ else }}
-    <meta
-      property="og:description"
-      content="View this (explicit) artwork by {{ Illust.User.Name }} on PixivFE."
-    />
-    <meta property="og:image" content="{{ BaseURL }}/assets/banner.jpg" />
-    {{ end }} {{ else if PageType == "user" }}
+    <meta name="twitter:image" content="{{ Illust.Images[0].Large }}">
+    {{ else if PageType == "user" }}
     <meta
       property="og:description"
       content="View this user's profile on PixivFE."
     />
+  <meta name="twitter:description" content="View this user's profile on PixivFE.">
     {{ if User.BackgroundImage }}
     <meta property="og:image" content="{{ User.BackgroundImage }}" />
+    <meta name="twitter:image" content="{{ User.BackgroundImage }}">
     {{ else }}
     <meta property="og:image" content="{{ User.Avatar }}" />
-    {{ end }} {{ end }} {{ else }}
-    <meta
-      property="og:description"
-      content="View this page on PixivFE. A privacy respecting frontend for Pixiv."
-    />
-    <meta property="og:image" content="{{ BaseURL }}/assets/banner.jpg" />
-    {{ end }} {{ end }}
+    <meta name="twitter:image" content="{{ User.Avatar }}">
+    {{ end }} {{ end }}    {{ end }} {{ end }}
   </head>
 
   <body>
