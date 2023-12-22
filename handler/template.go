@@ -106,6 +106,11 @@ func ParsePixivRedirect(s string) template.HTML {
 	return template.HTML(escaped)
 }
 
+func EscapeString(s string) string {
+	escaped := url.QueryEscape(s)
+	return escaped
+}
+
 func ParseTime(date time.Time) string {
 	return date.Format("2006-01-02 15:04")
 }
@@ -158,6 +163,9 @@ func GetTemplateFunctions() template.FuncMap {
 
 		"parsePixivRedirect": func(s string) template.HTML {
 			return ParsePixivRedirect(s)
+		},
+		"escapeString": func(s string) string {
+			return EscapeString(s)
 		},
 
 		"randomColor": func() string {

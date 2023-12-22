@@ -81,7 +81,7 @@
     {{ else }}
     <span class="illust-tag">
       <span class="illust-tag-name"
-        ><a href="/tags/{{ .Name }}">#{{ .Name }}</a></span
+        ><a href="/tags/{{ escapeString(.Name) }}">#{{ .Name }}</a></span
       ><span class="illust-tag-translation">{{ .TranslatedName }}</span>
     </span>
     {{ end }} {{ end }}
