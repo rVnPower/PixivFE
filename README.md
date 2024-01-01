@@ -37,6 +37,7 @@ currently have guides for Docker and Caddy.
 | Name               | Cloudflare? | URL                             |
 |--------------------|-------------|---------------------------------|
 | exozyme (Official) | No          | https://pixivfe.exozy.me        |
+| dragongoose        | No          | https://pixivfe.drgns.space     |
 | chaotic.ninja      | No          | https://pix.chaotic.ninja       |
 | WhateverItWorks    | Yes         | https://art.whateveritworks.org |
 | ducks.party        | No          | https://pixivfe.ducks.party     |
