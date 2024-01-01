@@ -97,6 +97,7 @@ func main() {
 
 	server.Get("about", pages.AboutPage)
 	server.Get("newest", pages.NewestPage)
+	server.Get("discovery", pages.DiscoveryPage)
 
 	log.Println("PixivFE is running.")
 	server.Listen(":8000")

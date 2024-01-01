@@ -67,7 +67,7 @@ func (s *ServerConfig) InitializeConfig() error {
 
 	acceptLanguage, hasAcceptLanguage := os.LookupEnv("PIXIVFE_ACCEPTLANGUAGE")
 	if !hasAcceptLanguage {
-		userAgent = "Mozilla/5.0"
+		acceptLanguage = "en-US,en;q=0.5"
 	}
 	s.SetAcceptLanguage(acceptLanguage)
 
