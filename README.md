@@ -40,6 +40,7 @@ currently have guides for Docker and Caddy.
 | dragongoose        | No          | https://pixivfe.drgns.space     |
 | chaotic.ninja      | No          | https://pix.chaotic.ninja       |
 | WhateverItWorks    | Yes         | https://art.whateveritworks.org |
+| ducks.party        | No          | https://pixivfe.ducks.party     |
 
 Hosted one yourself? Create a pull request to add it here!
 
