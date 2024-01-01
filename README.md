@@ -1,3 +1,6 @@
+### Note
+A backend rewrite is ongoing. Check out branch [v2](https://codeberg.org/VnPower/pixivfe/src/branch/v2).
+
 # PixivFE
 
 A privacy-respecting alternative front-end for Pixiv that doesn't suck
