@@ -1,0 +1,80 @@
+<div class="container">
+  <h2>{{ Title }}</h2>
+
+  <div class="switcher">
+    {{ url := "/ranking?mode=" + Queries.Mode + "&date=" + Data.CurrentDate +
+    "&page=1&content=" }}
+    <div class="switch-title">Content</div>
+    <a href="{{ url }}all" class="switch-button">Overall</a>
+    <a href="{{ url }}illust" class="switch-button">Illustrations</a>
+    <a href="{{ url }}manga" class="switch-button">Mangas</a>
+  </div>
+  <br />
+
+  <div class="switcher">
+    {{ url := "/ranking?content=" + Queries.Content +"&date=" + Data.CurrentDate
+    + "&page=1&mode=" }}
+    <div class="switch-title">Modes</div>
+    <a href="{{ url }}daily" class="switch-button">Daily</a>
+    <a href="{{ url }}weekly" class="switch-button">Weekly</a>
+    <a href="{{ url }}monthly" class="switch-button">Monthly</a>
+    <a href="{{ url }}rookie" class="switch-button">Rookie</a>
+    <span class="switch-seperator"></span>
+    <a href="{{ url }}daily_r18" class="switch-button">Daily (R-18)</a>
+    <a href="{{ url }}weekly_r18" class="switch-button">Weekly (R-18)</a>
+  </div>
+  <br />
+
+  <div class="switcher">
+    {{ url := "/ranking?content=" + Queries.Content + "&mode=" + Queries.Mode +
+    "&page=1" }}
+    <div class="switch-title">Date</div>
+    {{ if Data.PrevDate != "false" }}
+    <a href="{{ url }}&date={{Data.PrevDate}}" class="switch-button"
+      >Yesterday</a
+    >
+    {{ end }} {{ if Data.NextDate != "false" }}
+    <a href="{{ url }}&date={{Data.NextDate}}" class="switch-button"
+      >Next day</a
+    >
+    {{ end }}
+    <a href="{{ url }}" class="switch-button">Latest</a>
+    <span class="switch-seperator"></span>
+    <a href="/ranking_log">Ranking calendar</a>
+  </div>
+  <br />
+
+  <div class="artwork-container">
+    {{ range Data.Artworks }}
+    <div class="artwork-small artwork">
+      <div class="artwork-additional">
+        <div class="artwork-position">{{ .Rank }}</div>
+        {{ if toInt(.Pages) > 1 }}
+        <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
+        {{ end }}
+      </div>
+
+      <a href="/artworks/{{ .ID }}">
+        <img src="{{ .Image }}" alt="{{ .Title }}" />
+      </a>
+      <div class="artwork-title">
+        <a href="/artworks/{{ .ID }}"> {{ .Title }} </a>
+      </div>
+      <div class="artwork-author">
+        <a href="/users/{{ .ArtistID }}"
+          ><img src="{{ .ArtistAvatar }}" alt="{{ .ArtistName }}" />
+          <span>{{ .ArtistName }}</span></a
+        >
+      </div>
+    </div>
+    {{ end }}
+  </div>
+
+  <div class="pagination">
+    {{ url := "/ranking?content=" + Queries.Content +"&date=" + Data.CurrentDate
+    + "&mode=" + Queries.Mode + "&page=" }}
+    <small>Page {{ Page }}/10</small>
+    <br />
+    {{ raw: createPaginator(url, "#checkpoint", Page, 10) }}
+  </div>
+</div>

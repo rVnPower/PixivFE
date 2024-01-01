@@ -1,0 +1,19 @@
+{{ range . }} {{ if .ID == "#" }}
+<div class="artwork-small artwork">
+  <img src="{{ .Thumbnail }}" alt="{{ .Title }}" loading="lazy" />
+  <div class="artwork-title">
+    <a>{{ .Title }}</a>
+  </div>
+  <div class="artwork-author">
+    <a
+      ><img src="{{ .Thumbnail }}" alt="{{ .ArtistName }}" loading="lazy" />
+      <span>{{ .ArtistName }}</span></a
+    >
+  </div>
+</div>
+{{ else if .ID }}
+<div class="artwork-small artwork">
+  {{ include "thumbnail-dt" . }} {{ include "thumbnail-tt" . }} {{ include
+  "thumbnail-at" . }}
+</div>
+{{ end }} {{ end }}

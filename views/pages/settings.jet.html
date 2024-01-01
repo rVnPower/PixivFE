@@ -1,0 +1,36 @@
+<div class="container">
+    <h2>Login</h2>
+    <p>Go to <a href="/login">this page</a> to login</p>
+    <h2>Settings</h2>
+    <div class="form-field">
+        <h3>Image proxy server</h3>
+        <form action="/settings/image_server" method="post">
+            <input type="radio" name="image-proxy" id="image-proxy" value="pixiv.tatakai.top" />
+            <label for="image-proxy">pixiv.tatakai.top</label>
+            <br />
+            <input type="radio" name="image-proxy" id="image-proxy" value="i.loli.best" />
+            <label for="image-proxy">i.****.best</label>
+            <br />
+            <input type="radio" name="image-proxy" id="image-proxy" value="pximg.cocomi.cf" />
+            <label for="image-proxy">pximg.cocomi.cf</label>
+            <br />
+            <input type="radio" name="image-proxy" id="image-proxy" value="mima.trafficpixel.tk" />
+            <label for="image-proxy">mima.trafficpixel.tk</label>
+            <br />
+            <input type="radio" name="image-proxy" id="image-proxy" value="img.chaotic.ninja" />
+            <label for="image-proxy">img.chaotic.ninja</label>
+            <br />
+            <input type="radio" name="image-proxy" id="image-proxy" value="pixiv.cat" />
+            <label for="image-proxy">pixiv.cat</label>
+            <br />
+            <input type="submit" value="Apply" />
+        </form>
+        <br />
+        <form action="/settings/image_server" method="post">
+            <label for="image-proxy">Custom image proxy server</label>
+            <input type="text" name="image-proxy" id="image-proxy" placeholder="Paste the address here..."
+                autocomplete="off" />
+            <input type="submit" value="Apply" />
+        </form>
+    </div>
+</div>

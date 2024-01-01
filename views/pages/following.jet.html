@@ -1,0 +1,16 @@
+<div class="container">
+  <h2>Newest works from people you follow</h2>
+  <div class="switcher">
+    <div class="switch-title">Filter</div>
+    <a href="/following_works?mode=all&page=1" class="switch-button">All</a>
+    <a href="/following_works?mode=safe&page=1" class="switch-button">Safe</a>
+    <a href="/following_works?mode=r18&page=1" class="switch-button">R-18</a>
+  </div>
+  <div>{{ include "components/small-tn" Artworks }}</div>
+  <div class="pagination">
+    {{ url := "/self/following_works" + "?mode=" + Queries.Mode + "&page=" }}
+    <small>Page {{ Page }}</small>
+    <br />
+    {{ raw: createPaginator(url, "#checkpoint", Page, -1) }}
+  </div>
+</div>

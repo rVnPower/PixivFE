@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {{ title := "" }} {{ if isset(Title) }} {{ title = Title }} {{ else }} {{
+    title = "PixivFE" }} {{ end }}
+    <title>{{ title }} - PixivFE</title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="View this page on PixivFE." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'" />
+    <meta name="referrer" content="no-referrer, same-origin" />
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <nav>
+      <div class="navigation-wrapper">
+        <span>
+          <input type="checkbox" class="sidebar-toggler" id="sidebar-toggler" />
+          <label for="sidebar-toggler" class="sidebar-label">
+            <img
+              src="/assets/menu-thin.png"
+              alt="Menu"
+              width="30"
+              height="30"
+            />
+          </label>
+
+          <div class="sidebar">
+            <ul class="sidebar-list">
+              <a class="sidebar-item" href="/discovery">
+                <img src="/assets/compass.png" alt="icon" />Discovery</a
+              >
+              <a class="sidebar-item" href="/ranking">
+                <img src="/assets/crown.png" alt="icon" />Ranking</a
+              >
+              <a class="sidebar-item" href="/newest">
+                <img src="/assets/sparkling.png" alt="icon" />Newest</a
+              >
+              <br />
+              <a class="sidebar-item" href="/self/following_works">
+                <img src="/assets/users.png" alt="icon" />Latest by followed</a
+              >
+              <a class="sidebar-item" href="/self/bookmarks">
+                <img src="/assets/heart.png" alt="icon" />Your bookmarks</a
+              >
+              <a class="sidebar-item" href="/self">
+                <img src="/assets/user.png" alt="icon" />Your profile</a
+              >
+              <br />
+              <a class="sidebar-item" href="/settings">
+                <img src="/assets/settings.png" alt="icon" />Settings</a
+              >
+              <a class="sidebar-item" href="/about">
+                <img src="/assets/about.svg" alt="icon" />About</a
+              >
+              <br />
+              <a
+                class="sidebar-item"
+                href="https://codeberg.org/vnpower/pixivfe"
+              >
+                <img src="/assets/globe.png" alt="icon" />Source code</a
+              >
+            </ul>
+          </div>
+          <span class="navbar-brand">
+            <img src="https://pixivfe.exozy.me/favicon.ico" alt="Icon" />
+            <a href="/">
+              <span>PixivFE</span>
+            </a>
+          </span>
+        </span>
+
+        <span class="navbar-entry">
+          <form
+            class="search-form"
+            action="/tags"
+            method="post"
+            autocomplete="off"
+          >
+            <input
+              type="text"
+              name="name"
+              class="search-form-text"
+              placeholder="⌕ Search artworks..."
+            />
+            <input type="submit" hidden />
+          </form>
+        </span>
+        <span>
+          <span class="navbar-entry" id="search-page-entry">
+            <img src="/assets/search.svg" alt="Search" />
+          </span>
+          <span class="navbar-entry">
+            <a href="/settings">
+              <img src="/assets/cog.svg" alt="Settings" />
+            </a>
+          </span>
+        </span>
+      </div>
+      <div class="navbar-shadow"></div>
+    </nav>
+    {{ embed() }}
+  </body>
+</html>

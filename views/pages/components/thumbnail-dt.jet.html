@@ -1,0 +1,12 @@
+<div class="artwork-additional">
+  {{ if .XRestrict != 0 }}
+  <div class="artwork-profanity-label">
+    <span>{{ if .XRestrict == 1 }}R-18{{ else }}R-18G{{ end }}</span>
+  </div>
+  {{ end }} {{ if .Pages > 1 }}
+  <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
+  {{ end }}
+</div>
+<a href="/artworks/{{ .ID }}">
+  <img src="{{ .Thumbnail }}" alt="{{ .Title }}" loading="lazy" />
+</a>

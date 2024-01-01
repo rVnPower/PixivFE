@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>Server information</h1>
+  <ul>
+    <li>
+      <b>Version:</b> {{ Version }}<br />PixivFE's version this server is
+      running
+    </li>
+    <li>
+      <b>Started PixivFE (UTC)</b>: {{ Time }} <br />The date when PixivFE
+      started on this server
+    </li>
+    <li>
+      <b>Base URL</b>: {{ if isset(BaseURL) and !BaseURL == "localhost" }} {{
+      BaseURL }} <br />
+      Meta tags are available for embeds {{ else }} Not set <br />
+      Meta tags are not available, embeds may not work {{ end }}
+    </li>
+    <li>
+      <b>Default image proxy server</b>: {{ ImageProxy }}<br />The default image
+      proxy server that was set on this server, used to proxy images from
+      i.pximg.net
+    </li>
+    <li>
+      <b>Accept-Language header</b>: {{ AcceptLanguage }}<br />The value of the
+      Accept-Language header this server uses to request to Pixiv's APIs.
+    </li>
+  </ul>
+  <p></p>
+</div>
