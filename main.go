@@ -60,9 +60,10 @@ func main() {
 
 	server.Use(logger.New(
 		logger.Config{
-			Format: "${pid} ${ip} | ${path}\n",
+			Format: "${time} ${ip} | ${path}\n",
 		},
 	))
+
 	server.Use(cache.New(
 		cache.Config{
 			// Next: func(c *fiber.Ctx) bool {
@@ -99,9 +100,19 @@ func main() {
 	server.Static("assets/", "./views/assets")
 	server.Static("/robots.txt", "./views/assets/robots.txt")
 
+	//
+	// Routes
+	//
+	
 	server.Get("about", pages.AboutPage)
 	server.Get("newest", pages.NewestPage)
 	server.Get("discovery", pages.DiscoveryPage)
+
+	// Settings group
+	server.Get("login", pages.LoginPage)
+	settings := server.Group("settings")
+	settings.Get("/", pages.SettingsPage)
+	settings.Post("/:type", pages.SettingsPost)
 
 	log.Println("PixivFE is running.")
 	server.Listen(":8000")

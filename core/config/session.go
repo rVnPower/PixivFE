@@ -16,6 +16,14 @@ func SetupStorage() {
 	})
 }
 
+func saveSession(sess *session.Session) error {
+	if err := sess.Save(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func GetImageProxy(c *fiber.Ctx) string {
 	sess, err := Store.Get(c)
 	if err != nil {
@@ -28,4 +36,36 @@ func GetImageProxy(c *fiber.Ctx) string {
 	}
 
 	return GlobalServerConfig.ProxyServer
+}
+
+func SetSessionValue(c *fiber.Ctx, name, value string) error {
+	sess, err := Store.Get(c)
+	if err != nil {
+		return err
+	}
+
+	sess.Set(name, value)
+
+	if err = saveSession(sess); err != nil {
+		log.Fatalln("Failed to save session storage!")
+		return err
+	}
+
+	return nil
+}
+
+func RemoveSessionValue(c *fiber.Ctx, name string) error {
+	sess, err := Store.Get(c)
+	if err != nil {
+		return err
+	}
+
+	sess.Delete(name)
+
+	if err = saveSession(sess); err != nil {
+		log.Fatalln("Failed to save session storage!")
+		return err
+	}
+
+	return nil
 }
