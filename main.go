@@ -58,7 +58,11 @@ func main() {
 		},
 	})
 
-	server.Use(logger.New())
+	server.Use(logger.New(
+		logger.Config{
+			Format: "${pid} ${ip} | ${path}\n",
+		},
+	))
 	server.Use(cache.New(
 		cache.Config{
 			// Next: func(c *fiber.Ctx) bool {
