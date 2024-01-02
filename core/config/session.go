@@ -38,6 +38,20 @@ func GetImageProxy(c *fiber.Ctx) string {
 	return GlobalServerConfig.ProxyServer
 }
 
+func GetToken(c *fiber.Ctx) string {
+	sess, err := Store.Get(c)
+	if err != nil {
+		log.Fatalln("Failed to get current session and its values! Falling back to server default!")
+		return GlobalServerConfig.Token
+	}
+	value := sess.Get("Token")
+	if value != nil {
+		return value.(string)
+	}
+
+	return GlobalServerConfig.Token
+}
+
 func SetSessionValue(c *fiber.Ctx, name, value string) error {
 	sess, err := Store.Get(c)
 	if err != nil {

@@ -35,6 +35,7 @@ func ProxyImages(s, proxy string) string {
 
 func GetNewestArtworks(c *fiber.Ctx, worktype string, r18 string) ([]ArtworkBrief, error) {
 	imageProxy := session.GetImageProxy(c)
+	token := session.GetToken(c)
 	URL := http.GetNewestArtworksURL(worktype, r18, "0")
 
 	var body struct {
@@ -42,7 +43,7 @@ func GetNewestArtworks(c *fiber.Ctx, worktype string, r18 string) ([]ArtworkBrie
 		// LastId string
 	}
 
-	resp, err := http.UnwrapWebAPIRequest(URL)
+	resp, err := http.UnwrapWebAPIRequest(URL, token)
 	if err != nil {
 		return nil, err
 	}

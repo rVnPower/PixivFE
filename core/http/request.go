@@ -59,7 +59,7 @@ func WebAPIRequest(URL string) HttpResponse {
 	}
 }
 
-func UnwrapWebAPIRequest(URL string) (string, error) {
+func UnwrapWebAPIRequest(URL, token string) (string, error) {
 	resp := WebAPIRequest(URL)
 
 	if !resp.Ok {

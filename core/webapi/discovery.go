@@ -10,12 +10,13 @@ import (
 
 func GetDiscoveryArtwork(c *fiber.Ctx, mode string) ([]ArtworkBrief, error) {
 	imageProxy := session.GetImageProxy(c)
+	token := session.GetToken(c)
+
 	URL := http.GetDiscoveryURL(mode, 100)
 
 	var artworks []ArtworkBrief
 
-	resp, err := http.UnwrapWebAPIRequest(URL)
-	println("here")
+	resp, err := http.UnwrapWebAPIRequest(URL, token)
 	if err != nil {
 		return nil, err
 	}
