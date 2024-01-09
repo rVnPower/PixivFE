@@ -61,8 +61,18 @@ func setup_router() *fiber.App {
 	server.Use(cache.New(
 		cache.Config{
 			Next: func(c *fiber.Ctx) bool {
+				resp_code := c.Response().StatusCode()
+				if resp_code < 200 || resp_code >= 300 {
+					return true
+				}
+				if c.Path() == "/" {
+					return true
+				}
 				// Disable cache for settings page
-				return strings.Contains(c.Path(), "/settings") || c.Path() == "/"
+				if strings.Contains(c.Path(), "/settings") {
+					return true
+				}
+				return false
 			},
 			Expiration:   5 * time.Minute,
 			CacheControl: true,
