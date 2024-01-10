@@ -107,7 +107,7 @@ func ParsePixivRedirect(s string) template.HTML {
 }
 
 func EscapeString(s string) string {
-	escaped := url.QueryEscape(s)
+	escaped := url.PathEscape(s)
 	return escaped
 }
 

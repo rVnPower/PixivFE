@@ -14,7 +14,7 @@ func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {
 	var resp []models.ImageResponse
 	var images []models.Image
 
-	URL := fmt.Sprintf(ArtworkImagesURL, id)
+	URL := UrlSprintf(ArtworkImagesURL, id)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {
@@ -44,7 +44,7 @@ func (p *PixivClient) GetArtworkImages(id string) ([]models.Image, error) {
 func (p *PixivClient) GetArtworkByID(id string) (*models.Illust, error) {
 	var images []models.Image
 
-	URL := fmt.Sprintf(ArtworkInformationURL, id)
+	URL := UrlSprintf(ArtworkInformationURL, id)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {
@@ -175,7 +175,7 @@ func (p *PixivClient) GetArtworkComments(id string) ([]models.Comment, error) {
 		Comments []models.Comment `json:"comments"`
 	}
 
-	URL := fmt.Sprintf(ArtworkCommentsURL, id)
+	URL := UrlSprintf(ArtworkCommentsURL, id)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {
@@ -195,7 +195,7 @@ func (p *PixivClient) GetRelatedArtworks(id string) ([]models.IllustShort, error
 		Illusts []models.IllustShort `json:"illusts"`
 	}
 
-	URL := fmt.Sprintf(ArtworkRelatedURL, id, 96)
+	URL := UrlSprintf(ArtworkRelatedURL, id, 96)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {

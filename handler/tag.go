@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"fmt"
-
 	"codeberg.org/vnpower/pixivfe/models"
 	"github.com/goccy/go-json"
 )
@@ -10,7 +8,7 @@ import (
 func (p *PixivClient) GetTagData(name string) (models.TagDetail, error) {
 	var tag models.TagDetail
 
-	URL := fmt.Sprintf(SearchTagURL, name)
+	URL := UrlSprintf(SearchTagURL, name)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {
@@ -28,7 +26,7 @@ func (p *PixivClient) GetTagData(name string) (models.TagDetail, error) {
 func (p *PixivClient) GetFrequentTags(ids string) ([]models.FrequentTag, error) {
 	var tags []models.FrequentTag
 
-	URL := fmt.Sprintf(FrequentTagsURL, ids)
+	URL := UrlSprintf(FrequentTagsURL, ids)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {

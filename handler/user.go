@@ -12,7 +12,7 @@ import (
 )
 
 func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (string, int, error) {
-	URL := fmt.Sprintf(UserArtworksURL, id)
+	URL := UrlSprintf(UserArtworksURL, id)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {
@@ -80,7 +80,7 @@ func (p *PixivClient) GetUserArtworksID(id string, category string, page int) (s
 func (p *PixivClient) GetUserArtworks(id string, ids string) ([]models.IllustShort, error) {
 	var works []models.IllustShort
 
-	URL := fmt.Sprintf(UserArtworksFullURL, id, ids)
+	URL := UrlSprintf(UserArtworksFullURL, id, ids)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {
@@ -113,7 +113,7 @@ func (p *PixivClient) GetUserArtworks(id string, ids string) ([]models.IllustSho
 func (p *PixivClient) GetUserBasicInformation(id string) (models.UserShort, error) {
 	var user models.UserShort
 
-	URL := fmt.Sprintf(UserBasicInformationURL, id)
+	URL := UrlSprintf(UserBasicInformationURL, id)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {
@@ -131,7 +131,7 @@ func (p *PixivClient) GetUserBasicInformation(id string) (models.UserShort, erro
 func (p *PixivClient) GetUserInformation(id string, category string, page int) (*models.User, error) {
 	var user *models.User
 
-	URL := fmt.Sprintf(UserInformationURL, id)
+	URL := UrlSprintf(UserInformationURL, id)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {
@@ -202,7 +202,7 @@ func (p *PixivClient) GetUserInformation(id string, category string, page int) (
 
 func (p *PixivClient) GetUserBookmarks(id string, mode string, page int) ([]models.IllustShort, int, error) {
 	page--
-	URL := fmt.Sprintf(UserBookmarksURL, id, page*48, mode)
+	URL := UrlSprintf(UserBookmarksURL, id, page*48, mode)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {
