@@ -1,6 +1,1 @@
-.vercel
-*.map
-config.yml
-tmp/
-.air.toml
-/.dir-locals.el
+/pixivfe
