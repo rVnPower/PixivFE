@@ -1,9 +1,7 @@
 package core
 
 import (
-	"html/template"
 	"strings"
-	"time"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
@@ -12,17 +10,15 @@ import (
 )
 
 type ArtworkBrief struct {
-	ID           string        `json:"id"`
-	Title        string        `json:"title"`
-	Description  template.HTML `json:"description"`
-	ArtistID     string        `json:"userId"`
-	ArtistName   string        `json:"userName"`
-	ArtistAvatar string        `json:"profileImageUrl"`
-	Date         time.Time     `json:"uploadDate"`
-	Thumbnail    string        `json:"url"`
-	Pages        int           `json:"pageCount"`
-	XRestrict    int           `json:"xRestrict"`
-	AiType       int           `json:"aiType"`
+	ID           string `json:"id"`
+	Title        string `json:"title"`
+	ArtistID     string `json:"userId"`
+	ArtistName   string `json:"userName"`
+	ArtistAvatar string `json:"profileImageUrl"`
+	Thumbnail    string `json:"url"`
+	Pages        int    `json:"pageCount"`
+	XRestrict    int    `json:"xRestrict"`
+	AiType       int    `json:"aiType"`
 }
 
 func ProxyImages(s, proxy string) string {
