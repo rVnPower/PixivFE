@@ -11,10 +11,10 @@ import (
 )
 
 type HttpResponse struct {
-	Ok bool
+	Ok         bool
 	StatusCode int
 
-	Body string
+	Body    string
 	Message string
 }
 
@@ -25,37 +25,37 @@ func WebAPIRequest(URL string) HttpResponse {
 	req.Header.Add("Accept-Language", core.GlobalServerConfig.AcceptLanguage)
 
 	req.AddCookie(&http.Cookie{
-		Name: "PHPSESSID",
+		Name:  "PHPSESSID",
 		Value: core.GlobalServerConfig.Token,
 	})
 
-	// Make the request 
+	// Make the request
 	resp, err := http.DefaultClient.Do(req)
 
 	if err != nil {
 		return HttpResponse{
-			Ok: false,
+			Ok:         false,
 			StatusCode: 0,
-			Body: "",
-			Message: fmt.Sprintf("Failed to create a request to %s\n.", URL),
+			Body:       "",
+			Message:    fmt.Sprintf("Failed to create a request to %s\n.", URL),
 		}
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-	    return HttpResponse{
-		    Ok: false,
-		    StatusCode: 0,
-		    Body: "",
-		    Message: fmt.Sprintln("Failed to parse request data."),
-	    }
+		return HttpResponse{
+			Ok:         false,
+			StatusCode: 0,
+			Body:       "",
+			Message:    fmt.Sprintln("Failed to parse request data."),
+		}
 	}
 
 	return HttpResponse{
-		Ok: true,
+		Ok:         true,
 		StatusCode: resp.StatusCode,
-		Body: string(body),
-		Message: "",
+		Body:       string(body),
+		Message:    "",
 	}
 }
 
@@ -78,4 +78,3 @@ func UnwrapWebAPIRequest(URL, token string) (string, error) {
 
 	return gjson.Get(resp.Body, "body").String(), nil
 }
-

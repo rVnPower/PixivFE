@@ -2,6 +2,8 @@ package main
 
 import (
 	"log"
+	"net"
+	"os"
 	"time"
 
 	config "codeberg.org/vnpower/pixivfe/v2/core/config"
@@ -94,7 +96,7 @@ func main() {
 
 		return c.Next()
 	})
-	
+
 	server.Static("/favicon.ico", "./views/assets/favicon.ico")
 	server.Static("css/", "./views/css")
 	server.Static("assets/", "./views/assets")
@@ -103,7 +105,7 @@ func main() {
 	//
 	// Routes
 	//
-	
+
 	server.Get("about", pages.AboutPage)
 	server.Get("newest", pages.NewestPage)
 	server.Get("discovery", pages.DiscoveryPage)
@@ -114,6 +116,17 @@ func main() {
 	settings.Get("/", pages.SettingsPage)
 	settings.Post("/:type", pages.SettingsPost)
 
-	log.Println("PixivFE is running.")
-	server.Listen(":8000")
+	// Listen
+	if config.GlobalServerConfig.UnixSocket != "" {
+		ln, err := net.Listen("unix", config.GlobalServerConfig.UnixSocket)
+		if err != nil {
+			log.Fatalf("Failed to run on Unix socket. %s", err)
+			os.Exit(1)
+		}
+		log.Println("PixivFE is running on the configured Unix socket.")
+		server.Listener(ln)
+	} else {
+		log.Println("PixivFE is running on the configured port.")
+		server.Listen(":" + config.GlobalServerConfig.Port)
+	}
 }

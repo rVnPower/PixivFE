@@ -138,7 +138,6 @@ func CreatePaginator(base, ending string, current_page, max_page int) template.H
 		count++
 	}
 
-
 	if max_page == -1 {
 		pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button">&rsaquo;</a>`, base, current_page+1, ending)
 		pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button" id="disabled">&raquo;</a>`, base, max_page, ending)

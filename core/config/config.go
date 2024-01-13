@@ -1,29 +1,29 @@
 package core
 
 import (
-	"log"
-	"time"
-	"os"
 	"errors"
+	"log"
+	"os"
+	"time"
 )
 
 var GlobalServerConfig ServerConfig
 
 type ServerConfig struct {
 	// Required
-	Token string
+	Token       string
 	ProxyServer string
 
 	// One of two is required
-	Port string
+	Port       string
 	UnixSocket string
 
-	BaseURL string
-	UserAgent string
+	BaseURL        string
+	UserAgent      string
 	AcceptLanguage string
 
 	StartingTime string
-	Version string
+	Version      string
 }
 
 func (s *ServerConfig) InitializeConfig() error {

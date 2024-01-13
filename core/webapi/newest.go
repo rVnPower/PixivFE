@@ -2,8 +2,8 @@ package core
 
 import (
 	"html/template"
-	"time"
 	"strings"
+	"time"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"

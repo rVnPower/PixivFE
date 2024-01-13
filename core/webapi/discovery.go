@@ -23,8 +23,7 @@ func GetDiscoveryArtwork(c *fiber.Ctx, mode string) ([]ArtworkBrief, error) {
 
 	resp = ProxyImages(resp, imageProxy)
 	data := gjson.Get(resp, "thumbnails.illust").String()
-	
-	
+
 	err = json.Unmarshal([]byte(data), &artworks)
 	if err != nil {
 		return nil, err

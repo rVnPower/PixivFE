@@ -3,22 +3,22 @@ package serve
 import (
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/cache"
-	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"time"
 )
 
 func ServerSetup() {
 	server := fiber.New(fiber.Config{
-		AppName: "PixivFE",
-		DisableStartupMessage: true,
-		JSONEncoder: json.Marshal,
-		JSONDecoder: json.Unmarshal,
+		AppName:                 "PixivFE",
+		DisableStartupMessage:   true,
+		JSONEncoder:             json.Marshal,
+		JSONDecoder:             json.Unmarshal,
 		EnableTrustedProxyCheck: true,
-		TrustedProxies: []string{"0.0.0.0/0"},
-		ProxyHeader: fiber.HeaderXForwardedFor,
+		TrustedProxies:          []string{"0.0.0.0/0"},
+		ProxyHeader:             fiber.HeaderXForwardedFor,
 	})
 
 	server.Use(logger.New(logger.Config{

@@ -14,7 +14,6 @@ func setToken(c *fiber.Ctx) error {
 		if err := session.SetSessionValue(c, "Token", token); err != nil {
 			return err
 		}
-		
 
 		return nil
 	}
@@ -28,7 +27,6 @@ func setImageServer(c *fiber.Ctx) error {
 		if err := session.SetSessionValue(c, "ImageProxy", token); err != nil {
 			return err
 		}
-		
 
 		return nil
 	}
