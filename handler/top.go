@@ -1,13 +1,15 @@
 package handler
 
 import (
+	"fmt"
+
 	"codeberg.org/vnpower/pixivfe/models"
 	"github.com/goccy/go-json"
 )
 
 func (p *PixivClient) GetLandingPage(mode string) (models.LandingArtworks, error) {
 	var context models.LandingArtworks
-	URL := UrlSprintf(LandingPageURL, mode)
+	URL := fmt.Sprintf(LandingPageURL, mode)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"net/url"
 	"strings"
 	"time"
 
@@ -38,7 +37,7 @@ func (p *PixivClient) GetNewestArtworks(worktype string, r18 string) ([]models.I
 	lastID := "0"
 
 	for i := 0; i < 10; i++ {
-		URL := UrlSprintf(ArtworkNewestURL, worktype, r18, lastID)
+		URL := fmt.Sprintf(ArtworkNewestURL, worktype, r18, lastID)
 
 		response, err := p.PixivRequest(URL)
 		if err != nil {
@@ -70,7 +69,7 @@ func (p *PixivClient) GetRanking(mode string, content string, date string, page 
 		date = "&date=" + date
 	}
 
-	url := UrlSprintf(ArtworkRankingURL, mode, content, date, page)
+	url := fmt.Sprintf(ArtworkRankingURL, mode, content, date, page)
 
 	s, err := p.TextRequest(url)
 
@@ -89,7 +88,7 @@ func (p *PixivClient) GetRanking(mode string, content string, date string, page 
 }
 
 func (p *PixivClient) GetSearch(artworkType string, name string, order string, age_settings string, page string) (*models.SearchResult, error) {
-	URL := UrlSprintf(SearchArtworksURL, artworkType, name, order, age_settings, page)
+	URL := fmt.Sprintf(SearchArtworksURL, artworkType, name, order, age_settings, page)
 
 	response, err := p.PixivRequest(URL)
 	if err != nil {
@@ -133,7 +132,7 @@ func (p *PixivClient) GetDiscoveryArtwork(mode string, count int) ([]models.Illu
 
 		count -= itemsForRequest
 
-		URL := UrlSprintf(ArtworkDiscoveryURL, mode, itemsForRequest)
+		URL := fmt.Sprintf(ArtworkDiscoveryURL, mode, itemsForRequest)
 
 		response, err := p.PixivRequest(URL)
 		if err != nil {
@@ -217,14 +216,4 @@ func (p *PixivClient) GetRankingLog(mode string, year, month int, image_proxy st
 		}
 	}
 	return template.HTML(renderString), nil
-}
-
-func UrlSprintf(format string, a ...interface{}) string {
-	for i, v := range a {
-		s, ok := v.(string)
-		if ok {
-			a[i] = url.PathEscape(s)
-		}
-	}
-	return fmt.Sprintf(format, a...)
 }
