@@ -1,12 +1,14 @@
 package handler
 
 import (
+	"fmt"
+
 	"codeberg.org/vnpower/pixivfe/models"
 	"github.com/goccy/go-json"
 )
 
 func (p *PixivClient) GetNewestFromFollowing(mode, page, token string) ([]models.IllustShort, error) {
-	URL := UrlSprintf(NewestFromFollowURL, "illust", mode, page)
+	URL := fmt.Sprintf(NewestFromFollowURL, "illust", mode, page)
 
 	var body struct {
 		Thumbnails json.RawMessage `json:"thumbnails"`
