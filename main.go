@@ -110,6 +110,7 @@ func main() {
 	server.Get("newest", pages.NewestPage)
 	server.Get("discovery", pages.DiscoveryPage)
 	server.Get("ranking", pages.RankingPage)
+	server.Get("rankingCalendar", pages.RankingCalendarPage)
 
 	// Settings group
 	server.Get("login", pages.LoginPage)

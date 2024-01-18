@@ -22,3 +22,9 @@ func GetRankingURL(mode, content, date, page string) string {
 
 	return fmt.Sprintf(baseNoDate, mode, content, page)
 }
+
+func GetRankingCalendarURL(mode string, year, month int) string {
+	base := "https://www.pixiv.net/ranking_log.php?mode=%s&date=%d%02d"
+
+	return fmt.Sprintf(base, mode, year, month)
+}

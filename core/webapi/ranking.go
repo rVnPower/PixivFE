@@ -2,8 +2,6 @@ package core
 
 import (
 	"errors"
-	"fmt"
-	"log"
 	"strings"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
@@ -39,7 +37,6 @@ type Ranking struct {
 func GetRanking(c *fiber.Ctx, mode, content, date, page string) (Ranking, error) {
 	imageProxy := session.GetImageProxy(c)
 	URL := http.GetRankingURL(mode, content, date, page)
-	fmt.Println(URL)
 
 	var ranking Ranking
 
@@ -57,8 +54,6 @@ func GetRanking(c *fiber.Ctx, mode, content, date, page string) (Ranking, error)
 
 	ranking.PrevDate = strings.ReplaceAll(string(ranking.PrevDateRaw[:]), "\"", "")
 	ranking.NextDate = strings.ReplaceAll(string(ranking.NextDateRaw[:]), "\"", "")
-
-	log.Print(ranking.PrevDate)
 
 	return ranking, nil
 }
