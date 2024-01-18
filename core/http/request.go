@@ -60,6 +60,11 @@ func WebAPIRequest(URL string) HttpResponse {
 }
 
 func UnwrapWebAPIRequest(URL, token string) (string, error) {
+	cookies := make(map[string]string)
+
+	if token != "" {
+		cookies["PHPSESSID"] = token
+	}
 	resp := WebAPIRequest(URL)
 
 	if !resp.Ok {
