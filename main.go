@@ -130,6 +130,11 @@ func main() {
 	self.Get("/followingWorks", pages.FollowingWorksPage)
 	self.Get("/bookmarks", pages.LoginBookmarkPage)
 
+	// Legacy illust URL
+	server.Get("member_illust.php", func(c *fiber.Ctx) error {
+		return c.Redirect("artworks/" + c.Query("illust_id"))
+	})
+
 	// Listen
 	if config.GlobalServerConfig.UnixSocket != "" {
 		ln, err := net.Listen("unix", config.GlobalServerConfig.UnixSocket)
