@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"time"
 
@@ -129,6 +130,14 @@ func main() {
 	self.Get("/", pages.LoginUserPage)
 	self.Get("/followingWorks", pages.FollowingWorksPage)
 	self.Get("/bookmarks", pages.LoginBookmarkPage)
+
+	server.Get("tags/:name", pages.TagPage)
+	server.Post("tags",
+		func(c *fiber.Ctx) error {
+			name := c.FormValue("name")
+
+			return c.Redirect("/tags/"+name, http.StatusFound)
+		})
 
 	// Legacy illust URL
 	server.Get("member_illust.php", func(c *fiber.Ctx) error {

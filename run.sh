@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 # Update the program every time you run?
 # git pull
 

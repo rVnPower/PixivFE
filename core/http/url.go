@@ -71,18 +71,33 @@ func GetArtworkInformationURL(id string) string {
 
 	return fmt.Sprintf(base, id)
 }
+
 func GetArtworkImagesURL(id string) string {
 	base := "https://www.pixiv.net/ajax/illust/%s/pages"
 
 	return fmt.Sprintf(base, id)
 }
+
 func GetArtworkRelatedURL(id string, limit int) string {
 	base := "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=%d"
 
 	return fmt.Sprintf(base, id, limit)
 }
+
 func GetArtworkCommentsURL(id string) string {
 	base := "https://www.pixiv.net/ajax/illusts/comments/roots?illust_id=%s&limit=100"
 
 	return fmt.Sprintf(base, id)
+}
+
+func GetTagDetailURL(id string) string {
+	base := "https://www.pixiv.net/ajax/search/tags/%s"
+
+	return fmt.Sprintf(base, id)
+}
+
+func GetSearchArtworksURL(artworkType, name, order, age_settings, page string) string {
+	base := "https://www.pixiv.net/ajax/search/%s/%s?order=%s&mode=%s&p=%s"
+
+	return fmt.Sprintf(base, artworkType, name, order, age_settings, page)
 }
