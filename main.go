@@ -119,6 +119,12 @@ func main() {
 	settings.Get("/", pages.SettingsPage)
 	settings.Post("/:type", pages.SettingsPost)
 
+	// Personal group
+	self := server.Group("self")
+	self.Get("/", pages.LoginUserPage)
+	self.Get("/followingWorks", pages.FollowingWorksPage)
+	self.Get("/bookmarks", pages.LoginBookmarkPage)
+
 	// Listen
 	if config.GlobalServerConfig.UnixSocket != "" {
 		ln, err := net.Listen("unix", config.GlobalServerConfig.UnixSocket)

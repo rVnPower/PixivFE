@@ -157,7 +157,7 @@ func GetUserArtworksID(id, category string, page int) (string, int, error) {
 	worksPerPage := 30.0
 
 	if page < 1 || float64(page) > math.Ceil(worksNumber/worksPerPage)+1.0 {
-		return "", -1, errors.New("Page overflow")
+		return "", -1, errors.New("No page available.")
 	}
 
 	start := (page - 1) * int(worksPerPage)
@@ -165,11 +165,6 @@ func GetUserArtworksID(id, category string, page int) (string, int, error) {
 
 	for _, k := range ids[start:end] {
 		idsString += fmt.Sprintf("&ids[]=%d", k)
-	}
-
-	if count == 0 {
-		// No artworks
-		return "", -1, errors.New("No artworks found for the current filter.")
 	}
 
 	return idsString, count, nil
@@ -199,26 +194,31 @@ func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
 		if err != nil {
 			return user, err
 		}
-		works, err := GetUserArtworks(c, id, ids)
-		if err != nil {
-			return user, err
-		}
 
-		// IDK but the order got shuffled even though Pixiv sorted the IDs in the response
-		sort.Slice(works[:], func(i, j int) bool {
-			left, _ := strconv.Atoi(works[i].ID)
-			right, _ := strconv.Atoi(works[j].ID)
-			return left > right
-		})
-		user.Artworks = works
+		if count > 0 {
+			// Check if the user has artworks available or not
+			works, err := GetUserArtworks(c, id, ids)
+			if err != nil {
+				return user, err
+			}
+
+			// IDK but the order got shuffled even though Pixiv sorted the IDs in the response
+			sort.Slice(works[:], func(i, j int) bool {
+				left, _ := strconv.Atoi(works[i].ID)
+				right, _ := strconv.Atoi(works[j].ID)
+				return left > right
+			})
+			user.Artworks = works
+
+			user.FrequentTags, err = GetFrequentTags(ids)
+			if err != nil {
+				return user, err
+			}
+		}
 
 		// Artworks count
 		user.ArtworksCount = count
 
-		user.FrequentTags, err = GetFrequentTags(ids)
-		if err != nil {
-			return user, err
-		}
 	} else {
 		// Bookmarks
 		works, count, err := GetUserBookmarks(c, id, "show", page)

@@ -58,3 +58,10 @@ func GetFrequentTagsURL(ids string) string {
 
 	return fmt.Sprintf(base, ids)
 }
+
+func GetNewestFromFollowingURL(mode, page string) string {
+	base := "https://www.pixiv.net/ajax/follow_latest/%s?mode=%s&p=%s"
+
+	// TODO: Recheck this URL
+	return fmt.Sprintf(base, "illust", mode, page)
+}
