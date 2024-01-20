@@ -11,7 +11,7 @@ import (
 func ArtworkPage(c *fiber.Ctx) error {
 	id := c.Params("id")
 	if _, err := strconv.Atoi(id); err != nil {
-		return errors.New("Bad id")
+		return errors.New("Invalid ID.")
 	}
 
 	illust, err := core.GetArtworkByID(c, id)

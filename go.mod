@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/goccy/go-json v0.10.2
-	github.com/gofiber/fiber/v2 v2.51.0
+	github.com/gofiber/fiber/v2 v2.52.0
 	github.com/gofiber/template/jet/v2 v2.1.6
 	github.com/tidwall/gjson v1.17.0
 	golang.org/x/net v0.17.0
