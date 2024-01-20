@@ -13,6 +13,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/utils"
@@ -102,9 +103,7 @@ func main() {
 	server.Static("assets/", "./views/assets")
 	server.Static("/robots.txt", "./views/assets/robots.txt")
 
-	//
 	// Routes
-	//
 
 	server.Get("about", pages.AboutPage)
 	server.Get("newest", pages.NewestPage)
@@ -112,6 +111,11 @@ func main() {
 	server.Get("ranking", pages.RankingPage)
 	server.Get("rankingCalendar", pages.RankingCalendarPage)
 	server.Get("users/:id/:category?", pages.UserPage)
+
+	limit := limiter.New(limiter.Config{
+		Max: 10,
+	})
+	server.Get("artworks/:id/", limit, pages.ArtworkPage).Name("artworks")
 
 	// Settings group
 	server.Get("login", pages.LoginPage)

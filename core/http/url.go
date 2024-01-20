@@ -65,3 +65,24 @@ func GetNewestFromFollowingURL(mode, page string) string {
 	// TODO: Recheck this URL
 	return fmt.Sprintf(base, "illust", mode, page)
 }
+
+func GetArtworkInformationURL(id string) string {
+	base := "https://www.pixiv.net/ajax/illust/%s"
+
+	return fmt.Sprintf(base, id)
+}
+func GetArtworkImagesURL(id string) string {
+	base := "https://www.pixiv.net/ajax/illust/%s/pages"
+
+	return fmt.Sprintf(base, id)
+}
+func GetArtworkRelatedURL(id string, limit int) string {
+	base := "https://www.pixiv.net/ajax/illust/%s/recommend/init?limit=%d"
+
+	return fmt.Sprintf(base, id, limit)
+}
+func GetArtworkCommentsURL(id string) string {
+	base := "https://www.pixiv.net/ajax/illusts/comments/roots?illust_id=%s&limit=100"
+
+	return fmt.Sprintf(base, id)
+}
