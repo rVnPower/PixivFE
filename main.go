@@ -111,6 +111,7 @@ func main() {
 	server.Get("discovery", pages.DiscoveryPage)
 	server.Get("ranking", pages.RankingPage)
 	server.Get("rankingCalendar", pages.RankingCalendarPage)
+	server.Get("users/:id/:category?", pages.UserPage)
 
 	// Settings group
 	server.Get("login", pages.LoginPage)
