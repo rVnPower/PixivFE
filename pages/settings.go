@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
+	http "codeberg.org/vnpower/pixivfe/v2/core/http"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -11,6 +12,9 @@ func setToken(c *fiber.Ctx) error {
 	// Parse the value from the form
 	token := c.FormValue("token")
 	if token != "" {
+		if _, err := http.UnwrapWebAPIRequest("https://www.pixiv.net/ajax/user/extra", token); err != nil {
+			return errors.New("Cannot authorize with supplied token.")
+		}
 		if err := session.SetSessionValue(c, "Token", token); err != nil {
 			return err
 		}

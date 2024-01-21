@@ -18,16 +18,23 @@ type HttpResponse struct {
 	Message string
 }
 
-func WebAPIRequest(URL string) HttpResponse {
+func WebAPIRequest(URL, token string) HttpResponse {
 	req, _ := http.NewRequest("GET", URL, nil)
 
 	req.Header.Add("User-Agent", core.GlobalServerConfig.UserAgent)
 	req.Header.Add("Accept-Language", core.GlobalServerConfig.AcceptLanguage)
 
-	req.AddCookie(&http.Cookie{
-		Name:  "PHPSESSID",
-		Value: core.GlobalServerConfig.Token,
-	})
+	if token == "" {
+		req.AddCookie(&http.Cookie{
+			Name:  "PHPSESSID",
+			Value: core.GlobalServerConfig.Token,
+		})
+	} else {
+		req.AddCookie(&http.Cookie{
+			Name:  "PHPSESSID",
+			Value: token,
+		})
+	}
 
 	// Make the request
 	resp, err := http.DefaultClient.Do(req)
@@ -60,12 +67,7 @@ func WebAPIRequest(URL string) HttpResponse {
 }
 
 func UnwrapWebAPIRequest(URL, token string) (string, error) {
-	cookies := make(map[string]string)
-
-	if token != "" {
-		cookies["PHPSESSID"] = token
-	}
-	resp := WebAPIRequest(URL)
+	resp := WebAPIRequest(URL, token)
 
 	if !resp.Ok {
 		return "", errors.New(resp.Message)
