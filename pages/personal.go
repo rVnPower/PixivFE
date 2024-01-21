@@ -10,7 +10,7 @@ import (
 )
 
 func LoginUserPage(c *fiber.Ctx) error {
-	token := session.GetToken(c)
+	token := session.CheckToken(c)
 
 	if token == "" {
 		return c.Redirect("/login")
@@ -24,7 +24,7 @@ func LoginUserPage(c *fiber.Ctx) error {
 }
 
 func LoginBookmarkPage(c *fiber.Ctx) error {
-	token := session.GetToken(c)
+	token := session.CheckToken(c)
 	if token == "" {
 		return c.Redirect("/login")
 	}
@@ -37,7 +37,7 @@ func LoginBookmarkPage(c *fiber.Ctx) error {
 }
 
 func FollowingWorksPage(c *fiber.Ctx) error {
-	if token := session.GetToken(c); token == "" {
+	if token := session.CheckToken(c); token == "" {
 		return c.Redirect("/login")
 	}
 

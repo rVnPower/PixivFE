@@ -52,6 +52,20 @@ func GetToken(c *fiber.Ctx) string {
 	return GlobalServerConfig.Token
 }
 
+func CheckToken(c *fiber.Ctx) string {
+	sess, err := Store.Get(c)
+	if err != nil {
+		log.Fatalln("Failed to get current session and its values! Falling back to server default!")
+		return ""
+	}
+	value := sess.Get("Token")
+	if value != nil {
+		return value.(string)
+	}
+
+	return ""
+}
+
 func SetSessionValue(c *fiber.Ctx, name, value string) error {
 	sess, err := Store.Get(c)
 	if err != nil {
