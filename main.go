@@ -148,10 +148,13 @@ func main() {
 			log.Fatalf("Failed to run on Unix socket. %s", err)
 			os.Exit(1)
 		}
-		log.Println("PixivFE is running on the configured Unix socket.")
+		log.Printf("PixivFE is running on %v\n", config.GlobalServerConfig.UnixSocket)
 		server.Listener(ln)
 	} else {
-		log.Println("PixivFE is running on the configured port.")
-		server.Listen(":" + config.GlobalServerConfig.Port)
+		addr := config.GlobalServerConfig.Host + ":" + config.GlobalServerConfig.Port
+		log.Printf("PixivFE is running on %v\n", addr)
+		
+		// note: string concatenation is very flaky
+		server.Listen(addr)
 	}
 }

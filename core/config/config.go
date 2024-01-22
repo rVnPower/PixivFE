@@ -14,6 +14,9 @@ type ServerConfig struct {
 	Token       string
 	ProxyServer string
 
+	// can be left empty
+	Host string
+
 	// One of two is required
 	Port       string
 	UnixSocket string
@@ -40,6 +43,12 @@ func (s *ServerConfig) InitializeConfig() error {
 		return errors.New("PIXIVFE_IMAGEPROXY is required, but was not set.\n")
 	}
 	s.SetProxyServer(proxyServer)
+
+	hostname, hasHostname := os.LookupEnv("PIXIVFE_HOST")
+	if hasHostname {
+		log.Printf("Set TCP hostname to: %s\n", hostname)
+		s.Host = hostname
+	}
 
 	port, hasPort := os.LookupEnv("PIXIVFE_PORT")
 	if hasPort {
