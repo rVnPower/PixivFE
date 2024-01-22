@@ -155,6 +155,8 @@ func main() {
 		server.Listener(ln)
 	} else {
 		log.Println("PixivFE is running on the configured port.")
-		server.Listen(":" + config.GlobalServerConfig.Port)
+		
+		// note: string concatenation is very flaky
+		server.Listen(config.GlobalServerConfig.Host + ":" + config.GlobalServerConfig.Port)
 	}
 }
