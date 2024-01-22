@@ -127,6 +127,6 @@ func (s *ServerConfig) setStartingTime() {
 }
 
 func (s *ServerConfig) setVersion() {
-	s.Version = "v2.0.1"
+	s.Version = "v2.1"
 	log.Printf("Set server version to: %s\n", s.Version)
 }
