@@ -22,7 +22,8 @@ type ArtworkBrief struct {
 }
 
 func ProxyImages(s, proxy string) string {
-	s = strings.ReplaceAll(s, `i.pximg.net`, proxy)
+	s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, "https://"+proxy)
+	s = strings.ReplaceAll(s, `https:\/\/s.pximg.net`, "/s.pximg.net")
 
 	return s
 }
