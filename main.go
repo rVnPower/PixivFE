@@ -5,6 +5,7 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	config "codeberg.org/vnpower/pixivfe/v2/core/config"
@@ -64,6 +65,10 @@ func main() {
 	server.Use(logger.New(
 		logger.Config{
 			Format: "${time} ${ip} | ${path}\n",
+			Next: func(c *fiber.Ctx) bool {
+				path := c.Path()
+				return strings.Contains(path, "/assets") || strings.Contains(path, "/s.pximg.net") || strings.Contains(path, "/css")
+			},
 		},
 	))
 
@@ -153,7 +158,7 @@ func main() {
 	} else {
 		addr := config.GlobalServerConfig.Host + ":" + config.GlobalServerConfig.Port
 		log.Printf("PixivFE is running on %v\n", addr)
-		
+
 		// note: string concatenation is very flaky
 		server.Listen(addr)
 	}
