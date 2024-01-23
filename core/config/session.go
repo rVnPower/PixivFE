@@ -55,10 +55,24 @@ func GetToken(c *fiber.Ctx) string {
 func CheckToken(c *fiber.Ctx) string {
 	sess, err := Store.Get(c)
 	if err != nil {
-		log.Fatalln("Failed to get current session and its values! Falling back to server default!")
+		log.Fatalln("Failed to get current session and its values!")
 		return ""
 	}
 	value := sess.Get("Token")
+	if value != nil {
+		return value.(string)
+	}
+
+	return ""
+}
+
+func GetCSRFToken(c *fiber.Ctx) string {
+	sess, err := Store.Get(c)
+	if err != nil {
+		log.Fatalln("Failed to get current session and its values!")
+		return ""
+	}
+	value := sess.Get("CSRF")
 	if value != nil {
 		return value.(string)
 	}

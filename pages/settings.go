@@ -2,9 +2,12 @@ package pages
 
 import (
 	"errors"
+	"io"
+	"net/http"
+	"regexp"
+	"strings"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
-	http "codeberg.org/vnpower/pixivfe/v2/core/http"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -12,10 +15,39 @@ func setToken(c *fiber.Ctx) error {
 	// Parse the value from the form
 	token := c.FormValue("token")
 	if token != "" {
-		if _, err := http.UnwrapWebAPIRequest("https://www.pixiv.net/ajax/user/extra", token); err != nil {
+		// Make a test request to verify the token.
+		// THE TEST URL IS NSFW!
+		req, _ := http.NewRequest("GET", "https://www.pixiv.net/en/artworks/115365120", nil)
+		req.Header.Add("User-Agent", "Mozilla/5.0")
+		req.AddCookie(&http.Cookie{
+			Name:  "PHPSESSID",
+			Value: token,
+		})
+
+		resp, err := http.DefaultClient.Do(req)
+		if err != nil {
 			return errors.New("Cannot authorize with supplied token.")
 		}
+
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return errors.New("Cannot parse the response from Pixiv. Please report this issue.")
+		}
+
+		// CSRF token
+		r := regexp.MustCompile(`"token":"([0-9a-f]+)"`)
+		csrf := strings.Split(r.FindString(string(body)), ":")[1]
+		csrf = csrf[1 : len(csrf)-1]
+
+		if csrf == "" {
+			return errors.New("Cannot authorize with supplied token.")
+		}
+
+		// Set the tokens
 		if err := session.SetSessionValue(c, "Token", token); err != nil {
+			return err
+		}
+		if err := session.SetSessionValue(c, "CSRF", csrf); err != nil {
 			return err
 		}
 
