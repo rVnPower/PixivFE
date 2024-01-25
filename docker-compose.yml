@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  pixivfe:
+    container_name: pixivfe
+    hostname: pixivfe
+    restart: always
+    user: 65534:65534
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8282:8282"
+    environment:
+      # Visit https://codeberg.org/VnPower/PixivFE/wiki/Environment-variables for more details
+      - PIXIVFE_TOKEN=changethis
+      - PIXIVFE_PORT=8282
+      - PIXIVFE_IMAGEPROXY=pximg.cocomi.cf
