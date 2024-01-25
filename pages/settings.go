@@ -5,7 +5,6 @@ import (
 	"io"
 	"net/http"
 	"regexp"
-	"strings"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
 	httpc "codeberg.org/vnpower/pixivfe/v2/core/http"
@@ -42,8 +41,7 @@ func setToken(c *fiber.Ctx) error {
 
 		// CSRF token
 		r := regexp.MustCompile(`"token":"([0-9a-f]+)"`)
-		csrf := strings.Split(r.FindString(string(body)), ":")[1]
-		csrf = csrf[1 : len(csrf)-1]
+		csrf := r.FindStringSubmatch(string(body))[1]
 
 		if csrf == "" {
 			return errors.New("Cannot authorize with supplied token.")
