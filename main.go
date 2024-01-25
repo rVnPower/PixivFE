@@ -145,7 +145,10 @@ func main() {
 		return c.Redirect("artworks/" + c.Query("illust_id"))
 	})
 
-	server.Get("/s.pximg.net/*", pages.SPximgProxy)
+	// Proxy routes
+	proxy := server.Group("proxy")
+	proxy.Get("/s.pximg.net/*", pages.SPximgProxy)
+	proxy.Get("/ugoira.com/*", pages.UgoiraProxy)
 
 	// Listen
 	if config.GlobalServerConfig.UnixSocket != "" {

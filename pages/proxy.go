@@ -28,3 +28,24 @@ func SPximgProxy(c *fiber.Ctx) error {
 
 	return c.Send([]byte(body))
 }
+
+func UgoiraProxy(c *fiber.Ctx) error {
+	URL := fmt.Sprintf("https://ugoira.com/api/mp4/%s", c.Params("*"))
+	req, _ := http.NewRequest("GET", URL, nil)
+
+	// Make the request
+	resp, err := http.DefaultClient.Do(req)
+
+	if err != nil {
+		return err
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	c.Set("Content-Type", "video/mp4")
+
+	return c.Send([]byte(body))
+}

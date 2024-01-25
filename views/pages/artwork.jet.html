@@ -17,12 +17,16 @@
         disablepictureinpicture
         playsinline
         poster="{{ Illust.Images[0].Large }}"
-        src="https://ugoira.com/api/mp4/{{ Illust.ID }}"
+        src="/proxy/ugoira.com/{{ Illust.ID }}"
       >
         Unable to load ugoira.
       </video>
     </a>
   </div>
+  <a href="/proxy/ugoira.com/{{ Illust.ID }}"
+    >Download</a
+  >
+  <br />
   <a href="https://ugoira.com/i/{{ Illust.ID }}"
     >Go to ugoira.com for more options</a
   >
@@ -120,8 +124,8 @@
         {{ if .Stamp }}
         <img
           class="stamp"
-          src="/s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg"
-          alt="/s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg"
+          src="/proxy/s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg"
+          alt="/proxy/s.pximg.net/common/images/stamp/generated-stamps/{{ .Stamp }}_s.jpg"
         />
         {{ else }} {{ raw: parseEmojis(.Context) }} {{ end }}
       </p>

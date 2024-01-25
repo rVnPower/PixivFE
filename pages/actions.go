@@ -70,13 +70,10 @@ func AddBookmarkRoute(c *fiber.Ctx) error {
 	if id == "" {
 		return errors.New("No ID provided.")
 	}
-	println("2")
 
 	if err := pixivPostRequest(id, token, csrf); err != nil {
 		return err
 	}
-
-	println("1")
 
 	return c.SendString("Success")
 }
