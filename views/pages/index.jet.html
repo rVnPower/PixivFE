@@ -1,10 +1,13 @@
+
 <div class="container">
+{{ if isset(NoTokenData) }}
+  <p>Not logged in. You can login <a href="/login">here</a>.</p>
   <div class="component-header">
     <h2>Today's illustration rankings</h2>
     <a href="/ranking?content=all">See more</a>
   </div>
   <div class="artwork-container-scroll">
-    {{ range Data.Contents }}
+    {{ range NoTokenData.Contents }}
     <div class="artwork-small artwork">
       <div class="artwork-additional">
         <div class="artwork-position">{{ .Rank }}</div>
@@ -28,4 +31,39 @@
     </div>
     {{ end }}
   </div>
+
+{{ else }}
+  <div class="switcher">
+    <span class="switch-title">Filter</span>
+    <a href="/?mode=all" class="switch-button">All</a>
+    <a href="/?mode=r18" class="switch-button">R-18</a>
+  </div>
+  <div class="component-header">
+    <h2>Newest works by users you follow</h2>
+    <a href="/self/followingWorks">See more</a>
+  </div>
+  <div class="artwork-container-scroll">
+    {{ include "components/small-tn" Data.Following }}
+  </div>
+  <br />
+  <h2>Recommended works</h2>
+  <div class="artwork-container">
+    {{ include "components/small-tn" Data.Recommended }}
+  </div>
+  <br />
+  {{ range Data.RecommendByTags }}
+  <h2>Recommended illustrations tagged #{{.Name}}</h2>
+  <div class="artwork-container">
+    {{ include "components/small-tn" .Artworks }}
+  </div>
+  <br />
+  {{ end }}
+
+{{ end }}
 </div>
+
+  <!-- <h2>Works by recommended users</h2>
+       <div class="artwork-container">
+       {{ include "components/small-tn" Artworks.Users }}
+       </div>
+       <br /> -->

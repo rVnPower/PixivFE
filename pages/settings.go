@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
+	httpc "codeberg.org/vnpower/pixivfe/v2/core/http"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -15,6 +16,11 @@ func setToken(c *fiber.Ctx) error {
 	// Parse the value from the form
 	token := c.FormValue("token")
 	if token != "" {
+		_, err := httpc.UnwrapWebAPIRequest(httpc.GetNewestFromFollowingURL("all", "1"), token)
+		if err != nil {
+			return errors.New("Cannot authorize with supplied token.")
+		}
+
 		// Make a test request to verify the token.
 		// THE TEST URL IS NSFW!
 		req, _ := http.NewRequest("GET", "https://www.pixiv.net/en/artworks/115365120", nil)

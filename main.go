@@ -74,10 +74,10 @@ func main() {
 
 	server.Use(cache.New(
 		cache.Config{
-			// Next: func(c *fiber.Ctx) bool {
-			// 	// Disable cache for settings page
-			// 	return strings.Contains(c.Path(), "/settings") || c.Path() == "/"
-			// },
+			Next: func(c *fiber.Ctx) bool {
+				// Disable cache for settings page
+				return strings.Contains(c.Path(), "/settings") || c.Path() == "/"
+			},
 			Expiration:   5 * time.Minute,
 			CacheControl: true,
 

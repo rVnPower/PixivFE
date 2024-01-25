@@ -101,3 +101,9 @@ func GetSearchArtworksURL(artworkType, name, order, age_settings, page string) s
 
 	return fmt.Sprintf(base, artworkType, name, order, age_settings, page)
 }
+
+func GetLandingURL(mode string) string {
+	base := "https://www.pixiv.net/ajax/top/illust?mode=%s"
+
+	return fmt.Sprintf(base, mode)
+}
