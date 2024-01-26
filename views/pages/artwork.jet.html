@@ -9,19 +9,18 @@
   </div>
   {{ else }}
   <div class="illust-images">
-    <a href="https://ugoira.com/i/{{ Illust.ID }}" target="_blank">
       <video
         autoplay
         loop
         muted
         disablepictureinpicture
         playsinline
+        controls
         poster="{{ Illust.Images[0].Large }}"
         src="/proxy/ugoira.com/{{ Illust.ID }}"
       >
         Unable to load ugoira.
       </video>
-    </a>
   </div>
   <a href="/proxy/ugoira.com/{{ Illust.ID }}"
     >Download</a
