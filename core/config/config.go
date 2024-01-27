@@ -21,7 +21,6 @@ type ServerConfig struct {
 	Port       string
 	UnixSocket string
 
-	BaseURL        string
 	UserAgent      string
 	AcceptLanguage string
 
@@ -65,9 +64,6 @@ func (s *ServerConfig) InitializeConfig() error {
 		return errors.New("Either PIXIVFE_PORT or PIXIVFE_UNIXSOCKET has to be set.")
 	}
 
-	// Not required
-	s.SetBaseURL(os.Getenv("PIXIVFE_BASEURL"))
-
 	userAgent, hasUserAgent := os.LookupEnv("PIXIVFE_USERAGENT")
 	if !hasUserAgent {
 		userAgent = "Mozilla/5.0"
@@ -89,11 +85,6 @@ func (s *ServerConfig) InitializeConfig() error {
 func (s *ServerConfig) SetToken(v string) {
 	s.Token = v
 	log.Printf("Set token to: %s\n", v)
-}
-
-func (s *ServerConfig) SetBaseURL(v string) {
-	s.BaseURL = v
-	log.Printf("Set base URL to: %s\n", v)
 }
 
 func (s *ServerConfig) SetProxyServer(v string) {

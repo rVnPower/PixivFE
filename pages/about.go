@@ -8,7 +8,6 @@ import (
 func AboutPage(c *fiber.Ctx) error {
 	info := fiber.Map{
 		"Time":           core.GlobalServerConfig.StartingTime,
-		"BaseURL":        core.GlobalServerConfig.BaseURL,
 		"Version":        core.GlobalServerConfig.Version,
 		"ImageProxy":     core.GlobalServerConfig.ProxyServer,
 		"AcceptLanguage": core.GlobalServerConfig.AcceptLanguage,
