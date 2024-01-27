@@ -75,6 +75,11 @@ func main() {
 	server.Use(cache.New(
 		cache.Config{
 			Next: func(c *fiber.Ctx) bool {
+				resp_code := c.Response().StatusCode()
+				if resp_code < 200 || resp_code >= 300 {
+					return true
+				}
+
 				// Disable cache for settings page
 				return strings.Contains(c.Path(), "/settings") || c.Path() == "/"
 			},
@@ -100,6 +105,12 @@ func main() {
 		c.Set("Referrer-Policy", "no-referrer")
 		c.Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
 
+		return c.Next()
+	})
+
+	server.Use(func(c *fiber.Ctx) error {
+		var baseURL string
+		c.Bind(fiber.Map{"FullURL": baseURL + c.OriginalURL(), "BaseURL": baseURL})
 		return c.Next()
 	})
 

@@ -10,6 +10,25 @@
     <meta http-equiv="Content-Security-Policy" content="script-src 'self'" />
     <meta name="referrer" content="no-referrer, same-origin" />
     <link href="/css/style.css" rel="stylesheet" />
+
+    {{ if BaseURL }}
+      <meta property="og:title" content="{{ title }}" />
+      <meta property="og:url" content="https://{{ FullURL }}" />
+    <meta property="og:site_name" content="PixivFE" />
+    <meta property="og:type" content="article" />
+    <meta content="summary_large_image" name="twitter:card" />
+
+    {{ if isset(MetaDescription) }}
+    <meta
+      property="og:description"
+      content="{{MetaDescription}}"
+    />
+    {{ end }}
+
+    {{ if isset(MetaImage) }}
+      <meta property="og:image" content="{{ MetaImage }}" />
+    {{ end }}
+    {{ end }}
   </head>
 
   <body>

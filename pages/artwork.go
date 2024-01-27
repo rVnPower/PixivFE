@@ -21,8 +21,10 @@ func ArtworkPage(c *fiber.Ctx) error {
 
 	// Optimize this
 	return c.Render("pages/artwork", fiber.Map{
-		"Illust":   illust,
-		"Title":    illust.Title,
-		"PageType": "artwork",
+		"Illust":          illust,
+		"Title":           illust.Title,
+		"PageType":        "artwork",
+		"MetaDescription": illust.Description,
+		"MetaImage":       illust.Images[0].Original,
 	})
 }
