@@ -52,7 +52,7 @@
   </div>
   <br />
   {{ range Data.RecommendByTags }}
-  <h2>Recommended illustrations tagged #{{.Name}}</h2>
+  <h2>Recommended illustrations tagged <a href="/tags/{{.Name}}">#{{.Name}}</a></h2>
   <div class="artwork-container">
     {{ include "components/small-tn" .Artworks }}
   </div>
