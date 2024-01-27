@@ -19,12 +19,17 @@ func ArtworkPage(c *fiber.Ctx) error {
 		return err
 	}
 
+	metaDescription := ""
+	for _, i := range illust.Tags {
+		metaDescription += "#" + i.Name + ", "
+	}
+
 	// Optimize this
 	return c.Render("pages/artwork", fiber.Map{
 		"Illust":          illust,
 		"Title":           illust.Title,
 		"PageType":        "artwork",
-		"MetaDescription": illust.Description,
+		"MetaDescription": metaDescription,
 		"MetaImage":       illust.Images[0].Original,
 	})
 }
