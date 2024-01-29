@@ -28,7 +28,13 @@
     <p>{{ raw: parsePixivRedirect(User.Comment) }}</p>
   </div>
   <div class="switcher">
-    <div class="switch-title">Category</div>
+    <div class="switch-title">Category <button id="btn-open-all">open all</button></div>
+    <script>
+      document.getElementById('btn-open-all').onclick = () => {
+        let xs=document.querySelectorAll('div.artwork-small > a')
+        Array.from(xs).map(x=> window.open(x.href))
+      }
+    </script>
     <a href="/users/{{ User.ID }}/artworks#checkpoint" class="switch-button"
       >All</a
     >
