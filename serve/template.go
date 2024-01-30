@@ -87,7 +87,7 @@ func ParseEmojis(s string) template.HTML {
 		s = s[1 : len(s)-1] // Get the string inside
 		id := emojiList[s]
 
-		return fmt.Sprintf(`<img src="/s.pximg.net/common/images/emoji/%s.png" alt="(%s)" class="emoji" />`, id, s)
+		return fmt.Sprintf(`<img src="/proxy/s.pximg.net/common/images/emoji/%s.png" alt="(%s)" class="emoji" />`, id, s)
 	})
 	return template.HTML(parsedString)
 }
