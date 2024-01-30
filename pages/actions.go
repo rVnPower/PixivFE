@@ -12,17 +12,11 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-func pixivPostRequest(id, token, csrf string) error {
-	URL := "https://www.pixiv.net/ajax/illusts/bookmarks/add"
+func pixivPostRequest(url, payload, token, csrf string) error {
 
-	requestBody := []byte(fmt.Sprintf(`{
-"illust_id": "%s",
-"restrict": 0,
-"comment": "",
-"tags": []
-}`, id))
+	requestBody := []byte(payload)
 
-	req, _ := http.NewRequest("POST", URL, bytes.NewBuffer(requestBody))
+	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(requestBody))
 	req.Header.Add("User-Agent", "Mozilla/5.0")
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("Content-Type", "application/json; charset=utf-8")
@@ -57,12 +51,9 @@ func pixivPostRequest(id, token, csrf string) error {
 
 func AddBookmarkRoute(c *fiber.Ctx) error {
 	token := session.CheckToken(c)
-	if token == "" {
-		return c.Redirect("/login")
-	}
-
 	csrf := session.GetCSRFToken(c)
-	if csrf == "" {
+
+	if token == "" || csrf == "" {
 		return c.Redirect("/login")
 	}
 
@@ -71,7 +62,59 @@ func AddBookmarkRoute(c *fiber.Ctx) error {
 		return errors.New("No ID provided.")
 	}
 
-	if err := pixivPostRequest(id, token, csrf); err != nil {
+	URL := "https://www.pixiv.net/ajax/illusts/bookmarks/add"
+	payload := fmt.Sprintf(`{
+"illust_id": "%s",
+"restrict": 0,
+"comment": "",
+"tags": []
+}`, id)
+	if err := pixivPostRequest(URL, payload, token, csrf); err != nil {
+		return err
+	}
+
+	return c.SendString("Success")
+}
+
+func DeleteBookmarkRoute(c *fiber.Ctx) error {
+	token := session.CheckToken(c)
+	csrf := session.GetCSRFToken(c)
+
+	if token == "" || csrf == "" {
+		return c.Redirect("/login")
+	}
+
+	id := c.Params("id")
+	if id == "" {
+		return errors.New("No ID provided.")
+	}
+
+	// You can't unlike
+	URL := "https://www.pixiv.net/ajax/illusts/bookmark/delete"
+	payload := fmt.Sprintf(`bookmark_id=%s`, id)
+	if err := pixivPostRequest(URL, payload, token, csrf); err != nil {
+		return err
+	}
+
+	return c.SendString("Success")
+}
+
+func LikeRoute(c *fiber.Ctx) error {
+	token := session.CheckToken(c)
+	csrf := session.GetCSRFToken(c)
+
+	if token == "" || csrf == "" {
+		return c.Redirect("/login")
+	}
+
+	id := c.Params("id")
+	if id == "" {
+		return errors.New("No ID provided.")
+	}
+
+	URL := "https://www.pixiv.net/ajax/illusts/like"
+	payload := fmt.Sprintf(`{"illust_id": "%s"}`, id)
+	if err := pixivPostRequest(URL, payload, token, csrf); err != nil {
 		return err
 	}
 
