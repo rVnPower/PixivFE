@@ -141,9 +141,9 @@ func main() {
 	self.Get("/", pages.LoginUserPage)
 	self.Get("/followingWorks", pages.FollowingWorksPage)
 	self.Get("/bookmarks", pages.LoginBookmarkPage)
-	self.Get("/addBookmark/:id", pages.AddBookmarkRoute)
-	self.Get("/deleteBookmark/:id", pages.DeleteBookmarkRoute)
-	self.Get("/like/:id", pages.LikeRoute)
+	self.Post("/addBookmark/:id", pages.AddBookmarkRoute)
+	self.Post("/deleteBookmark/:id", pages.DeleteBookmarkRoute)
+	self.Post("/like/:id", pages.LikeRoute)
 
 	server.Get("tags/:name", pages.TagPage)
 	server.Post("tags",

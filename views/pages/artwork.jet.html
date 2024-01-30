@@ -54,6 +54,20 @@
     <br />
   </div>
   <div class="illust-tags">
+    <!--
+         To know if this artwork is bookmarked:
+         ```
+         {{ if Illust.Bookmarked }}
+          <button>Unbookmark</button>
+          //...
+         {{ else }}
+          <button>Bookmarked</button>
+          //...
+         {{ end }}
+         ```
+
+         Same with Illust.Liked
+    -->
     <span class="illust-tag-attr">
       <img src="/assets/eye.png" alt="Views" />
       {{ Illust.Views }}

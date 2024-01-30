@@ -19,6 +19,7 @@ type ArtworkBrief struct {
 	Pages        int    `json:"pageCount"`
 	XRestrict    int    `json:"xRestrict"`
 	AiType       int    `json:"aiType"`
+	Bookmarked   any    `json:"bookmarkData"`
 }
 
 func ProxyImages(s, proxy string) string {
