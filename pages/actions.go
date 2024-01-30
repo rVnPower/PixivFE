@@ -90,7 +90,7 @@ func DeleteBookmarkRoute(c *fiber.Ctx) error {
 	}
 
 	// You can't unlike
-	URL := "https://www.pixiv.net/ajax/illusts/bookmark/delete"
+	URL := "https://www.pixiv.net/ajax/illusts/bookmarks/delete"
 	payload := fmt.Sprintf(`bookmark_id=%s`, id)
 	if err := pixivPostRequest(URL, payload, token, csrf); err != nil {
 		return err
