@@ -32,5 +32,7 @@ func UserPage(c *fiber.Ctx) error {
 	worksCount = user.ArtworksCount
 	pageLimit := math.Ceil(float64(worksCount) / 30.0)
 
-	return c.Render("pages/user", fiber.Map{"Title": user.Name, "User": user, "Category": category, "PageLimit": int(pageLimit), "Page": pageInt})
+	return c.Render("pages/user", fiber.Map{"Title": user.Name, "User": user, "Category": category, "PageLimit": int(pageLimit), "Page": pageInt,
+		"MetaImage": user.BackgroundImage,
+	})
 }
