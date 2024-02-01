@@ -20,20 +20,20 @@ type FrequentTag struct {
 }
 
 type User struct {
-	ID              string          `json:"userId"`
-	Name            string          `json:"name"`
-	Avatar          string          `json:"imageBig"`
-	BackgroundImage string          `json:"background"`
-	Following       int             `json:"following"`
-	MyPixiv         int             `json:"mypixivCount"`
-	Comment         template.HTML   `json:"commentHtml"`
-	Webpage         string          `json:"webpage"`
-	SocialRaw       json.RawMessage `json:"social"`
-	Artworks        []ArtworkBrief  `json:"artworks"`
+	ID              string                 `json:"userId"`
+	Name            string                 `json:"name"`
+	Avatar          string                 `json:"imageBig"`
+	Following       int                    `json:"following"`
+	MyPixiv         int                    `json:"mypixivCount"`
+	Comment         template.HTML          `json:"commentHtml"`
+	Webpage         string                 `json:"webpage"`
+	SocialRaw       json.RawMessage        `json:"social"`
+	Artworks        []ArtworkBrief         `json:"artworks"`
+	Background      map[string]interface{} `json:"background"`
 	ArtworksCount   int
 	FrequentTags    []FrequentTag
 	Social          map[string]map[string]string
-	Background      map[string]interface{} `json:"background"`
+	BackgroundImage string
 }
 
 func (s *User) ParseSocial() {
