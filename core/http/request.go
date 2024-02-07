@@ -27,7 +27,7 @@ func WebAPIRequest(URL, token string) HttpResponse {
 	if token == "" {
 		req.AddCookie(&http.Cookie{
 			Name:  "PHPSESSID",
-			Value: core.GlobalServerConfig.Token,
+			Value: core.GetRandomDefaultToken(),
 		})
 	} else {
 		req.AddCookie(&http.Cookie{

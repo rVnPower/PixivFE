@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -11,7 +12,7 @@ var GlobalServerConfig ServerConfig
 
 type ServerConfig struct {
 	// Required
-	Token       string
+	Token       []string
 	ProxyServer string
 
 	// can be left empty
@@ -83,7 +84,8 @@ func (s *ServerConfig) InitializeConfig() error {
 }
 
 func (s *ServerConfig) SetToken(v string) {
-	s.Token = v
+	// TODO Maybe add some testing?
+	s.Token = strings.Split(v, ",")
 	log.Printf("Set token to: %s\n", v)
 }
 
