@@ -143,6 +143,7 @@ func main() {
 	server.Get("discovery", pages.DiscoveryPage)
 	server.Get("ranking", pages.RankingPage)
 	server.Get("rankingCalendar", pages.RankingCalendarPage)
+	server.Post("rankingCalendar", pages.RankingCalendarPicker)
 	server.Get("users/:id/:category?", pages.UserPage)
 	server.Get("artworks/:id/", pages.ArtworkPage).Name("artworks")
 

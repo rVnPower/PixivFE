@@ -1,7 +1,7 @@
 <div class="container">
-    <h2>Ranking calendar ({{ Month }} {{ Year }})</h2>
+    <h2>Ranking calendar ({{ ThisMonth.MonthLiteral }} {{ Year }})</h2>
     <div class="switcher">
-        {{ url := "/rankingCalendar?date=" + ThisMonth + "&mode=" }}
+        {{ url := "/rankingCalendar?date=" + ThisMonth.Link + "&mode=" }}
         <span class="switch-title">Modes</span>
         <a href="{{ url }}daily" class="switch-button">Daily</a>
         <a href="{{ url }}weekly" class="switch-button">Weekly</a>
@@ -11,7 +11,21 @@
         <a href="{{ url }}daily_r18" class="switch-button">Daily (R-18)</a>
         <a href="{{ url }}weekly_r18" class="switch-button">Weekly (R-18)</a>
     </div>
-    <a href="https://codeberg.org/VnPower/pixivfe/wiki/Questions-you-may-ask"><small>R18?</small></a>
+
+    <div>
+        <form method="post" action="/rankingCalendar">
+            <input type="hidden" name="mode" value="{{ Mode }}" />
+            <label for="date">
+                Date picker (mm/dd/yyyy):
+            </label>
+            <span>
+                <input type="date" name="date" min="2007-09-01" max="{{Year}}-{{ ThisMonth.MonthPadded }}-01" value="{{Year}}-{{ ThisMonth.MonthPadded }}-01"/>
+            </span>
+            <span>
+                <input type="submit" value="Go" />
+            </span>
+        </form>
+    </div>
 
     <br>
     <div id="calendar">
@@ -30,7 +44,7 @@
     </div>
     <div class="pagination">
         {{ url := "/rankingCalendar?mode=" + Mode + "&date=" }}
-        <a href="{{ url }}{{ MonthBefore }}" class="pagination-button ">Last month</a>
-        <a href="{{ url }}{{ MonthAfter }}" class="pagination-button ">Next month</a>
+        <a href="{{ url }}{{ MonthBefore.Link }}" class="pagination-button ">Last month</a>
+        <a href="{{ url }}{{ MonthAfter.Link }}" class="pagination-button ">Next month</a>
     </div>
 </div>
