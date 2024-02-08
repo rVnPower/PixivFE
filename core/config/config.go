@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -24,6 +25,7 @@ type ServerConfig struct {
 
 	UserAgent      string
 	AcceptLanguage string
+	RequestLimit   int
 
 	StartingTime string
 	Version      string
@@ -77,6 +79,12 @@ func (s *ServerConfig) InitializeConfig() error {
 	}
 	s.SetAcceptLanguage(acceptLanguage)
 
+	requestLimit, hasRequestLimit := os.LookupEnv("PIXIVFE_REQUESTLIMIT")
+	if !hasRequestLimit {
+		requestLimit = "100"
+	}
+	s.SetRequestLimit(requestLimit)
+
 	s.setStartingTime()
 	s.setVersion()
 
@@ -112,6 +120,15 @@ func (s *ServerConfig) SetUserAgent(v string) {
 func (s *ServerConfig) SetAcceptLanguage(v string) {
 	s.AcceptLanguage = v
 	log.Printf("Set Accept-Language header to: %s\n", v)
+}
+
+func (s *ServerConfig) SetRequestLimit(v string) {
+	t, err := strconv.Atoi(v)
+	if err != nil {
+		panic(err)
+	}
+	s.RequestLimit = t
+	log.Printf("Set request limit to %s requests per 5 minutes\n", v)
 }
 
 func (s *ServerConfig) setStartingTime() {

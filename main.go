@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"log"
 	"net"
 	"net/http"
@@ -15,6 +16,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/utils"
@@ -95,6 +97,20 @@ func main() {
 
 	server.Use(compress.New(compress.Config{
 		Level: compress.LevelBestSpeed, // 1
+	}))
+
+	server.Use(limiter.New(limiter.Config{
+		Next: func(c *fiber.Ctx) bool {
+			path := c.Path()
+			return strings.Contains(path, "/assets") || strings.Contains(path, "/s.pximg.net") || strings.Contains(path, "/css")
+		},
+		Expiration:        30 * time.Second,
+		Max:               15,
+		LimiterMiddleware: limiter.SlidingWindow{},
+		LimitReached: func(c *fiber.Ctx) error {
+			log.Println("Hit!")
+			return errors.New("Woah! You are going too fast! I'll have to keep an eye on you.")
+		},
 	}))
 
 	// Global headers (from GotHub)
