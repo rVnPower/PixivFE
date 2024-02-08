@@ -15,7 +15,7 @@ Questions? Feedbacks? You can [PM me](https://matrix.to/#/@vnpower:eientei.org) 
 Matrix!
 
 You can keep track of this project's development
-[here](https://codeberg.org/VnPower/pixivfe/projects/3481).
+[here](https://codeberg.org/VnPower/PixivFE/wiki/Things-to-do).
 
 ## Features
 
