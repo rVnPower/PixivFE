@@ -22,7 +22,7 @@ a {
 /* Scrollbars */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #118bee auto;
+  /* scrollbar-color: #118bee auto; */
 }
 
 *::-webkit-scrollbar {
