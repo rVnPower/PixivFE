@@ -131,29 +131,29 @@ func main() {
 	})
 
 	server.Static("/favicon.ico", "./views/assets/favicon.ico")
-	server.Static("css/", "./views/css")
-	server.Static("assets/", "./views/assets")
+	server.Static("/css/", "./views/css")
+	server.Static("/assets/", "./views/assets")
 	server.Static("/robots.txt", "./views/assets/robots.txt")
 
 	// Routes
 
 	server.Get("/", pages.IndexPage)
-	server.Get("about", pages.AboutPage)
-	server.Get("newest", pages.NewestPage)
-	server.Get("discovery", pages.DiscoveryPage)
-	server.Get("ranking", pages.RankingPage)
-	server.Get("rankingCalendar", pages.RankingCalendarPage)
-	server.Post("rankingCalendar", pages.RankingCalendarPicker)
-	server.Get("users/:id/:category?", pages.UserPage)
-	server.Get("artworks/:id/", pages.ArtworkPage).Name("artworks")
+	server.Get("/about", pages.AboutPage)
+	server.Get("/newest", pages.NewestPage)
+	server.Get("/discovery", pages.DiscoveryPage)
+	server.Get("/ranking", pages.RankingPage)
+	server.Get("/rankingCalendar", pages.RankingCalendarPage)
+	server.Post("/rankingCalendar", pages.RankingCalendarPicker)
+	server.Get("/users/:id/:category?", pages.UserPage)
+	server.Get("/artworks/:id/", pages.ArtworkPage).Name("artworks")
 
 	// Settings group
-	settings := server.Group("settings")
+	settings := server.Group("/settings")
 	settings.Get("/", pages.SettingsPage)
 	settings.Post("/:type", pages.SettingsPost)
 
 	// Personal group
-	self := server.Group("self")
+	self := server.Group("/self")
 	self.Get("/", pages.LoginUserPage)
 	self.Get("/followingWorks", pages.FollowingWorksPage)
 	self.Get("/bookmarks", pages.LoginBookmarkPage)
@@ -161,8 +161,8 @@ func main() {
 	self.Post("/deleteBookmark/:id", pages.DeleteBookmarkRoute)
 	self.Post("/like/:id", pages.LikeRoute)
 
-	server.Get("tags/:name", pages.TagPage)
-	server.Post("tags",
+	server.Get("/tags/:name", pages.TagPage)
+	server.Post("/tags",
 		func(c *fiber.Ctx) error {
 			name := c.FormValue("name")
 
@@ -170,12 +170,12 @@ func main() {
 		})
 
 	// Legacy illust URL
-	server.Get("member_illust.php", func(c *fiber.Ctx) error {
-		return c.Redirect("artworks/" + c.Query("illust_id"))
+	server.Get("/member_illust.php", func(c *fiber.Ctx) error {
+		return c.Redirect("/artworks/" + c.Query("illust_id"))
 	})
 
 	// Proxy routes
-	proxy := server.Group("proxy")
+	proxy := server.Group("/proxy")
 	proxy.Get("/s.pximg.net/*", pages.SPximgProxy)
 	proxy.Get("/ugoira.com/*", pages.UgoiraProxy)
 
