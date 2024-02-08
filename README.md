@@ -1,10 +1,3 @@
-# Notice
-
-It appears that Pixiv is starting to limit the usage of the web API.
-I recommend self-hosting your own instance for personal use, instead of relying entirely on official instances.
-
-You may check out the official repository of PixivFE for more updates.
-
 # PixivFE
 
 A privacy-respecting alternative front-end for Pixiv that doesn't suck
@@ -34,6 +27,8 @@ You can keep track of this project's development
 ## Hosting
 
 You can use PixivFE for personal use! Assuming that you use an operating system that can run POSIX shell scripts, install `go`, clone this repository, modify the `run.sh` file, and profit!
+I recommend self-hosting your own instance for personal use, instead of relying entirely on official instances.
+
 
 Check out [this page](https://codeberg.org/VnPower/pixivfe/wiki/Hosting). We
 currently have guides for Docker and Caddy.
