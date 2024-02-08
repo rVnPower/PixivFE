@@ -80,10 +80,11 @@ func (s *ServerConfig) InitializeConfig() error {
 	s.SetAcceptLanguage(acceptLanguage)
 
 	requestLimit, hasRequestLimit := os.LookupEnv("PIXIVFE_REQUESTLIMIT")
-	if !hasRequestLimit {
-		requestLimit = "100"
+	if hasRequestLimit {
+		s.SetRequestLimit(requestLimit)
+	} else {
+		s.RequestLimit = 15
 	}
-	s.SetRequestLimit(requestLimit)
 
 	s.setStartingTime()
 	s.setVersion()

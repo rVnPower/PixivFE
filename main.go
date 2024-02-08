@@ -105,7 +105,7 @@ func main() {
 			return strings.Contains(path, "/assets") || strings.Contains(path, "/s.pximg.net") || strings.Contains(path, "/css")
 		},
 		Expiration:        30 * time.Second,
-		Max:               15,
+		Max:               config.GlobalServerConfig.RequestLimit,
 		LimiterMiddleware: limiter.SlidingWindow{},
 		LimitReached: func(c *fiber.Ctx) error {
 			log.Println("Hit!")
