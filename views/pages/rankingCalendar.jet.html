@@ -1,7 +1,7 @@
 <div class="container">
     <h2>Ranking calendar ({{ Month }} {{ Year }})</h2>
     <div class="switcher">
-        {{ url := "/ranking_log?date=" + ThisMonth + "&mode=" }}
+        {{ url := "/rankingCalendar?date=" + ThisMonth + "&mode=" }}
         <span class="switch-title">Modes</span>
         <a href="{{ url }}daily" class="switch-button">Daily</a>
         <a href="{{ url }}weekly" class="switch-button">Weekly</a>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="pagination">
-        {{ url := "/ranking_log?mode=" + Mode + "&date=" }}
+        {{ url := "/rankingCalendar?mode=" + Mode + "&date=" }}
         <a href="{{ url }}{{ MonthBefore }}" class="pagination-button ">Last month</a>
         <a href="{{ url }}{{ MonthAfter }}" class="pagination-button ">Next month</a>
     </div>

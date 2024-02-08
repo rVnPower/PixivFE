@@ -33,10 +33,19 @@ func get_weekday(n time.Weekday) int {
 }
 
 func GetRankingCalendar(c *fiber.Ctx, mode string, year, month int) (template.HTML, error) {
+	token := session.GetToken(c)
 	imageProxy := session.GetImageProxy(c)
 	URL := url.GetRankingCalendarURL(mode, year, month)
 
-	resp, err := http.Get(URL)
+	req, _ := http.NewRequest("GET", URL, nil)
+	req.Header.Add("User-Agent", "Mozilla/5.0")
+	req.Header.Add("Cookie", "PHPSESSID="+token)
+	// req.AddCookie(&http.Cookie{
+	// 	Name:  "PHPSESSID",
+	// 	Value: token,
+	// })
+
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return "", err
 	}
