@@ -78,10 +78,6 @@ func setLogout(c *fiber.Ctx) error {
 	return nil
 }
 
-func LoginPage(c *fiber.Ctx) error {
-	return c.Render("pages/login", fiber.Map{})
-}
-
 func SettingsPage(c *fiber.Ctx) error {
 	return c.Render("pages/settings", fiber.Map{})
 }
@@ -104,6 +100,6 @@ func SettingsPost(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-	c.Redirect("/settings")
+	c.Redirect("/")
 	return nil
 }

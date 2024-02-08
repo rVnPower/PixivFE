@@ -13,7 +13,7 @@ func LoginUserPage(c *fiber.Ctx) error {
 	token := session.CheckToken(c)
 
 	if token == "" {
-		return c.Redirect("/login")
+		return c.Redirect("/settings")
 	}
 
 	// The left part of the token is the member ID
@@ -26,7 +26,7 @@ func LoginUserPage(c *fiber.Ctx) error {
 func LoginBookmarkPage(c *fiber.Ctx) error {
 	token := session.CheckToken(c)
 	if token == "" {
-		return c.Redirect("/login")
+		return c.Redirect("/settings")
 	}
 
 	// The left part of the token is the member ID
@@ -38,7 +38,7 @@ func LoginBookmarkPage(c *fiber.Ctx) error {
 
 func FollowingWorksPage(c *fiber.Ctx) error {
 	if token := session.CheckToken(c); token == "" {
-		return c.Redirect("/login")
+		return c.Redirect("/settings")
 	}
 
 	mode := c.Query("mode", "all")

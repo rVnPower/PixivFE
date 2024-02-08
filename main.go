@@ -147,7 +147,6 @@ func main() {
 	server.Get("artworks/:id/", pages.ArtworkPage).Name("artworks")
 
 	// Settings group
-	server.Get("login", pages.LoginPage)
 	settings := server.Group("settings")
 	settings.Get("/", pages.SettingsPage)
 	settings.Post("/:type", pages.SettingsPost)
