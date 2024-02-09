@@ -28,9 +28,16 @@ func UserPage(c *fiber.Ctx) error {
 	}
 
 	var worksCount int
+	var worksPerPage float64
+
+	if category == "bookmarks" {
+		worksPerPage = 48.0
+	} else {
+		worksPerPage = 30.0
+	}
 
 	worksCount = user.ArtworksCount
-	pageLimit := math.Ceil(float64(worksCount) / 30.0)
+	pageLimit := math.Ceil(float64(worksCount) / worksPerPage)
 
 	return c.Render("pages/user", fiber.Map{"Title": user.Name, "User": user, "Category": category, "PageLimit": int(pageLimit), "Page": pageInt,
 		"MetaImage": user.BackgroundImage,
