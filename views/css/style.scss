@@ -41,7 +41,8 @@ a {
 /* Scrollbars */
 * {
     scrollbar-width: thin;
-    scrollbar-color: $link auto;
+    // invalid line
+    // scrollbar-color: $link auto;
 }
 
 *::-webkit-scrollbar {
