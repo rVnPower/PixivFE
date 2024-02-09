@@ -108,7 +108,7 @@ func main() {
 		Max:               config.GlobalServerConfig.RequestLimit,
 		LimiterMiddleware: limiter.SlidingWindow{},
 		LimitReached: func(c *fiber.Ctx) error {
-			log.Println("Hit!")
+			log.Println("Limit Reached!")
 			return errors.New("Woah! You are going too fast! I'll have to keep an eye on you.")
 		},
 	}))
@@ -176,6 +176,7 @@ func main() {
 
 	// Proxy routes
 	proxy := server.Group("/proxy")
+	proxy.Get("/i.pximg.net/*", pages.IPximgProxy)
 	proxy.Get("/s.pximg.net/*", pages.SPximgProxy)
 	proxy.Get("/ugoira.com/*", pages.UgoiraProxy)
 
