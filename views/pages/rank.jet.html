@@ -2,9 +2,15 @@
   <h2>{{ Title }}</h2>
 
   <div class="switcher">
-    {{ url := "/ranking?mode=" + Mode + "&date=" + Data.CurrentDate +
+    {{ url := "" }}
+    {{ if Mode == "original" || Mode == "male" || Mode == "Female" }}
+    {{ url = "/ranking?date=" + Data.CurrentDate +
     "&page=1&content=" }}
-    <div class="switch-title">Content</div>
+    {{ else }}
+    {{ url = "/ranking?mode=" + Mode + "&date=" + Data.CurrentDate +
+    "&page=1&content=" }}
+    {{ end }}
+    <div class="switch-title">Content (current: {{ Content }})</div>
     <a href="{{ url }}all" class="switch-button">Overall</a>
     <a href="{{ url }}illust" class="switch-button">Illustrations</a>
     <a href="{{ url }}manga" class="switch-button">Mangas</a>
@@ -14,14 +20,23 @@
   <div class="switcher">
     {{ url := "/ranking?content=" + Content +"&date=" + Data.CurrentDate
     + "&page=1&mode=" }}
-    <div class="switch-title">Modes</div>
+    <div class="switch-title">Modes (current: {{ Mode }})</div>
     <a href="{{ url }}daily" class="switch-button">Daily</a>
     <a href="{{ url }}weekly" class="switch-button">Weekly</a>
+    {{ if Content != "ugoira" }}
     <a href="{{ url }}monthly" class="switch-button">Monthly</a>
     <a href="{{ url }}rookie" class="switch-button">Rookie</a>
+    {{ end }}
+
     <span class="switch-seperator"></span>
     <a href="{{ url }}daily_r18" class="switch-button">Daily (R-18)</a>
     <a href="{{ url }}weekly_r18" class="switch-button">Weekly (R-18)</a>
+    <br />
+    {{ if Content == "all" }}
+    <a href="{{ url }}original" class="switch-button">Original</a>
+    <a href="{{ url }}male" class="switch-button">Popular along males</a>
+    <a href="{{ url }}female" class="switch-button">Popular along females</a>
+    {{ end }}
   </div>
   <br />
 
