@@ -121,7 +121,7 @@ func GetUserBasicInformation(c *fiber.Ctx, id string) (UserBrief, error) {
 	if err != nil {
 		return user, err
 	}
-	response = ProxyImages(response, session.GetImageProxy(c))
+	response = session.ProxyImageUrl(response)
 
 	err = json.Unmarshal([]byte(response), &user)
 	if err != nil {
@@ -141,7 +141,7 @@ func GetArtworkImages(c *fiber.Ctx, id string) ([]Image, error) {
 	if err != nil {
 		return nil, err
 	}
-	response = ProxyImages(response, session.GetImageProxy(c))
+	response = session.ProxyImageUrl(response)
 
 	err = json.Unmarshal([]byte(response), &resp)
 	if err != nil {
@@ -174,7 +174,7 @@ func GetArtworkComments(c *fiber.Ctx, id string) ([]Comment, error) {
 	if err != nil {
 		return nil, err
 	}
-	response = ProxyImages(response, session.GetImageProxy(c))
+	response = session.ProxyImageUrl(response)
 
 	err = json.Unmarshal([]byte(response), &body)
 	if err != nil {
@@ -197,7 +197,7 @@ func GetRelatedArtworks(c *fiber.Ctx, id string) ([]ArtworkBrief, error) {
 		return nil, err
 	}
 
-	response = ProxyImages(response, session.GetImageProxy(c))
+	response = session.ProxyImageUrl(response)
 
 	err = json.Unmarshal([]byte(response), &body)
 	if err != nil {

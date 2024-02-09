@@ -48,7 +48,6 @@ func GetLanding(c *fiber.Ctx, mode string) (LandingArtworks, error) {
 		} `json:"recommendByTag"`
 	}
 
-	imageProxy := session.GetImageProxy(c)
 	URL := http.GetLandingURL(mode)
 
 	var landing LandingArtworks
@@ -58,8 +57,7 @@ func GetLanding(c *fiber.Ctx, mode string) (LandingArtworks, error) {
 	if err != nil {
 		return landing, err
 	}
-
-	resp = ProxyImages(resp, imageProxy)
+	resp = session.ProxyImageUrl(resp)
 
 	artworks := map[string]ArtworkBrief{}
 

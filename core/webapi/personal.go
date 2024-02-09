@@ -8,7 +8,6 @@ import (
 )
 
 func GetNewestFromFollowing(c *fiber.Ctx, mode, page string) ([]ArtworkBrief, error) {
-	imageProxy := session.GetImageProxy(c)
 	token := session.GetToken(c)
 	URL := http.GetNewestFromFollowingURL(mode, page)
 
@@ -24,8 +23,7 @@ func GetNewestFromFollowing(c *fiber.Ctx, mode, page string) ([]ArtworkBrief, er
 	if err != nil {
 		return nil, err
 	}
-
-	resp = ProxyImages(resp, imageProxy)
+	resp = session.ProxyImageUrl(resp)
 
 	err = json.Unmarshal([]byte(resp), &body)
 	if err != nil {

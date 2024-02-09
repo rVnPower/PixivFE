@@ -35,7 +35,6 @@ type Ranking struct {
 }
 
 func GetRanking(c *fiber.Ctx, mode, content, date, page string) (Ranking, error) {
-	imageProxy := session.GetImageProxy(c)
 	URL := http.GetRankingURL(mode, content, date, page)
 
 	var ranking Ranking
@@ -44,8 +43,7 @@ func GetRanking(c *fiber.Ctx, mode, content, date, page string) (Ranking, error)
 	if !resp.Ok {
 		return ranking, errors.New(resp.Message)
 	}
-
-	proxiedResp := ProxyImages(resp.Body, imageProxy)
+	proxiedResp := session.ProxyImageUrl(resp.Body)
 
 	err := json.Unmarshal([]byte(proxiedResp), &ranking)
 	if err != nil {

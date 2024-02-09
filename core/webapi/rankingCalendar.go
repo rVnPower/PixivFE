@@ -34,7 +34,6 @@ func get_weekday(n time.Weekday) int {
 
 func GetRankingCalendar(c *fiber.Ctx, mode string, year, month int) (template.HTML, error) {
 	token := session.GetToken(c)
-	imageProxy := session.GetImageProxy(c)
 	URL := url.GetRankingCalendarURL(mode, year, month)
 
 	req, _ := http.NewRequest("GET", URL, nil)
@@ -65,7 +64,7 @@ func GetRankingCalendar(c *fiber.Ctx, mode string, year, month int) (template.HT
 			for _, a := range n.Attr {
 				if a.Key == "data-src" {
 					// adds a new link entry when the attribute matches
-					links = append(links, ProxyImages(a.Val, imageProxy))
+					links = append(links, session.ProxyImageUrl(a.Val))
 				}
 			}
 		}

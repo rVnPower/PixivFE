@@ -9,7 +9,6 @@ import (
 )
 
 func GetDiscoveryArtwork(c *fiber.Ctx, mode string) ([]ArtworkBrief, error) {
-	imageProxy := session.GetImageProxy(c)
 	token := session.GetToken(c)
 
 	URL := http.GetDiscoveryURL(mode, 100)
@@ -20,8 +19,7 @@ func GetDiscoveryArtwork(c *fiber.Ctx, mode string) ([]ArtworkBrief, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	resp = ProxyImages(resp, imageProxy)
+	resp = session.ProxyImageUrl(resp)
 	data := gjson.Get(resp, "thumbnails.illust").String()
 
 	err = json.Unmarshal([]byte(data), &artworks)

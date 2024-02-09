@@ -1,8 +1,6 @@
 package core
 
 import (
-	"strings"
-
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
 	"github.com/goccy/go-json"
@@ -22,15 +20,7 @@ type ArtworkBrief struct {
 	Bookmarked   any    `json:"bookmarkData"`
 }
 
-func ProxyImages(s, proxy string) string {
-	s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, "/proxy/i.pximg.net")
-	s = strings.ReplaceAll(s, `https:\/\/s.pximg.net`, "/proxy/s.pximg.net")
-
-	return s
-}
-
 func GetNewestArtworks(c *fiber.Ctx, worktype string, r18 string) ([]ArtworkBrief, error) {
-	imageProxy := session.GetImageProxy(c)
 	token := session.GetToken(c)
 	URL := http.GetNewestArtworksURL(worktype, r18, "0")
 
@@ -43,8 +33,7 @@ func GetNewestArtworks(c *fiber.Ctx, worktype string, r18 string) ([]ArtworkBrie
 	if err != nil {
 		return nil, err
 	}
-
-	resp = ProxyImages(resp, imageProxy)
+	resp = session.ProxyImageUrl(resp)
 
 	err = json.Unmarshal([]byte(resp), &body)
 	if err != nil {

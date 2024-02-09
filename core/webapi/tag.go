@@ -37,7 +37,6 @@ type SearchResult struct {
 func GetTagData(c *fiber.Ctx, name string) (TagDetail, error) {
 	var tag TagDetail
 
-	imageProxy := session.GetImageProxy(c)
 	URL := http.GetTagDetailURL(name)
 
 	response, err := http.UnwrapWebAPIRequest(URL, "")
@@ -45,7 +44,7 @@ func GetTagData(c *fiber.Ctx, name string) (TagDetail, error) {
 		return tag, err
 	}
 
-	response = ProxyImages(response, imageProxy)
+	response = session.ProxyImageUrl(response)
 
 	err = json.Unmarshal([]byte(response), &tag)
 	if err != nil {
@@ -56,14 +55,14 @@ func GetTagData(c *fiber.Ctx, name string) (TagDetail, error) {
 }
 
 func GetSearch(c *fiber.Ctx, artworkType, name, order, age_settings, page string) (*SearchResult, error) {
-	imageProxy := session.GetImageProxy(c)
+
 	URL := http.GetSearchArtworksURL(artworkType, name, order, age_settings, page)
 
 	response, err := http.UnwrapWebAPIRequest(URL, "")
 	if err != nil {
 		return nil, err
 	}
-	response = ProxyImages(response, imageProxy)
+	response = session.ProxyImageUrl(response)
 
 	// IDK how to do better than this lol
 	temp := strings.ReplaceAll(string(response), `"illust"`, `"works"`)

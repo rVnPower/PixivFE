@@ -66,14 +66,13 @@ func GetFrequentTags(ids string) ([]FrequentTag, error) {
 func GetUserArtworks(c *fiber.Ctx, id, ids string) ([]ArtworkBrief, error) {
 	var works []ArtworkBrief
 
-	imageProxy := session.GetImageProxy(c)
 	URL := http.GetUserFullArtworkURL(id, ids)
 
 	resp, err := http.UnwrapWebAPIRequest(URL, "")
 	if err != nil {
 		return nil, err
 	}
-	resp = ProxyImages(resp, imageProxy)
+	resp = session.ProxyImageUrl(resp)
 
 	var body struct {
 		Illusts map[int]json.RawMessage `json:"works"`
@@ -172,7 +171,7 @@ func GetUserArtworksID(id, category string, page int) (string, int, error) {
 
 func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
 	var user User
-	imageProxy := session.GetImageProxy(c)
+
 	token := session.GetToken(c)
 
 	URL := http.GetUserInformationURL(id)
@@ -182,7 +181,7 @@ func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
 		return user, err
 	}
 
-	resp = ProxyImages(resp, imageProxy)
+	resp = session.ProxyImageUrl(resp)
 
 	err = json.Unmarshal([]byte(resp), &user)
 	if err != nil {
@@ -244,14 +243,14 @@ func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
 
 func GetUserBookmarks(c *fiber.Ctx, id, mode string, page int) ([]ArtworkBrief, int, error) {
 	page--
-	imageProxy := session.GetImageProxy(c)
+
 	URL := http.GetUserBookmarksURL(id, mode, page)
 
 	resp, err := http.UnwrapWebAPIRequest(URL, "")
 	if err != nil {
 		return nil, -1, err
 	}
-	resp = ProxyImages(resp, imageProxy)
+	resp = session.ProxyImageUrl(resp)
 
 	var body struct {
 		Artworks []json.RawMessage `json:"works"`

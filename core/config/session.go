@@ -3,6 +3,7 @@ package core
 import (
 	"log"
 	"math/rand"
+	"strings"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -23,6 +24,12 @@ func saveSession(sess *session.Session) error {
 	}
 
 	return nil
+}
+
+func ProxyImageUrl(s string) string {
+	s = strings.Replace(s, `https://i.pximg.net`, "/proxy/i.pximg.net", 1)
+	s = strings.Replace(s, `https://s.pximg.net`, "/proxy/s.pximg.net", 1)
+	return s
 }
 
 func GetImageProxy(c *fiber.Ctx) string {
