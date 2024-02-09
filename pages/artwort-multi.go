@@ -20,12 +20,12 @@ func ArtworkMultiPage(c *fiber.Ctx) error {
 		if _, err := strconv.Atoi(id); err != nil {
 			return errors.New("Invalid ID.")
 		}
-	
+
 		illust, err := core.GetArtworkByID(c, id)
 		if err != nil {
 			return err
 		}
-	
+
 		metaDescription := ""
 		for _, i := range illust.Tags {
 			metaDescription += "#" + i.Name + ", "
@@ -39,7 +39,7 @@ func ArtworkMultiPage(c *fiber.Ctx) error {
 			"MetaImage":       illust.Images[0].Original,
 		})
 	}
-	
+
 	log.Println("artworks:", artworks)
 
 	return c.Render("pages/artwork-multi", fiber.Map{
