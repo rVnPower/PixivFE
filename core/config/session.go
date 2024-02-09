@@ -27,8 +27,8 @@ func saveSession(sess *session.Session) error {
 }
 
 func ProxyImageUrl(s string) string {
-	s = strings.Replace(s, `https://i.pximg.net`, "/proxy/i.pximg.net", 1)
-	s = strings.Replace(s, `https://s.pximg.net`, "/proxy/s.pximg.net", 1)
+	s = strings.Replace(s, `https:\/\/i.pximg.net`, "/proxy/i.pximg.net", 1)
+	s = strings.Replace(s, `https:\/\/s.pximg.net`, "/proxy/s.pximg.net", 1)
 	return s
 }
 
