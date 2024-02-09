@@ -23,6 +23,15 @@ import (
 	"github.com/gofiber/template/jet/v2"
 )
 
+func CanRequestSkipLimiter(c *fiber.Ctx) bool {
+	path := c.Path()
+	return true ||
+		strings.HasPrefix(path, "/assets/") ||
+		strings.HasPrefix(path, "/css/") ||
+		strings.HasPrefix(path, "/js/") ||
+		strings.HasPrefix(path, "/proxy/s.pximg.net/")
+}
+
 func main() {
 	config.SetupStorage()
 	config.GlobalServerConfig.InitializeConfig()
@@ -67,10 +76,7 @@ func main() {
 	server.Use(logger.New(
 		logger.Config{
 			Format: "${time} ${ip} | ${path}\n",
-			Next: func(c *fiber.Ctx) bool {
-				path := c.Path()
-				return strings.Contains(path, "/assets") || strings.Contains(path, "/s.pximg.net") || strings.Contains(path, "/css")
-			},
+			Next:   CanRequestSkipLimiter,
 		},
 	))
 
@@ -100,10 +106,7 @@ func main() {
 	}))
 
 	server.Use(limiter.New(limiter.Config{
-		Next: func(c *fiber.Ctx) bool {
-			path := c.Path()
-			return strings.Contains(path, "/assets") || strings.Contains(path, "/s.pximg.net") || strings.Contains(path, "/css")
-		},
+		Next:              CanRequestSkipLimiter,
 		Expiration:        30 * time.Second,
 		Max:               config.GlobalServerConfig.RequestLimit,
 		LimiterMiddleware: limiter.SlidingWindow{},
