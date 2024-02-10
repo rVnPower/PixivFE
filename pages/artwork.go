@@ -8,13 +8,21 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+type ArtWorkData struct {
+	Illust          *core.Illust
+	Title           string
+	PageType        string
+	MetaDescription string
+	MetaImage       string
+}
+
 func ArtworkPage(c *fiber.Ctx) error {
-	id := c.Params("id")
-	if _, err := strconv.Atoi(id); err != nil {
-		return errors.New("Invalid ID.")
+	param_id := c.Params("id")
+	if _, err := strconv.Atoi(param_id); err != nil {
+		return errors.New("invalid id")
 	}
 
-	illust, err := core.GetArtworkByID(c, id)
+	illust, err := core.GetArtworkByID(c, param_id)
 	if err != nil {
 		return err
 	}
@@ -24,7 +32,7 @@ func ArtworkPage(c *fiber.Ctx) error {
 		metaDescription += "#" + i.Name + ", "
 	}
 
-	// Optimize this
+	// todo: passing ArtWorkData{} here will not work. maybe lowercase?
 	return c.Render("pages/artwork", fiber.Map{
 		"Illust":          illust,
 		"Title":           illust.Title,

@@ -5,40 +5,51 @@ import (
 	"log"
 	"strconv"
 	"strings"
+	"sync"
 
 	core "codeberg.org/vnpower/pixivfe/v2/core/webapi"
 	"github.com/gofiber/fiber/v2"
 )
 
 func ArtworkMultiPage(c *fiber.Ctx) error {
-	ids := c.Params("ids")
+	param_ids := c.Params("ids")
+	ids := strings.Split(param_ids, ",")
 
-	artworks := []fiber.Map{}
-
-	// optimize: sequential access might be slow
-	for _, id := range strings.Split(ids, ",") {
+	artworks := make([]ArtWorkData, len(ids))
+	
+	wg := sync.WaitGroup{}
+	wg.Add(len(ids))
+	for i, id := range ids {
 		if _, err := strconv.Atoi(id); err != nil {
-			return errors.New("Invalid ID.")
+			return errors.New("invalid id")
 		}
 
-		illust, err := core.GetArtworkByID(c, id)
-		if err != nil {
-			return err
-		}
+		go func(i int, id string) {
+			defer wg.Done()
 
-		metaDescription := ""
-		for _, i := range illust.Tags {
-			metaDescription += "#" + i.Name + ", "
-		}
+			illust, err := core.GetArtworkByID(c, id)
+			if err != nil {
+				artworks[i] = ArtWorkData{
+					Title: err.Error(),
+				}
+				return
+			}
 
-		artworks = append(artworks, fiber.Map{
-			"Illust":          illust,
-			"Title":           illust.Title,
-			"PageType":        "artwork",
-			"MetaDescription": metaDescription,
-			"MetaImage":       illust.Images[0].Original,
-		})
+			metaDescription := ""
+			for _, i := range illust.Tags {
+				metaDescription += "#" + i.Name + ", "
+			}
+
+			artworks[i] = ArtWorkData{
+				Illust:          illust,
+				Title:           illust.Title,
+				PageType:        "artwork",
+				MetaDescription: metaDescription,
+				MetaImage:       illust.Images[0].Original,
+			}
+		}(i, id)
 	}
+	wg.Wait()
 
 	log.Println("artworks:", artworks)
 

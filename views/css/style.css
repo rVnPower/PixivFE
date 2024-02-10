@@ -290,9 +290,17 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   padding-right: 10px;
 }
 
+.artwork-container-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .artwork-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(199px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   align-items: center;
   justify-items: center;
 }
