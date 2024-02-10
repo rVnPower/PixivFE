@@ -35,6 +35,9 @@ type ServerConfig struct {
 func (s *ServerConfig) InitializeConfig() error {
 	_, hasDev := os.LookupEnv("PIXIVFE_DEV")
 	s.InDevelopment = hasDev
+	if s.InDevelopment {
+		log.Printf("Set server to development mode\n")
+	}
 
 	token, hasToken := os.LookupEnv("PIXIVFE_TOKEN")
 	if !hasToken {
