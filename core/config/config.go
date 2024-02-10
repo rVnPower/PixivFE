@@ -27,11 +27,15 @@ type ServerConfig struct {
 	AcceptLanguage string
 	RequestLimit   int
 
-	StartingTime string
-	Version      string
+	StartingTime  string
+	Version       string
+	InDevelopment bool
 }
 
 func (s *ServerConfig) InitializeConfig() error {
+	_, hasDev := os.LookupEnv("PIXIVFE_DEV")
+	s.InDevelopment = hasDev
+
 	token, hasToken := os.LookupEnv("PIXIVFE_TOKEN")
 	if !hasToken {
 		log.Fatalln("PIXIVFE_TOKEN is required, but was not set.")

@@ -36,6 +36,9 @@ func main() {
 	config.GlobalServerConfig.InitializeConfig()
 
 	engine := jet.New("./views", ".jet.html")
+	if config.GlobalServerConfig.InDevelopment {
+		engine.Reload(true)
+	}
 
 	engine.AddFuncMap(serve.GetTemplateFunctions())
 
@@ -79,25 +82,28 @@ func main() {
 		},
 	))
 
-	server.Use(cache.New(
-		cache.Config{
-			Next: func(c *fiber.Ctx) bool {
-				resp_code := c.Response().StatusCode()
-				if resp_code < 200 || resp_code >= 300 {
-					return true
-				}
+	if !config.GlobalServerConfig.InDevelopment {
+		server.Use(cache.New(
+			cache.Config{
+				Next: func(c *fiber.Ctx) bool {
+					resp_code := c.Response().StatusCode()
+					if resp_code < 200 || resp_code >= 300 {
+						return true
+					}
 
-				// Disable cache for settings page
-				return strings.Contains(c.Path(), "/settings") || c.Path() == "/"
-			},
-			Expiration:   5 * time.Minute,
-			CacheControl: true,
+					// Disable cache for settings page
+					return strings.Contains(c.Path(), "/settings") || c.Path() == "/"
+				},
+				Expiration:   5 * time.Minute,
+				CacheControl: true,
 
-			KeyGenerator: func(c *fiber.Ctx) string {
-				return utils.CopyString(c.OriginalURL())
+				KeyGenerator: func(c *fiber.Ctx) string {
+					return utils.CopyString(c.OriginalURL())
+				},
 			},
-		},
-	))
+		))
+	}
+
 	server.Use(recover.New())
 
 	server.Use(compress.New(compress.Config{
