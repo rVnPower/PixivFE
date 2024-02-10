@@ -36,11 +36,15 @@ func main() {
 	config.GlobalServerConfig.InitializeConfig()
 
 	engine := jet.New("./views", ".jet.html")
+	engine.AddFuncMap(serve.GetTemplateFunctions())
 	if config.GlobalServerConfig.InDevelopment {
 		engine.Reload(true)
 	}
-
-	engine.AddFuncMap(serve.GetTemplateFunctions())
+	// // no error even if the templates are invalid???
+	// err := engine.Load()
+	// if err != nil {
+	// 	panic(err)
+	// }
 
 	server := fiber.New(fiber.Config{
 		AppName:                 "PixivFE",
@@ -104,7 +108,7 @@ func main() {
 		))
 	}
 
-	server.Use(recover.New())
+	server.Use(recover.New(recover.Config{EnableStackTrace: config.GlobalServerConfig.InDevelopment}))
 
 	server.Use(compress.New(compress.Config{
 		Level: compress.LevelBestSpeed, // 1

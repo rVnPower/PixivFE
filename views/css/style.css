@@ -610,10 +610,15 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 .user-tags {
   display: flex;
   flex-wrap: wrap;
-  column-gap: 8px;
+  row-gap: 8px;
+  column-gap: 1em;
+  margin-block: 4px 20px;
 }
-.user-tags > * {
+.user-tags > a {
   line-height: 1;
+}
+.user-tags > a:hover {
+  text-decoration: underline;
 }
 
 #calendar {
