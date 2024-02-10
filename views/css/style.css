@@ -70,10 +70,6 @@ a {
   font-size: 1.8rem;
 }
 
-[hidden] {
-  display: none;
-}
-
 input,
 label,
 select,
@@ -191,7 +187,7 @@ input[type="submit"],
   color: var(--fg);
 }
 
-input[type="submit"][hidden] {
+.hidden {
   display: none;
 }
 
