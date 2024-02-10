@@ -643,7 +643,7 @@ nav {
   }
 
   .illust-other-works {
-    & > a {
+    a.illust-other-works-author {
       display: inline-flex;
       align-items: center;
       text-decoration: none;
