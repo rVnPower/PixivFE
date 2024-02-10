@@ -25,7 +25,6 @@ type Ranking struct {
 	Mode        string          `json:"mode"`
 	Content     string          `json:"content"`
 	Page        int             `json:"page"`
-	Date        string          `json:"date"`
 	RankTotal   int             `json:"rank_total"`
 	CurrentDate string          `json:"date"`
 	PrevDateRaw json.RawMessage `json:"prev_date"`

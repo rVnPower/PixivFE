@@ -14,6 +14,7 @@
     <a href="{{ url }}all" class="switch-button">Overall</a>
     <a href="{{ url }}illust" class="switch-button">Illustrations</a>
     <a href="{{ url }}manga" class="switch-button">Mangas</a>
+    <a href="{{ url }}ugoira" class="switch-button">Ugoira</a>
   </div>
   <br />
 
@@ -43,7 +44,7 @@
   <div class="switcher">
     {{ url := "/ranking?content=" + Content + "&mode=" + Mode +
     "&page=1" }}
-    <div class="switch-title">Date</div>
+    <div class="switch-title">Date (current: {{ Data.CurrentDate }})</div>
     {{ if Data.PrevDate != "false" }}
     <a href="{{ url }}&date={{Data.PrevDate}}" class="switch-button"
       >Yesterday</a
