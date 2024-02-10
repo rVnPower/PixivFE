@@ -109,11 +109,14 @@
   </div>
   <br />
   <div class="illust-other-works">
-    <a href="/users/{{ Illust.User.ID }}"
-      ><img src="{{ Illust.User.Avatar }}" alt="{{ Illust.User.Name }}" /> Other
-      works by {{ Illust.User.Name }}
-      <span class="special-symbol">&raquo;</span>
-    </a>
+    <div class="artwork-container-header">
+      <a href="/users/{{ Illust.User.ID }}"
+        ><img src="{{ Illust.User.Avatar }}" alt="{{ Illust.User.Name }}" /> Other works by {{ Illust.User.Name }}
+        <span class="special-symbol">&raquo;</span>
+      </a>
+      {{ combinedUrl := "/artworks-multi/" + joinArtworkIds(Illust.RecentWorks) }}
+      <div class="artwork-actions"><a href="{{combinedUrl}}">View all</a></div>
+    </div>
     <div class="artwork-container-scroll">
       {{ range Illust.RecentWorks }}
       <div class="artwork-small artwork">
