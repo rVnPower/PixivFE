@@ -1,0 +1,20 @@
+# Usage: semgrep scan -f semgrep.yml
+rules:
+- id: rule-0
+  message: "find http requests made not with *fiber.Ctx available"
+  languages: [go]
+  severity: WARNING
+  patterns:
+  - pattern: |
+      http.$HFUNC(URL, ...)
+  - pattern-not-inside: |
+      func $FUNC(c *fiber.Ctx, ...) $RET {
+        ...
+      }
+- id: rule-1
+  message: "find http requests made (limiter should be installed at all places)"
+  languages: [go]
+  severity: INFO
+  patterns:
+  - pattern: |
+      http.$HFUNC(URL, ...)

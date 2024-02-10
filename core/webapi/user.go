@@ -45,7 +45,7 @@ func (s *User) ParseSocial() {
 	_ = json.Unmarshal(s.SocialRaw, &s.Social)
 }
 
-func GetFrequentTags(ids string) ([]FrequentTag, error) {
+func GetFrequentTags(c *fiber.Ctx, ids string) ([]FrequentTag, error) {
 	var tags []FrequentTag
 
 	URL := http.GetFrequentTagsURL(ids)
@@ -97,7 +97,7 @@ func GetUserArtworks(c *fiber.Ctx, id, ids string) ([]ArtworkBrief, error) {
 	return works, nil
 }
 
-func GetUserArtworksID(id, category string, page int) (string, int, error) {
+func GetUserArtworksID(c *fiber.Ctx, id, category string, page int) (string, int, error) {
 	URL := http.GetUserArtworksURL(id)
 
 	resp, err := http.UnwrapWebAPIRequest(URL, "")
@@ -189,7 +189,7 @@ func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
 	}
 
 	if category != "bookmarks" {
-		ids, count, err := GetUserArtworksID(id, category, page)
+		ids, count, err := GetUserArtworksID(c, id, category, page)
 		if err != nil {
 			return user, err
 		}
@@ -209,7 +209,7 @@ func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
 			})
 			user.Artworks = works
 
-			user.FrequentTags, err = GetFrequentTags(ids)
+			user.FrequentTags, err = GetFrequentTags(c, ids)
 			if err != nil {
 				return user, err
 			}
