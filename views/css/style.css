@@ -611,9 +611,13 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   display: flex;
   flex-wrap: wrap;
   column-gap: 8px;
+  margin-block: 4px;
 }
 .user-tags > * {
   line-height: 1;
+}
+.user-tags > a {
+  text-decoration: underline;
 }
 
 #calendar {

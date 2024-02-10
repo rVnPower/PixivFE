@@ -44,13 +44,7 @@
     {{ end }}
   </div>
   <div class="switcher">
-    <div class="switch-title">Category <button id="btn-open-all">Open all artworks</button></div>
-    <script>
-      document.getElementById('btn-open-all').onclick = () => {
-        let xs=document.querySelectorAll('div.artwork-small > a')
-        Array.from(xs).map(x=> window.open(x.href))
-      }
-    </script>
+    <div class="switch-title">Category</div>
     <a href="/users/{{ User.ID }}/artworks#checkpoint" class="switch-button"
       >All</a
     >
@@ -68,6 +62,8 @@
   </div>
   <div>
     <h2 id="checkpoint">Illustrations and Mangas</h2>
+    {{ combinedUrl := "/artworks-multi/" ++ joinArtworkIds(User.Artworks) }}
+    <a href="{{combinedUrl}}">View all</a>
     <div class="artwork-container">
       {{ include "components/small-tn" User.Artworks }}
     </div>

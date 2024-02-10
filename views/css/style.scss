@@ -714,6 +714,10 @@ nav {
   &>* {
     line-height: 1;
   }
+  &>a {
+    text-decoration: underline;
+  }
+  margin-block: 4px;
 }
 
 #calendar {

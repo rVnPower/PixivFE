@@ -7,7 +7,10 @@ import (
 	"net/url"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
+
+	core "codeberg.org/vnpower/pixivfe/v2/core/webapi"
 )
 
 func GetRandomColor() string {
@@ -195,6 +198,13 @@ func GetTemplateFunctions() template.FuncMap {
 		},
 		"createPaginator": func(base, ending string, current_page, max_page int) template.HTML {
 			return CreatePaginator(base, ending, current_page, max_page)
+		},
+		"joinArtworkIds": func(artworks []core.ArtworkBrief) string {
+			ids := []string{}
+			for _, art := range artworks {
+				ids = append(ids, art.ID)
+			}
+			return strings.Join(ids, ",")
 		},
 	}
 }
