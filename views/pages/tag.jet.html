@@ -56,9 +56,13 @@
   </div>
   {{ if Data.Popular.Recent }}
   <h2>Popular artworks</h2>
+  <h3>Recent</h3>
   <div class="artwork-container-scroll">
-    {{ include "components/small-tn" Data.Popular.Recent }} {{ include
-    "components/small-tn" Data.Popular.Permanent }}
+    {{ include "components/small-tn" Data.Popular.Recent }}
+  </div>
+  <h3>All Time</h3>
+  <div class="artwork-container-scroll">
+    {{ include "components/small-tn" Data.Popular.Permanent }}
   </div>
   {{ end }}
   <!-- Switchers here -->
