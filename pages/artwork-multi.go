@@ -2,7 +2,6 @@ package pages
 
 import (
 	"errors"
-	"log"
 	"strconv"
 	"strings"
 	"sync"
@@ -50,8 +49,6 @@ func ArtworkMultiPage(c *fiber.Ctx) error {
 		}(i, id)
 	}
 	wg.Wait()
-
-	log.Println("artworks:", artworks)
 
 	return c.Render("pages/artwork-multi", fiber.Map{
 		"Artworks": artworks,
