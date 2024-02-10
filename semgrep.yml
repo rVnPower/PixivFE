@@ -5,8 +5,11 @@ rules:
   languages: [go]
   severity: WARNING
   patterns:
-  - pattern: |
-      http.$HFUNC(URL, ...)
+  - pattern-either:
+    - pattern: |
+        http.UnwrapWebAPIRequest(...)
+    - pattern: |
+        http.WebAPIRequest(...)
   - pattern-not-inside: |
       func $FUNC(c *fiber.Ctx, ...) $RET {
         ...
@@ -16,5 +19,8 @@ rules:
   languages: [go]
   severity: INFO
   patterns:
-  - pattern: |
-      http.$HFUNC(URL, ...)
+  - pattern-either:
+    - pattern: |
+        http.UnwrapWebAPIRequest(...)
+    - pattern: |
+        http.WebAPIRequest(...)

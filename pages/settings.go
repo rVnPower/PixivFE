@@ -15,7 +15,9 @@ func setToken(c *fiber.Ctx) error {
 	// Parse the value from the form
 	token := c.FormValue("token")
 	if token != "" {
-		_, err := httpc.UnwrapWebAPIRequest(httpc.GetNewestFromFollowingURL("all", "1"), token)
+		URL := httpc.GetNewestFromFollowingURL("all", "1")
+		
+		_, err := httpc.UnwrapWebAPIRequest(URL, token)
 		if err != nil {
 			return errors.New("Cannot authorize with supplied token.")
 		}
