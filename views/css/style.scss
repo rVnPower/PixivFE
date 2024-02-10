@@ -349,12 +349,22 @@ nav {
   padding-right: 10px;
 }
 
+.artwork-container-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .artwork-container {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(calc($small-artwork-width + 15px), 1fr)
-  );
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  // grid-template-columns: repeat(
+  //   auto-fit,
+  //   minmax(calc($small-artwork-width + 15px), 1fr)
+  // );
   align-items: center;
   justify-items: center;
 }
@@ -633,7 +643,7 @@ nav {
   }
 
   .illust-other-works {
-    & > a {
+    a.illust-other-works-author {
       display: inline-flex;
       align-items: center;
       text-decoration: none;
