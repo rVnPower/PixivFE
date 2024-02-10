@@ -129,7 +129,7 @@ func (s *ServerConfig) SetRequestLimit(v string) {
 		panic(err)
 	}
 	s.RequestLimit = t
-	log.Printf("Set request limit to %s requests per 5 minutes\n", v)
+	log.Printf("Set request limit to %s requests per 30 seconds\n", v)
 }
 
 func (s *ServerConfig) setStartingTime() {
