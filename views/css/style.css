@@ -22,7 +22,6 @@ a {
 /* Scrollbars */
 * {
   scrollbar-width: thin;
-  /* scrollbar-color: #118bee auto; */
 }
 
 *::-webkit-scrollbar {
@@ -606,6 +605,15 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 }
 .user .user-details h2 {
   margin: 0;
+}
+
+.user-tags {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 8px;
+}
+.user-tags > * {
+  line-height: 1;
 }
 
 #calendar {

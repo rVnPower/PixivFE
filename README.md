@@ -33,6 +33,17 @@ I recommend self-hosting your own instance for personal use, instead of relying 
 Check out [this page](https://codeberg.org/VnPower/pixivfe/wiki/Hosting). We
 currently have guides for Docker and Caddy.
 
+## Development
+
+```
+# watch and compile styles with node-sass
+pnpm i -g sass
+sass --watch views/css
+
+# run in development mode (auto reload templates)
+PIXIVFE_DEV=1 ... go run .
+```
+
 ## Instances
 
 | Name               | Cloudflare? | URL                             |

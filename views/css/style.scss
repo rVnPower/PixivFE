@@ -707,6 +707,15 @@ nav {
   }
 }
 
+.user-tags {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 8px;
+  &>* {
+    line-height: 1;
+  }
+}
+
 #calendar {
   width: 100%;
   height: auto;

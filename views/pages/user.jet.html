@@ -27,6 +27,22 @@
     </div>
     <p>{{ raw: parsePixivRedirect(User.Comment) }}</p>
   </div>
+  <div>Frequently Used Tags</div>
+  <div class="user-tags">
+    {{ range User.FrequentTags }}
+    <a href="/tags/{{ .Name }}">
+      #{{ .Name }}
+      <!-- <div>
+        {{ if ! .TranslatedName }}
+        <div class="main">{{ .Name }}</div>
+        {{ else }}
+        <div class="main">{{ .TranslatedName }}</div>
+        <div class="sub">#{{ .Name }}</div>
+        {{ end }}
+      </div> -->
+    </a>
+    {{ end }}
+  </div>
   <div class="switcher">
     <div class="switch-title">Category <button id="btn-open-all">Open all artworks</button></div>
     <script>
@@ -51,24 +67,7 @@
     >
   </div>
   <div>
-    <h1 id="checkpoint">Illustrations and Mangas</h1>
-
-    <!-- <div>
-                    {{ range User.FrequentTags }}
-                    <a href="/tags/{{ .Name }}">
-                        <div class="tag-container" style="background-color: {{ randomColor() }}">
-                            {{ if ! .TranslatedName }}
-                            <div class="main">{{ .Name }}</div>
-                            <div class="sub">#</div>
-                            {{ else }}
-                            <div class="main">{{ .TranslatedName }}</div>
-                            <div class="sub">#{{ .Name }}</div>
-                            {{ end }}
-                        </div>
-                    </a>
-                    {{ end }}
-                </div> -->
-
+    <h2 id="checkpoint">Illustrations and Mangas</h2>
     <div class="artwork-container">
       {{ include "components/small-tn" User.Artworks }}
     </div>
