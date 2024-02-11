@@ -1,11 +1,13 @@
 package core
 
 import (
+	"errors"
 	"fmt"
 	"html/template"
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
@@ -208,8 +210,6 @@ func GetRelatedArtworks(c *fiber.Ctx, id string) ([]ArtworkBrief, error) {
 }
 
 func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
-	var images []Image
-
 	URL := http.GetArtworkInformationURL(id)
 
 	response, err := http.UnwrapWebAPIRequest(URL, "")
@@ -232,33 +232,37 @@ func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
 
 	// Begin testing here
 
-	c1 := make(chan []Image)
-	c2 := make(chan []ArtworkBrief)
-	c3 := make(chan UserBrief)
-	c4 := make(chan []Tag)
-	c5 := make(chan []ArtworkBrief)
-	c6 := make(chan []Comment)
+	wg := sync.WaitGroup{}
+	cerr := make(chan error, 6)
+
+	wg.Add(3)
 
 	go func() {
 		// Get illust images
-		images, err = GetArtworkImages(c, id)
+		defer wg.Done()
+		images, err := GetArtworkImages(c, id)
 		if err != nil {
-			c1 <- nil
+			cerr <- err
+			return
 		}
-		c1 <- images
+		illust.Images = images
 	}()
 
 	go func() {
 		// Get basic user information (the URL above does not contain avatars)
+		defer wg.Done()
+		var err error
 		userInfo, err := GetUserBasicInformation(c, illust.UserID)
 		if err != nil {
-			//
+			cerr <- err
+			return
 		}
-		c3 <- userInfo
+		illust.User = userInfo
 	}()
 
 	go func() {
-		var tagsList []Tag
+		defer wg.Done()
+		var err error
 		// Extract tags
 		var tags struct {
 			Tags []struct {
@@ -268,9 +272,11 @@ func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
 		}
 		err = json.Unmarshal(illust.RawTags, &tags)
 		if err != nil {
-			c4 <- nil
+			cerr <- err
+			return
 		}
 
+		var tagsList []Tag
 		for _, tag := range tags.Tags {
 			var newTag Tag
 			newTag.Name = tag.Tag
@@ -278,12 +284,15 @@ func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
 
 			tagsList = append(tagsList, newTag)
 		}
-		c4 <- tagsList
+		illust.Tags = tagsList
 	}()
 
 	if full {
+		wg.Add(3)
 
 		go func() {
+			defer wg.Done()
+			var err error
 			// Get recent artworks
 			ids := make([]int, 0)
 
@@ -302,36 +311,51 @@ func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
 
 			recent, err := GetUserArtworks(c, illust.UserID, idsString)
 			if err != nil {
-				c2 <- nil
+				cerr <- err
+				return
 			}
 			sort.Slice(recent[:], func(i, j int) bool {
 				left, _ := strconv.Atoi(recent[i].ID)
 				right, _ := strconv.Atoi(recent[j].ID)
 				return left > right
 			})
-			c2 <- recent
-
+			illust.RecentWorks = recent
 		}()
 
 		go func() {
-			related, _ := GetRelatedArtworks(c, id)
-			// Error handling...
-			c5 <- related
+			defer wg.Done()
+			var err error
+			related, err := GetRelatedArtworks(c, id)
+			if err != nil {
+				cerr <- err
+				return
+			}
+			illust.RelatedWorks = related
 		}()
 
 		go func() {
-			comments, _ := GetArtworkComments(c, id)
-			// Error handling...
-			c6 <- comments
+			defer wg.Done()
+			var err error
+			comments, err := GetArtworkComments(c, id)
+			if err != nil {
+				cerr <- err
+				return
+			}
+			illust.CommentsList = comments
 		}()
 	}
 
-	illust.Images = <-c1
-	illust.RecentWorks = <-c2
-	illust.User = <-c3
-	illust.Tags = <-c4
-	illust.RelatedWorks = <-c5
-	illust.CommentsList = <-c6
+	wg.Wait()
+	close(cerr)
+
+	all_errors := []error{}
+	for suberr := range cerr {
+		all_errors = append(all_errors, suberr)
+	}
+	err_summary := errors.Join(all_errors...)
+	if err_summary != nil {
+		return nil, err_summary
+	}
 
 	// If this artwork is an ugoira
 	illust.IsUgoira = strings.Contains(illust.Images[0].Original, "ugoira")
