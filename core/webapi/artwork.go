@@ -207,7 +207,7 @@ func GetRelatedArtworks(c *fiber.Ctx, id string) ([]ArtworkBrief, error) {
 	return body.Illusts, nil
 }
 
-func GetArtworkByID(c *fiber.Ctx, id string) (*Illust, error) {
+func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
 	var images []Image
 
 	URL := http.GetArtworkInformationURL(id)
@@ -249,36 +249,6 @@ func GetArtworkByID(c *fiber.Ctx, id string) (*Illust, error) {
 	}()
 
 	go func() {
-		// Get recent artworks
-		ids := make([]int, 0)
-
-		for k := range illust.Recent {
-			ids = append(ids, k)
-		}
-
-		sort.Sort(sort.Reverse(sort.IntSlice(ids)))
-
-		idsString := ""
-		count := min(len(ids), 20)
-
-		for i := 0; i < count; i++ {
-			idsString += fmt.Sprintf("&ids[]=%d", ids[i])
-		}
-
-		recent, err := GetUserArtworks(c, illust.UserID, idsString)
-		if err != nil {
-			c2 <- nil
-		}
-		sort.Slice(recent[:], func(i, j int) bool {
-			left, _ := strconv.Atoi(recent[i].ID)
-			right, _ := strconv.Atoi(recent[j].ID)
-			return left > right
-		})
-		c2 <- recent
-
-	}()
-
-	go func() {
 		// Get basic user information (the URL above does not contain avatars)
 		userInfo, err := GetUserBasicInformation(c, illust.UserID)
 		if err != nil {
@@ -311,17 +281,50 @@ func GetArtworkByID(c *fiber.Ctx, id string) (*Illust, error) {
 		c4 <- tagsList
 	}()
 
-	go func() {
-		related, _ := GetRelatedArtworks(c, id)
-		// Error handling...
-		c5 <- related
-	}()
+	if full {
 
-	go func() {
-		comments, _ := GetArtworkComments(c, id)
-		// Error handling...
-		c6 <- comments
-	}()
+		go func() {
+			// Get recent artworks
+			ids := make([]int, 0)
+
+			for k := range illust.Recent {
+				ids = append(ids, k)
+			}
+
+			sort.Sort(sort.Reverse(sort.IntSlice(ids)))
+
+			idsString := ""
+			count := min(len(ids), 20)
+
+			for i := 0; i < count; i++ {
+				idsString += fmt.Sprintf("&ids[]=%d", ids[i])
+			}
+
+			recent, err := GetUserArtworks(c, illust.UserID, idsString)
+			if err != nil {
+				c2 <- nil
+			}
+			sort.Slice(recent[:], func(i, j int) bool {
+				left, _ := strconv.Atoi(recent[i].ID)
+				right, _ := strconv.Atoi(recent[j].ID)
+				return left > right
+			})
+			c2 <- recent
+
+		}()
+
+		go func() {
+			related, _ := GetRelatedArtworks(c, id)
+			// Error handling...
+			c5 <- related
+		}()
+
+		go func() {
+			comments, _ := GetArtworkComments(c, id)
+			// Error handling...
+			c6 <- comments
+		}()
+	}
 
 	illust.Images = <-c1
 	illust.RecentWorks = <-c2

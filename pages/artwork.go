@@ -22,7 +22,7 @@ func ArtworkPage(c *fiber.Ctx) error {
 		return errors.New("invalid id")
 	}
 
-	illust, err := core.GetArtworkByID(c, param_id)
+	illust, err := core.GetArtworkByID(c, param_id, true)
 	if err != nil {
 		return err
 	}
