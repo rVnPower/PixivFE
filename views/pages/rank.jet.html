@@ -61,29 +61,7 @@
   <br />
 
   <div class="artwork-container">
-    {{ range Data.Contents }}
-    <div class="artwork-small artwork">
-      <div class="artwork-additional">
-        <div class="artwork-position">{{ .Rank }}</div>
-        {{ if toInt(.Pages) > 1 }}
-        <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
-        {{ end }}
-      </div>
-
-      <a href="/artworks/{{ .ID }}">
-        <img src="{{ .Image }}" alt="{{ .Title }}" />
-      </a>
-      <div class="artwork-title">
-        <a href="/artworks/{{ .ID }}"> {{ .Title }} </a>
-      </div>
-      <div class="artwork-author">
-        <a href="/users/{{ .ArtistID }}"
-          ><img src="{{ .ArtistAvatar }}" alt="{{ .ArtistName }}" />
-          <span>{{ .ArtistName }}</span></a
-        >
-      </div>
-    </div>
-    {{ end }}
+    {{ include "components/ranking-tn" Data.Contents }}
   </div>
 
   <div class="pagination">

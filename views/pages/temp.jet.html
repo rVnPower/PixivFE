@@ -41,12 +41,12 @@
         </div>
         {{ end }}
       </div>
-      <a href="/artworks/{{ .ID }}">
+      <a href="/artworks/{{ .ID }}#checkpoint">
         <img src="{{ .Thumbnail }}" alt="{{ .Title }}" />
       </a>
 
       <div class="artwork-title">
-        <a href="/artworks/{{ .ID }}"> {{ .Title }} </a>
+        <a href="/artworks/{{ .ID }}#checkpoint"> {{ .Title }} </a>
       </div>
       <div class="artwork-author">
         <a href="/users/{{ .ArtistID }}">
@@ -122,12 +122,12 @@
        </div>
        {{ end }}
        </div>
-       <a href="/artworks/{{ .ID }}">
+       <a href="/artworks/{{ .ID }}#checkpoint">
        <img src="{{ .Thumbnail }}" alt="{{ .Title }}" />
        </a>
 
        <div class="artwork-title">
-       <a href="/artworks/{{ .ID }}"> {{ .Title }} </a>
+       <a href="/artworks/{{ .ID }}#checkpoint"> {{ .Title }} </a>
        </div>
        <div class="artwork-author">
        <a href="/users/{{ .ArtistID }}">
