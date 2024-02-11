@@ -298,9 +298,8 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 }
 
 .artwork-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(199px, 1fr));
   align-items: center;
   justify-items: center;
 }
