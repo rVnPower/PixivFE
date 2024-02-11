@@ -67,7 +67,7 @@
   <div class="pagination">
     {{ url := "/ranking?content=" + Content +"&date=" + Data.CurrentDate
     + "&mode=" + Mode + "&page=" }}
-    <small>Page {{ Page }}/10</small>
+    <small>Page {{ Page }}/{{ PageLimit }}</small>
     <br />
     {{ raw: createPaginator(url, "#checkpoint", Page, 10) }}
   </div>

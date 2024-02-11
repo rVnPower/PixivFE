@@ -13,7 +13,10 @@ func RankingPage(c *fiber.Ctx) error {
 	date := c.Query("date", "")
 
 	page := c.Query("page", "1")
-	pageInt, _ := strconv.Atoi(page)
+	pageInt, err := strconv.Atoi(page)
+	if err != nil {
+		panic(err)
+	}
 
 	works, err := core.GetRanking(c, mode, content, date, page)
 	if err != nil {
@@ -21,11 +24,12 @@ func RankingPage(c *fiber.Ctx) error {
 	}
 
 	return c.Render("pages/rank", fiber.Map{
-		"Title":   "Ranking",
-		"Page":    pageInt,
-		"Mode":    mode,
-		"Content": content,
-		"Date":    date,
-		"Data":    works,
+		"Title":     "Ranking",
+		"Page":      pageInt,
+		"PageLimit": 10, // hard-coded by pixiv
+		"Mode":      mode,
+		"Content":   content,
+		"Date":      date,
+		"Data":      works,
 	})
 }

@@ -1,3 +1,7 @@
+:root {
+  --small-breakpoint: 440px;
+}
+
 html {
   font-size: 62.5%;
 }
@@ -10,8 +14,11 @@ body {
   font-size: 1.8rem;
   font-family: "Roboto", "Open Sans", "Noto Sans", sans-serif, "Noto Sans CJK JP";
   margin-bottom: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
+}
+@media (min-width: var(--small-breakpoint)) {
+  body {
+    margin-inline: 5px;
+  }
 }
 
 a {
@@ -179,6 +186,10 @@ input[type=submit][hidden] {
 .pagination {
   text-align: center;
 }
+.pagination .pagination-buttons {
+  display: flex;
+  flex-wrap: wrap;
+}
 .pagination .pagination-button {
   margin-right: 5px;
 }
@@ -284,10 +295,13 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 
 .container {
   max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 10px;
-  padding-right: 10px;
+  margin-inline: auto;
+  padding-inline: 4px;
+}
+@media (min-width: var(--small-breakpoint)) {
+  .container {
+    padding-inline: 10px;
+  }
 }
 
 .artwork-container-header {

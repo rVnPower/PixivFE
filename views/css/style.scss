@@ -14,6 +14,10 @@ $font-family: "Roboto", "Open Sans", "Noto Sans", sans-serif, "Noto Sans CJK JP"
 $small-artwork-width: 184px;
 $large-artwork-width: 288px;
 
+:root {
+  --small-breakpoint: 440px;
+}
+
 html {
   font-size: 62.5%;
 }
@@ -29,8 +33,9 @@ body {
   font-family: $font-family;
 
   margin-bottom: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
+  @media(min-width: var(--small-breakpoint)) {
+    margin-inline: 5px;
+  }
 }
 
 a {
@@ -201,6 +206,11 @@ input[type="submit"][hidden] {
 .pagination {
   text-align: center;
 
+  .pagination-buttons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   .pagination-button {
     margin-right: 5px;
   }
@@ -343,10 +353,11 @@ nav {
 
 .container {
   max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 10px;
-  padding-right: 10px;
+  margin-inline: auto;
+  padding-inline: 4px;
+  @media(min-width: var(--small-breakpoint)) {
+    padding-inline: 10px;
+  }
 }
 
 .artwork-container-header {
