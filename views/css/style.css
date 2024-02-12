@@ -189,6 +189,7 @@ input[type=submit][hidden] {
 .pagination .pagination-buttons {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
 }
 .pagination .pagination-button {
   margin-right: 5px;
