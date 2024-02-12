@@ -189,6 +189,9 @@ input[type=submit][hidden] {
 .pagination .pagination-buttons {
   text-align: center;
 }
+.pagination .pagination-buttons input {
+  width: 5em;
+}
 .pagination .pagination-button {
   margin-right: 5px;
 }

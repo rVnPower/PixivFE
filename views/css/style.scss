@@ -212,6 +212,10 @@ input[type="submit"][hidden] {
 
   .pagination-buttons {
     text-align: center;
+
+    input {
+	  width: 5em;
+    }
   }
 
   .pagination-button {
