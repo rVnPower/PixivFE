@@ -143,9 +143,10 @@ func main() {
 	})
 
 	server.Static("/favicon.ico", "./views/assets/favicon.ico")
-	server.Static("/css/", "./views/css")
-	server.Static("/assets/", "./views/assets")
 	server.Static("/robots.txt", "./views/assets/robots.txt")
+	server.Static("/assets/", "./views/assets")
+	server.Static("/css/", "./views/css")
+	server.Static("/js/", "./views/js")
 
 	// Routes
 
