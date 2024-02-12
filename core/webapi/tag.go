@@ -44,7 +44,7 @@ func GetTagData(c *fiber.Ctx, name string) (TagDetail, error) {
 		return tag, err
 	}
 
-	response = session.ProxyImageUrl(response)
+	response = session.ProxyImageUrl(c, response)
 
 	err = json.Unmarshal([]byte(response), &tag)
 	if err != nil {
@@ -62,7 +62,7 @@ func GetSearch(c *fiber.Ctx, artworkType, name, order, age_settings, page string
 	if err != nil {
 		return nil, err
 	}
-	response = session.ProxyImageUrl(response)
+	response = session.ProxyImageUrl(c, response)
 
 	// IDK how to do better than this lol
 	temp := strings.ReplaceAll(string(response), `"illust"`, `"works"`)

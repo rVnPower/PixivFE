@@ -107,3 +107,9 @@ func GetLandingURL(mode string) string {
 
 	return fmt.Sprintf(base, mode)
 }
+
+func GetNovelURL(id string) string {
+	base := "https://www.pixiv.net/ajax/novel/%s"
+
+	return fmt.Sprintf(base, id)
+}

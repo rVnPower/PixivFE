@@ -57,7 +57,7 @@ func GetLanding(c *fiber.Ctx, mode string) (LandingArtworks, error) {
 	if err != nil {
 		return landing, err
 	}
-	resp = session.ProxyImageUrl(resp)
+	resp = session.ProxyImageUrl(c, resp)
 
 	artworks := map[string]ArtworkBrief{}
 

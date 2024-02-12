@@ -42,7 +42,7 @@ func GetRanking(c *fiber.Ctx, mode, content, date, page string) (Ranking, error)
 	if !resp.Ok {
 		return ranking, errors.New(resp.Message)
 	}
-	proxiedResp := session.ProxyImageUrl(resp.Body)
+	proxiedResp := session.ProxyImageUrl(c, resp.Body)
 
 	err := json.Unmarshal([]byte(proxiedResp), &ranking)
 	if err != nil {

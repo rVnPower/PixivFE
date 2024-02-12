@@ -26,8 +26,9 @@ func saveSession(sess *session.Session) error {
 	return nil
 }
 
-func ProxyImageUrl(s string) string {
-	s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, "https://"+GlobalServerConfig.ProxyServer)
+func ProxyImageUrl(c *fiber.Ctx, s string) string {
+	proxy := GetImageProxy(c)
+	s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, "https://"+proxy)
 	// s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, "/proxy/i.pximg.net")
 	s = strings.ReplaceAll(s, `https:\/\/s.pximg.net`, "/proxy/s.pximg.net")
 	return s

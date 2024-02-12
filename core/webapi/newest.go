@@ -33,7 +33,7 @@ func GetNewestArtworks(c *fiber.Ctx, worktype string, r18 string) ([]ArtworkBrie
 	if err != nil {
 		return nil, err
 	}
-	resp = session.ProxyImageUrl(resp)
+	resp = session.ProxyImageUrl(c, resp)
 
 	err = json.Unmarshal([]byte(resp), &body)
 	if err != nil {

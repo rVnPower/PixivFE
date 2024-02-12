@@ -72,7 +72,7 @@ func GetUserArtworks(c *fiber.Ctx, id, ids string) ([]ArtworkBrief, error) {
 	if err != nil {
 		return nil, err
 	}
-	resp = session.ProxyImageUrl(resp)
+	resp = session.ProxyImageUrl(c, resp)
 
 	var body struct {
 		Illusts map[int]json.RawMessage `json:"works"`
@@ -181,7 +181,7 @@ func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
 		return user, err
 	}
 
-	resp = session.ProxyImageUrl(resp)
+	resp = session.ProxyImageUrl(c, resp)
 
 	err = json.Unmarshal([]byte(resp), &user)
 	if err != nil {
@@ -250,7 +250,7 @@ func GetUserBookmarks(c *fiber.Ctx, id, mode string, page int) ([]ArtworkBrief, 
 	if err != nil {
 		return nil, -1, err
 	}
-	resp = session.ProxyImageUrl(resp)
+	resp = session.ProxyImageUrl(c, resp)
 
 	var body struct {
 		Artworks []json.RawMessage `json:"works"`
