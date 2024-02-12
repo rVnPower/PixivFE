@@ -7,7 +7,7 @@
     <meta charset="UTF-8" />
     <meta name="description" content="View this page on PixivFE." />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self'" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'" />
     <meta name="referrer" content="no-referrer, same-origin" />
     <link href="/css/style.css" rel="stylesheet" />
     <script src="/js/htmx@1.9.10.min.js" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"></script>
@@ -32,7 +32,14 @@
     {{ end }}
   </head>
 
-  <body hx-boost="true" hx-target="main" hx-select="main">
+  <body hx-boost="true" hx-target="main" hx-select="main" hx-indicator="#loading-indicator">
+    <script>
+      document.body.addEventListener('htmx:beforeOnLoad', function (evt) {
+        evt.detail.shouldSwap = true;
+        evt.detail.isError = false;
+      });
+    </script>
+    <div id="loading-indicator"></div>
     <nav>
       <div class="navigation-wrapper">
         <span>

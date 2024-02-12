@@ -13,10 +13,7 @@ $color-shadow: #bbbbbb20;
 $font-family: "Roboto", "Open Sans", "Noto Sans", sans-serif, "Noto Sans CJK JP";
 $small-artwork-width: 184px;
 $large-artwork-width: 288px;
-
-:root {
-  --small-breakpoint: 440px;
-}
+$small-breakpoint: 440px;
 
 html {
   font-size: 62.5%;
@@ -33,7 +30,10 @@ body {
   font-family: $font-family;
 
   margin-bottom: 10px;
-  @media(min-width: var(--small-breakpoint)) {
+}
+
+main {
+  @media (min-width: $small-breakpoint) {
     margin-inline: 5px;
   }
 }
@@ -229,6 +229,29 @@ input[type="submit"][hidden] {
   }
 }
 
+#loading-indicator {
+  z-index: 2;
+  isolation: isolate;
+  position: sticky;
+  top: 0;
+  height: 4px;
+  margin-bottom: -4px;
+  &.htmx-request {
+    // background: $link;
+    // https://stackoverflow.com/questions/63787241/css-how-to-create-an-infinitely-moving-repeating-linear-gradient/63787567#63787567
+    background-image: repeating-linear-gradient(90deg, $link, $fg, $link, $fg, $link); 
+    animation: rolling-something 3s linear infinite;
+  }
+}
+@keyframes rolling-something {
+  0% {
+    background-position-x: -33vw
+  }
+  100% {
+    background-position-x: 100vw
+  }
+}
+
 nav {
   margin-top: 15px;
   margin-bottom: 15px;
@@ -278,6 +301,8 @@ nav {
     }
 
     .sidebar {
+      z-index: 1;
+      isolation: isolate;
       background-color: $bg;
       position: absolute;
       padding-top: 6px;
@@ -285,7 +310,6 @@ nav {
       width: 220px;
       transform: translateX(-220px);
       transition: transform 250ms cubic-bezier(0.23, 1, 0.32, 1);
-      z-index: 999;
 
       br {
         align-self: stretch;
@@ -358,7 +382,7 @@ nav {
   max-width: 1200px;
   margin-inline: auto;
   padding-inline: 4px;
-  @media(min-width: var(--small-breakpoint)) {
+  @media (min-width: $small-breakpoint) {
     padding-inline: 10px;
   }
 }
