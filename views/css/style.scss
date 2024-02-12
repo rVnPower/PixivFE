@@ -206,10 +206,12 @@ input[type="submit"][hidden] {
 .pagination {
   text-align: center;
 
+  form {
+    display: inline-block;
+  }
+
   .pagination-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    text-align: center;
   }
 
   .pagination-button {

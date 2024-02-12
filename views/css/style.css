@@ -186,10 +186,11 @@ input[type=submit][hidden] {
 .pagination {
   text-align: center;
 }
+.pagination form {
+  display: inline-block;
+}
 .pagination .pagination-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  text-align: center;
 }
 .pagination .pagination-button {
   margin-right: 5px;

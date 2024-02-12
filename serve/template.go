@@ -132,6 +132,29 @@ func CreatePaginator(base, ending string, current_page, max_page int) template.H
 	pages := ""
 
 	pages += `<div class="pagination-buttons">`
+	{ // "jump to page" <form>
+		hidden_section := ""
+		urlParsed, err := url.Parse(base)
+		if err != nil {
+			panic(err)
+		}
+		for k, vs := range urlParsed.Query() {
+			if k == "page" {
+				continue
+			}
+			for _, v := range vs {
+				hidden_section += fmt.Sprintf(`<input type="hidden" name="%s" value="%s"/>`, k, v)
+			}
+		}
+
+		max_section := ""
+		if hasMaxPage {
+			max_section = fmt.Sprintf(`max="%d"`, max_page)
+		}
+
+		pages += fmt.Sprintf(`<form action="%s">%s<input name="page" type="number" required value="%d" min="%d" %s placeholder="Page№" title="jump to page"/></form>`, pageUrl(current_page), hidden_section, current_page, 1, max_section)
+		pages += "<br />"
+	}
 	{
 		// previous,first (two buttons)
 		pages += `<span>`
@@ -151,29 +174,6 @@ func CreatePaginator(base, ending string, current_page, max_page int) template.H
 				pages += fmt.Sprintf(`<a href="%s" class="pagination-button">%d</a>`, pageUrl(i), i)
 			}
 			count++
-		}
-
-		{ // "jump to page" <form>
-			hidden_section := ""
-			urlParsed, err := url.Parse(base)
-			if err != nil {
-				panic(err)
-			}
-			for k, vs := range urlParsed.Query() {
-				if k == "page" {
-					continue
-				}
-				for _, v := range vs {
-					hidden_section += fmt.Sprintf(`<input type="hidden" name="%s" value="%s"/>`, k, v)
-				}
-			}
-
-			max_section := ""
-			if hasMaxPage {
-				max_section = fmt.Sprintf(`max="%d"`, max_page)
-			}
-
-			pages += fmt.Sprintf(`<form action="%s">%s<input name="page" type="number" required value="%d" min="%d" %s placeholder="Page№" title="jump to page"/></form>`, pageUrl(current_page), hidden_section, current_page, 1, max_section)
 		}
 
 		// next,last (two buttons)
