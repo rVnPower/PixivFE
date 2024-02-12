@@ -119,17 +119,25 @@ func ParseTime(date time.Time) string {
 }
 
 func CreatePaginator(base, ending string, current_page, max_page int) template.HTML {
-	peek := 10
-	limit := peek*2 + 1
+	pageUrl := func(page int) string {
+		return fmt.Sprintf(`%s%d%s`, base, page, ending)
+	}
+
+	const (
+		peek  = 5 // this can be changed freely
+		limit = peek*2 + 1 // tied to the algorithm below, do not change
+	)
+	hasMaxPage := max_page != -1
 	count := 0
 	pages := ""
 
 	pages += `<div class="pagination-buttons">`
 	{
+		// previous,first (two buttons)
 		pages += `<span>`
 		{
-			pages += fmt.Sprintf(`<a href="%s1%s" class="pagination-button">&laquo;</a>`, base, ending)
-			pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button">&lsaquo;</a>`, base, max(1, current_page-1), ending)
+			pages += fmt.Sprintf(`<a href="%s" class="pagination-button">&laquo;</a>`, pageUrl(1))
+			pages += fmt.Sprintf(`<a href="%s" class="pagination-button">&lsaquo;</a>`, pageUrl(max(1, current_page-1)))
 		}
 		pages += `</span>`
 
@@ -138,22 +146,47 @@ func CreatePaginator(base, ending string, current_page, max_page int) template.H
 				continue
 			}
 			if i == current_page {
-				pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button" id="highlight">%d</a>`, base, i, ending, i)
-
+				pages += fmt.Sprintf(`<a href="%s" class="pagination-button" id="highlight">%d</a>`, pageUrl(i), i)
 			} else {
-				pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button">%d</a>`, base, i, ending, i)
-
+				pages += fmt.Sprintf(`<a href="%s" class="pagination-button">%d</a>`, pageUrl(i), i)
 			}
 			count++
 		}
 
+		{ // "jump to page" <form>
+			hidden_section := ""
+			urlParsed, err := url.Parse(base)
+			if err != nil {
+				panic(err)
+			}
+			for k, vs := range urlParsed.Query() {
+				if k == "page" {
+					continue
+				}
+				for _, v := range vs {
+					hidden_section += fmt.Sprintf(`<input type="hidden" name="%s" value="%s"/>`, k, v)
+				}
+			}
+
+			max_section := ""
+			if hasMaxPage {
+				max_section = fmt.Sprintf(`max="%d"`, max_page)
+			}
+
+			pages += fmt.Sprintf(`<form action="%s">
+		  %s
+		  <input name="page" type="number" required min="%d" %s placeholder="Page№" title="jump to page"/>
+		</form>`, pageUrl(current_page), hidden_section, 1, max_section)
+		}
+
+		// next,last (two buttons)
 		pages += `<span>`
-		if max_page == -1 {
-			pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button">&rsaquo;</a>`, base, current_page+1, ending)
-			pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button" id="disabled">&raquo;</a>`, base, max_page, ending)
+		if hasMaxPage {
+			pages += fmt.Sprintf(`<a href="%s" class="pagination-button">&rsaquo;</a>`, pageUrl(min(max_page, current_page+1)))
+			pages += fmt.Sprintf(`<a href="%s" class="pagination-button">&raquo;</a>`, pageUrl(max_page))
 		} else {
-			pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button">&rsaquo;</a>`, base, min(max_page, current_page+1), ending)
-			pages += fmt.Sprintf(`<a href="%s%d%s" class="pagination-button">&raquo;</a>`, base, max_page, ending)
+			pages += fmt.Sprintf(`<a href="%s" class="pagination-button">&rsaquo;</a>`, pageUrl(current_page+1))
+			pages += fmt.Sprintf(`<a href="%s" class="pagination-button" class="disabled">&raquo;</a>`, pageUrl(max_page))
 		}
 		pages += `</span>`
 	}

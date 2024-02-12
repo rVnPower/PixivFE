@@ -219,7 +219,7 @@ input[type="submit"][hidden] {
     filter: brightness($hover-brightness);
   }
 
-  #disabled {
+  .disabled {
     pointer-events: none;
     background-color: $bg-secondary;
     filter: brightness(1);

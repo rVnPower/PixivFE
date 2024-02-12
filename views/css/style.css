@@ -196,7 +196,7 @@ input[type=submit][hidden] {
 .pagination #highlight {
   filter: brightness(1.2);
 }
-.pagination #disabled {
+.pagination .disabled {
   pointer-events: none;
   background-color: #222;
   filter: brightness(1);

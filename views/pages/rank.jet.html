@@ -69,6 +69,6 @@
     + "&mode=" + Mode + "&page=" }}
     <small>Page {{ Page }}/{{ PageLimit }}</small>
     <br />
-    {{ raw: createPaginator(url, "#checkpoint", Page, 10) }}
+    {{ raw: createPaginator(url, "#checkpoint", Page, PageLimit) }}
   </div>
 </div>
