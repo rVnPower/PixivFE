@@ -124,7 +124,7 @@ func CreatePaginator(base, ending string, current_page, max_page int) template.H
 	}
 
 	const (
-		peek  = 5 // this can be changed freely
+		peek  = 5          // this can be changed freely
 		limit = peek*2 + 1 // tied to the algorithm below, do not change
 	)
 	hasMaxPage := max_page != -1
@@ -173,10 +173,7 @@ func CreatePaginator(base, ending string, current_page, max_page int) template.H
 				max_section = fmt.Sprintf(`max="%d"`, max_page)
 			}
 
-			pages += fmt.Sprintf(`<form action="%s">
-		  %s
-		  <input name="page" type="number" required min="%d" %s placeholder="Page№" title="jump to page"/>
-		</form>`, pageUrl(current_page), hidden_section, 1, max_section)
+			pages += fmt.Sprintf(`<form action="%s">%s<input name="page" type="number" required value="%d" min="%d" %s placeholder="Page№" title="jump to page"/></form>`, pageUrl(current_page), hidden_section, current_page, 1, max_section)
 		}
 
 		// next,last (two buttons)
