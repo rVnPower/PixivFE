@@ -233,6 +233,7 @@ input[type="submit"][hidden] {
   }
 }
 
+// https://stackoverflow.com/questions/63787241/css-how-to-create-an-infinitely-moving-repeating-linear-gradient/63787567#63787567
 #loading-indicator {
   z-index: 2;
   isolation: isolate;
@@ -240,16 +241,22 @@ input[type="submit"][hidden] {
   top: 0;
   height: 4px;
   margin-bottom: -4px;
+
+  // background-size: 200px auto;
+  animation: rolling-something 3s linear infinite;  
+  background-image: repeating-linear-gradient(90deg, $link, transparent, transparent, $link, transparent, transparent, $link); 
+
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
   &.htmx-request {
-    // background: $link;
-    // https://stackoverflow.com/questions/63787241/css-how-to-create-an-infinitely-moving-repeating-linear-gradient/63787567#63787567
-    background-image: repeating-linear-gradient(90deg, $link, $fg, $link, $fg, $link); 
-    animation: rolling-something 3s linear infinite;
+    opacity: 1;
+    transition-timing-function: linear;
   }
 }
+
 @keyframes rolling-something {
   0% {
-    background-position-x: -33vw
+    background-position-x: -50vw
   }
   100% {
     background-position-x: 100vw
