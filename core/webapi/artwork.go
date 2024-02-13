@@ -242,6 +242,7 @@ func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
 		defer wg.Done()
 		images, err := GetArtworkImages(c, id)
 		if err != nil {
+
 			cerr <- err
 			return
 		}
@@ -335,9 +336,13 @@ func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
 
 		go func() {
 			defer wg.Done()
+			if illust.CommentDisabled == 1 {
+				return
+			}
 			var err error
 			comments, err := GetArtworkComments(c, id)
 			if err != nil {
+				println("here")
 				cerr <- err
 				return
 			}
