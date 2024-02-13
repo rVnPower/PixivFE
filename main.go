@@ -159,6 +159,7 @@ func main() {
 	server.Post("/rankingCalendar", pages.RankingCalendarPicker)
 	server.Get("/users/:id/:category?", pages.UserPage)
 	server.Get("/artworks/:id/", pages.ArtworkPage).Name("artworks")
+	server.Get("/artworks/:id/embed", pages.ArtworkEmbedPage)
 	server.Get("/artworks-multi/:ids/", pages.ArtworkMultiPage)
 
 	// Settings group

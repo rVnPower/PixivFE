@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <meta property="og:site_name" content="PixivFE" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:description" content="{{ MetaDescription }}" />
+    <meta property="og:url" content="{{ BaseURL }}" />
+    <meta property="og:image" content="{{ MetaImage }}" />
+    <!-- <meta property="og:image:alt" content="{{ alt_text }}" /> -->
+    <meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+    <a href="{{ BaseURL }}">You should have been redirected, here is a link to the original post.</a>
+    <script type="text/javascript">
+        window.location.replace("{{ BaseURL }}")
+    </script>
+</body>
+</html>

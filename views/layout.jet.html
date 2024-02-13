@@ -15,18 +15,18 @@
     {{ if BaseURL }}
       <meta property="og:title" content="{{ title }}" />
       <meta property="og:url" content="{{ BaseURL }}" />
-    <meta property="og:site_name" content="PixivFE" />
-    <meta property="og:type" content="article" />
-    <meta content="summary_large_image" name="twitter:card" />
+      <meta property="og:site_name" content="PixivFE" />
+      <meta property="og:type" content="article" />
+      <meta content="summary_large_image" name="twitter:card" />
 
-    {{ if isset(MetaDescription) }}
+      {{ if isset(MetaDescription) }}
     <meta
       property="og:description"
       content="{{MetaDescription}}"
     />
-    {{ end }}
+    {{end}}
 
-    {{ if isset(MetaImage) }}
+      {{ if isset(MetaDescription) }}
       <meta property="og:image" content="{{ MetaImage }}" />
     {{ end }}
     {{ end }}
