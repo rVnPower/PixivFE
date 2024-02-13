@@ -246,5 +246,9 @@ func GetTemplateFunctions() template.FuncMap {
 			}
 			return strings.Join(ids, ",")
 		},
+		"stripEmbed": func(s string) string {
+			// this is stupid
+			return s[:len(s)-6]
+		},
 	}
 }

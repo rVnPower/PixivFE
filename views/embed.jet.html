@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    {{ url := stripEmbed(BaseURL) }}
 <head>
     <meta charset="UTF-8">
     <title>{{ Title }}</title>
@@ -7,14 +8,14 @@
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{{ Title }}" />
     <meta property="og:description" content="{{ MetaDescription }}" />
-    <meta property="og:url" content="{{ BaseURL }}" />
+    <meta property="og:url" content="{{ url }}" />
     <meta property="og:image" content="{{ MetaImage }}" />
     <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body>
-    <a href="{{ BaseURL }}">You should have been redirected, here is a link to the original post.</a>
+    <a href="{{ url }}">You should have been redirected, here is a link to the original post.</a>
     <script type="text/javascript">
-        window.location.replace("{{ BaseURL }}")
+        window.location.replace("{{ url }}")
     </script>
 </body>
 </html>
