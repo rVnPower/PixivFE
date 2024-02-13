@@ -211,20 +211,23 @@ input[type=submit][hidden] {
   top: 0;
   height: 4px;
   margin-bottom: -4px;
+  animation: rolling-something 3s linear infinite;
+  animation-play-state: paused;
+  background-size: 60px auto;
 }
 #loading-indicator.htmx-request {
-  background-image: repeating-linear-gradient(90deg, #118bee, #fff, #118bee, #fff, #118bee);
-  animation: rolling-something 3s linear infinite;
+  background-image: repeating-linear-gradient(90deg, #118bee 0px 30px, transparent 30px 60px);
+  animation-play-state: running;
 }
-
 @keyframes rolling-something {
   0% {
-    background-position-x: -33vw;
+    background-position-x: -20px;
   }
   100% {
-    background-position-x: 100vw;
+    background-position-x: 40px;
   }
 }
+
 nav {
   margin-top: 15px;
   margin-bottom: 15px;
