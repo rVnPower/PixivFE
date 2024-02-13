@@ -211,22 +211,25 @@ input[type=submit][hidden] {
   top: 0;
   height: 4px;
   margin-bottom: -4px;
-  animation: rolling-something 3s linear infinite;
-  background-image: repeating-linear-gradient(90deg, #118bee, transparent, transparent, #118bee, transparent, transparent, #118bee);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: rolling-something 1s linear infinite;
+  background-image: repeating-linear-gradient(-0.25turn, #118bee 0vw, transparent 40vw);
+  background-size: 80vw auto;
+  will-change: opacity;
+  transition: opacity 0.3s;
   opacity: 0;
 }
 #loading-indicator.htmx-request {
   opacity: 1;
-  transition-timing-function: linear;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes rolling-something {
   0% {
-    background-position-x: -50vw;
+    background-position-x: 0vm;
   }
   100% {
-    background-position-x: 100vw;
+    background-position-x: 40vw;
   }
 }
 nav {
