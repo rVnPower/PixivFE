@@ -58,7 +58,7 @@ func ArtworkEmbedPage(c *fiber.Ctx) error {
 	}
 
 	// todo: passing ArtWorkData{} here will not work. maybe lowercase?
-	return c.Render("pages/artwork", fiber.Map{
+	return c.Render("embed", fiber.Map{
 		"Illust":          illust,
 		"Title":           illust.Title,
 		"MetaDescription": metaDescription,
