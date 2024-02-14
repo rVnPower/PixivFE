@@ -56,14 +56,18 @@ var aiTypeModel = map[aiType]string{
 }
 
 type ImageResponse struct {
-	Urls map[string]string `json:"urls"`
+	Width  int               `json:"width"`
+	Height int               `json:"height"`
+	Urls   map[string]string `json:"urls"`
 }
 
 type Image struct {
-	Small    string `json:"thumb_mini"`
-	Medium   string `json:"small"`
-	Large    string `json:"regular"`
-	Original string `json:"original"`
+	Width    int
+	Height   int
+	Small    string
+	Medium   string
+	Large    string
+	Original string
 }
 
 type Tag struct {
@@ -94,19 +98,19 @@ type Illust struct {
 	UserName        string        `json:"userName"`
 	UserAccount     string        `json:"userAccount"`
 	Date            time.Time     `json:"uploadDate"`
-	Images          []Image       `json:"images"`
-	Tags            []Tag         `json:"tags"`
-	Pages           int           `json:"pageCount"`
-	Bookmarks       int           `json:"bookmarkCount"`
-	Likes           int           `json:"likeCount"`
-	Comments        int           `json:"commentCount"`
-	Views           int           `json:"viewCount"`
-	CommentDisabled int           `json:"commentOff"`
-	SanityLevel     int           `json:"sl"`
-	XRestrict       xRestrict     `json:"xRestrict"`
-	AiType          aiType        `json:"aiType"`
-	Bookmarked      any           `json:"bookmarkData"`
-	Liked           any           `json:"likeData"`
+	Images          []Image
+	Tags            []Tag     `json:"tags"`
+	Pages           int       `json:"pageCount"`
+	Bookmarks       int       `json:"bookmarkCount"`
+	Likes           int       `json:"likeCount"`
+	Comments        int       `json:"commentCount"`
+	Views           int       `json:"viewCount"`
+	CommentDisabled int       `json:"commentOff"`
+	SanityLevel     int       `json:"sl"`
+	XRestrict       xRestrict `json:"xRestrict"`
+	AiType          aiType    `json:"aiType"`
+	Bookmarked      any       `json:"bookmarkData"`
+	Liked           any       `json:"likeData"`
 	User            UserBrief
 	RecentWorks     []ArtworkBrief
 	RelatedWorks    []ArtworkBrief
@@ -153,6 +157,12 @@ func GetArtworkImages(c *fiber.Ctx, id string) ([]Image, error) {
 	// Extract and proxy every images
 	for _, imageRaw := range resp {
 		var image Image
+
+		// this is the original art dimention, not the "regular" art dimension
+		// the image ratio of "regular" is close to Width/Height
+		// maybe not useful
+		image.Width = imageRaw.Width
+		image.Height = imageRaw.Height
 
 		image.Small = imageRaw.Urls["thumb_mini"]
 		image.Medium = imageRaw.Urls["small"]
@@ -220,6 +230,7 @@ func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
 	var illust struct {
 		*Illust
 
+		// recent illustrations by same user
 		Recent  map[int]any     `json:"userIllusts"`
 		RawTags json.RawMessage `json:"tags"`
 	}
