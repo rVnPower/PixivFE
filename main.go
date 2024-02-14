@@ -125,12 +125,15 @@ func main() {
 		},
 	}))
 
-	// Global headers (from GotHub)
+	// Global HTTP headers
 	server.Use(func(c *fiber.Ctx) error {
 		c.Set("X-Frame-Options", "SAMEORIGIN")
 		c.Set("X-Content-Type-Options", "nosniff")
 		c.Set("Referrer-Policy", "no-referrer")
 		c.Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
+		// -- Allowing inline styles may be simpler and avoid breakage, but you lose a lot of the protection that CSP provides
+		// src: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src#unsafe_inline_styles
+		c.Set("Content-Security-Policy", "default-src 'none'; script-src 'self' 'sha256-hyWmaJx4D/wwnSlHuylUcUEAHy4waDmxU5jgvi3ilCs='; style-src 'self' 'unsafe-inline'; img-src 'self' https:; connect-src 'self'; frame-ancestors 'none'; object-src 'none'")
 
 		return c.Next()
 	})
