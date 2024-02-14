@@ -2,3 +2,6 @@
 dev.sh
 /pixivfe
 .sass-cache/
+.env
+# exclude changes to pixivfe_token.txt
+docker/pixivfe_token.txt
