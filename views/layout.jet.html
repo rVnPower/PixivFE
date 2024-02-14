@@ -32,7 +32,7 @@
     {{ end }}
   </head>
 
-  <body hx-boost="true" hx-target="main" hx-select="main" hx-indicator="#loading-indicator">
+  <body data-hx-boost="true" data-hx-swap="outerHTML" data-hx-target="main" data-hx-select="main" data-hx-indicator="#loading-indicator">
     <script>
       document.body.addEventListener('htmx:beforeOnLoad', function (evt) {
         evt.detail.shouldSwap = true;
