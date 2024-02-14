@@ -1,111 +1,109 @@
-<div class="container illust">
-    {{ if !.Illust.IsUgoira }}
-    <div class="illust-images">
-      {{ range index := .Illust.Images }}
-      <a href="{{ .Original }}" target="_blank">
-        <img src="{{ .Large }}" alt="Page {{ index }}" />
-      </a>
-      {{ end }}
-    </div>
-    {{ else }}
-    <div class="illust-images">
-        <video
-          autoplay
-          loop
-          muted
-          disablepictureinpicture
-          playsinline
-          controls
-          poster="{{ .Illust.Images[0].Large }}"
-          src="/proxy/ugoira.com/{{ .Illust.ID }}"
-        >
-          Unable to load ugoira.
-        </video>
-    </div>
-    <a href="/proxy/ugoira.com/{{ .Illust.ID }}"
-      >Download</a
+{{ if !.IsUgoira }}
+<div class="illust-images">
+  {{ range index := .Images }}
+  <a href="{{ .Original }}" target="_blank">
+    <img src="{{ .Large }}" alt="Page {{ index }}" />
+  </a>
+  {{ end }}
+</div>
+{{ else }}
+<div class="illust-images">
+    <video
+      autoplay
+      loop
+      muted
+      disablepictureinpicture
+      playsinline
+      controls
+      poster="{{ .Images[0].Large }}"
+      src="/proxy/ugoira.com/{{ .ID }}"
     >
-    <br />
-    <a href="https://ugoira.com/i/{{ .Illust.ID }}"
-      >Go to ugoira.com for more options</a
-    >
-    {{ end }}
-  
-    <div class="illust-attr">
-      <a href="/users/{{ .Illust.User.ID }}"
-        ><img
-          src="{{ .Illust.User.Avatar }}"
-          alt="{{ .Illust.User.Name }}"
-          class="illust-avatar"
-        />
-      </a>
-      <div class="attr-wrap">
-        <div class="illust-title">{{ .Illust.Title }}</div>
-        <div class="illust-author">
-          <a href="/users/{{ .Illust.User.ID }}">{{ .Illust.User.Name }}</a>
-        </div>
-      </div>
+      Unable to load ugoira.
+    </video>
+</div>
+<a href="/proxy/ugoira.com/{{ .ID }}"
+  >Download</a
+>
+<br />
+<a href="https://ugoira.com/i/{{ .ID }}"
+  >Go to ugoira.com for more options</a
+>
+{{ end }}
+
+<div class="illust-attr">
+  <a href="/users/{{ .User.ID }}"
+    ><img
+      src="{{ .User.Avatar }}"
+      alt="{{ .User.Name }}"
+      class="illust-avatar"
+    />
+  </a>
+  <div class="attr-wrap">
+    <div class="illust-title">{{ .Title }}</div>
+    <div class="illust-author">
+      <a href="/users/{{ .User.ID }}">{{ .User.Name }}</a>
     </div>
-  
-    <div>
-      <a href="https://pixiv.net/i/{{ .Illust.ID }}"
-        >pixiv.net/i/{{ .Illust.ID }}</a
-      >
-      <br />
-    </div>
-    <div class="illust-tags">
-      <!--
-           To know if this artwork is bookmarked:
-           ```
-           {{ if .Illust.Bookmarked }}
-            <button>Unbookmark</button>
-            //...
-           {{ else }}
-            <button>Bookmarked</button>
-            //...
-           {{ end }}
-           ```
-  
-           Same with .Illust.Liked
-      -->
-      <span class="illust-tag-attr">
-        <img src="/assets/eye.png" alt="Views" />
-        {{ .Illust.Views }}
-      </span>
-      <span class="illust-tag-attr">
-        <img src="/assets/heart-solid.png" alt="Bookmarks" />
-        {{ .Illust.Bookmarks }}
-      </span>
-      <span class="illust-tag-attr">
-        <img src="/assets/like.png" alt="Likes" />
-        {{ .Illust.Likes }}
-      </span>
-      <span class="illust-tag-attr">
-        <img src="/assets/calendar.png" alt="Date" />
-        {{ parseTime: .Illust.Date }}
-      </span>
-    </div>
-  
-    <div class="illust-tags">
-      {{ if .Illust.AiType == 2 }}
-      <span class="illust-tag">
-        <span class="illust-tag-name" id="highlight">AI-generated</span>
-      </span>
-      {{ end }} {{ range .Illust.Tags }} {{ if isEmphasize(.Name) }}
-      <span class="illust-tag">
-        <span class="illust-tag-name" id="highlight">{{ .Name }}</span>
-      </span>
-      {{ else }}
-      <span class="illust-tag">
-        <span class="illust-tag-name"
-          ><a href="/tags/{{ escapeString(.Name) }}">#{{ .Name }}</a></span
-        ><span class="illust-tag-translation">{{ .TranslatedName }}</span>
-      </span>
-      {{ end }} {{ end }}
-    </div>
-    <br />
-    <div class="illust-description">
-      {{ raw: parsePixivRedirect(.Illust.Description) }}
-    </div>
-    <br />
   </div>
+</div>
+
+<div>
+  <a href="https://pixiv.net/i/{{ .ID }}"
+    >pixiv.net/i/{{ .ID }}</a
+  >
+  <br />
+</div>
+<div class="illust-tags">
+  <!--
+        To know if this artwork is bookmarked:
+        ```
+        {{ if .Bookmarked }}
+        <button>Unbookmark</button>
+        //...
+        {{ else }}
+        <button>Bookmarked</button>
+        //...
+        {{ end }}
+        ```
+
+        Same with .Liked
+  -->
+  <span class="illust-tag-attr">
+    <img src="/assets/eye.png" alt="Views" />
+    {{ .Views }}
+  </span>
+  <span class="illust-tag-attr">
+    <img src="/assets/heart-solid.png" alt="Bookmarks" />
+    {{ .Bookmarks }}
+  </span>
+  <span class="illust-tag-attr">
+    <img src="/assets/like.png" alt="Likes" />
+    {{ .Likes }}
+  </span>
+  <span class="illust-tag-attr">
+    <img src="/assets/calendar.png" alt="Date" />
+    {{ parseTime: .Date }}
+  </span>
+</div>
+
+<div class="illust-tags">
+  {{ if .AiType == 2 }}
+  <span class="illust-tag">
+    <span class="illust-tag-name" id="highlight">AI-generated</span>
+  </span>
+  {{ end }} {{ range .Tags }} {{ if isEmphasize(.Name) }}
+  <span class="illust-tag">
+    <span class="illust-tag-name" id="highlight">{{ .Name }}</span>
+  </span>
+  {{ else }}
+  <span class="illust-tag">
+    <span class="illust-tag-name"
+      ><a href="/tags/{{ escapeString(.Name) }}">#{{ .Name }}</a></span
+    ><span class="illust-tag-translation">{{ .TranslatedName }}</span>
+  </span>
+  {{ end }} {{ end }}
+</div>
+<br />
+<div class="illust-description">
+  {{ raw: parsePixivRedirect(.Description) }}
+</div>
+<br />
