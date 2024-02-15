@@ -90,6 +90,20 @@ type UserBrief struct {
 	Avatar string `json:"imageBig"`
 }
 
+type ArtworkBrief struct {
+	ID           string `json:"id"`
+	Title        string `json:"title"`
+	ArtistID     string `json:"userId"`
+	ArtistName   string `json:"userName"`
+	ArtistAvatar string `json:"profileImageUrl"`
+	Thumbnail    string `json:"url"`
+	Pages        int    `json:"pageCount"`
+	XRestrict    int    `json:"xRestrict"`
+	AiType       int    `json:"aiType"`
+	Bookmarked   any    `json:"bookmarkData"`
+	IllustType   int    `json:"illustType"`
+}
+
 type Illust struct {
 	ID              string        `json:"id"`
 	Title           string        `json:"title"`
