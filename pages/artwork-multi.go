@@ -2,6 +2,7 @@ package pages
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"sync"
@@ -14,7 +15,7 @@ func ArtworkMultiPage(c *fiber.Ctx) error {
 	param_ids := c.Params("ids")
 	ids := strings.Split(param_ids, ",")
 
-	artworks := make([]ArtWorkData, len(ids))
+	artworks := make([]*core.Illust, len(ids))
 
 	wg := sync.WaitGroup{}
 	wg.Add(len(ids))
@@ -28,8 +29,8 @@ func ArtworkMultiPage(c *fiber.Ctx) error {
 
 			illust, err := core.GetArtworkByID(c, id, false)
 			if err != nil {
-				artworks[i] = ArtWorkData{
-					Title: err.Error(),
+				artworks[i] = &core.Illust{
+					Title: err.Error(), // this might be flaky
 				}
 				return
 			}
@@ -39,18 +40,13 @@ func ArtworkMultiPage(c *fiber.Ctx) error {
 				metaDescription += "#" + i.Name + ", "
 			}
 
-			artworks[i] = ArtWorkData{
-				Illust:          illust,
-				Title:           illust.Title,
-				PageType:        "artwork",
-				MetaDescription: metaDescription,
-				MetaImage:       illust.Images[0].Original,
-			}
+			artworks[i] = illust
 		}(i, id)
 	}
 	wg.Wait()
 
 	return c.Render("pages/artwork-multi", fiber.Map{
 		"Artworks": artworks,
+		"Title": fmt.Sprintf("(%d images)", len(artworks)),
 	})
 }

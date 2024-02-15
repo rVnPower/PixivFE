@@ -5,6 +5,9 @@
     {{ if toInt(.Pages) > 1 }}
     <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
     {{ end }}
+    {{ if toInt(.IllustType) == 2 }}
+    <div class="artwork-page-count"><span>&#9654;</span></div>
+    {{ end }}
   </div>
 
   <a href="/artworks/{{ .ID }}#checkpoint">

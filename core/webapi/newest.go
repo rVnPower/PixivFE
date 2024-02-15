@@ -7,19 +7,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type ArtworkBrief struct {
-	ID           string `json:"id"`
-	Title        string `json:"title"`
-	ArtistID     string `json:"userId"`
-	ArtistName   string `json:"userName"`
-	ArtistAvatar string `json:"profileImageUrl"`
-	Thumbnail    string `json:"url"`
-	Pages        int    `json:"pageCount"`
-	XRestrict    int    `json:"xRestrict"`
-	AiType       int    `json:"aiType"`
-	Bookmarked   any    `json:"bookmarkData"`
-}
-
 func GetNewestArtworks(c *fiber.Ctx, worktype string, r18 string) ([]ArtworkBrief, error) {
 	token := session.GetToken(c)
 	URL := http.GetNewestArtworksURL(worktype, r18, "0")

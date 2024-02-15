@@ -8,14 +8,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type ArtWorkData struct {
-	Illust          *core.Illust
-	Title           string
-	PageType        string
-	MetaDescription string
-	MetaImage       string
-}
-
 func ArtworkPage(c *fiber.Ctx) error {
 	param_id := c.Params("id")
 	if _, err := strconv.Atoi(param_id); err != nil {

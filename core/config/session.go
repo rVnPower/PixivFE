@@ -34,6 +34,14 @@ func ProxyImageUrl(c *fiber.Ctx, s string) string {
 	return s
 }
 
+func ProxyImageUrlNoEscape(c *fiber.Ctx, s string) string {
+	proxy := GetImageProxy(c)
+	s = strings.ReplaceAll(s, `https://i.pximg.net`, "https://"+proxy)
+	// s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, "/proxy/i.pximg.net")
+	s = strings.ReplaceAll(s, `https://s.pximg.net`, "/proxy/s.pximg.net")
+	return s
+}
+
 func GetImageProxy(c *fiber.Ctx) string {
 	sess, err := Store.Get(c)
 	if err != nil {
