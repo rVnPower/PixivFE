@@ -34,12 +34,6 @@
   </head>
 
   <body data-hx-boost="true" data-hx-swap="outerHTML" data-hx-target="main" data-hx-select="main" data-hx-indicator="#loading-indicator">
-    <script>
-      document.body.addEventListener('htmx:beforeOnLoad', function (evt) {
-        evt.detail.shouldSwap = true;
-        evt.detail.isError = false;
-      });
-    </script>
     <div id="loading-indicator"></div>
     <nav>
       <div class="navigation-wrapper">
@@ -131,6 +125,25 @@
       </div>
       <div class="navbar-shadow"></div>
     </nav>
+    <script>
+      // make 4xx 5xx responses swap in as well
+      addEventListener('htmx:beforeOnLoad', function (event) {
+        event.detail.shouldSwap = true;
+        event.detail.isError = false;
+      });
+
+      function closeNavigationMenu() {
+        document.getElementById("sidebar-toggler").checked = false
+      }
+      // browser built-in navigation
+      addEventListener("popstate", (event) => {
+        closeNavigationMenu()
+      });
+      // htmx triggered navigation
+      addEventListener("htmx:pushedIntoHistory", (event) => {
+        closeNavigationMenu()
+      });
+    </script>
     <main>
       {{ embed() }}
     </main>
