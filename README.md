@@ -1,6 +1,6 @@
 # PixivFE
 
-A privacy-respecting alternative front-end for Pixiv that doesn't suck
+A privacy-respecting alternative front-end for Pixiv that doesn't suck.
 
 <p>
 <a href="https://codeberg.org/vnpower/pixivfe">
@@ -11,11 +11,9 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck
 ![CI badge](https://ci.codeberg.org/api/badges/12556/status.svg)
 [![Go Report Card](https://goreportcard.com/badge/codeberg.org/vnpower/pixivfe)](https://goreportcard.com/report/codeberg.org/vnpower/pixivfe)
 
-Questions? Feedbacks? You can [PM me](https://matrix.to/#/@vnpower:eientei.org) on
-Matrix!
+Questions? Feedback? You can [PM me](https://matrix.to/#/@vnpower:eientei.org) on Matrix!
 
-You can keep track of this project's development
-[here](https://codeberg.org/VnPower/PixivFE/wiki/Things-to-do).
+You can keep track of this project's development [here](https://codeberg.org/VnPower/PixivFE/wiki/Things-to-do).
 
 ## Features
 
@@ -29,25 +27,33 @@ You can keep track of this project's development
 You can use PixivFE for personal use! Assuming that you use an operating system that can run POSIX shell scripts, install `go`, clone this repository, modify the `run.sh` file, and profit!
 I recommend self-hosting your own instance for personal use, instead of relying entirely on official instances.
 
-
-Check out [this page](https://codeberg.org/VnPower/pixivfe/wiki/Hosting). We
-currently have guides for Docker and Caddy.
+Check out [this page](https://codeberg.org/VnPower/pixivfe/wiki/Hosting). We currently have guides for Docker and Caddy.
 
 ## Development
 
-```
-# watch and compile styles with node-sass
-pnpm i -g sass
-sass --watch views/css
+**Requirements:**
 
-# run in development mode (auto reload templates)
-PIXIVFE_DEV=1 ... go run .
+- [pnpm](https://pnpm.io/installation) (to install Sass)
+- [go](https://go.dev/doc/install) (to build PixivFE from source)
+
+```bash
+# Clone the PixivFE repository
+git clone https://codeberg.org/VnPower/PixivFE.git && cd PixivFE
+
+# Install Sass globally using pnpm
+pnpm i -g sass
+
+# Compile styles using Sass and watch for changes
+sass --watch ./views/css
+
+# Run in PixivFE in development mode (templates reload automatically)
+PIXIVFE_DEV=1 <other_environment_variables> go run .
 ```
 
 ## Instances
 
 | Name               | Cloudflare? | URL                             |
-|--------------------|-------------|---------------------------------|
+| ------------------ | ----------- | ------------------------------- |
 | exozyme (Official) | No          | https://pixivfe.exozy.me        |
 | dragongoose        | No          | https://pixivfe.drgns.space     |
 | chaotic.ninja      | No          | https://pix.chaotic.ninja       |
@@ -61,6 +67,7 @@ Hosted one yourself? Create a pull request to add it here!
 License: [AGPL3](https://www.gnu.org/licenses/agpl-3.0.txt)
 
 Special thanks:
+
 - [huggy](https://huggy.moe): author of [ugoira.com](https://ugoira.com) for the ugoira API
 - [dragongoose](https://drgns.space): writing guides
-- Contributors, stargazers and users like you, as well! 
+- Contributors, stargazers and users like you, as well!
