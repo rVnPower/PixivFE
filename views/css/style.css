@@ -333,6 +333,7 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   max-width: 1200px;
   margin-inline: auto;
   padding-inline: 4px;
+  scroll-margin-top: 71px;
 }
 @media (min-width: 440px) {
   .container {
