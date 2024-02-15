@@ -38,6 +38,9 @@ Check out [this page](https://codeberg.org/VnPower/pixivfe/wiki/Hosting). We cur
 - [go](https://go.dev/doc/install) (to run PixivFE in development mode)
 
 ```bash
+# Clone the PixivFE repository
+git clone https://codeberg.org/VnPower/PixivFE.git && cd PixivFE
+
 # Install Sass globally using pnpm
 pnpm i -g sass
 
