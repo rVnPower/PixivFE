@@ -267,11 +267,16 @@ input[type="submit"][hidden] {
 }
 
 nav {
-  margin-top: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   margin-bottom: 15px;
   margin-left: 20px;
   margin-right: 20px;
   .navigation-wrapper {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: $bg;
     display: flex;
     justify-content: space-between;
     align-items: center;
