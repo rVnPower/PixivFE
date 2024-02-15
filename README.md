@@ -38,15 +38,17 @@ currently have guides for Docker and Caddy.
 
 - [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) (to install pnpm)
 - [pnpm](https://pnpm.io/installation) (to install Sass)
-- [go](https://go.dev/doc/install) (to build PixivFE and then run in development mode)
+- [go](https://go.dev/doc/install) (to run PixivFE in development mode)
 
 ```bash
-# watch and compile styles with node-sass
+# Install Sass globally using pnpm
 pnpm i -g sass
+
+# Compile styles using Sass and watch for changes
 sass --watch views/css
 
-# run in development mode (auto reload templates)
-PIXIVFE_DEV=1 ... go run .
+# Run in PixivFE in development mode (templates reload automatically)
+PIXIVFE_DEV=1 <other_environment_variables> go run .
 ```
 
 ## Instances
