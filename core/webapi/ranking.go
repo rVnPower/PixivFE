@@ -20,6 +20,7 @@ type Ranking struct {
 		ID           int    `json:"illust_id"`
 		ArtistID     int    `json:"user_id"`
 		Rank         int    `json:"rank"`
+		IllustType   string `json:"illust_type"`
 	} `json:"contents"`
 
 	Mode        string          `json:"mode"`
