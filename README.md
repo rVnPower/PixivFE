@@ -42,7 +42,7 @@ Check out [this page](https://codeberg.org/VnPower/pixivfe/wiki/Hosting). We cur
 pnpm i -g sass
 
 # Compile styles using Sass and watch for changes
-sass --watch views/css
+sass --watch ./views/css
 
 # Run in PixivFE in development mode (templates reload automatically)
 PIXIVFE_DEV=1 <other_environment_variables> go run .
