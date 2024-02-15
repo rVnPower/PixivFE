@@ -14,7 +14,7 @@ var GlobalServerConfig ServerConfig
 type ServerConfig struct {
 	// Required
 	Token       []string
-	ProxyServer string // authority part of the URL; no '/'
+	ProxyServer string // authority part of the URL; no '/', no path, no protocol (default to https://)
 
 	// can be left empty
 	Host string

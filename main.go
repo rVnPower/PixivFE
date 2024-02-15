@@ -5,7 +5,6 @@ import (
 	"log"
 	"net"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 
@@ -133,7 +132,7 @@ func main() {
 		c.Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
 		// -- Allowing inline styles may be simpler and avoid breakage, but you lose a lot of the protection that CSP provides
 		// src: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src#unsafe_inline_styles
-		c.Set("Content-Security-Policy", "default-src 'none'; script-src 'self' 'sha256-hyWmaJx4D/wwnSlHuylUcUEAHy4waDmxU5jgvi3ilCs='; style-src 'self' 'unsafe-inline'; img-src 'self' https:; connect-src 'self'; frame-ancestors 'self'; object-src 'none'")
+		// c.Set("Content-Security-Policy", "default-src 'none'; script-src 'self' 'sha256-hyWmaJx4D/wwnSlHuylUcUEAHy4waDmxU5jgvi3ilCs='; style-src 'self' 'unsafe-inline'; img-src 'self' https:; connect-src 'self'; frame-ancestors 'self'; object-src 'none'")
 
 		return c.Next()
 	})
@@ -201,16 +200,22 @@ func main() {
 	if config.GlobalServerConfig.UnixSocket != "" {
 		ln, err := net.Listen("unix", config.GlobalServerConfig.UnixSocket)
 		if err != nil {
-			log.Fatalf("Failed to run on Unix socket. %s", err)
-			os.Exit(1)
+			// log.Fatalf("Failed to run on Unix socket. %s", err)
+			panic(err)
 		}
 		log.Printf("PixivFE is running on %v\n", config.GlobalServerConfig.UnixSocket)
-		server.Listener(ln)
+		err = server.Listener(ln)
+		if err != nil {
+			panic(err)
+		}
 	} else {
 		addr := config.GlobalServerConfig.Host + ":" + config.GlobalServerConfig.Port
 		log.Printf("PixivFE is running on %v\n", addr)
 
 		// note: string concatenation is very flaky
-		server.Listen(addr)
+		err := server.Listen(addr)
+		if err != nil {
+			panic(err)
+		}
 	}
 }
