@@ -35,6 +35,12 @@ currently have guides for Docker and Caddy.
 
 ## Development
 
+**Requirements:**
+
+- [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) (to install pnpm)
+- [pnpm](https://pnpm.io/installation) (to install Sass)
+- [go](https://go.dev/doc/install) (to build PixivFE and then run in development mode)
+
 ```
 # watch and compile styles with node-sass
 pnpm i -g sass
