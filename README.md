@@ -33,9 +33,8 @@ Check out [this page](https://codeberg.org/VnPower/pixivfe/wiki/Hosting). We cur
 
 **Requirements:**
 
-- [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) (to install pnpm)
 - [pnpm](https://pnpm.io/installation) (to install Sass)
-- [go](https://go.dev/doc/install) (to run PixivFE in development mode)
+- [go](https://go.dev/doc/install) (to build PixivFE from source)
 
 ```bash
 # Clone the PixivFE repository
