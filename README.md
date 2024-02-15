@@ -29,7 +29,6 @@ You can keep track of this project's development
 You can use PixivFE for personal use! Assuming that you use an operating system that can run POSIX shell scripts, install `go`, clone this repository, modify the `run.sh` file, and profit!
 I recommend self-hosting your own instance for personal use, instead of relying entirely on official instances.
 
-
 Check out [this page](https://codeberg.org/VnPower/pixivfe/wiki/Hosting). We
 currently have guides for Docker and Caddy.
 
@@ -41,7 +40,7 @@ currently have guides for Docker and Caddy.
 - [pnpm](https://pnpm.io/installation) (to install Sass)
 - [go](https://go.dev/doc/install) (to build PixivFE and then run in development mode)
 
-```
+```bash
 # watch and compile styles with node-sass
 pnpm i -g sass
 sass --watch views/css
@@ -53,7 +52,7 @@ PIXIVFE_DEV=1 ... go run .
 ## Instances
 
 | Name               | Cloudflare? | URL                             |
-|--------------------|-------------|---------------------------------|
+| ------------------ | ----------- | ------------------------------- |
 | exozyme (Official) | No          | https://pixivfe.exozy.me        |
 | dragongoose        | No          | https://pixivfe.drgns.space     |
 | chaotic.ninja      | No          | https://pix.chaotic.ninja       |
@@ -67,6 +66,7 @@ Hosted one yourself? Create a pull request to add it here!
 License: [AGPL3](https://www.gnu.org/licenses/agpl-3.0.txt)
 
 Special thanks:
+
 - [huggy](https://huggy.moe): author of [ugoira.com](https://ugoira.com) for the ugoira API
 - [dragongoose](https://drgns.space): writing guides
-- Contributors, stargazers and users like you, as well! 
+- Contributors, stargazers and users like you, as well!
