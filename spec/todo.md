@@ -26,6 +26,9 @@ Serialized web comics. Example: https://www.pixiv.net/user/13651304/series/17101
 
 Independent features
 
+- [x] Multiple tokens support
+Now you can do PIXIVFE_TOKEN=TOKEN_A,TOKEN_B
+
 - [ ] Pixivision  
 https://www.pixivision.net/en/  
 Pretty good to discover new artworks n stuff.  
