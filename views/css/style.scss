@@ -380,6 +380,11 @@ nav {
 
 @media screen and (max-width: 600px) {
   nav {
+    .navigation-wrapper {
+      padding-top: 10px; // Reduced from 15px
+      padding-bottom: 10px; // Reduced from 15px
+    }
+      
     .search-form {
       display: none;
     }

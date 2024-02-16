@@ -315,6 +315,10 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 }
 
 @media screen and (max-width: 600px) {
+  nav .navigation-wrapper {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
   nav .search-form {
     display: none;
   }
