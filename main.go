@@ -131,8 +131,8 @@ func main() {
 		c.Set("X-Content-Type-Options", "nosniff")
 		c.Set("Referrer-Policy", "no-referrer")
 		c.Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
-		c.Set("Content-Security-Policy", fmt.Sprintf("default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' %s; connect-src 'self'", config.GetImageProxyOrigin(c)))
-		// add this if need iframe:      ; frame-ancestors 'self'
+		c.Set("Content-Security-Policy", fmt.Sprintf("default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' %s; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; ", config.GetImageProxyOrigin(c)))
+		// use this if need iframe:  frame-ancestors 'self'
 
 		return c.Next()
 	})
