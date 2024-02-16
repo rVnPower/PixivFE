@@ -1,6 +1,9 @@
 package core
 
-import "fmt"
+import (
+	"fmt"
+	"net/url"
+)
 
 func GetNewestArtworksURL(worktype, r18, lastID string) string {
 	base := "https://www.pixiv.net/ajax/illust/new?limit=30&type=%s&r18=%s&lastId=%s"
@@ -90,10 +93,10 @@ func GetArtworkCommentsURL(id string) string {
 	return fmt.Sprintf(base, id)
 }
 
-func GetTagDetailURL(id string) string {
+func GetTagDetailURL(unescapedTag string) string {
 	base := "https://www.pixiv.net/ajax/search/tags/%s"
 
-	return fmt.Sprintf(base, id)
+	return fmt.Sprintf(base, url.PathEscape(unescapedTag))
 }
 
 func GetSearchArtworksURL(artworkType, name, order, age_settings, page string) string {

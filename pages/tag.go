@@ -1,6 +1,7 @@
 package pages
 
 import (
+	"net/url"
 	"strconv"
 
 	core "codeberg.org/vnpower/pixivfe/v2/core/webapi"
@@ -13,7 +14,10 @@ func TagPage(c *fiber.Ctx) error {
 	queries["Category"] = c.Query("category", "artworks")
 	queries["Order"] = c.Query("order", "date_d")
 
-	name := c.Params("name")
+	name, err := url.PathUnescape(c.Params("name"))
+	if err != nil {
+		return err
+	}
 
 	page := c.Query("page", "1")
 	pageInt, _ := strconv.Atoi(page)

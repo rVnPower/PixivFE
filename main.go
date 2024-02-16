@@ -178,6 +178,7 @@ func main() {
 	self.Post("/like/:id", pages.LikeRoute)
 
 	server.Get("/tags/:name", pages.TagPage)
+	server.Post("/tags/:name", pages.TagPage)
 	server.Post("/tags",
 		func(c *fiber.Ctx) error {
 			name := c.FormValue("name")
