@@ -1,43 +1,24 @@
-# To consider
-- [ ] App API support  
-May be painful to implement.
-Required to fully replace Pixiv, if user actions won't work universally.
-https://codeberg.org/VnPower/PixivFE/issues/7
+# Roadmap
 
-- [ ] Testing  
-Do we really need testing? What to test?
+## To implement
 
-- [ ] Storing values  
+/settings/
+
+- [x] Merge login page with settings page
+- [ ] Persistence  
 A JSON file to store values.
 This way, values set by users won't be lost after restarts.
+- [Add More User Settings](user-customization.md)
 
-- [ ] User discovery  
-For discovery page.  
-Pretty useless if user actions (following) doesn't work.
-
-- [ ] "Popular" artworks  
-Check the README of this:  
-https://github.com/kokseen1/Mashiro
-
-- [ ] i18n  
-The last thing to work on, probably.
-
-- [x] Ranking page  
-A lot of options weren't implemented.
-
-- [x] Revisit ranking calendar  
-There should be a way to display R18 thumbnails now?
-
-# To implement
-- [x] Multiple tokens support  
-Let the host supply multiple tokens at once to avoid overuse.
+uncategorized
 
 - [ ] Pixivision  
 https://www.pixivision.net/en/  
 Pretty good to discover new artworks n stuff.  
 Implement by parsing the webpage.
 
-- [ ] RSS support for Pixivision  
+  - [ ] RSS support for Pixivision  
+
 - [ ] Search page  
 A page to do more extensive searching.  
 Might require JavaScript for search recommendation, if wanted.
@@ -59,8 +40,36 @@ There are a lot of sections for the landing page. https://www.pixiv.net/ajax/top
 The artwork parsing part has already been implemented flawlessly.  
 We only have to write the frontend code for those sections.
 
-- [x] Merge settings page with login page  
 - [ ] Various interesting pages from Pixiv.net  
   - https://www.pixiv.net/idea/
   - https://www.pixiv.net/request
   - https://www.pixiv.net/contest/ (no AJAX endpoints)
+
+## To consider
+
+- App API support  
+May be painful to implement.
+Required to fully replace Pixiv, if user actions won't work universally.
+https://codeberg.org/VnPower/PixivFE/issues/7
+
+- Testing  
+Do we really need testing? What to test?
+
+- User discovery  
+For discovery page.  
+Pretty useless if user actions (following) doesn't work.
+
+- "Popular" artworks  
+Check the README of this:  
+https://github.com/kokseen1/Mashiro
+
+- i18n  
+The last thing to work on, probably.
+
+## extraneous (not sure if those are tasks or ideas)
+
+- [x] Ranking page  
+A lot of options weren't implemented.
+
+- [x] Revisit ranking calendar  
+There should be a way to display R18 thumbnails now?

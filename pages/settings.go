@@ -49,7 +49,7 @@ func setToken(c *fiber.Ctx) error {
 			return errors.New("Cannot authorize with supplied token.")
 		}
 
-		// Set the tokens
+		// Set the token
 		if err := session.SetSessionValue(c, "Token", token); err != nil {
 			return err
 		}
@@ -96,7 +96,7 @@ func SettingsPost(c *fiber.Ctx) error {
 	case "logout":
 		err = setLogout(c)
 	default:
-		err = errors.New("No such methods available.")
+		err = errors.New("no such setting available")
 	}
 
 	if err != nil {
