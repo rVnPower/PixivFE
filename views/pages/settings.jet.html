@@ -20,7 +20,7 @@
   </p>
   <form action="/settings/token" method="post">
     <input type="text" name="token" autocomplete="off" />
-    <input type="submit" value="Apply" />
+    <input type="submit" value="Remember Account Cookie Until Next Server Restart" />
   </form>
   <hr />
   <h2>Logout</h2>
@@ -36,35 +36,35 @@
     <h2>Image proxy server</h2>
     <div class="form-field">
         <form action="/settings/image_server" method="post">
-            <input type="radio" name="image-proxy" id="image-proxy" value="pximg.exozy.me" />
-            <label for="image-proxy">pximg.exozy.me</label>
+            <input type="radio" name="image-proxy" id="image-proxy" value="https://pximg.exozy.me" />
+            <label for="image-proxy">https://pximg.exozy.me</label>
             <br />
-            <input type="radio" name="image-proxy" id="image-proxy" value="pixiv.ducks.party" />
-            <label for="image-proxy">pixiv.ducks.party</label>
+            <input type="radio" name="image-proxy" id="image-proxy" value="https://pixiv.ducks.party" />
+            <label for="image-proxy">https://pixiv.ducks.party</label>
             <br />
-            <input type="radio" name="image-proxy" id="image-proxy" value="sex.nyan.xyz" />
-            <label for="image-proxy">***.nyan.xyz</label>
+            <input type="radio" name="image-proxy" id="image-proxy" value="https://sex.nyan.xyz" />
+            <label for="image-proxy">https://***.nyan.xyz</label>
             <br />
-            <input type="radio" name="image-proxy" id="image-proxy" value="pixiv.tatakai.top" />
-            <label for="image-proxy">pixiv.tatakai.top</label>
+            <input type="radio" name="image-proxy" id="image-proxy" value="https://pixiv.tatakai.top" />
+            <label for="image-proxy">https://pixiv.tatakai.top</label>
             <br />
-            <input type="radio" name="image-proxy" id="image-proxy" value="i.loli.best" />
-            <label for="image-proxy">i.****.best</label>
+            <input type="radio" name="image-proxy" id="image-proxy" value="https://i.loli.best" />
+            <label for="image-proxy">https://i.****.best</label>
             <br />
-            <input type="radio" name="image-proxy" id="image-proxy" value="img.chaotic.ninja" />
-            <label for="image-proxy">img.chaotic.ninja</label>
+            <input type="radio" name="image-proxy" id="image-proxy" value="https://img.chaotic.ninja" />
+            <label for="image-proxy">https://img.chaotic.ninja</label>
             <br />
-            <input type="radio" name="image-proxy" id="image-proxy" value="pixiv.cat" />
-            <label for="image-proxy">pixiv.cat</label>
+            <input type="radio" name="image-proxy" id="image-proxy" value="https://pixiv.cat" />
+            <label for="image-proxy">https://pixiv.cat</label>
             <br />
-            <input type="submit" value="Apply" />
+            <input type="submit" value="Use Selected Proxy" />
         </form>
         <br />
         <form action="/settings/image_server" method="post">
             <label for="image-proxy">Custom image proxy server</label>
-            <input type="text" name="image-proxy" id="image-proxy" placeholder="Paste the address here..."
+            <input type="text" name="image-proxy" id="image-proxy" placeholder="https://example.com"
                 autocomplete="off" />
-            <input type="submit" value="Apply" />
+            <input type="submit" value="Use Custom Proxy" />
         </form>
     </div>
 </div>

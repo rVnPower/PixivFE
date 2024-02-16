@@ -11,7 +11,6 @@ import (
 	"time"
 
 	core "codeberg.org/vnpower/pixivfe/v2/core/webapi"
-	config "codeberg.org/vnpower/pixivfe/v2/core/config"
 )
 
 func GetRandomColor() string {
@@ -250,9 +249,6 @@ func GetTemplateFunctions() template.FuncMap {
 		"stripEmbed": func(s string) string {
 			// this is stupid
 			return s[:len(s)-6]
-		},
-		"getImageProxyProtocolAuthority": func() string {
-			return "https://" + config.GlobalServerConfig.ProxyServerAuthority
 		},
 	}
 }

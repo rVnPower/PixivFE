@@ -3,6 +3,7 @@ package core
 import (
 	"log"
 	"math/rand"
+	"net/url"
 	"strings"
 	"time"
 
@@ -42,23 +43,29 @@ func ProxyImageUrlNoEscape(c *fiber.Ctx, s string) string {
 	return s
 }
 
+// footgun: if proxy server has prefix path (.Path != "/""), PixivFE will not work
 func GetImageProxyOrigin(c *fiber.Ctx) string {
-	return "https://" + GetImageProxyAuthority(c)
+	url := GetImageProxy(c)
+	return url.Scheme + "://" + url.Host
 }
 
-// Deprecated: this function should be nuked.
-func GetImageProxyAuthority(c *fiber.Ctx) string {
+func GetImageProxy(c *fiber.Ctx) url.URL {
 	sess, err := Store.Get(c)
 	if err != nil {
-		log.Fatalln("Failed to get current session and its values! Falling back to server default!")
-		return GlobalServerConfig.ProxyServerAuthority
+		log.Println("Failed to get current session!")
+		// fall through to default case
+	} else {
+		value := sess.Get("ImageProxy")
+		if value_s, ok := value.(string); ok {
+			proxyUrl, err := url.Parse(value_s)
+			if err != nil {
+				// fall through to default case
+			} else {
+				return *proxyUrl
+			}
+		}
 	}
-	value := sess.Get("ImageProxy")
-	if value != nil {
-		return value.(string)
-	}
-
-	return GlobalServerConfig.ProxyServerAuthority
+	return GlobalServerConfig.ProxyServer
 }
 
 func GetRandomDefaultToken() string {

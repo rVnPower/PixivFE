@@ -200,7 +200,6 @@ func main() {
 	if config.GlobalServerConfig.UnixSocket != "" {
 		ln, err := net.Listen("unix", config.GlobalServerConfig.UnixSocket)
 		if err != nil {
-			// log.Fatalf("Failed to run on Unix socket. %s", err)
 			panic(err)
 		}
 		log.Printf("PixivFE is running on %v\n", config.GlobalServerConfig.UnixSocket)

@@ -3,6 +3,7 @@ package core
 import (
 	"errors"
 	"log"
+	"net/url"
 	"os"
 	"strconv"
 	"strings"
@@ -13,9 +14,9 @@ var GlobalServerConfig ServerConfig
 
 type ServerConfig struct {
 	// Required
-	Token       []string
-	// Deprecated: only store Origin instead
-	ProxyServerAuthority string // authority part of the URL; no '/', no path, no protocol (default to https://)
+	Token []string
+
+	ProxyServer url.URL // proxy server, may contain prefix as well
 
 	// can be left empty
 	Host string
@@ -107,8 +108,21 @@ func (s *ServerConfig) SetToken(v string) {
 }
 
 func (s *ServerConfig) SetProxyServer(v string) {
-	s.ProxyServerAuthority = v
-	log.Printf("Set image proxy server to: %s\n", v)
+	proxyUrl, err := url.Parse(v)
+	if err != nil {
+		panic(err)
+	}
+	s.ProxyServer = *proxyUrl
+	if proxyUrl.Scheme == "" {
+		log.Panicf("proxy server url has no scheme: %s\nPlease specify like https://example.com", proxyUrl.String())
+	}
+	if proxyUrl.Host == "" {
+		log.Panicf("proxy server url has no host: %s\nPlease specify like https://example.com", proxyUrl.String())
+	}
+	if proxyUrl.Path != "" {
+		log.Panicf("proxy server url has path component (%s): %s\nPixivFE does not support this now, sorry", proxyUrl.Path, proxyUrl.String())
+	}
+	log.Printf("Set image proxy server to: %s\n", proxyUrl.String())
 }
 
 func (s *ServerConfig) SetPort(v string) {
