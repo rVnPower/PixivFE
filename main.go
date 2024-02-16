@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"net"
 	"net/http"
@@ -130,9 +131,8 @@ func main() {
 		c.Set("X-Content-Type-Options", "nosniff")
 		c.Set("Referrer-Policy", "no-referrer")
 		c.Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
-		// -- Allowing inline styles may be simpler and avoid breakage, but you lose a lot of the protection that CSP provides
-		// src: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src#unsafe_inline_styles
-		// c.Set("Content-Security-Policy", "default-src 'none'; script-src 'self' 'sha256-hyWmaJx4D/wwnSlHuylUcUEAHy4waDmxU5jgvi3ilCs='; style-src 'self' 'unsafe-inline'; img-src 'self' https:; connect-src 'self'; frame-ancestors 'self'; object-src 'none'")
+		c.Set("Content-Security-Policy", fmt.Sprintf("default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' %s; connect-src 'self'", config.GetImageProxyOrigin(c)))
+		// add this if need iframe:      ; frame-ancestors 'self'
 
 		return c.Next()
 	})

@@ -27,33 +27,38 @@ func saveSession(sess *session.Session) error {
 }
 
 func ProxyImageUrl(c *fiber.Ctx, s string) string {
-	proxy := GetImageProxy(c)
-	s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, "https://"+proxy)
+	proxyOrigin := GetImageProxyOrigin(c)
+	s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, proxyOrigin)
 	// s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, "/proxy/i.pximg.net")
 	s = strings.ReplaceAll(s, `https:\/\/s.pximg.net`, "/proxy/s.pximg.net")
 	return s
 }
 
 func ProxyImageUrlNoEscape(c *fiber.Ctx, s string) string {
-	proxy := GetImageProxy(c)
-	s = strings.ReplaceAll(s, `https://i.pximg.net`, "https://"+proxy)
+	proxyOrigin := GetImageProxyOrigin(c)
+	s = strings.ReplaceAll(s, `https://i.pximg.net`, proxyOrigin)
 	// s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, "/proxy/i.pximg.net")
 	s = strings.ReplaceAll(s, `https://s.pximg.net`, "/proxy/s.pximg.net")
 	return s
 }
 
-func GetImageProxy(c *fiber.Ctx) string {
+func GetImageProxyOrigin(c *fiber.Ctx) string {
+	return "https://" + GetImageProxyAuthority(c)
+}
+
+// Deprecated: this function should be nuked.
+func GetImageProxyAuthority(c *fiber.Ctx) string {
 	sess, err := Store.Get(c)
 	if err != nil {
 		log.Fatalln("Failed to get current session and its values! Falling back to server default!")
-		return GlobalServerConfig.ProxyServer
+		return GlobalServerConfig.ProxyServerAuthority
 	}
 	value := sess.Get("ImageProxy")
 	if value != nil {
 		return value.(string)
 	}
 
-	return GlobalServerConfig.ProxyServer
+	return GlobalServerConfig.ProxyServerAuthority
 }
 
 func GetRandomDefaultToken() string {

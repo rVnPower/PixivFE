@@ -31,7 +31,7 @@ func SPximgProxy(c *fiber.Ctx) error {
 }
 
 func IPximgProxy(c *fiber.Ctx) error {
-	proxy_authority := config.GetImageProxy(c)
+	proxy_authority := config.GetImageProxyAuthority(c)
 	URL := fmt.Sprintf("https://%s/%s", proxy_authority, c.Params("*"))
 	req, _ := http.NewRequest("GET", URL, nil)
 

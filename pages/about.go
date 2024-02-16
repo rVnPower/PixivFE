@@ -9,7 +9,7 @@ func AboutPage(c *fiber.Ctx) error {
 	info := fiber.Map{
 		"Time":           core.GlobalServerConfig.StartingTime,
 		"Version":        core.GlobalServerConfig.Version,
-		"ImageProxy":     core.GlobalServerConfig.ProxyServer,
+		"ImageProxy":     core.GlobalServerConfig.ProxyServerAuthority,
 		"AcceptLanguage": core.GlobalServerConfig.AcceptLanguage,
 	}
 	return c.Render("pages/about", info)

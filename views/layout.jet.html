@@ -2,16 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="referrer" content="no-referrer" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' {{ getImageProxyProtocolAuthority() }}" />
     <meta name="description" content="View this page on PixivFE." />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
     {{ title := "" }} {{ if isset(Title) }} {{ title = Title }} {{ else }} {{
     title = "PixivFE" }} {{ end }}
     <title>{{ title }} - PixivFE</title>
+    
     <link href="/css/style.css" rel="stylesheet" />
-    <script src="/js/htmx@1.9.10.min.js" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"></script>
+    
     <meta name="htmx-config" content='{"includeIndicatorStyles":false}'>
+    <script src="/js/htmx@1.9.10.min.js" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"></script>
 
     {{ if BaseURL }}
       <meta property="og:title" content="{{ title }}" />
@@ -125,25 +126,7 @@
       </div>
       <div class="navbar-shadow"></div>
     </nav>
-    <script>
-      // make 4xx 5xx responses swap in as well
-      addEventListener('htmx:beforeOnLoad', function (event) {
-        event.detail.shouldSwap = true;
-        event.detail.isError = false;
-      });
-
-      function closeNavigationMenu() {
-        document.getElementById("sidebar-toggler").checked = false
-      }
-      // browser built-in navigation
-      addEventListener("popstate", (event) => {
-        closeNavigationMenu()
-      });
-      // htmx triggered navigation
-      addEventListener("htmx:pushedIntoHistory", (event) => {
-        closeNavigationMenu()
-      });
-    </script>
+    <script src="/js/on-page-load.js"></script>
     <main>
       {{ embed() }}
     </main>

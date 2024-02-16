@@ -14,7 +14,8 @@ var GlobalServerConfig ServerConfig
 type ServerConfig struct {
 	// Required
 	Token       []string
-	ProxyServer string // authority part of the URL; no '/', no path, no protocol (default to https://)
+	// Deprecated: only store Origin instead
+	ProxyServerAuthority string // authority part of the URL; no '/', no path, no protocol (default to https://)
 
 	// can be left empty
 	Host string
@@ -106,7 +107,7 @@ func (s *ServerConfig) SetToken(v string) {
 }
 
 func (s *ServerConfig) SetProxyServer(v string) {
-	s.ProxyServer = v
+	s.ProxyServerAuthority = v
 	log.Printf("Set image proxy server to: %s\n", v)
 }
 

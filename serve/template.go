@@ -252,7 +252,7 @@ func GetTemplateFunctions() template.FuncMap {
 			return s[:len(s)-6]
 		},
 		"getImageProxyProtocolAuthority": func() string {
-			return "https://" + config.GlobalServerConfig.ProxyServer
+			return "https://" + config.GlobalServerConfig.ProxyServerAuthority
 		},
 	}
 }

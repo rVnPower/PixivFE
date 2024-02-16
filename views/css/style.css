@@ -226,7 +226,7 @@ input[type=submit][hidden] {
 
 @keyframes rolling-something {
   0% {
-    background-position-x: 0vm;
+    background-position-x: 0vw;
   }
   100% {
     background-position-x: 40vw;
