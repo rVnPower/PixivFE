@@ -383,6 +383,12 @@ nav {
     .navigation-wrapper {
       padding-top: 10px; // Reduced from 15px
       padding-bottom: 10px; // Reduced from 15px
+
+      .sidebar {
+        br {
+          margin-top: 0; // Reduced from 10px
+        }
+      }
     }
       
     .search-form {

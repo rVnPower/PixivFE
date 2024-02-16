@@ -319,6 +319,9 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
     padding-top: 10px;
     padding-bottom: 10px;
   }
+  nav .navigation-wrapper .sidebar br {
+    margin-top: 0;
+  }
   nav .search-form {
     display: none;
   }
