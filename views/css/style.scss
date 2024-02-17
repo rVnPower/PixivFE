@@ -400,6 +400,9 @@ nav {
     padding-inline: 10px;
   }
 }
+.error.container {
+  text-align: center;
+}
 
 .artwork-container-header {
   display: flex;
@@ -781,7 +784,9 @@ nav {
   transform: translateY(-8rem);
 
   .user-avatar {
-    margin: auto;
+    text-align: center;
+  }
+  .user-avatar img {
     aspect-ratio: 1/1;
     width: 170px;
     height: 170px;
