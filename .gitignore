@@ -1,7 +1,14 @@
-/tmp
-dev.sh
-/pixivfe
-.sass-cache/
+# dotenv
 .env
+# sass cache
+.sass-cache/
+# css sourcemaps
+*.css.map
+# executable got from `go build .`
+/pixivfe
+# custom dev script
+dev.sh
+# not sure what this is for
+/tmp
 # exclude changes to pixivfe_token.txt
 docker/pixivfe_token.txt
