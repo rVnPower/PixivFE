@@ -267,16 +267,12 @@ input[type="submit"][hidden] {
 }
 
 nav {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: $bg;
   margin-bottom: 15px;
   padding-left: 20px;
   padding-right: 20px;
+
   .navigation-wrapper {
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-block: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -303,6 +299,9 @@ nav {
     .search-form {
       input {
         margin: 0;
+      }
+      @media screen and (max-width: 550px) {
+        display: none;
       }
     }
 
@@ -378,23 +377,22 @@ nav {
   // }
 }
 
-@media screen and (max-width: 600px) {
-  nav {
-    .navigation-wrapper {
-      padding-top: 10px; // Reduced from 15px
-      padding-bottom: 10px; // Reduced from 15px
-
-      .sidebar {
-        br {
-          margin-top: 0; // Reduced from 10px
-        }
+// mobile nav bar
+@media screen and (max-height: 768px) {
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: $bg;
+  .navigation-wrapper {
+    padding-block: 5px; // Reduced from 15px
+    .sidebar {
+      br {
+        margin-top: 0; // Reduced from 10px
       }
     }
-      
-    .search-form {
-      display: none;
-    }
   }
+}
 }
 
 .component-header {

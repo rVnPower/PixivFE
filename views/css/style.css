@@ -233,17 +233,12 @@ input[type=submit][hidden] {
   }
 }
 nav {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: #131516;
   margin-bottom: 15px;
   padding-left: 20px;
   padding-right: 20px;
 }
 nav .navigation-wrapper {
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-block: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -264,6 +259,11 @@ nav .navigation-wrapper .navbar-entry img {
 }
 nav .navigation-wrapper .search-form input {
   margin: 0;
+}
+@media screen and (max-width: 550px) {
+  nav .navigation-wrapper .search-form {
+    display: none;
+  }
 }
 nav .navigation-wrapper .sidebar-toggler {
   display: none;
@@ -314,16 +314,18 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   margin-right: 10px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-height: 768px) {
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #131516;
+  }
   nav .navigation-wrapper {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-block: 5px;
   }
   nav .navigation-wrapper .sidebar br {
     margin-top: 0;
-  }
-  nav .search-form {
-    display: none;
   }
 }
 .component-header {
