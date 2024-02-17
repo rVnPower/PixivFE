@@ -278,6 +278,10 @@ nav {
     align-items: center;
     width: auto;
 
+    .sidebar-container {
+      height: 30px;
+    }
+
     .navbar-brand {
       display: inline-flex;
       gap: 10px;
@@ -290,21 +294,19 @@ nav {
     }
 
     .navbar-entry {
+      display: flex;
+
       img {
         width: 30px;
         height: 30px;
       }
     }
 
-    form {
+    .search-form {
       display: flex;
       gap: 4px;
-    }
-    // .navbar-entry.navbar-search-button {
-    //   display: unset;
-    // }
+      align-items: center;
 
-    .search-form {
       input {
         margin: 0;
       }
@@ -319,7 +321,8 @@ nav {
     }
 
     .sidebar-label {
-      margin-right: 9px;
+      display: flex;
+      margin-right: 20px;
       cursor: pointer;
     }
 
@@ -390,7 +393,7 @@ nav {
   z-index: 1;
   background-color: $bg;
   .navigation-wrapper {
-    padding-block: 5px; // Reduced from 15px
+    padding-block: 8px; // Reduced from 15px
     .sidebar {
       br {
         margin-top: 0; // Reduced from 10px

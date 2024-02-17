@@ -243,6 +243,9 @@ nav .navigation-wrapper {
   align-items: center;
   width: auto;
 }
+nav .navigation-wrapper .sidebar-container {
+  height: 30px;
+}
 nav .navigation-wrapper .navbar-brand {
   display: inline-flex;
   gap: 10px;
@@ -252,13 +255,17 @@ nav .navigation-wrapper .navbar-brand span {
   font-size: 1.3em;
   color: #fff;
 }
+nav .navigation-wrapper .navbar-entry {
+  display: flex;
+}
 nav .navigation-wrapper .navbar-entry img {
   width: 30px;
   height: 30px;
 }
-nav .navigation-wrapper form {
+nav .navigation-wrapper .search-form {
   display: flex;
   gap: 4px;
+  align-items: center;
 }
 nav .navigation-wrapper .search-form input {
   margin: 0;
@@ -270,7 +277,8 @@ nav .navigation-wrapper .sidebar-toggler:checked ~ .sidebar {
   transform: translateX(0);
 }
 nav .navigation-wrapper .sidebar-label {
-  margin-right: 9px;
+  display: flex;
+  margin-right: 20px;
   cursor: pointer;
 }
 nav .navigation-wrapper .sidebar {
@@ -320,7 +328,7 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
     background-color: #131516;
   }
   nav .navigation-wrapper {
-    padding-block: 5px;
+    padding-block: 8px;
   }
   nav .navigation-wrapper .sidebar br {
     margin-top: 0;

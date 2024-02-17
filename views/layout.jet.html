@@ -38,63 +38,62 @@
     <div id="loading-indicator"></div>
     <nav>
       <div class="navigation-wrapper">
-        <span>
-          <input type="checkbox" class="sidebar-toggler" id="sidebar-toggler" />
-          <label for="sidebar-toggler" class="sidebar-label">
-            <img
-              src="/assets/menu-thin.png"
-              alt="Menu"
-              width="30"
-              height="30"
-            />
-          </label>
-
-          <div class="sidebar">
-            <ul class="sidebar-list">
-              <a class="sidebar-item" href="/discovery">
-                <img src="/assets/compass.png" alt="compass" />Discovery</a
-              >
-              <a class="sidebar-item" href="/ranking">
-                <img src="/assets/crown.png" alt="crown" />Ranking</a
-              >
-              <a class="sidebar-item" href="/rankingCalendar">
-                <img src="/assets/calendar.png" alt="calendar" />Ranking history</a
-              >
-              <a class="sidebar-item" href="/newest">
-                <img src="/assets/sparkling.png" alt="sparkling" />Newest</a
-              >
-              <br />
-              <a class="sidebar-item" href="/self/followingWorks">
-                <img src="/assets/users.png" alt="users" />Latest by followed</a
-              >
-              <a class="sidebar-item" href="/self/bookmarks">
-                <img src="/assets/heart.png" alt="heart" />Your bookmarks</a
-              >
-              <a class="sidebar-item" href="/self">
-                <img src="/assets/user.png" alt="user" />Your profile</a
-              >
-              <br />
-              <a class="sidebar-item" href="/settings">
-                <img src="/assets/settings.png" alt="settings" />Settings</a
-              >
-              <a class="sidebar-item" href="/about">
-                <img src="/assets/about.svg" alt="about" />About</a
-              >
-              <br />
-              <a
-                class="sidebar-item"
-                href="https://codeberg.org/vnpower/pixivfe"
-              >
-                <img src="/assets/globe.png" alt="globe" />Source code</a
-              >
-            </ul>
-          </div>
-          <span class="navbar-brand">
-            <img src="/assets/favicon.ico" alt="PixivFE icon" />
-            <a href="/">
-              <span>PixivFE</span>
-            </a>
+        <span class="navbar-entry">
+          <span class="sidebar-container">
+            <input type="checkbox" class="sidebar-toggler" id="sidebar-toggler" />
+            <label for="sidebar-toggler" class="sidebar-label">
+              <img
+                src="/assets/menu-thin.png"
+                alt="Menu"
+                width="30"
+                height="30"
+              />
+            </label>
+            <div class="sidebar">
+              <ul class="sidebar-list">
+                <a class="sidebar-item" href="/discovery">
+                  <img src="/assets/compass.png" alt="compass" />Discovery</a
+                >
+                <a class="sidebar-item" href="/ranking">
+                  <img src="/assets/crown.png" alt="crown" />Ranking</a
+                >
+                <a class="sidebar-item" href="/rankingCalendar">
+                  <img src="/assets/calendar.png" alt="calendar" />Ranking history</a
+                >
+                <a class="sidebar-item" href="/newest">
+                  <img src="/assets/sparkling.png" alt="sparkling" />Newest</a
+                >
+                <br />
+                <a class="sidebar-item" href="/self/followingWorks">
+                  <img src="/assets/users.png" alt="users" />Latest by followed</a
+                >
+                <a class="sidebar-item" href="/self/bookmarks">
+                  <img src="/assets/heart.png" alt="heart" />Your bookmarks</a
+                >
+                <a class="sidebar-item" href="/self">
+                  <img src="/assets/user.png" alt="user" />Your profile</a
+                >
+                <br />
+                <a class="sidebar-item" href="/settings">
+                  <img src="/assets/settings.png" alt="settings" />Settings</a
+                >
+                <a class="sidebar-item" href="/about">
+                  <img src="/assets/about.svg" alt="about" />About</a
+                >
+                <br />
+                <a
+                  class="sidebar-item"
+                  href="https://codeberg.org/vnpower/pixivfe"
+                >
+                  <img src="/assets/globe.png" alt="globe" />Source code</a
+                >
+              </ul>
+            </div>
           </span>
+          <a class="navbar-brand" href="/">
+            <img src="/assets/favicon.ico" alt="PixivFE icon" />
+            <span>PixivFE</span>
+          </a>
         </span>
 
         <span class="navbar-entry">
@@ -109,19 +108,16 @@
               class="search-form-text"
               placeholder="⌕ Search artworks..."
             />
-            <label class="navbar-entry navbar-search-button" id="search-page-entry"
+            <label class="navbar-entry"
               ><img src="/assets/search.svg" alt="Search" 
               /><input type="submit" hidden 
             /></label>
           </form>
         </span>
-        <span>
-          <span class="navbar-entry">
-            <a href="/settings">
-              <img src="/assets/cog.svg" alt="Settings" />
-            </a>
-          </span>
-        </span>
+        
+        <a class="navbar-entry" href="/settings">
+          <img src="/assets/cog.svg" alt="Settings" />
+        </a>
       </div>
       <div class="navbar-shadow"></div>
     </nav>
