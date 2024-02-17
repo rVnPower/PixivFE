@@ -581,6 +581,38 @@ nav {
   }
 }
 
+/* Brought out here because both artworks and novels needed this */
+.illust-tags {
+  font-size: 0.9em;
+
+  .illust-tag-attr {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 15px;
+
+    img {
+      aspect-ratio: 1/1;
+      width: 18px;
+      height: 18px;
+      margin-right: 5px;
+    }
+  }
+
+  .illust-tag {
+    margin-right: 10px;
+
+    #highlight {
+      color: $highlight;
+    }
+
+    .illust-tag-name {
+      color: $link;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+  }
+}
+
 .illust {
   background-color: $bg-secondary;
   border-radius: $border-radius;
@@ -631,36 +663,6 @@ nav {
     font-size: 0.85em;
   }
 
-  .illust-tags {
-    font-size: 0.9em;
-
-    .illust-tag-attr {
-      display: inline-flex;
-      align-items: center;
-      margin-right: 15px;
-
-      img {
-        aspect-ratio: 1/1;
-        width: 18px;
-        height: 18px;
-        margin-right: 5px;
-      }
-    }
-
-    .illust-tag {
-      margin-right: 10px;
-
-      #highlight {
-        color: $highlight;
-      }
-
-      .illust-tag-name {
-        color: $link;
-        font-weight: bold;
-        margin-right: 5px;
-      }
-    }
-  }
 
   .comment {
     display: flex;
@@ -707,6 +709,44 @@ nav {
         margin-right: 5px;
       }
     }
+  }
+}
+
+.novel {
+  background-color: $bg-secondary;
+  border-radius: $border-radius;
+  padding: 5px 15px;
+  padding-top: 1em;
+
+  .novel-detail {
+    display: flex;
+
+    .novel-metadata {
+      margin-left: 1.5rem;
+
+      .novel-title {
+        font-size: 1.17em;
+        font-weight: bold;
+      }
+
+      .novel-description {
+        font-size: 0.85em;
+      }
+    }
+  }
+
+
+  .novel-cover img {
+    /* warning: hard-coded values */
+    width: 136px;
+    height: 191px;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .novel-content {
+    margin: 1.2rem 0;
+    line-height: 1.2;
   }
 }
 

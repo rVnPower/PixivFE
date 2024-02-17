@@ -1,9 +1,16 @@
 package core
 
-import "time"
+import (
+	"time"
+
+	session "codeberg.org/vnpower/pixivfe/v2/core/config"
+	http "codeberg.org/vnpower/pixivfe/v2/core/http"
+	"github.com/goccy/go-json"
+	"github.com/gofiber/fiber/v2"
+)
 
 type Novel struct {
-	BookmarkCount  int         `json:"bookmarkCount"`
+	Bookmarks      int         `json:"bookmarkCount"`
 	CommentCount   int         `json:"commentCount"`
 	MarkerCount    int         `json:"markerCount"`
 	CreateDate     time.Time   `json:"createDate"`
@@ -11,11 +18,11 @@ type Novel struct {
 	Description    string      `json:"description"`
 	ID             string      `json:"id"`
 	Title          string      `json:"title"`
-	LikeCount      int         `json:"likeCount"`
-	PageCount      int         `json:"pageCount"`
+	Likes          int         `json:"likeCount"`
+	Pages          int         `json:"pageCount"`
 	UserID         string      `json:"userId"`
 	UserName       string      `json:"userName"`
-	ViewCount      int         `json:"viewCount"`
+	Views          int         `json:"viewCount"`
 	IsOriginal     bool        `json:"isOriginal"`
 	IsBungei       bool        `json:"isBungei"`
 	XRestrict      int         `json:"xRestrict"`
@@ -31,11 +38,7 @@ type Novel struct {
 		AuthorID string `json:"authorId"`
 		IsLocked bool   `json:"isLocked"`
 		Tags     []struct {
-			Tag       string `json:"tag"`
-			Locked    bool   `json:"locked"`
-			Deletable bool   `json:"deletable"`
-			UserID    string `json:"userId"`
-			UserName  string `json:"userName"`
+			Name string `json:"tag"`
 		} `json:"tags"`
 		Writable bool `json:"writable"`
 	} `json:"tags"`
@@ -52,6 +55,21 @@ type Novel struct {
 	Genre          string      `json:"genre"`
 }
 
-func GetNovelByID(id string) {
+func GetNovelByID(c *fiber.Ctx, id string) (Novel, error) {
+	var novel Novel
 
+	URL := http.GetNovelURL(id)
+
+	response, err := http.UnwrapWebAPIRequest(URL, "")
+	if err != nil {
+		return novel, err
+	}
+	response = session.ProxyImageUrl(c, response)
+
+	err = json.Unmarshal([]byte(response), &novel)
+	if err != nil {
+		return novel, err
+	}
+
+	return novel, nil
 }

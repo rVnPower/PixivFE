@@ -507,6 +507,33 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   line-height: 22px;
 }
 
+/* Brought out here because both artworks and novels needed this */
+.illust-tags {
+  font-size: 0.9em;
+}
+.illust-tags .illust-tag-attr {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 15px;
+}
+.illust-tags .illust-tag-attr img {
+  aspect-ratio: 1/1;
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+}
+.illust-tags .illust-tag {
+  margin-right: 10px;
+}
+.illust-tags .illust-tag #highlight {
+  color: #fc365b;
+}
+.illust-tags .illust-tag .illust-tag-name {
+  color: #118bee;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
 .illust {
   background-color: #222;
   border-radius: 5px;
@@ -550,31 +577,6 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 .illust .illust-description {
   font-size: 0.85em;
 }
-.illust .illust-tags {
-  font-size: 0.9em;
-}
-.illust .illust-tags .illust-tag-attr {
-  display: inline-flex;
-  align-items: center;
-  margin-right: 15px;
-}
-.illust .illust-tags .illust-tag-attr img {
-  aspect-ratio: 1/1;
-  width: 18px;
-  height: 18px;
-  margin-right: 5px;
-}
-.illust .illust-tags .illust-tag {
-  margin-right: 10px;
-}
-.illust .illust-tags .illust-tag #highlight {
-  color: #fc365b;
-}
-.illust .illust-tags .illust-tag .illust-tag-name {
-  color: #118bee;
-  font-weight: bold;
-  margin-right: 5px;
-}
 .illust .comment {
   display: flex;
   margin-bottom: 10px;
@@ -612,6 +614,37 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   height: 50px;
   border-radius: 50%;
   margin-right: 5px;
+}
+
+.novel {
+  background-color: #222;
+  border-radius: 5px;
+  padding: 5px 15px;
+  padding-top: 1em;
+}
+.novel .novel-detail {
+  display: flex;
+}
+.novel .novel-detail .novel-metadata {
+  margin-left: 1.5rem;
+}
+.novel .novel-detail .novel-metadata .novel-title {
+  font-size: 1.17em;
+  font-weight: bold;
+}
+.novel .novel-detail .novel-metadata .novel-description {
+  font-size: 0.85em;
+}
+.novel .novel-cover img {
+  /* warning: hard-coded values */
+  width: 136px;
+  height: 191px;
+  object-fit: cover;
+  object-position: center center;
+}
+.novel .novel-content {
+  margin: 1.2rem 0;
+  line-height: 1.2;
 }
 
 .background-cover {

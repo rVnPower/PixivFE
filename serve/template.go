@@ -3,6 +3,7 @@ package serve
 import (
 	"fmt"
 	"html/template"
+	"math"
 	"math/rand"
 	"net/url"
 	"regexp"
@@ -192,6 +193,47 @@ func CreatePaginator(base, ending string, current_page, max_page int) template.H
 	return template.HTML(pages)
 }
 
+func GetNovelGenre(s string) string {
+	switch s {
+	case "1":
+		return "Romance"
+	case "2":
+		return "Isekai fantasy"
+	case "3":
+		return "Contemporary fantasy"
+	case "4":
+		return "Mystery"
+	case "5":
+		return "Horror"
+	case "6":
+		return "Sci-fi"
+	case "7":
+		return "Literature"
+	case "8":
+		return "Drama"
+	case "9":
+		return "Historical pieces"
+	case "10":
+		return "BL (yaoi)"
+	case "11":
+		return "Yuri"
+	case "12":
+		return "For kids"
+	case "13":
+		return "Poetry"
+	case "14":
+		return "Essays/non-fiction"
+	case "15":
+		return "Screenplays/scripts"
+	case "16":
+		return "Reviews/opinion pieces"
+	case "17":
+		return "Other"
+	}
+
+	return ""
+}
+
 func GetTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
 		"toInt": func(s string) int {
@@ -249,6 +291,16 @@ func GetTemplateFunctions() template.FuncMap {
 		"stripEmbed": func(s string) string {
 			// this is stupid
 			return s[:len(s)-6]
+		},
+		"renderNovel": func(s string) template.HTML {
+			s = fmt.Sprintf(s)
+			s = strings.ReplaceAll(s, "\n", "<br />")
+			s = strings.ReplaceAll(s, "[newpage]", "Insert page separator here.")
+			return template.HTML(s)
+		},
+		"novelGenre": GetNovelGenre,
+		"floor": func(i float64) int {
+			return int(math.Floor(i))
 		},
 	}
 }

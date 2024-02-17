@@ -1,0 +1,61 @@
+<div class="container novel" id="checkpoint">
+  <div class="novel-detail">
+    <div class="novel-cover">
+      <img src="{{ Novel.CoverURL }}" alt="{{ Novel.Title }}" />
+    </div>
+    <div class="novel-metadata">
+      <div class="novel-title">{{ Novel.Title }}</div>
+      <small><span>{{ Novel.WordCount }} word(s)</span>&nbsp;<span>{{ floor: Novel.ReadingTime / 60 }} min</span></small>
+      <p class="novel-description">{{ raw: Novel.Description }}</p>
+
+      <div class="illust-tags">
+        {{ if Novel.AiType == 2 }}
+        <span class="illust-tag">
+          <span class="illust-tag-name" id="highlight">AI-generated</span>
+        </span>
+        {{ end }}
+        {{ if Novel.IsOriginal }}
+        <span class="illust-tag">
+          <span class="illust-tag-name">Original</span>
+        </span>
+        {{ end }}
+        <span class="illust-tag">
+          <span class="illust-tag-name">{{ novelGenre: Novel.Genre }}</span>
+        </span>
+        {{ range Novel.Tags.Tags }} {{ if isEmphasize(.Name) }}
+        <span class="illust-tag">
+          <span class="illust-tag-name" id="highlight">{{ .Name }}</span>
+        </span>
+        {{ else }}
+        <span class="illust-tag">
+          <span class="illust-tag-translation"
+            ><a href="/tags/{{ escapeString(.Name) }}">#{{ .Name }}</a></span
+          >
+        </span>
+        {{ end }} {{ end }}
+      </div>
+
+      <div class="illust-tags">
+        <span class="illust-tag-attr">
+          <img src="/assets/eye.png" alt="Views" />
+          {{ Novel.Views }}
+        </span>
+        <span class="illust-tag-attr">
+          <img src="/assets/heart-solid.png" alt="Bookmarks" />
+          {{ Novel.Bookmarks }}
+        </span>
+        <span class="illust-tag-attr">
+          <img src="/assets/like.png" alt="Likes" />
+          {{ Novel.Likes }}
+        </span>
+        <span class="illust-tag-attr">
+          <img src="/assets/calendar.png" alt="Date" />
+          {{ parseTime: Novel.CreateDate }}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="novel-content">
+  {{ raw: renderNovel(Novel.Content) }}
+  </div>
+</div>
