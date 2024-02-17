@@ -10,7 +10,21 @@ A JSON file to store values.
 This way, values set by users won't be lost after restarts.
 - [Add More User Settings](user-customization.md)
 
-uncategorized
+/novel/
+
+- [ ] Novel support  
+Might need some ideas for the reader's UI.  
+Allow options for font size and family?  
+Black and white backgrounds?  
+Theme support?  
+
+/series/
+- [ ] Manga series  
+Serialized web comics. Example: https://www.pixiv.net/user/13651304/series/171013
+- [ ] Novel series  
+
+
+Independent features
 
 - [ ] Pixivision  
 https://www.pixivision.net/en/  
@@ -23,17 +37,8 @@ Implement by parsing the webpage.
 A page to do more extensive searching.  
 Might require JavaScript for search recommendation, if wanted.
 
-- [ ] Manga series  
-Serialized web comics. Example: https://www.pixiv.net/user/13651304/series/171013
 
-- [ ] Novel support  
-Might need some ideas for the reader's UI.  
-Allow options for font size and family?  
-Black and white backgrounds?  
-Theme support?  
 
-- [ ] Native AI/R15/R18/R18-G... artwork filtering  
-We can filter them out using values supplied by Pixiv for each artworks.
 
 - [ ] Full landing page  
 There are a lot of sections for the landing page. https://www.pixiv.net/ajax/top/illust  
@@ -66,7 +71,7 @@ https://github.com/kokseen1/Mashiro
 - i18n  
 The last thing to work on, probably.
 
-## extraneous (not sure if those are tasks or ideas)
+## Misc
 
 - [x] Ranking page  
 A lot of options weren't implemented.

@@ -14,3 +14,6 @@ Let the host supply multiple tokens at once to avoid overuse.
 - [ ] font size
 - [ ] font family
 
+## artwork
+- [ ] native AI/R15/R18/R18-G... artwork filtering  
+We can filter them out using values supplied by Pixiv for each artworks.
