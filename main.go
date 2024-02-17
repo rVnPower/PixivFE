@@ -211,7 +211,7 @@ func main() {
 		}
 	} else {
 		addr := config.GlobalServerConfig.Host + ":" + config.GlobalServerConfig.Port
-		log.Printf("PixivFE is running on %v\n", addr)
+		log.Printf("PixivFE is running on http://%v/\n", addr)
 
 		// note: string concatenation is very flaky
 		err := server.Listen(addr)
