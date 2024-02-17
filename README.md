@@ -13,7 +13,7 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck.
 
 Questions? Feedback? You can [PM me](https://matrix.to/#/@vnpower:eientei.org) on Matrix! You can also look in [Known Quirks Of PixivFE](doc/Quirks.md) to see if your issue already has a known solution.
 
-You can keep track of this project's development [here](spec/Things-to-do.md).
+You can keep track of this project's development [here](doc/dev/Things-to-do.md).
 
 ## Features
 
