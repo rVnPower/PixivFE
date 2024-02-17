@@ -267,11 +267,16 @@ input[type="submit"][hidden] {
 }
 
 nav {
-  margin-top: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: $bg;
   margin-bottom: 15px;
-  margin-left: 20px;
-  margin-right: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   .navigation-wrapper {
+    padding-top: 15px;
+    padding-bottom: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -375,6 +380,17 @@ nav {
 
 @media screen and (max-width: 600px) {
   nav {
+    .navigation-wrapper {
+      padding-top: 10px; // Reduced from 15px
+      padding-bottom: 10px; // Reduced from 15px
+
+      .sidebar {
+        br {
+          margin-top: 0; // Reduced from 10px
+        }
+      }
+    }
+      
     .search-form {
       display: none;
     }
@@ -399,6 +415,7 @@ nav {
   @media (min-width: $small-breakpoint) {
     padding-inline: 10px;
   }
+  scroll-margin-top: 71px; // Prevent images from being covered; equal to the navigation bar height
 }
 .error.container {
   text-align: center;
