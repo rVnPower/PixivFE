@@ -28,7 +28,7 @@ func saveSession(sess *session.Session) error {
 }
 
 func ProxyImageUrl(c *fiber.Ctx, s string) string {
-	proxyOrigin := GetImageProxyOrigin(c)
+	proxyOrigin := GetImageProxyPrefix(c)
 	s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, proxyOrigin)
 	// s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, "/proxy/i.pximg.net")
 	s = strings.ReplaceAll(s, `https:\/\/s.pximg.net`, "/proxy/s.pximg.net")
@@ -36,7 +36,7 @@ func ProxyImageUrl(c *fiber.Ctx, s string) string {
 }
 
 func ProxyImageUrlNoEscape(c *fiber.Ctx, s string) string {
-	proxyOrigin := GetImageProxyOrigin(c)
+	proxyOrigin := GetImageProxyPrefix(c)
 	s = strings.ReplaceAll(s, `https://i.pximg.net`, proxyOrigin)
 	// s = strings.ReplaceAll(s, `https:\/\/i.pximg.net`, "/proxy/i.pximg.net")
 	s = strings.ReplaceAll(s, `https://s.pximg.net`, "/proxy/s.pximg.net")
@@ -47,6 +47,12 @@ func ProxyImageUrlNoEscape(c *fiber.Ctx, s string) string {
 func GetImageProxyOrigin(c *fiber.Ctx) string {
 	url := GetImageProxy(c)
 	return url.Scheme + "://" + url.Host
+}
+
+func GetImageProxyPrefix(c *fiber.Ctx) string {
+	url := GetImageProxy(c)
+	return url.Scheme + "://" + url.Host + url.Path
+	// note: not sure if url.EscapedPath() is useful here. go's standard library is trash at handling URL (:// should be part of the scheme)
 }
 
 func GetImageProxy(c *fiber.Ctx) url.URL {

@@ -28,7 +28,7 @@ func CanRequestSkipLimiter(c *fiber.Ctx) bool {
 	return strings.HasPrefix(path, "/assets/") ||
 		strings.HasPrefix(path, "/css/") ||
 		strings.HasPrefix(path, "/js/") ||
-		strings.HasPrefix(path, "/proxy/s.pximg.net/")
+		strings.HasPrefix(path, "/proxy/")
 }
 
 func main() {

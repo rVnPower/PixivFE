@@ -4,14 +4,16 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	config "codeberg.org/vnpower/pixivfe/v2/core/config"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func SPximgProxy(c *fiber.Ctx) error {
 	URL := fmt.Sprintf("https://s.pximg.net/%s", c.Params("*"))
-	req, _ := http.NewRequest("GET", URL, nil)
+	req, err := http.NewRequest("GET", URL, nil)
+	if err != nil {
+		return err
+	}
 
 	// Make the request
 	resp, err := http.DefaultClient.Do(req)
@@ -31,10 +33,12 @@ func SPximgProxy(c *fiber.Ctx) error {
 }
 
 func IPximgProxy(c *fiber.Ctx) error {
-	proxiedUrl := config.GetImageProxy(c)
-	proxiedUrl.Path = c.Params("*")
-	URL := proxiedUrl.String()
-	req, _ := http.NewRequest("GET", URL, nil)
+	URL := fmt.Sprintf("https://i.pximg.net/%s", c.Params("*"))
+	req, err := http.NewRequest("GET", URL, nil)
+	if err != nil {
+		return err
+	}
+	req.Header.Add("Referer", "https://www.pixiv.net/")
 
 	// Make the request
 	resp, err := http.DefaultClient.Do(req)
@@ -55,7 +59,10 @@ func IPximgProxy(c *fiber.Ctx) error {
 
 func UgoiraProxy(c *fiber.Ctx) error {
 	URL := fmt.Sprintf("https://ugoira.com/api/mp4/%s", c.Params("*"))
-	req, _ := http.NewRequest("GET", URL, nil)
+	req, err := http.NewRequest("GET", URL, nil)
+	if err != nil {
+		return err
+	}
 
 	// Make the request
 	resp, err := http.DefaultClient.Do(req)

@@ -114,13 +114,13 @@ func (s *ServerConfig) SetProxyServer(v string) {
 	}
 	s.ProxyServer = *proxyUrl
 	if proxyUrl.Scheme == "" {
-		log.Panicf("proxy server url has no scheme: %s\nPlease specify like https://example.com", proxyUrl.String())
+		log.Panicf("proxy server url has no scheme: %s\nPlease specify e.g. https://example.com", proxyUrl.String())
 	}
 	if proxyUrl.Host == "" {
-		log.Panicf("proxy server url has no host: %s\nPlease specify like https://example.com", proxyUrl.String())
+		log.Panicf("proxy server url has no host: %s\nPlease specify e.g. https://example.com", proxyUrl.String())
 	}
-	if proxyUrl.Path != "" {
-		log.Panicf("proxy server url has path component (%s): %s\nPixivFE does not support this now, sorry", proxyUrl.Path, proxyUrl.String())
+	if strings.HasSuffix(proxyUrl.Path, "/") {
+		log.Panicf("proxy server path (%s) has cannot end in /: %s\nPixivFE does not support this now, sorry", proxyUrl.Path, proxyUrl.String())
 	}
 	log.Printf("Set image proxy server to: %s\n", proxyUrl.String())
 }
