@@ -28,7 +28,13 @@ func CanRequestSkipLimiter(c *fiber.Ctx) bool {
 	return strings.HasPrefix(path, "/assets/") ||
 		strings.HasPrefix(path, "/css/") ||
 		strings.HasPrefix(path, "/js/") ||
-		strings.HasPrefix(path, "/proxy/")
+		strings.HasPrefix(path, "/proxy/s.pximg.net/")
+}
+
+func CanRequestSkipLogger(c *fiber.Ctx) bool {
+	path := c.Path()
+	return CanRequestSkipLimiter(c) ||
+		strings.HasPrefix(path, "/proxy/i.pximg.net/")
 }
 
 func main() {
@@ -82,7 +88,7 @@ func main() {
 	server.Use(logger.New(
 		logger.Config{
 			Format: "${time} ${ip} | ${path}\n",
-			Next:   CanRequestSkipLimiter,
+			Next:   CanRequestSkipLogger,
 		},
 	))
 
