@@ -13,7 +13,7 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck.
 
 Questions? Feedback? You can [PM me](https://matrix.to/#/@vnpower:eientei.org) on Matrix! You can also look in [Known Quirks Of PixivFE](spec/quirks.md) to see if your issue already has a known solution.
 
-You can keep track of this project's development [here](https://codeberg.org/VnPower/PixivFE/wiki/Things-to-do).
+You can keep track of this project's development [here](spec/Things-to-do.md).
 
 ## Features
 
@@ -27,7 +27,7 @@ You can keep track of this project's development [here](https://codeberg.org/VnP
 You can use PixivFE for personal use! Assuming that you use an operating system that can run POSIX shell scripts, install `go`, clone this repository, modify the `run.sh` file, and profit!
 I recommend self-hosting your own instance for personal use, instead of relying entirely on official instances.
 
-[How to host PixivFE using Docker and Caddy](https://codeberg.org/VnPower/pixivfe/wiki/Hosting)
+[How to host PixivFE using Docker and Caddy](doc/Hosting.md)
 
 ## Development
 
@@ -60,7 +60,7 @@ PIXIVFE_DEV=1 <other_environment_variables> go run .
 | WhateverItWorks    | Yes         | https://art.whateveritworks.org |
 | ducks.party        | No          | https://pixivfe.ducks.party     |
 
-[How to host a Pixiv proxy](https://codeberg.org/VnPower/PixivFE/wiki/Hosting-an-image-proxy-server-for-Pixiv)
+[How to host a Pixiv proxy](doc/Hosting-an-image-proxy-server-for-Pixiv.md)
 
 Hosted one yourself? Create a pull request to add it here!
 
