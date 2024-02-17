@@ -46,11 +46,11 @@ func main() {
 	if config.GlobalServerConfig.InDevelopment {
 		engine.Reload(true)
 	}
-	// // no error even if the templates are invalid???
-	// err := engine.Load()
-	// if err != nil {
-	// 	panic(err)
-	// }
+	// gofiber bug: no error even if the templates are invalid???
+	err := engine.Load()
+	if err != nil {
+		panic(err)
+	}
 
 	server := fiber.New(fiber.Config{
 		AppName:                 "PixivFE",
@@ -64,6 +64,8 @@ func main() {
 		TrustedProxies:          []string{"0.0.0.0/0"},
 		ProxyHeader:             fiber.HeaderXForwardedFor,
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
+			log.Println(err)
+
 			// Status code defaults to 500
 			code := fiber.StatusInternalServerError
 
@@ -76,11 +78,9 @@ func main() {
 			// Send custom error page
 			err = c.Status(code).Render("pages/error", fiber.Map{"Title": "Error", "Error": err})
 			if err != nil {
-				// In case the SendFile fails
-				return c.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")
+				return c.Status(fiber.StatusInternalServerError).SendString(fmt.Sprintf("Internal Server Error: %s", err))
 			}
 
-			// Return from handler
 			return nil
 		},
 	})
