@@ -8,11 +8,11 @@
 - [ ] Persistence  
 A JSON file to store values.
 This way, values set by users won't be lost after restarts.
-- [Add More User Settings](user-customization.md)
+- [User Settings](user-customization.md)
 
 /novel/
 
-- [ ] Novel support  
+- [Novel support](novels.md)  
 Might need some ideas for the reader's UI.  
 Allow options for font size and family?  
 Black and white backgrounds?  
