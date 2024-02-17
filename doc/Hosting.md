@@ -1,4 +1,4 @@
-# Hosting
+# Hosting PixivFE
 
 This page covers multiple methods to install PixivFE. Using [Docker](#docker) is recommended for production use.
 

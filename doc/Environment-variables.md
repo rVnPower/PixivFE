@@ -1,4 +1,6 @@
-Currently, you can only set variables directly in your environment.
+# Environment Variables
+
+PixivFE's behavior is governed by those Environment Variables.
 
 ### PIXIVFE_TOKEN
 **Required**: Yes

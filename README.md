@@ -11,7 +11,7 @@ A privacy-respecting alternative front-end for Pixiv that doesn't suck.
 ![CI badge](https://ci.codeberg.org/api/badges/12556/status.svg)
 [![Go Report Card](https://goreportcard.com/badge/codeberg.org/vnpower/pixivfe)](https://goreportcard.com/report/codeberg.org/vnpower/pixivfe)
 
-Questions? Feedback? You can [PM me](https://matrix.to/#/@vnpower:eientei.org) on Matrix! You can also look in [Known Quirks Of PixivFE](spec/quirks.md) to see if your issue already has a known solution.
+Questions? Feedback? You can [PM me](https://matrix.to/#/@vnpower:eientei.org) on Matrix! You can also look in [Known Quirks Of PixivFE](doc/Quirks.md) to see if your issue already has a known solution.
 
 You can keep track of this project's development [here](spec/Things-to-do.md).
 
