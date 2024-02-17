@@ -105,16 +105,17 @@
             <input
               type="text"
               name="name"
+              required="true"
               class="search-form-text"
               placeholder="⌕ Search artworks..."
             />
-            <input type="submit" hidden />
+            <label class="navbar-entry navbar-search-button" id="search-page-entry"
+              ><img src="/assets/search.svg" alt="Search" 
+              /><input type="submit" hidden 
+            /></label>
           </form>
         </span>
         <span>
-          <span class="navbar-entry" id="search-page-entry">
-            <img src="/assets/search.svg" alt="Search" />
-          </span>
           <span class="navbar-entry">
             <a href="/settings">
               <img src="/assets/cog.svg" alt="Settings" />

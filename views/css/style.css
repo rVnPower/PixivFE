@@ -102,11 +102,6 @@ textarea[readonly] {
   background-color: #222;
 }
 
-label {
-  font-weight: bold;
-  margin-bottom: 0.2rem;
-}
-
 .form-field {
   border: 1px solid #222;
   border-radius: 5px;
@@ -119,6 +114,10 @@ label {
 .form-field header {
   margin: 1.5rem 0;
   padding: 1.5rem 0;
+}
+.form-field label {
+  font-weight: bold;
+  margin-bottom: 0.2rem;
 }
 
 a b,
@@ -257,13 +256,12 @@ nav .navigation-wrapper .navbar-entry img {
   width: 30px;
   height: 30px;
 }
+nav .navigation-wrapper form {
+  display: flex;
+  gap: 4px;
+}
 nav .navigation-wrapper .search-form input {
   margin: 0;
-}
-@media screen and (max-width: 550px) {
-  nav .navigation-wrapper .search-form {
-    display: none;
-  }
 }
 nav .navigation-wrapper .sidebar-toggler {
   display: none;

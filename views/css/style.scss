@@ -124,11 +124,6 @@ textarea[readonly] {
   background-color: $bg-secondary;
 }
 
-label {
-  font-weight: bold;
-  margin-bottom: 0.2rem;
-}
-
 .form-field {
   border: 1px solid $bg-secondary;
   border-radius: $border-radius;
@@ -142,6 +137,11 @@ label {
     margin: 1.5rem 0;
     padding: 1.5rem 0;
   }
+
+  label {
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+  }  
 }
 
 a b,
@@ -296,12 +296,17 @@ nav {
       }
     }
 
+    form {
+      display: flex;
+      gap: 4px;
+    }
+    // .navbar-entry.navbar-search-button {
+    //   display: unset;
+    // }
+
     .search-form {
       input {
         margin: 0;
-      }
-      @media screen and (max-width: 550px) {
-        display: none;
       }
     }
 
