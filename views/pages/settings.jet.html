@@ -36,34 +36,21 @@
     <h2>Image proxy server</h2>
     <div class="form-field">
         <form action="/settings/image_server" method="post">
-            <input type="radio" name="image-proxy" id="image-proxy" value="https://pximg.exozy.me" />
-            <label for="image-proxy">https://pximg.exozy.me</label>
-            <br />
-            <input type="radio" name="image-proxy" id="image-proxy" value="https://pixiv.ducks.party" />
-            <label for="image-proxy">https://pixiv.ducks.party</label>
-            <br />
-            <input type="radio" name="image-proxy" id="image-proxy" value="https://sex.nyan.xyz" />
-            <label for="image-proxy">https://***.nyan.xyz</label>
-            <br />
-            <input type="radio" name="image-proxy" id="image-proxy" value="https://pixiv.tatakai.top" />
-            <label for="image-proxy">https://pixiv.tatakai.top</label>
-            <br />
-            <input type="radio" name="image-proxy" id="image-proxy" value="https://i.loli.best" />
-            <label for="image-proxy">https://i.****.best</label>
-            <br />
-            <input type="radio" name="image-proxy" id="image-proxy" value="https://img.chaotic.ninja" />
-            <label for="image-proxy">https://img.chaotic.ninja</label>
-            <br />
-            <input type="radio" name="image-proxy" id="image-proxy" value="https://pixiv.cat" />
-            <label for="image-proxy">https://pixiv.cat</label>
-            <br />
+            {{ range Proxies }}
+            <label>
+              <input type="radio" name="image-proxy" required="true" value="{{.}}" />
+              {{.}}
+            </label>
+            {{ end }}
             <input type="submit" value="Use Selected Proxy" />
         </form>
         <br />
         <form action="/settings/image_server" method="post">
-            <label for="image-proxy">Custom image proxy server</label>
-            <input type="text" name="image-proxy" id="image-proxy" placeholder="https://example.com"
+            <label for="image-proxy">
+              Custom image proxy server
+              <input type="text" name="image-proxy" required="true" placeholder="https://example.com"
                 autocomplete="off" />
+            </label>
             <input type="submit" value="Use Custom Proxy" />
         </form>
     </div>

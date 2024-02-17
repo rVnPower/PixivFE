@@ -8,6 +8,7 @@ import (
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
 	httpc "codeberg.org/vnpower/pixivfe/v2/core/http"
+	"codeberg.org/vnpower/pixivfe/v2/doc"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -81,7 +82,9 @@ func setLogout(c *fiber.Ctx) error {
 }
 
 func SettingsPage(c *fiber.Ctx) error {
-	return c.Render("pages/settings", fiber.Map{})
+	return c.Render("pages/settings", fiber.Map{
+		"Proxies": doc.PresetProxies,
+	})
 }
 
 func SettingsPost(c *fiber.Ctx) error {
