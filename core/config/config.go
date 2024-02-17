@@ -49,11 +49,11 @@ func (s *ServerConfig) InitializeConfig() error {
 	s.SetToken(token)
 
 	proxyServer, hasProxyServer := os.LookupEnv("PIXIVFE_IMAGEPROXY")
-	if !hasProxyServer {
-		log.Fatalln("PIXIVFE_IMAGEPROXY is required, but was not set.")
-		return errors.New("PIXIVFE_IMAGEPROXY is required, but was not set.\n")
+	if hasProxyServer {
+		s.SetProxyServer(proxyServer)
+	} else {
+		s.ProxyServer = url.URL{Path: "/proxy/i.pximg.net"}
 	}
-	s.SetProxyServer(proxyServer)
 
 	hostname, hasHostname := os.LookupEnv("PIXIVFE_HOST")
 	if hasHostname {

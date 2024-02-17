@@ -43,15 +43,27 @@ func ProxyImageUrlNoEscape(c *fiber.Ctx, s string) string {
 	return s
 }
 
-// footgun: if proxy server has prefix path (.Path != "/""), PixivFE will not work
+// note: still cannot believe Go didn't have this function
+func urlAuthority(url url.URL) string {
+	r := ""
+	if (url.Scheme != "" ) != (url.Host != "") {
+		log.Panicf("url must have both scheme and authority or neither: %s", url.String())
+	}
+	if url.Scheme != "" {
+		r += url.Scheme + "://"
+	}
+	r += url.Host
+	return r
+}
+
 func GetImageProxyOrigin(c *fiber.Ctx) string {
 	url := GetImageProxy(c)
-	return url.Scheme + "://" + url.Host
+	return urlAuthority(url)
 }
 
 func GetImageProxyPrefix(c *fiber.Ctx) string {
 	url := GetImageProxy(c)
-	return url.Scheme + "://" + url.Host + url.Path
+	return urlAuthority(url) + url.Path
 	// note: not sure if url.EscapedPath() is useful here. go's standard library is trash at handling URL (:// should be part of the scheme)
 }
 
