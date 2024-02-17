@@ -27,7 +27,7 @@ You can keep track of this project's development [here](https://codeberg.org/VnP
 You can use PixivFE for personal use! Assuming that you use an operating system that can run POSIX shell scripts, install `go`, clone this repository, modify the `run.sh` file, and profit!
 I recommend self-hosting your own instance for personal use, instead of relying entirely on official instances.
 
-Check out [this page](https://codeberg.org/VnPower/pixivfe/wiki/Hosting). We currently have guides for Docker and Caddy.
+[How to host PixivFE using Docker and Caddy](https://codeberg.org/VnPower/pixivfe/wiki/Hosting)
 
 ## Development
 
@@ -59,6 +59,8 @@ PIXIVFE_DEV=1 <other_environment_variables> go run .
 | chaotic.ninja      | No          | https://pix.chaotic.ninja       |
 | WhateverItWorks    | Yes         | https://art.whateveritworks.org |
 | ducks.party        | No          | https://pixivfe.ducks.party     |
+
+[How to host a Pixiv proxy](https://codeberg.org/VnPower/PixivFE/wiki/Hosting-an-image-proxy-server-for-Pixiv)
 
 Hosted one yourself? Create a pull request to add it here!
 
