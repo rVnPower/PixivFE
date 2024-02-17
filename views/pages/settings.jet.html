@@ -36,7 +36,7 @@
     <h2>Image proxy server</h2>
     <div class="form-field">
         <form action="/settings/image_server" method="post">
-            {{ range Proxies }}
+            {{ range ProxyList }}
             <label>
               <input type="radio" name="image-proxy" required="true" value="{{.}}" />
               {{.}}

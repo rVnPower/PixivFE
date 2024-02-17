@@ -1,6 +1,7 @@
 package doc
 
-var PresetProxies = []string{
+// the list of proxies on /settings
+var BuiltinProxyList = []string{
 	"https://pximg.exozy.me",
 	"https://pixiv.ducks.party",
 	"https://***.nyan.xyz",

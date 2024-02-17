@@ -83,7 +83,7 @@ func setLogout(c *fiber.Ctx) error {
 
 func SettingsPage(c *fiber.Ctx) error {
 	return c.Render("pages/settings", fiber.Map{
-		"Proxies": doc.PresetProxies,
+		"ProxyList": doc.BuiltinProxyList,
 	})
 }
 
