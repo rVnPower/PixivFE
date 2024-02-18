@@ -50,7 +50,9 @@ sass --watch ./views/css
 PIXIVFE_DEV=1 <other_environment_variables> go run .
 ```
 
-## Instances
+## Image Proxy Instances
+
+Note: PixivFE can work without an external image proxy server.
 
 <!-- The current instance table is really wide; maybe there's a better way of formatting it without losing information?
 The badges are also difficult to read on a small screen due to Codeberg shrinking the width of the columns -->

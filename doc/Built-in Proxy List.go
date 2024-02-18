@@ -4,7 +4,7 @@ package doc
 var BuiltinProxyList = []string{
 	// WE ARE NOT AFFILIATED WITH MOST OF THE PROXIES!!!!
 	// !!!!!!!
-	"https://pximg.exozy.me",
+	"https://pximg.exozy.me", // except this one. this one we affiliated.
 	"https://pixiv.ducks.party",
 	"https://pximg.cocomi.eu.org",
 	"https://sex.nyan.xyz",
