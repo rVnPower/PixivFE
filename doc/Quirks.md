@@ -1,9 +1,7 @@
-# Known Quicks Of PixivFE
+# Known quirks
 
-## Why don't my userstyles work?
+## Why aren't my userstyles working?
 
 Origin: https://codeberg.org/VnPower/PixivFE/pulls/62#issuecomment-1568191
 
-This website uses <abbr title="Content Security Policy">CSP</abbr>, which blocks the loading of inline styles. In the case of Stylus, you need to enable **Advanced > Circumvent CSP 'style-­src' via adoptedSty­leSheets** in Stylus Options.
-
-Reference: https://github.com/openstyles/stylus/issues/1685
+PixivFE implements a strong [Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) that prevents inline styles from being loaded. If you're using Stylus, you need to enable **Advanced > Circumvent CSP 'style-­src' via adoptedSty­leSheets** in Stylus Options (see [issue #1685](https://github.com/openstyles/stylus/issues/1685) on the Stylus GitHub repository).
