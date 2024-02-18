@@ -3,7 +3,7 @@
 # Update the program every time you run?
 # git pull
 
-# Visit ./doc/Environment-variables.md for more details
+# Visit ./doc/Environment\ Variables.go for more details
 export PIXIVFE_TOKEN=token_123456
 export PIXIVFE_IMAGEPROXY=pximg.cocomi.cf
 # export PIXIVFE_UNIXSOCKET=/srv/http/pages/pixivfe

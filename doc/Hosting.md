@@ -8,7 +8,7 @@ This page covers multiple methods to install PixivFE. Using [Docker](#docker) is
 
 PixivFE needs an account token to reach the API.
 
-You can check out [this page](./How-to-get-the-cookie-(PIXIVFE_TOKEN).md) for detailed information about how to get the token.
+You can check out [this page](How-to-get-the-pixiv-token.md) for detailed information about how to get the token.
 
 ## Installation
 

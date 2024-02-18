@@ -4,10 +4,11 @@ import (
 	"errors"
 	"log"
 	"net/url"
-	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"codeberg.org/vnpower/pixivfe/v2/doc"
 )
 
 var GlobalServerConfig ServerConfig
@@ -35,38 +36,40 @@ type ServerConfig struct {
 }
 
 func (s *ServerConfig) InitializeConfig() error {
-	_, hasDev := os.LookupEnv("PIXIVFE_DEV")
+	doc.CollectEnv()
+
+	_, hasDev := doc.LookupEnv("PIXIVFE_DEV")
 	s.InDevelopment = hasDev
 	if s.InDevelopment {
 		log.Printf("Set server to development mode\n")
 	}
 
-	token, hasToken := os.LookupEnv("PIXIVFE_TOKEN")
+	token, hasToken := doc.LookupEnv("PIXIVFE_TOKEN")
 	if !hasToken {
 		log.Fatalln("PIXIVFE_TOKEN is required, but was not set.")
 		return errors.New("PIXIVFE_TOKEN is required, but was not set.\n")
 	}
 	s.SetToken(token)
 
-	proxyServer, hasProxyServer := os.LookupEnv("PIXIVFE_IMAGEPROXY")
+	proxyServer, hasProxyServer := doc.LookupEnv("PIXIVFE_IMAGEPROXY")
 	if hasProxyServer {
 		s.SetProxyServer(proxyServer)
 	} else {
 		s.ProxyServer = url.URL{Path: "/proxy/i.pximg.net"}
 	}
 
-	hostname, hasHostname := os.LookupEnv("PIXIVFE_HOST")
+	hostname, hasHostname := doc.LookupEnv("PIXIVFE_HOST")
 	if hasHostname {
 		log.Printf("Set TCP hostname to: %s\n", hostname)
 		s.Host = hostname
 	}
 
-	port, hasPort := os.LookupEnv("PIXIVFE_PORT")
+	port, hasPort := doc.LookupEnv("PIXIVFE_PORT")
 	if hasPort {
 		s.SetPort(port)
 	}
 
-	socket, hasSocket := os.LookupEnv("PIXIVFE_UNIXSOCKET")
+	socket, hasSocket := doc.LookupEnv("PIXIVFE_UNIXSOCKET")
 	if hasSocket {
 		s.SetUnixSocket(socket)
 	}
@@ -76,24 +79,14 @@ func (s *ServerConfig) InitializeConfig() error {
 		return errors.New("Either PIXIVFE_PORT or PIXIVFE_UNIXSOCKET has to be set.")
 	}
 
-	userAgent, hasUserAgent := os.LookupEnv("PIXIVFE_USERAGENT")
-	if !hasUserAgent {
-		userAgent = "Mozilla/5.0"
-	}
+	userAgent, _ := doc.LookupEnv("PIXIVFE_USERAGENT")
 	s.SetUserAgent(userAgent)
 
-	acceptLanguage, hasAcceptLanguage := os.LookupEnv("PIXIVFE_ACCEPTLANGUAGE")
-	if !hasAcceptLanguage {
-		acceptLanguage = "en-US,en;q=0.5"
-	}
+	acceptLanguage, _ := doc.LookupEnv("PIXIVFE_ACCEPTLANGUAGE")
 	s.SetAcceptLanguage(acceptLanguage)
 
-	requestLimit, hasRequestLimit := os.LookupEnv("PIXIVFE_REQUESTLIMIT")
-	if hasRequestLimit {
-		s.SetRequestLimit(requestLimit)
-	} else {
-		s.RequestLimit = 15
-	}
+	requestLimit, _ := doc.LookupEnv("PIXIVFE_REQUESTLIMIT")
+	s.SetRequestLimit(requestLimit)
 
 	s.setStartingTime()
 	s.setVersion()
