@@ -12,37 +12,38 @@ import (
 // An environment variable is a KEY=VALUE pair
 type EnvVar = struct {
 	Name       string
-	Value      string // available at run-time
 	CommonName string
+	Value      string // available at run-time
+	Modified   bool
 }
 
 // All environment variables used by PixivFE
-var EnvironList []EnvVar = []EnvVar{
+var EnvList []*EnvVar = []*EnvVar{
 	{
 		Name:       "PIXIVFE_DEV",
 		CommonName: "development mode",
 		// **Required**: No
 		//
-		// Set this to anything to enable development mode, in which the server will live-reload HTML templates and disable caching.
+		// Set this to anything to enable development mode, in which the server will live-reload HTML templates and disable caching. For example, `PIXIVFE_DEV=true`.
 	},
 
 	{
 		Name:       "PIXIVFE_HOST",
-		CommonName: "HOST",
-		// **Required**: Yes (no if PIXIVFE_UNIXSOCKET was set)
+		CommonName: "TCP hostname",
+		// **Required**: No (ignored if PIXIVFE_UNIXSOCKET was set)
 		//
 		// Hostname/IP address to listen on. For example `PIXIVFE_HOST=localhost`.
 	},
 	{
 		Name:       "PIXIVFE_PORT",
-		CommonName: "PORT",
+		CommonName: "TCP port",
 		// **Required**: Yes (no if PIXIVFE_UNIXSOCKET was set)
 		//
 		// Port to listen on. For example `PIXIVFE_PORT=8745`.
 	},
 	{
 		Name:       "PIXIVFE_UNIXSOCKET",
-		CommonName: "UNIXSOCKET",
+		CommonName: "UNIX socket path",
 		// **Required**: Yes (ignored if PIXIVFE_PORT was set)
 		//
 		// UNIX socket to listen on. For example `PIXIVFE_UNIXSOCKET=/srv/http/pages/pixivfe`.
@@ -50,7 +51,7 @@ var EnvironList []EnvVar = []EnvVar{
 	},
 	{
 		Name:       "PIXIVFE_TOKEN",
-		CommonName: "TOKEN",
+		CommonName: "Pixiv token",
 		// **Required**: Yes
 		//
 		// Authorization is required to fully access Pixiv's Ajax API. This variable will store your Pixiv's account cookie, which will be used by PixivFE for authorization.
@@ -60,7 +61,8 @@ var EnvironList []EnvVar = []EnvVar{
 	},
 	{
 		Name:       "PIXIVFE_IMAGEPROXY",
-		CommonName: "IMAGEPROXY",
+		CommonName: "image proxy server",
+		Value:      "/proxy/i.pximg.net", // built-in proxy route
 		// **Required**: Yes
 		//
 		// See the current [list of image proxies](Built-in Proxy List.go).
@@ -69,13 +71,13 @@ var EnvironList []EnvVar = []EnvVar{
 	},
 	{
 		Name:       "PIXIVFE_REQUESTLIMIT",
-		CommonName: "REQUESTLIMIT",
+		CommonName: "request limit per 30 seconds",
 		Value:      "15",
 		// **Required**: No
 	},
 	{
 		Name:       "PIXIVFE_USERAGENT",
-		CommonName: "USERAGENT",
+		CommonName: "user agent",
 		Value:      "Mozilla/5.0",
 		// **Required**: No
 		//
@@ -84,7 +86,7 @@ var EnvironList []EnvVar = []EnvVar{
 	},
 	{
 		Name:       "PIXIVFE_ACCEPTLANGUAGE",
-		CommonName: "ACCEPTLANGUAGE",
+		CommonName: "Accept-Language header",
 		Value:      "en-US,en;q=0.5",
 		// **Required**: No
 		//
@@ -92,21 +94,39 @@ var EnvironList []EnvVar = []EnvVar{
 	},
 }
 
-func CollectEnv() {
-	for _, v := range EnvironList {
+// ======================================================================
+//  what lies below is irrelevant to you if you just want to use PixivFE
+// ======================================================================
+
+func CollectAllEnv() {
+	for _, v := range EnvList {
 		value, hasValue := os.LookupEnv(v.Name)
 		if hasValue {
 			v.Value = value
+			v.Modified = true
 		}
 	}
 }
 
+func GetEnv(key string) string {
+	value, _ := LookupEnv(key)
+	return value
+}
+
 func LookupEnv(key string) (string, bool) {
-	for _, v := range EnvironList {
+	for _, v := range EnvList {
 		if v.Name == key {
-			return v.Value, v.Value == ""
+			return v.Value, v.Value != ""
 		}
 	}
 	log.Panicf("Environment Variable Name not in `EnvironList`: %s", key)
 	panic("Go's type system has no Void/noreturn type...")
+}
+
+func AnnounceAllEnv() {
+	for _, v := range EnvList {
+		if v.Modified {
+			log.Printf("Set %s to: %s\n", v.CommonName, v.Value)
+		}
+	}
 }
