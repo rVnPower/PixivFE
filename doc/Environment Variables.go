@@ -14,7 +14,7 @@ type EnvVar = struct {
 	Name       string
 	CommonName string
 	Value      string // available at run-time
-	Modified   bool
+	Announce   bool
 }
 
 // All environment variables used by PixivFE
@@ -60,20 +60,21 @@ var EnvList []*EnvVar = []*EnvVar{
 
 	},
 	{
-		Name:       "PIXIVFE_IMAGEPROXY",
-		CommonName: "image proxy server",
-		Value:      "/proxy/i.pximg.net", // built-in proxy route
-		// **Required**: Yes
-		//
-		// See the current [list of image proxies](Built-in Proxy List.go).
-		//
-		// The address to proxy images. Pixiv does not allow you to get their images normally. For example, this [image](https://i.pximg.net/img-original/img/2023/06/06/20/30/01/108783513_p0.png). We could bypass this anyway by using NGINX and reverse proxy. [You can host an image proxy server if you want](./Hosting-an-image-proxy-server-for-Pixiv.md). If you wish not to, or unable to get images directly from Pixiv, set this variable.
-	},
-	{
 		Name:       "PIXIVFE_REQUESTLIMIT",
 		CommonName: "request limit per 30 seconds",
 		Value:      "15",
 		// **Required**: No
+	},
+	{
+		Name:       "PIXIVFE_IMAGEPROXY",
+		CommonName: "image proxy server",
+		Value:      "/proxy/i.pximg.net", // built-in proxy route
+		Announce:   true,
+		// **Required**: Yes
+		//
+		// See the current [list of image proxies](Built-in Proxy List.go).
+		//
+		// The address to proxy images. Pixiv does not allow you to get their images normally. For example, this [image](https://i.pximg.net/img-original/img/2023/06/06/20/30/01/108783513_p0.png). We could bypass this anyway by using NGINX and reverse proxy. [You can host an image proxy server if you want](Hosting-an-image-proxy-server-for-Pixiv.md). If you wish not to, or unable to get images directly from Pixiv, set this variable.
 	},
 	{
 		Name:       "PIXIVFE_USERAGENT",
@@ -103,7 +104,7 @@ func CollectAllEnv() {
 		value, hasValue := os.LookupEnv(v.Name)
 		if hasValue {
 			v.Value = value
-			v.Modified = true
+			v.Announce = true
 		}
 	}
 }
@@ -125,7 +126,7 @@ func LookupEnv(key string) (string, bool) {
 
 func AnnounceAllEnv() {
 	for _, v := range EnvList {
-		if v.Modified {
+		if v.Announce {
 			log.Printf("Set %s to: %s\n", v.CommonName, v.Value)
 		}
 	}

@@ -89,7 +89,6 @@ func (s *ServerConfig) SetProxyServer(v string) {
 	if strings.HasSuffix(proxyUrl.Path, "/") {
 		log.Panicf("proxy server path (%s) has cannot end in /: %s\nPixivFE does not support this now, sorry", proxyUrl.Path, proxyUrl.String())
 	}
-	log.Printf("Set image proxy server to: %s\n", proxyUrl.String())
 }
 
 func (s *ServerConfig) SetRequestLimit(v string) {
@@ -107,5 +106,5 @@ func (s *ServerConfig) setStartingTime() {
 
 func (s *ServerConfig) setVersion() {
 	s.Version = "v2.3"
-	log.Printf("Set server version to: %s\n", s.Version)
+	log.Printf("PixivFE %s\n", s.Version)
 }
