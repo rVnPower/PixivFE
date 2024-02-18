@@ -29,6 +29,8 @@ I recommend self-hosting your own instance for personal use, instead of relying 
 
 To deploy PixivFE using Docker or the compiled binary, see the [Hosting PixivFE](doc/Hosting.md) wiki page. A guide on [hosting a Pixiv image proxy](doc/Hosting-an-image-proxy-server-for-Pixiv.md) is also available if you don't want to use a public one.
 
+[How to host a Pixiv image proxy](doc/Hosting-an-image-proxy-server-for-Pixiv.md)
+
 ## Development
 
 **Requirements:**
@@ -59,16 +61,10 @@ PIXIVFE_DEV=1 <other_environment_variables> go run .
 | ducks.party        | https://pixivfe.ducks.party  | NL      | No               | ![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade-score/pixivfe.ducks.party)  | ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m796383747-c92c281f520d52fe3fd894ed) ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m796383747-c92c281f520d52fe3fd894ed?label=uptime%20%2Fmonth) |
 | perennialte.ch     | https://pixiv.perennialte.ch | AU      | No               | ![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade-score/pixiv.perennialte.ch) | ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m796383748-503799f65873a23dbc860a02) ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m796383748-503799f65873a23dbc860a02?label=uptime%20%2Fmonth) |
 
-For more information on instance uptime, see the [PixivFE instance status page](https://stats.uptimerobot.com/FbEGewWlbX).
-
 If you are hosting your own instance, you can create a pull request to add it here!
 
-## License & Attributions
+For more information on instance uptime, see the [PixivFE instance status page](https://stats.uptimerobot.com/FbEGewWlbX).
+
+## License
 
 License: [AGPL3](https://www.gnu.org/licenses/agpl-3.0.txt)
-
-Special thanks:
-
-- [huggy](https://huggy.moe): author of [ugoira.com](https://ugoira.com) for the ugoira API
-- [dragongoose](https://drgns.space): writing guides
-- Contributors, stargazers and users like you, as well!
