@@ -29,8 +29,6 @@ I recommend self-hosting your own instance for personal use, instead of relying 
 
 To deploy PixivFE using Docker or the compiled binary, see the [Hosting PixivFE](doc/Hosting.md) wiki page. A guide on [hosting a Pixiv image proxy](doc/Hosting-an-image-proxy-server-for-Pixiv.md) is also available if you don't want to use a public one.
 
-[How to host a Pixiv image proxy](doc/Hosting-an-image-proxy-server-for-Pixiv.md)
-
 ## Development
 
 **Requirements:**
@@ -54,7 +52,9 @@ PIXIVFE_DEV=1 <other_environment_variables> go run .
 
 ## Instances
 
-| Name               | URL                          | Country | Cloudflare usage | [Mozilla Observatory](https://observatory.mozilla.org/faq/) grade                                              | Uptime                                                                                                                                                                                                                                      |
+<!-- The current instance table is really wide; maybe there's a better way of formatting it without losing information? -->
+
+| Name               | URL                          | Country | Cloudflare? | [Mozilla Observatory](https://observatory.mozilla.org/faq/) grade                                              | Uptime                                                                                                                                                                                                                                      |
 | ------------------ | ---------------------------- | ------- | ---------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | exozyme (Official) | https://pixivfe.exozy.me     | US      | No               | ![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade-score/pixivfe.exozy.me)     | ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m796383741-c72f1ae6562dc943d032ba96) ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m796383741-c72f1ae6562dc943d032ba96?label=uptime%20%2Fmonth) |
 | dragongoose        | https://pixivfe.drgns.space  | US      | No               | ![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade-score/pixivfe.drgns.space)  | ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m796383743-c0cf0d6b5dbb09c8dbe7dc53) ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m796383743-c0cf0d6b5dbb09c8dbe7dc53?label=uptime%20%2Fmonth) |
