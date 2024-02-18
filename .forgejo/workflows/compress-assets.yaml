@@ -1,0 +1,27 @@
+name: Compress assets
+
+on:
+  push:
+    branches:
+      - v2
+  pull_request:
+    branches:
+      - v2
+
+jobs:
+  compress-assets:
+    runs-on: docker
+    container:
+      image: node
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Leanify
+        run: |
+          curl -L https://files.perennialte.ch/leanify -o leanify
+          chmod +x ./leanify
+          mv ./leanify /usr/local/bin
+
+      - name: Compress assets
+        run: leanify -p ./views/assets
