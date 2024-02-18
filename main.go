@@ -6,7 +6,11 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
+	"os/exec"
+	"runtime"
 	"strings"
+	"syscall"
 	"time"
 
 	config "codeberg.org/vnpower/pixivfe/v2/core/config"
@@ -204,6 +208,21 @@ func main() {
 	proxy.Get("/i.pximg.net/*", pages.IPximgProxy)
 	proxy.Get("/s.pximg.net/*", pages.SPximgProxy)
 	proxy.Get("/ugoira.com/*", pages.UgoiraProxy)
+
+	// run sass when in development mode
+	if config.GlobalServerConfig.InDevelopment {
+		go func() {
+			cmd := exec.Command("sass", "--watch", "views/css")
+			cmd.Stdout = os.Stderr // heh. (sass quirk)
+			cmd.Stderr = os.Stderr
+			cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true, Pdeathsig: syscall.SIGHUP}
+			runtime.LockOSThread() // O.O https://github.com/golang/go/issues/27505
+			err := cmd.Run()
+			if err != nil {
+				log.Println(fmt.Errorf("when running sass: %w", err))
+			}
+		}()
+	}
 
 	// Listen
 	if config.GlobalServerConfig.UnixSocket != "" {

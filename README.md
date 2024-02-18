@@ -33,20 +33,20 @@ To deploy PixivFE using Docker or the compiled binary, see the [Hosting PixivFE]
 
 **Requirements:**
 
-- [pnpm](https://pnpm.io/installation) (to install Sass)
-- [go](https://go.dev/doc/install) (to build PixivFE from source)
+- [Go](https://go.dev/doc/install) (to build PixivFE from source)
+- [Sass](https://github.com/sass/dart-sass/) (will be run by PixivFE in development mode)
+
+To install Dart Sass, you can choose any of the following methods.
+
+- use system package manager (usually called `dart-sass`)
+- download executable from [the official release page](https://github.com/sass/dart-sass/releases)
+- `pnpm i -g sass`
 
 ```bash
 # Clone the PixivFE repository
 git clone https://codeberg.org/VnPower/PixivFE.git && cd PixivFE
 
-# Install Sass globally using pnpm
-pnpm i -g sass
-
-# Compile styles using Sass and watch for changes
-sass --watch ./views/css
-
-# Run in PixivFE in development mode (templates reload automatically)
+# Run in PixivFE in development mode (styles and templates reload automatically)
 PIXIVFE_DEV=1 <other_environment_variables> go run .
 ```
 
