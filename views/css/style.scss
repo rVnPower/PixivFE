@@ -386,19 +386,34 @@ nav {
 }
 
 // mobile nav bar
-@media screen and (max-height: 768px) {
+@media screen and (max-height: 767px) {
 nav {
   position: sticky;
   top: 0;
+  isolation: isolate;
   z-index: 1;
+
   background-color: $bg;
   .navigation-wrapper {
+    background-color: $bg;
     padding-block: 8px; // Reduced from 15px
     .sidebar {
+      z-index: -1;
+      width: 100vw;
+      transform: translateY(-100%);
+      padding-block: 8px 16px;
       br {
-        margin-top: 0; // Reduced from 10px
+        display: none;
       }
     }
+  }
+  .sidebar-list {
+    background-color: $bg;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }
 }

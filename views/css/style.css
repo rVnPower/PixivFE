@@ -320,18 +320,31 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   margin-right: 10px;
 }
 
-@media screen and (max-height: 768px) {
+@media screen and (max-height: 767px) {
   nav {
     position: sticky;
     top: 0;
+    isolation: isolate;
     z-index: 1;
     background-color: #131516;
   }
   nav .navigation-wrapper {
+    background-color: #131516;
     padding-block: 8px;
   }
+  nav .navigation-wrapper .sidebar {
+    z-index: -1;
+    width: 100vw;
+    transform: translateY(-100%);
+    padding-block: 8px 16px;
+  }
   nav .navigation-wrapper .sidebar br {
-    margin-top: 0;
+    display: none;
+  }
+  nav .sidebar-list {
+    background-color: #131516;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }
 .component-header {
