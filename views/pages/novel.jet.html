@@ -19,9 +19,11 @@
           <span class="illust-tag-name">Original</span>
         </span>
         {{ end }}
+        {{ if Novel.Genre != "0" }}
         <span class="illust-tag">
           <span class="illust-tag-name">{{ novelGenre: Novel.Genre }}</span>
         </span>
+        {{ end }}
         {{ range Novel.Tags.Tags }} {{ if isEmphasize(.Name) }}
         <span class="illust-tag">
           <span class="illust-tag-name" id="highlight">{{ .Name }}</span>

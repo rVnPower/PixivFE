@@ -1,0 +1,74 @@
+<div class="container">
+  <h2>Discover novels</h2>
+  <div class="switcher">
+    {{ url := "/discovery/novel?mode=" }}
+    <div class="switch-title">Filter</div>
+    <a href="{{url}}all" class="switch-button">All</a>
+    <a href="{{url}}safe" class="switch-button">Safe</a>
+    <a href="{{url}}r18" class="switch-button">R-18</a>
+  </div>
+  <div class="novel-container">
+      {{ range Novels }}
+      <div class="novel-card">
+
+        <div class="novel-detail">
+            <div class="novel-cover">
+            <img src="{{ .CoverURL }}" alt="{{ .Title }}" />
+            </div>
+            <div class="novel-metadata">
+                <a href="/novel/{{ .ID }}">
+                    <div class="novel-title">
+                        {{ .Title }}
+                    </div>
+                </a>
+            <small><span>{{ .WordCount }} word(s)</span>&nbsp;<span>{{ floor: .ReadingTime / 60 }} min</span></small>
+            <p class="novel-description">{{ raw: .Description }}</p>
+
+            <div class="illust-tags">
+                {{ if .AiType == 2 }}
+                <span class="illust-tag">
+                <span class="illust-tag-name" id="highlight">AI-generated</span>
+                </span>
+                {{ end }}
+                {{ if .IsOriginal }}
+                <span class="illust-tag">
+                <span class="illust-tag-name">Original</span>
+                </span>
+                {{ end }}
+                {{ if .Genre != "0" }}
+                <span class="illust-tag">
+                <span class="illust-tag-name">{{ novelGenre: .Genre }}</span>
+                </span>
+                {{ end }}
+                {{ range .Tags }} {{ if isEmphasize(.) }}
+                <span class="illust-tag">
+                <span class="illust-tag-name" id="highlight">{{ . }}</span>
+                </span>
+                {{ else }}
+                <span class="illust-tag">
+                <span class="illust-tag-translation"
+                    ><a href="/tags/{{ escapeString(.) }}">#{{ . }}</a></span
+                >
+                </span>
+                {{ end }} {{ end }}
+            </div>
+
+            <div class="illust-tags">
+                <span class="illust-tag-attr">
+                <img src="/assets/heart-solid.png" alt="Bookmarks" />
+                {{ .Bookmarks }}
+                </span>
+                <span class="illust-tag-attr">
+                <img src="/assets/calendar.png" alt="Date" />
+                {{ parseTime: .CreateDate }}
+                </span>
+            </div>
+        </div>
+        </div>
+    </div>
+    {{ end }}
+  </div>
+  <div class="pagination">
+    <a href="" class="pagination-button">Reload</a>
+  </div>
+</div>

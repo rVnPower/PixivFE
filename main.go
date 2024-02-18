@@ -161,6 +161,7 @@ func main() {
 	server.Get("/about", pages.AboutPage)
 	server.Get("/newest", pages.NewestPage)
 	server.Get("/discovery", pages.DiscoveryPage)
+	server.Get("/discovery/novel", pages.NovelDiscoveryPage)
 	server.Get("/ranking", pages.RankingPage)
 	server.Get("/rankingCalendar", pages.RankingCalendarPage)
 	server.Post("/rankingCalendar", pages.RankingCalendarPicker)

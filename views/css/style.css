@@ -654,6 +654,57 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   margin-right: 5px;
 }
 
+.novel-card {
+  font-size: 1.5rem;
+  background-color: #222;
+  border-radius: 5px;
+  padding: 5px 15px;
+  padding-top: 1em;
+}
+.novel-card .novel-detail {
+  display: flex;
+}
+.novel-card .novel-detail .novel-metadata {
+  margin-left: 1.5rem;
+}
+.novel-card .novel-detail .novel-metadata .novel-title {
+  color: #fff;
+  font-size: 1.17em;
+  font-weight: bold;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.novel-card .novel-detail .novel-metadata .novel-description {
+  font-size: 0.85em;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+.novel-card .novel-cover img {
+  /* warning: hard-coded values */
+  width: 136px;
+  height: 191px;
+  object-fit: cover;
+  object-position: center center;
+}
+.novel-card .novel-content {
+  margin: 1.2rem 0;
+  line-height: 1.8;
+  color: black;
+  background-color: white;
+}
+
 .novel {
   background-color: #222;
   border-radius: 5px;
@@ -682,7 +733,9 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
 }
 .novel .novel-content {
   margin: 1.2rem 0;
-  line-height: 1.2;
+  line-height: 1.8;
+  color: black;
+  background-color: white;
 }
 
 .background-cover {

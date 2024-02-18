@@ -15,6 +15,11 @@ func GetDiscoveryURL(mode string, limit int) string {
 	return fmt.Sprintf(base, mode, limit)
 }
 
+func GetDiscoveryNovelURL(mode string, limit int) string {
+	base := "https://www.pixiv.net/ajax/discovery/novels?mode=%s&limit=%d"
+	return fmt.Sprintf(base, mode, limit)
+}
+
 func GetRankingURL(mode, content, date, page string) string {
 	base := "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&date=%s&p=%s"
 	baseNoDate := "https://www.pixiv.net/ranking.php?format=json&mode=%s&content=%s&p=%s"
