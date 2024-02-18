@@ -59,6 +59,8 @@ PIXIVFE_DEV=1 <other_environment_variables> go run .
 | ducks.party        | No          | https://pixivfe.ducks.party     |
 | perennialte.ch     | No          | https://pixiv.perennialte.ch    |
 
+For information on instance uptime, see the [PixivFE instance status page](https://stats.uptimerobot.com/FbEGewWlbX).
+
 [How to host a Pixiv image proxy](doc/Hosting-an-image-proxy-server-for-Pixiv.md)
 
 Hosted one yourself? Create a pull request to add it here!
