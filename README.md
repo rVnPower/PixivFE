@@ -52,7 +52,8 @@ PIXIVFE_DEV=1 <other_environment_variables> go run .
 
 ## Instances
 
-<!-- The current instance table is really wide; maybe there's a better way of formatting it without losing information? -->
+<!-- The current instance table is really wide; maybe there's a better way of formatting it without losing information?
+The badges are also difficult to read on a small screen due to Codeberg shrinking the width of the columns -->
 
 | Name               | URL                          | Country | Cloudflare? | [Mozilla Observatory](https://observatory.mozilla.org/faq/) grade                                              | Uptime                                                                                                                                                                                                                                      |
 | ------------------ | ---------------------------- | ------- | ---------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
