@@ -1,7 +1,6 @@
 package core
 
 import (
-	"errors"
 	"fmt"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"

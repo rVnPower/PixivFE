@@ -1,7 +1,6 @@
 package core
 
 import (
-	"errors"
 	"fmt"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
@@ -59,7 +58,7 @@ func GetLanding(c *fiber.Ctx, mode string) (*LandingArtworks, error) {
 		return &landing, err
 	}
 	resp = session.ProxyImageUrl(c, resp)
-	
+
 	if !gjson.Valid(resp) {
 		return nil, fmt.Errorf("invalid json: %v", resp)
 	}
@@ -115,5 +114,5 @@ func GetLanding(c *fiber.Ctx, mode string) (*LandingArtworks, error) {
 		landing.Recommended = append(landing.Recommended, artworks[i])
 	}
 
-	return landing, nil
+	return &landing, nil
 }
