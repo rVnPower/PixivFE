@@ -19,7 +19,7 @@ You can keep track of this project's development [here](doc/dev/Things-to-do.md)
 
 - Lightweight - both the interface and the code
 - Privacy-first - the server will do the work for you
-- No bloat - we only serve HTML and CSS
+- No bloat - we only serve HTML, CSS and minimal JS code
 - Open source - you can trust me!
 
 ## Hosting
