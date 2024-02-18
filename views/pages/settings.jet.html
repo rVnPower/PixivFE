@@ -39,7 +39,7 @@
             {{ range ProxyList }}
             <label>
               <input type="radio" name="image-proxy" required="true" value="{{.}}" />
-              {{.}}
+              {{filterWordsIDK: .}}
             </label>
             {{ end }}
             <input type="submit" value="Use Selected Proxy" />
