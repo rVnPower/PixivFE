@@ -59,6 +59,7 @@ PIXIVFE_DEV=1 <other_environment_variables> go run .
 | chaotic.ninja      | No          | https://pix.chaotic.ninja       |
 | WhateverItWorks    | Yes         | https://art.whateveritworks.org |
 | ducks.party        | No          | https://pixivfe.ducks.party     |
+| perennialte.ch     | No          | https://pixiv.perennialte.ch    |
 
 [How to host a Pixiv image proxy](doc/Hosting-an-image-proxy-server-for-Pixiv.md)
 
