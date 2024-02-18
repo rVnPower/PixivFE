@@ -89,7 +89,7 @@ func GetRankingCalendar(c *fiber.Ctx, mode string, year, month int) (template.HT
 	for i := 0; i < thisMonth.Day(); i++ {
 		date := fmt.Sprintf("%d%02d%02d", year, month, i+1)
 		if len(links) > i {
-			renderString += fmt.Sprintf(`<a href="/ranking?mode=%s&date=%s"><div class="calendar-node" style="background-image: url(%s)"><span>%d</span></div></a>`, mode, date, links[i], i+1)
+			renderString += fmt.Sprintf(`<a href="/ranking?mode=%s&date=%s"><div class="calendar-node"><img src="%s" alt="Day %d" /><span>%d</span></div></a>`, mode, date, links[i], i+1, i+1)
 		} else {
 			renderString += fmt.Sprintf(`<div class="calendar-node"><span>%d</span></div>`, i+1)
 		}

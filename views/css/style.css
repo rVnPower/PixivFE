@@ -756,10 +756,13 @@ nav .navigation-wrapper .sidebar .sidebar-list .sidebar-item img {
   width: 128px;
   height: 128px;
   border-radius: 8px;
-  background-size: cover;
-  background-position: center;
   background-color: #222;
   position: relative;
+}
+.calendar-node img {
+  border-radius: 8px;
+  object-fit: cover;
+  object-position: center center;
 }
 .calendar-node span {
   font-size: small;

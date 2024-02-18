@@ -872,10 +872,14 @@ nav {
   width: 128px;
   height: 128px;
   border-radius: 8px;
-  background-size: cover;
-  background-position: center;
   background-color: $bg-secondary;
   position: relative;
+
+  img {
+    border-radius: 8px;
+    object-fit: cover;
+    object-position: center center;
+  }
 
   span {
     font-size: small;
