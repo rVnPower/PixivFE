@@ -17,10 +17,27 @@ rules:
 - id: rule-1
   message: "find http requests made (limiter should be installed at all places)"
   languages: [go]
-  severity: INFO
+  # severity: INFO
+  severity: INVENTORY
   patterns:
   - pattern-either:
     - pattern: |
         http.UnwrapWebAPIRequest(...)
     - pattern: |
         http.WebAPIRequest(...)
+- id: rule-2
+  message: "gjson.Get without gjson.Valid"
+  languages: [go]
+  severity: ERROR
+  patterns:
+  # - pattern-inside: |
+  #     func $FUNC(...) $RET {
+  #       ...
+  #     }
+  - pattern: |
+      gjson.Get($X, ...)
+  - pattern-not-inside: |
+      if !gjson.Valid($X) {
+        $...DISCARD
+      }
+      ...

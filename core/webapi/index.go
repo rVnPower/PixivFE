@@ -1,6 +1,7 @@
 package core
 
 import (
+	"errors"
 	"fmt"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
@@ -32,7 +33,7 @@ type LandingArtworks struct {
 	RecommendByTags []RecommendedTags
 }
 
-func GetLanding(c *fiber.Ctx, mode string) (LandingArtworks, error) {
+func GetLanding(c *fiber.Ctx, mode string) (*LandingArtworks, error) {
 	var pages struct {
 		Pixivision  []Pixivision `json:"pixivision"`
 		Follow      []int        `json:"follow"`
@@ -55,9 +56,13 @@ func GetLanding(c *fiber.Ctx, mode string) (LandingArtworks, error) {
 	resp, err := http.UnwrapWebAPIRequest(URL, "")
 
 	if err != nil {
-		return landing, err
+		return &landing, err
 	}
 	resp = session.ProxyImageUrl(c, resp)
+	
+	if !gjson.Valid(resp) {
+		return nil, fmt.Errorf("invalid json: %v", resp)
+	}
 
 	artworks := map[string]ArtworkBrief{}
 
@@ -86,7 +91,7 @@ func GetLanding(c *fiber.Ctx, mode string) (LandingArtworks, error) {
 	err = json.Unmarshal([]byte(pagesStr), &pages)
 
 	if err != nil {
-		return landing, err
+		return &landing, err
 	}
 
 	// Parse everything

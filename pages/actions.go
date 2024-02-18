@@ -13,7 +13,6 @@ import (
 )
 
 func pixivPostRequest(url, payload, token, csrf string) error {
-
 	requestBody := []byte(payload)
 
 	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(requestBody))
@@ -36,8 +35,11 @@ func pixivPostRequest(url, payload, token, csrf string) error {
 	if err != nil {
 		return errors.New("Cannot parse the response from Pixiv. Please report this issue.")
 	}
-
-	errr := gjson.Get(string(body), "error")
+	body_s := string(body)
+	if !gjson.Valid(body_s) {
+		return fmt.Errorf("invalid json: %v", body_s)
+	}
+	errr := gjson.Get(body_s, "error")
 
 	if !errr.Exists() {
 		return errors.New("Incompatible request body.")

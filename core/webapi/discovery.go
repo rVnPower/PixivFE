@@ -1,6 +1,9 @@
 package core
 
 import (
+	"errors"
+	"fmt"
+
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
 	"github.com/goccy/go-json"
@@ -20,6 +23,9 @@ func GetDiscoveryArtwork(c *fiber.Ctx, mode string) ([]ArtworkBrief, error) {
 		return nil, err
 	}
 	resp = session.ProxyImageUrl(c, resp)
+	if !gjson.Valid(resp) {
+		return nil, fmt.Errorf("invalid json: %v", resp)
+	}
 	data := gjson.Get(resp, "thumbnails.illust").String()
 
 	err = json.Unmarshal([]byte(data), &artworks)
