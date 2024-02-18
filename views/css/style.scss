@@ -277,99 +277,6 @@ nav {
     justify-content: space-between;
     align-items: center;
     width: auto;
-
-    .sidebar-container {
-      height: 30px;
-    }
-
-    .navbar-brand {
-      display: inline-flex;
-      gap: 10px;
-
-      span {
-        font-weight: bold;
-        font-size: 1.3em;
-        color: $fg;
-      }
-    }
-
-    .navbar-entry {
-      display: flex;
-
-      img {
-        width: 30px;
-        height: 30px;
-      }
-    }
-
-    .search-form {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-
-      input {
-        margin: 0;
-      }
-    }
-
-    .sidebar-toggler {
-      display: none;
-
-      &:checked ~ .sidebar {
-        transform: translateX(0);
-      }
-    }
-
-    .sidebar-label {
-      display: flex;
-      margin-right: 20px;
-      cursor: pointer;
-    }
-
-    .sidebar {
-      z-index: 1;
-      isolation: isolate;
-      background-color: $bg;
-      position: absolute;
-      padding-top: 6px;
-      left: 0;
-      width: 220px;
-      transform: translateX(-220px);
-      transition: transform 250ms cubic-bezier(0.23, 1, 0.32, 1);
-
-      br {
-        align-self: stretch;
-        margin-top: 10px;
-      }
-
-      .sidebar-list {
-        list-style-type: none;
-
-        margin: 0;
-        padding: 0;
-
-        .sidebar-item {
-          display: flex;
-          align-items: center;
-          list-style: none;
-          color: $fg;
-          font-size: 0.9em;
-          text-decoration: none;
-          padding: 10px;
-
-          &:hover {
-            background-color: $bg-secondary;
-          }
-
-          img {
-            width: 30px;
-            height: 30px;
-            margin-left: 1.2rem;
-            margin-right: 10px;
-          }
-        }
-      }
-    }
   }
 
   // .navbar-shadow {
@@ -383,6 +290,100 @@ nav {
   //     rgba(240, 248, 255, 0) 28px
   //   );
   // }
+
+  .sidebar-container {
+    height: 30px;
+  }
+
+  .navbar-brand {
+    display: inline-flex;
+    gap: 10px;
+
+    span {
+      font-weight: bold;
+      font-size: 1.3em;
+      color: $fg;
+    }
+  }
+
+  .navbar-entry {
+    display: flex;
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .search-form {
+    display: flex;
+    gap: 4px;
+    margin-left: 8px;
+    align-items: center;
+
+    input {
+      margin: 0;
+    }
+  }
+
+  .sidebar-toggler {
+    display: none;
+
+    &:checked ~ .sidebar {
+      transform: translateX(0);
+    }
+  }
+
+  .sidebar-label {
+    display: flex;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+
+  .sidebar {
+    z-index: 1;
+    isolation: isolate;
+    background-color: $bg;
+    position: absolute;
+    padding-top: 6px;
+    left: 0;
+    width: 220px;
+    transform: translateX(-220px);
+    transition: transform 250ms cubic-bezier(0.23, 1, 0.32, 1);
+
+    br {
+      align-self: stretch;
+      margin-top: 10px;
+    }
+  }
+
+  .sidebar-list {
+    list-style-type: none;
+
+    margin: 0;
+    padding: 0;
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    color: $fg;
+    font-size: 0.9em;
+    text-decoration: none;
+    padding: 10px;
+
+    &:hover {
+      background-color: $bg-secondary;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+      margin-left: 1.2rem;
+      margin-right: 10px;
+    }
+  }
 }
 
 // mobile nav bar
@@ -397,23 +398,33 @@ nav {
   .navigation-wrapper {
     background-color: $bg;
     padding-block: 8px; // Reduced from 15px
-    .sidebar {
-      z-index: -1;
-      width: 100vw;
-      transform: translateY(-100%);
-      padding-block: 8px 16px;
-      br {
-        display: none;
-      }
+  }
+  
+  .sidebar {
+    z-index: -1;
+    width: 100vw;
+    transform: translateY(-100%);
+    padding-block: 8px 16px;
+    br {
+      display: none;
     }
   }
+
   .sidebar-list {
     background-color: $bg;
     // display: flex;
     // flex-direction: row;
     // flex-wrap: wrap;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0px, 400px) repeat(
+      auto-fit,
+      minmax(0px, 400px)
+    );
+
+  }
+
+  .sidebar-item {
+    padding-inline: unset;
   }
 }
 }
