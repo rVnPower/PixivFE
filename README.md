@@ -52,12 +52,12 @@ PIXIVFE_DEV=1 <other_environment_variables> go run .
 
 ## Instances
 
-| Name               | Cloudflare? | URL                             |
-| ------------------ | ----------- | ------------------------------- |
-| exozyme (Official) | No          | https://pixivfe.exozy.me        |
-| dragongoose        | No          | https://pixivfe.drgns.space     |
-| ducks.party        | No          | https://pixivfe.ducks.party     |
-| perennialte.ch     | No          | https://pixiv.perennialte.ch    |
+| Name               | Cloudflare? | URL                          | Country |
+| ------------------ | ----------- | ---------------------------- | ------- |
+| exozyme (Official) | No          | https://pixivfe.exozy.me     | US      |
+| dragongoose        | No          | https://pixivfe.drgns.space  | US      |
+| ducks.party        | No          | https://pixivfe.ducks.party  | NL      |
+| perennialte.ch     | No          | https://pixiv.perennialte.ch | AU      |
 
 For information on instance uptime, see the [PixivFE instance status page](https://stats.uptimerobot.com/FbEGewWlbX).
 
