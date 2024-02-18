@@ -52,12 +52,12 @@ PIXIVFE_DEV=1 <other_environment_variables> go run .
 
 ## Instances
 
-| Name               | URL                          | Country | Cloudflare? |
-| ------------------ | ---------------------------- | ------- | ----------- |
-| exozyme (Official) | https://pixivfe.exozy.me     | US      | No          |
-| dragongoose        | https://pixivfe.drgns.space  | US      | No          |
-| ducks.party        | https://pixivfe.ducks.party  | NL      | No          |
-| perennialte.ch     | https://pixiv.perennialte.ch | AU      | No          |
+| Name               | URL                          | Country | Cloudflare? | Uptime                                                                                                                                                                                                                                      |
+| ------------------ | ---------------------------- | ------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| exozyme (Official) | https://pixivfe.exozy.me     | US      | No          | ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m796383741-c72f1ae6562dc943d032ba96) ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m796383741-c72f1ae6562dc943d032ba96?label=uptime%20%2Fmonth) |
+| dragongoose        | https://pixivfe.drgns.space  | US      | No          | ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m796383743-c0cf0d6b5dbb09c8dbe7dc53) ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m796383743-c0cf0d6b5dbb09c8dbe7dc53?label=uptime%20%2Fmonth) |
+| ducks.party        | https://pixivfe.ducks.party  | NL      | No          | ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m796383747-c92c281f520d52fe3fd894ed) ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m796383747-c92c281f520d52fe3fd894ed?label=uptime%20%2Fmonth) |
+| perennialte.ch     | https://pixiv.perennialte.ch | AU      | No          | ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m796383748-503799f65873a23dbc860a02) ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m796383748-503799f65873a23dbc860a02?label=uptime%20%2Fmonth) |
 
 For information on instance uptime, see the [PixivFE instance status page](https://stats.uptimerobot.com/FbEGewWlbX).
 
