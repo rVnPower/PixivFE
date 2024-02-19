@@ -661,7 +661,7 @@ nav .sidebar-item img {
 .novel-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(407px, 1fr));
-  justify-items: center;
+  justify-content: center;
 }
 
 .novel-card {
@@ -756,6 +756,7 @@ nav .sidebar-item img {
 }
 .novel .novel-content {
   margin: 1.2rem 0;
+  padding: 6.4rem 10rem;
   line-height: 1.8;
   color: black;
   background-color: white;
