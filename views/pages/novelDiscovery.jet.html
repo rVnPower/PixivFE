@@ -1,6 +1,11 @@
 <div class="container">
   <h2>Discover novels</h2>
   <div class="switcher">
+    <div class="switch-title">Filter</div>
+    <a href="/discovery" class="switch-button">Artworks</a>
+    <a href="/discovery/novel" class="switch-button">Novels</a>
+  </div>
+  <div class="switcher">
     {{ url := "/discovery/novel?mode=" }}
     <div class="switch-title">Filter</div>
     <a href="{{url}}all" class="switch-button">All</a>
