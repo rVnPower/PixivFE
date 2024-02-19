@@ -70,7 +70,7 @@ var EnvList []*EnvVar = []*EnvVar{
 		CommonName: "image proxy server",
 		Value:      "/proxy/i.pximg.net", // built-in proxy route
 		Announce:   true,
-		// **Required**: Yes
+		// **Required**: No, default to using built-in proxy
 		//
 		// See the current [list of image proxies](Built-in Proxy List.go).
 		//
