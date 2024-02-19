@@ -668,6 +668,21 @@ nav .sidebar-item img {
 .novel-card .novel-detail {
   display: flex;
 }
+.novel-card .novel-detail .novel-author {
+  display: flex;
+  align-items: center;
+  font-size: 0.8em;
+}
+.novel-card .novel-detail .novel-author img {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+.novel-card .novel-detail .novel-author span {
+  color: #fff;
+  display: inline-block;
+  margin-left: 5px;
+}
 .novel-card .novel-detail .novel-metadata {
   margin-left: 1.5rem;
 }

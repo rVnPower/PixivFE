@@ -774,6 +774,24 @@ nav {
   .novel-detail {
     display: flex;
 
+    .novel-author {
+      display: flex;
+      align-items: center;
+      font-size: 0.8em;
+
+      img {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+      }
+
+      span {
+        color: $fg;
+        display: inline-block;
+        margin-left: 5px;
+      }
+    }
+
     .novel-metadata {
       margin-left: 1.5rem;
 

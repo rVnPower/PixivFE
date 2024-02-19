@@ -10,7 +10,6 @@
   <div class="novel-container">
       {{ range Novels }}
       <div class="novel-card">
-
         <div class="novel-detail">
             <div class="novel-cover">
             <img src="{{ .CoverURL }}" alt="{{ .Title }}" />
@@ -22,6 +21,12 @@
                     </div>
                 </a>
             <small><span>{{ .WordCount }} word(s)</span>&nbsp;<span>{{ floor: .ReadingTime / 60 }} min</span></small>
+            <a href="/users/{{ .UserID }}">
+                <div class="novel-author">
+                        <img src="{{ .UserAvatar }}" alt="{{ .UserName }}" />
+                        <span>{{ .UserName }}</span>
+                </div>
+            </a>
             <p class="novel-description">{{ raw: .Description }}</p>
 
             <div class="illust-tags">

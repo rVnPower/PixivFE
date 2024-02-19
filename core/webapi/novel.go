@@ -56,31 +56,31 @@ type Novel struct {
 }
 
 type NovelBrief struct {
-	ID              string      `json:"id"`
-	Title           string      `json:"title"`
-	XRestrict       int         `json:"xRestrict"`
-	Restrict        int         `json:"restrict"`
-	CoverURL        string      `json:"url"`
-	Tags            []string    `json:"tags"`
-	UserID          string      `json:"userId"`
-	UserName        string      `json:"userName"`
-	ProfileImageURL string      `json:"profileImageUrl"`
-	TextCount       int         `json:"textCount"`
-	WordCount       int         `json:"wordCount"`
-	ReadingTime     int         `json:"readingTime"`
-	Description     string      `json:"description"`
-	IsBookmarkable  bool        `json:"isBookmarkable"`
-	BookmarkData    interface{} `json:"bookmarkData"`
-	Bookmarks       int         `json:"bookmarkCount"`
-	IsOriginal      bool        `json:"isOriginal"`
-	CreateDate      time.Time   `json:"createDate"`
-	UpdateDate      time.Time   `json:"updateDate"`
-	IsMasked        bool        `json:"isMasked"`
-	SeriesID        string      `json:"seriesId"`
-	SeriesTitle     string      `json:"seriesTitle"`
-	IsUnlisted      bool        `json:"isUnlisted"`
-	AiType          int         `json:"aiType"`
-	Genre           string      `json:"genre"`
+	ID             string      `json:"id"`
+	Title          string      `json:"title"`
+	XRestrict      int         `json:"xRestrict"`
+	Restrict       int         `json:"restrict"`
+	CoverURL       string      `json:"url"`
+	Tags           []string    `json:"tags"`
+	UserID         string      `json:"userId"`
+	UserName       string      `json:"userName"`
+	UserAvatar     string      `json:"profileImageUrl"`
+	TextCount      int         `json:"textCount"`
+	WordCount      int         `json:"wordCount"`
+	ReadingTime    int         `json:"readingTime"`
+	Description    string      `json:"description"`
+	IsBookmarkable bool        `json:"isBookmarkable"`
+	BookmarkData   interface{} `json:"bookmarkData"`
+	Bookmarks      int         `json:"bookmarkCount"`
+	IsOriginal     bool        `json:"isOriginal"`
+	CreateDate     time.Time   `json:"createDate"`
+	UpdateDate     time.Time   `json:"updateDate"`
+	IsMasked       bool        `json:"isMasked"`
+	SeriesID       string      `json:"seriesId"`
+	SeriesTitle    string      `json:"seriesTitle"`
+	IsUnlisted     bool        `json:"isUnlisted"`
+	AiType         int         `json:"aiType"`
+	Genre          string      `json:"genre"`
 }
 
 func GetNovelByID(c *fiber.Ctx, id string) (Novel, error) {
