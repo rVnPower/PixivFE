@@ -13,6 +13,7 @@ $color-shadow: #bbbbbb20;
 $font-family: "Roboto", "Open Sans", "Noto Sans", sans-serif, "Noto Sans CJK JP";
 $small-artwork-width: 184px;
 $large-artwork-width: 288px;
+$novel-width: 392px;
 $small-breakpoint: 440px;
 
 html {
@@ -764,10 +765,18 @@ nav {
   }
 }
 
+.novel-container {
+  display: grid;
+
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(calc($novel-width + 15px), 1fr)
+  );
+  justify-items: center;
+}
+
 .novel-card {
   font-size: 1.5rem;
-  background-color: $bg-secondary;
-  border-radius: $border-radius;
   padding: 5px 15px;
   padding-top: 1em;
 

@@ -658,10 +658,14 @@ nav .sidebar-item img {
   margin-right: 5px;
 }
 
+.novel-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(407px, 1fr));
+  justify-items: center;
+}
+
 .novel-card {
   font-size: 1.5rem;
-  background-color: #222;
-  border-radius: 5px;
   padding: 5px 15px;
   padding-top: 1em;
 }
