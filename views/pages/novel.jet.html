@@ -1,7 +1,9 @@
 <div class="container novel" id="checkpoint">
   <div class="novel-detail">
     <div class="novel-cover">
-      <img src="{{ Novel.CoverURL }}" alt="{{ Novel.Title }}" />
+      <a href="{{ Novel.CoverURL }}">
+        <img src="{{ Novel.CoverURL }}" alt="{{ Novel.Title }}" />
+      </a>
     </div>
     <div class="novel-metadata">
       <div class="novel-title">{{ Novel.Title }}</div>
