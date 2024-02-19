@@ -12,7 +12,9 @@
       <div class="novel-card">
         <div class="novel-detail">
             <div class="novel-cover">
-            <img src="{{ .CoverURL }}" alt="{{ .Title }}" />
+                <a href="{{ .CoverURL }}">
+                    <img src="{{ .CoverURL }}" alt="{{ .Title }}" />
+                </a>
             </div>
             <div class="novel-metadata">
                 <a href="/novel/{{ .ID }}">
