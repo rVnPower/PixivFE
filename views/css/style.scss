@@ -772,7 +772,7 @@ nav {
     auto-fit,
     minmax(calc($novel-width + 15px), 1fr)
   );
-  justify-items: center;
+  justify-content: center;
 }
 
 .novel-card {
