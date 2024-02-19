@@ -154,7 +154,7 @@ func CreatePaginator(base, ending string, current_page, max_page int) template.H
 		}
 
 		pages += fmt.Sprintf(`<form action="%s">%s<input name="page" type="number" required value="%d" min="%d" %s placeholder="Page№" title="Jump To Page Number"/></form>`, pageUrl(current_page), hidden_section, current_page, 1, max_section)
-		pages += "<br />"
+		pages += `<br />`
 	}
 	{
 		// previous,first (two buttons)
@@ -165,6 +165,7 @@ func CreatePaginator(base, ending string, current_page, max_page int) template.H
 		}
 		pages += `</span>`
 
+		// page number buttons
 		for i := current_page - peek; (i <= max_page || max_page == -1) && count < limit; i++ {
 			if i < 1 {
 				continue
@@ -231,7 +232,7 @@ func GetNovelGenre(s string) string {
 		return "Other"
 	}
 
-	return ""
+	return fmt.Sprintf("(Unknown Genre %s)", s)
 }
 
 func GetTemplateFunctions() template.FuncMap {
@@ -293,7 +294,6 @@ func GetTemplateFunctions() template.FuncMap {
 			return s[:len(s)-6]
 		},
 		"renderNovel": func(s string) template.HTML {
-			s = fmt.Sprintf(s)
 			s = strings.ReplaceAll(s, "\n", "<br />")
 			s = strings.ReplaceAll(s, "[newpage]", "Insert page separator here.")
 			return template.HTML(s)
