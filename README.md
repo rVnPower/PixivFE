@@ -27,7 +27,11 @@ You can keep track of this project's development using the [roadmap](doc/dev/gen
 You can use PixivFE for personal use! Assuming that you use an operating system that can run POSIX shell scripts, install `go`, clone this repository, modify the `run.sh` file, and profit!
 I recommend self-hosting your own instance for personal use, instead of relying entirely on official instances.
 
-To deploy PixivFE using Docker or the compiled binary, see the [Hosting PixivFE](doc/Hosting.md) wiki page. A guide on [hosting a Pixiv image proxy](doc/Hosting-an-image-proxy-server-for-Pixiv.md) is also available if you don't want to use a public one.
+To deploy PixivFE using Docker or the compiled binary, see the [Hosting PixivFE](doc/Hosting.md) wiki page.
+
+PixivFE can work with or without an external image proxy server. Here is [the built-in proxy list](doc/Built-in%20Proxy%20List.go).
+See [hosting a Pixiv image proxy](doc/Hosting-an-image-proxy-server-for-Pixiv.md) if you want to host one yourself.
+
 
 ## Development
 
@@ -50,9 +54,7 @@ git clone https://codeberg.org/VnPower/PixivFE.git && cd PixivFE
 PIXIVFE_DEV=1 <other_environment_variables> go run .
 ```
 
-## Image Proxy Instances
-
-Note: PixivFE can work without an external image proxy server.
+## Instances
 
 <!-- The current instance table is really wide; maybe there's a better way of formatting it without losing information?
 The badges are also difficult to read on a small screen due to Codeberg shrinking the width of the columns -->
