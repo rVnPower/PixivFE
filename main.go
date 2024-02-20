@@ -213,10 +213,10 @@ func main() {
 	if config.GlobalServerConfig.InDevelopment {
 		go func() {
 			cmd := exec.Command("sass", "--watch", "views/css")
-			cmd.Stdout = os.Stderr // heh. (sass quirk)
+			cmd.Stdout = os.Stderr // Sass quirk
 			cmd.Stderr = os.Stderr
 			cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true, Pdeathsig: syscall.SIGHUP}
-			runtime.LockOSThread() // O.O https://github.com/golang/go/issues/27505
+			runtime.LockOSThread() // Go quirk https://github.com/golang/go/issues/27505
 			err := cmd.Run()
 			if err != nil {
 				log.Println(fmt.Errorf("when running sass: %w", err))
