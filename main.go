@@ -24,6 +24,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/utils"
 	"github.com/gofiber/template/jet/v2"
+	"github.com/im7mortal/kmutex"
 )
 
 func CanRequestSkipLimiter(c *fiber.Ctx) bool {
@@ -88,12 +89,34 @@ func main() {
 		},
 	})
 
+	const limiterResetInterval time.Duration = 30 * time.Second
+	keyedSleepingSpot := kmutex.New()
+	server.Use(limiter.New(limiter.Config{
+		Next:              CanRequestSkipLimiter,
+		Expiration:        limiterResetInterval,
+		Max:               config.GlobalServerConfig.RequestLimit,
+		LimiterMiddleware: limiter.SlidingWindow{},
+		LimitReached: func(c *fiber.Ctx) error {
+			// limit response throughput by pacing, since not every bot reads X-RateLimit-*
+			// on limit reached, they just have to wait
+			key := c.IP()
+			keyedSleepingSpot.Lock(key)
+			defer keyedSleepingSpot.Unlock(key)
+			time.Sleep(limiterResetInterval)
+			return c.Next()
+		},
+	}))
+
 	server.Use(logger.New(
 		logger.Config{
 			Format: "${time} ${ip} | ${path}\n",
 			Next:   CanRequestSkipLogger,
 		},
 	))
+
+	server.Use(compress.New(compress.Config{
+		Level: compress.LevelBestSpeed, // 1
+	}))
 
 	if !config.GlobalServerConfig.InDevelopment {
 		server.Use(cache.New(
@@ -116,27 +139,7 @@ func main() {
 			},
 		))
 	}
-
-	server.Use(recover.New(recover.Config{EnableStackTrace: config.GlobalServerConfig.InDevelopment}))
-
-	server.Use(compress.New(compress.Config{
-		Level: compress.LevelBestSpeed, // 1
-	}))
-
-	const limiterResetInterval time.Duration = 30 * time.Second
-	server.Use(limiter.New(limiter.Config{
-		Next:              CanRequestSkipLimiter,
-		Expiration:        limiterResetInterval,
-		Max:               config.GlobalServerConfig.RequestLimit,
-		LimiterMiddleware: limiter.SlidingWindow{},
-		LimitReached: func(c *fiber.Ctx) error {
-			// limit response throughput by pacing, since not every bot reads X-RateLimit-*
-			// on limit reached, they just have to wait
-			time.Sleep(limiterResetInterval)
-			return c.Next()
-		},
-	}))
-
+	
 	// Global HTTP headers
 	server.Use(func(c *fiber.Ctx) error {
 		c.Set("X-Frame-Options", "DENY")
@@ -161,6 +164,8 @@ func main() {
 	server.Static("/assets/", "./views/assets")
 	server.Static("/css/", "./views/css")
 	server.Static("/js/", "./views/js")
+
+	server.Use(recover.New(recover.Config{EnableStackTrace: config.GlobalServerConfig.InDevelopment}))
 
 	// Routes
 
