@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"net"
@@ -124,14 +123,17 @@ func main() {
 		Level: compress.LevelBestSpeed, // 1
 	}))
 
+	const limiterResetInterval time.Duration = 30 * time.Second
 	server.Use(limiter.New(limiter.Config{
 		Next:              CanRequestSkipLimiter,
-		Expiration:        30 * time.Second,
+		Expiration:        limiterResetInterval,
 		Max:               config.GlobalServerConfig.RequestLimit,
 		LimiterMiddleware: limiter.SlidingWindow{},
 		LimitReached: func(c *fiber.Ctx) error {
-			log.Println("Limit Reached!")
-			return errors.New("Woah! You are going too fast! I'll have to keep an eye on you.")
+			// limit response throughput by pacing, since not every bot reads X-RateLimit-*
+			// on limit reached, they just have to wait
+			time.Sleep(limiterResetInterval)
+			return c.Next()
 		},
 	}))
 
