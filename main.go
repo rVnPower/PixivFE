@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
@@ -8,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"strconv"
 	"strings"
 	"syscall"
 	"time"
@@ -89,21 +91,33 @@ func main() {
 		},
 	})
 
-	const limiterResetInterval time.Duration = 30 * time.Second
 	keyedSleepingSpot := kmutex.New()
 	server.Use(limiter.New(limiter.Config{
 		Next:              CanRequestSkipLimiter,
-		Expiration:        limiterResetInterval,
+		Expiration:        30 * time.Second,
 		Max:               config.GlobalServerConfig.RequestLimit,
 		LimiterMiddleware: limiter.SlidingWindow{},
 		LimitReached: func(c *fiber.Ctx) error {
 			// limit response throughput by pacing, since not every bot reads X-RateLimit-*
 			// on limit reached, they just have to wait
+			// the design of this means that if they send multiple requests when reaching rate limit, they will wait even longer (since `retryAfter` is calculated before anything has slept)
+			retryAfter_s := c.GetRespHeader(fiber.HeaderRetryAfter)
+			retryAfter, err := strconv.ParseUint(retryAfter_s, 10, 64)
+			if err != nil {
+				log.Panicf("response header 'RetryAfter' should be a number: %v", err)
+			}
 			key := c.IP()
+			ctx, cancel := context.WithTimeout(c.Context(), time.Duration(retryAfter)*time.Second)
+			defer cancel()
 			keyedSleepingSpot.Lock(key)
-			defer keyedSleepingSpot.Unlock(key)
-			time.Sleep(limiterResetInterval)
+			<-ctx.Done()
+			keyedSleepingSpot.Unlock(key)
 			return c.Next()
+
+			// old behavior
+
+			// log.Println("Limit Reached!")
+			// return errors.New("Woah! You are going too fast! I'll have to keep an eye on you.")
 		},
 	}))
 
@@ -139,7 +153,7 @@ func main() {
 			},
 		))
 	}
-	
+
 	// Global HTTP headers
 	server.Use(func(c *fiber.Ctx) error {
 		c.Set("X-Frame-Options", "DENY")
