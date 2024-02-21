@@ -7,8 +7,8 @@ var BuiltinProxyList = []string{
 	"https://pximg.exozy.me", // except this one. this one we affiliated.
 	"https://pixiv.ducks.party",
 	"https://pximg.cocomi.eu.org",
-	"https://sex.nyan.xyz",
-	"https://i.loli.best",
+	//"https://sex.nyan.xyz",
+	//"https://i.loli.best",
 	"https://mima.localghost.org/proxy/pximg",
 	"https://i.pixiv.re",
 	// "https://pixiv.tatakai.top", // dead due to us :(
