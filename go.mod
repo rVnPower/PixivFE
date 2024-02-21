@@ -2,6 +2,8 @@ module codeberg.org/vnpower/pixivfe/v2
 
 go 1.21
 
+replace github.com/gofiber/fiber/v2 => github.com/iacore/fiber/v2 v2.0.0-20240221154744-f7bf0b188c39
+
 require (
 	github.com/goccy/go-json v0.10.2
 	github.com/gofiber/fiber/v2 v2.52.0
