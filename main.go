@@ -124,8 +124,15 @@ func main() {
 
 	server.Use(logger.New(
 		logger.Config{
-			Format: "${time} ${ip} | ${path}\n",
+			Format: "${time} +${latency} ${ip} ${method} ${path} ${status} ${error} \n",
 			Next:   CanRequestSkipLogger,
+			CustomTags: map[string]logger.LogFunc{
+				// make latency always print in seconds
+				logger.TagLatency: func(output logger.Buffer, c *fiber.Ctx, data *logger.Data, extraParam string) (int, error) {
+					latency := data.Stop.Sub(data.Start).Seconds()
+					return output.WriteString(fmt.Sprintf("%.6f", latency))
+				},
+			},
 		},
 	))
 
