@@ -26,7 +26,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/utils"
 	"github.com/gofiber/template/jet/v2"
-	"github.com/im7mortal/kmutex"
+	"codeberg.org/vnpower/pixivfe/v2/core/kmutex"
 )
 
 func CanRequestSkipLimiter(c *fiber.Ctx) bool {
@@ -106,18 +106,19 @@ func main() {
 			if err != nil {
 				log.Panicf("response header 'RetryAfter' should be a number: %v", err)
 			}
-			key := c.IP()
+			requestIP := c.IP()
+			refcount := keyedSleepingSpot.Lock(requestIP)
+			defer keyedSleepingSpot.Unlock(requestIP)
+			if refcount >= 4 { // on too much concurrent requests
+				// todo: maybe blackhole `requestIP` here
+				log.Println("Limit Reached!")
+				return fmt.Errorf("Woah! You are going too fast! I'll have to keep an eye on you.")
+			}
 			ctx, cancel := context.WithTimeout(c.Context(), time.Duration(retryAfter)*time.Second)
 			defer cancel()
-			keyedSleepingSpot.Lock(key)
 			<-ctx.Done()
-			keyedSleepingSpot.Unlock(key)
 			return c.Next()
 
-			// old behavior
-
-			// log.Println("Limit Reached!")
-			// return errors.New("Woah! You are going too fast! I'll have to keep an eye on you.")
 		},
 	}))
 
