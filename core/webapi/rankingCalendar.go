@@ -36,7 +36,11 @@ func GetRankingCalendar(c *fiber.Ctx, mode string, year, month int) (template.HT
 	token := session.GetToken(c)
 	URL := url.GetRankingCalendarURL(mode, year, month)
 
-	req, _ := http.NewRequest("GET", URL, nil)
+	req, err := http.NewRequest("GET", URL, nil)
+	if err != nil {
+		return template.HTML(""), err
+	}
+	req = req.WithContext(c.Context())
 	req.Header.Add("User-Agent", "Mozilla/5.0")
 	req.Header.Add("Cookie", "PHPSESSID="+token)
 	// req.AddCookie(&http.Cookie{

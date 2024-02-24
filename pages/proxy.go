@@ -14,6 +14,7 @@ func SPximgProxy(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
+	req = req.WithContext(c.Context())
 
 	// Make the request
 	resp, err := http.DefaultClient.Do(req)
@@ -38,6 +39,7 @@ func IPximgProxy(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
+	req = req.WithContext(c.Context())
 	req.Header.Add("Referer", "https://www.pixiv.net/")
 
 	// Make the request
@@ -63,6 +65,7 @@ func UgoiraProxy(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
+	req = req.WithContext(c.Context())
 
 	// Make the request
 	resp, err := http.DefaultClient.Do(req)

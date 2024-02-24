@@ -17,7 +17,7 @@ func setToken(c *fiber.Ctx) error {
 	token := c.FormValue("token")
 	if token != "" {
 		URL := httpc.GetNewestFromFollowingURL("all", "1")
-		
+
 		_, err := httpc.UnwrapWebAPIRequest(c.Context(), URL, token)
 		if err != nil {
 			return errors.New("Cannot authorize with supplied token.")
@@ -25,7 +25,11 @@ func setToken(c *fiber.Ctx) error {
 
 		// Make a test request to verify the token.
 		// THE TEST URL IS NSFW!
-		req, _ := http.NewRequest("GET", "https://www.pixiv.net/en/artworks/115365120", nil)
+		req, err := http.NewRequest("GET", "https://www.pixiv.net/en/artworks/115365120", nil)
+		if err != nil {
+			return err
+		}
+		req = req.WithContext(c.Context())
 		req.Header.Add("User-Agent", "Mozilla/5.0")
 		req.AddCookie(&http.Cookie{
 			Name:  "PHPSESSID",

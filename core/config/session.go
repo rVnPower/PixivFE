@@ -46,7 +46,7 @@ func ProxyImageUrlNoEscape(c *fiber.Ctx, s string) string {
 // note: still cannot believe Go didn't have this function
 func urlAuthority(url url.URL) string {
 	r := ""
-	if (url.Scheme != "" ) != (url.Host != "") {
+	if (url.Scheme != "") != (url.Host != "") {
 		log.Panicf("url must have both scheme and authority or neither: %s", url.String())
 	}
 	if url.Scheme != "" {

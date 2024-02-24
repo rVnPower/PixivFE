@@ -15,6 +15,7 @@ import (
 	"time"
 
 	config "codeberg.org/vnpower/pixivfe/v2/core/config"
+	"codeberg.org/vnpower/pixivfe/v2/core/kmutex"
 	"codeberg.org/vnpower/pixivfe/v2/pages"
 	"codeberg.org/vnpower/pixivfe/v2/serve"
 	"github.com/goccy/go-json"
@@ -26,7 +27,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/utils"
 	"github.com/gofiber/template/jet/v2"
-	"codeberg.org/vnpower/pixivfe/v2/core/kmutex"
 )
 
 func CanRequestSkipLimiter(c *fiber.Ctx) bool {

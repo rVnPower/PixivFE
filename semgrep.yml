@@ -51,3 +51,24 @@ rules:
         $...DISCARD
       }
       ...
+- id: rule-3
+  message: "http request without context"
+  languages: [go]
+  severity: WARNING
+  patterns:
+  - pattern-inside: |
+      $REQ, $ERR := http.NewRequest($...ARGV)
+      $...REST
+  - pattern-not: |
+      $REQ, $ERR := http.NewRequest($...ARGV)
+      if $ERR != nil {
+        ...
+      }
+      $REQ = $REQ.WithContext($CTX)
+      ...
+  fix: |
+      $REQ, err := http.NewRequest($...ARGV)
+      if err != nil {
+        return err
+      }
+      $REQ = $REQ.WithContext(c.Context())
