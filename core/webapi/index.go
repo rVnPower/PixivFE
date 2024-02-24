@@ -43,8 +43,8 @@ func GetLanding(c *fiber.Ctx, mode string) (*LandingArtworks, error) {
 		// UserRecommended   []any `json:"recommendUser"`
 		// Commission        []any `json:"completeRequestIds"`
 		RecommendedByTags []struct {
-			Name string   `json:"tag"`
-			IDs  []string `json:"ids"`
+			Name string `json:"tag"`
+			IDs  []string  `json:"ids"`
 		} `json:"recommendByTag"`
 	}
 

@@ -20,7 +20,10 @@ func UserPage(c *fiber.Ctx) error {
 	}
 
 	page := c.Query("page", "1")
-	pageInt, _ := strconv.Atoi(page)
+	pageInt, err := strconv.Atoi(page)
+	if err != nil {
+		return err
+	}
 
 	user, err := core.GetUserArtwork(c, id, category, pageInt)
 	if err != nil {

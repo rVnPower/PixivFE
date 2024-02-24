@@ -44,7 +44,10 @@ func FollowingWorksPage(c *fiber.Ctx) error {
 	mode := c.Query("mode", "all")
 	page := c.Query("page", "1")
 
-	pageInt, _ := strconv.Atoi(page)
+	pageInt, err := strconv.Atoi(page)
+	if err != nil {
+		return err
+	}
 
 	works, err := core.GetNewestFromFollowing(c, mode, page)
 	if err != nil {

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"html/template"
 	"sort"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -341,9 +340,9 @@ func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
 				return
 			}
 			sort.Slice(recent[:], func(i, j int) bool {
-				left, _ := strconv.Atoi(recent[i].ID)
-				right, _ := strconv.Atoi(recent[j].ID)
-				return left > right
+				left := recent[i].ID
+				right := recent[j].ID
+				return numberGreaterThan(left,right)
 			})
 			illust.RecentWorks = recent
 		}()

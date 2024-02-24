@@ -2,10 +2,10 @@
 <div class="artwork-small artwork">
   <div class="artwork-additional">
     <div class="artwork-position">{{ .Rank }}</div>
-    {{ if toInt(.Pages) > 1 }}
+    {{ if .Pages > 1 }}
     <div class="artwork-page-count"><span>&boxbox; {{ .Pages }}</span></div>
     {{ end }}
-    {{ if toInt(.IllustType) == 2 }}
+    {{ if .IllustType == 2 }}
     <div class="artwork-page-count"><span>&#9654;</span></div>
     {{ end }}
   </div>

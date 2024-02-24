@@ -14,13 +14,13 @@ type Ranking struct {
 	Contents []struct {
 		Title        string `json:"title"`
 		Image        string `json:"url"`
-		Pages        string `json:"illust_page_count"`
+		Pages        int `json:"illust_page_count,string"`
 		ArtistName   string `json:"user_name"`
 		ArtistAvatar string `json:"profile_img"`
 		ID           int    `json:"illust_id"`
 		ArtistID     int    `json:"user_id"`
 		Rank         int    `json:"rank"`
-		IllustType   string `json:"illust_type"`
+		IllustType   int `json:"illust_type,string"`
 	} `json:"contents"`
 
 	Mode        string          `json:"mode"`

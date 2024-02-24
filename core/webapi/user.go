@@ -6,7 +6,6 @@ import (
 	"html/template"
 	"math"
 	"sort"
-	"strconv"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/config"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
@@ -36,13 +35,17 @@ type User struct {
 	BackgroundImage string
 }
 
-func (s *User) ParseSocial() {
+func (s *User) ParseSocial() error {
 	if string(s.SocialRaw[:]) == "[]" {
 		// Fuck Pixiv
-		return
+		return nil
 	}
 
-	_ = json.Unmarshal(s.SocialRaw, &s.Social)
+	err := json.Unmarshal(s.SocialRaw, &s.Social)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func GetFrequentTags(c *fiber.Ctx, ids string) ([]FrequentTag, error) {
@@ -203,9 +206,9 @@ func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
 
 			// IDK but the order got shuffled even though Pixiv sorted the IDs in the response
 			sort.Slice(works[:], func(i, j int) bool {
-				left, _ := strconv.Atoi(works[i].ID)
-				right, _ := strconv.Atoi(works[j].ID)
-				return left > right
+				left := works[i].ID
+				right := works[j].ID
+				return numberGreaterThan(left, right)
 			})
 			user.Artworks = works
 
@@ -232,7 +235,10 @@ func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
 
 	}
 
-	user.ParseSocial()
+	err = user.ParseSocial()
+	if err != nil {
+		return User{}, err
+	}
 
 	if user.Background != nil {
 		user.BackgroundImage = user.Background["url"].(string)
@@ -280,4 +286,14 @@ func GetUserBookmarks(c *fiber.Ctx, id, mode string, page int) ([]ArtworkBrief, 
 	}
 
 	return artworks, body.Total, nil
+}
+
+func numberGreaterThan(l, r string) bool {
+	if len(l) > len(r) {
+		return true
+	}
+	if len(l) < len(r) {
+		return false
+	}
+	return l > r
 }

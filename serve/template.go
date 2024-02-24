@@ -7,7 +7,6 @@ import (
 	"math/rand"
 	"net/url"
 	"regexp"
-	"strconv"
 	"strings"
 	"time"
 
@@ -237,11 +236,6 @@ func GetNovelGenre(s string) string {
 
 func GetTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
-		"toInt": func(s string) int {
-			n, _ := strconv.Atoi(s)
-			return n
-		},
-
 		"parseEmojis": func(s string) template.HTML {
 			return ParseEmojis(s)
 		},

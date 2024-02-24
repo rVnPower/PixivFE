@@ -20,7 +20,10 @@ func TagPage(c *fiber.Ctx) error {
 	}
 
 	page := c.Query("page", "1")
-	pageInt, _ := strconv.Atoi(page)
+	pageInt, err := strconv.Atoi(page)
+	if err != nil {
+		return err
+	}
 
 	tag, err := core.GetTagData(c, name)
 	if err != nil {
