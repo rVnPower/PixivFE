@@ -54,7 +54,7 @@ rules:
 - id: rule-3
   message: "http request without context"
   languages: [go]
-  severity: WARNING
+  severity: INVENTORY
   patterns:
   - pattern-inside: |
       $REQ, $ERR := http.NewRequest($...ARGV)
@@ -72,3 +72,15 @@ rules:
         return err
       }
       $REQ = $REQ.WithContext(c.Context())
+- id: rule-4
+  message: "fmt.Sprint on string"
+  languages: [go]
+  severity: WARNING
+  pattern: |
+    fmt.Sprint(($S : string))
+- id: rule-5
+  message: "unhandled error"
+  languages: [go]
+  severity: WARNING
+  pattern: |
+    (_ : error) = ...
