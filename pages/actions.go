@@ -41,7 +41,7 @@ func pixivPostRequest(c *fiber.Ctx, url, payload, token, csrf string) error {
 	}
 	body_s := string(body)
 	if !gjson.Valid(body_s) {
-		return fmt.Errorf("invalid json: %v", body_s)
+		return fmt.Errorf("Invalid JSON: %v", body_s)
 	}
 	errr := gjson.Get(body_s, "error")
 

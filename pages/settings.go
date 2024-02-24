@@ -116,7 +116,7 @@ func SettingsPost(c *fiber.Ctx) error {
 	case "reset-all":
 		err = resetAll(c)
 	default:
-		err = errors.New("no such setting available")
+		err = errors.New("No such setting is available.")
 	}
 
 	if err != nil {

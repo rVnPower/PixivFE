@@ -1,7 +1,7 @@
 package pages
 
 import (
-	"errors"
+	"fmt"
 	"strconv"
 
 	core "codeberg.org/vnpower/pixivfe/v2/core/webapi"
@@ -9,12 +9,12 @@ import (
 )
 
 func NovelPage(c *fiber.Ctx) error {
-	param_id := c.Params("id")
-	if _, err := strconv.Atoi(param_id); err != nil {
-		return errors.New("invalid id")
+	id := c.Params("id")
+	if _, err := strconv.Atoi(id); err != nil {
+		return fmt.Errorf("Invalid ID: %s", id)
 	}
 
-	novel, err := core.GetNovelByID(c, param_id)
+	novel, err := core.GetNovelByID(c, id)
 	if err != nil {
 		return err
 	}

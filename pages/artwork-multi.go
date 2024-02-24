@@ -1,7 +1,6 @@
 package pages
 
 import (
-	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -12,8 +11,8 @@ import (
 )
 
 func ArtworkMultiPage(c *fiber.Ctx) error {
-	param_ids := c.Params("ids")
-	ids := strings.Split(param_ids, ",")
+	ids_ := c.Params("ids")
+	ids := strings.Split(ids_, ",")
 
 	artworks := make([]*core.Illust, len(ids))
 
@@ -21,7 +20,7 @@ func ArtworkMultiPage(c *fiber.Ctx) error {
 	wg.Add(len(ids))
 	for i, id := range ids {
 		if _, err := strconv.Atoi(id); err != nil {
-			return errors.New("invalid id")
+			return fmt.Errorf("Invalid ID: %s", id)
 		}
 
 		go func(i int, id string) {

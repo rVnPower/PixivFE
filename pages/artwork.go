@@ -1,7 +1,7 @@
 package pages
 
 import (
-	"errors"
+	"fmt"
 	"strconv"
 
 	core "codeberg.org/vnpower/pixivfe/v2/core/webapi"
@@ -9,12 +9,12 @@ import (
 )
 
 func ArtworkPage(c *fiber.Ctx) error {
-	param_id := c.Params("id")
-	if _, err := strconv.Atoi(param_id); err != nil {
-		return errors.New("invalid id")
+	id := c.Params("id")
+	if _, err := strconv.Atoi(id); err != nil {
+		return fmt.Errorf("Invalid ID: %s", id)
 	}
 
-	illust, err := core.GetArtworkByID(c, param_id, true)
+	illust, err := core.GetArtworkByID(c, id, true)
 	if err != nil {
 		return err
 	}
@@ -34,12 +34,12 @@ func ArtworkPage(c *fiber.Ctx) error {
 }
 
 func ArtworkEmbedPage(c *fiber.Ctx) error {
-	param_id := c.Params("id")
-	if _, err := strconv.Atoi(param_id); err != nil {
-		return errors.New("invalid id")
+	id := c.Params("id")
+	if _, err := strconv.Atoi(id); err != nil {
+		return fmt.Errorf("Invalid ID: %s", id)
 	}
 
-	illust, err := core.GetArtworkByID(c, param_id, false)
+	illust, err := core.GetArtworkByID(c, id, false)
 	if err != nil {
 		return err
 	}

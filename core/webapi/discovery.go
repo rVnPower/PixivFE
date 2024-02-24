@@ -23,7 +23,7 @@ func GetDiscoveryArtwork(c *fiber.Ctx, mode string) ([]ArtworkBrief, error) {
 	}
 	resp = session.ProxyImageUrl(c, resp)
 	if !gjson.Valid(resp) {
-		return nil, fmt.Errorf("invalid json: %v", resp)
+		return nil, fmt.Errorf("Invalid JSON: %v", resp)
 	}
 	data := gjson.Get(resp, "thumbnails.illust").String()
 
@@ -48,7 +48,7 @@ func GetDiscoveryNovels(c *fiber.Ctx, mode string) ([]NovelBrief, error) {
 	}
 	resp = session.ProxyImageUrl(c, resp)
 	if !gjson.Valid(resp) {
-		return nil, fmt.Errorf("invalid json: %v", resp)
+		return nil, fmt.Errorf("Invalid JSON: %v", resp)
 	}
 	data := gjson.Get(resp, "thumbnails.novel").String()
 

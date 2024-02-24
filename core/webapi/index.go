@@ -60,7 +60,7 @@ func GetLanding(c *fiber.Ctx, mode string) (*LandingArtworks, error) {
 	resp = session.ProxyImageUrl(c, resp)
 
 	if !gjson.Valid(resp) {
-		return nil, fmt.Errorf("invalid json: %v", resp)
+		return nil, fmt.Errorf("Invalid JSON: %v", resp)
 	}
 
 	artworks := map[string]ArtworkBrief{}

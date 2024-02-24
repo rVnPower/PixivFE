@@ -83,13 +83,13 @@ func UnwrapWebAPIRequest(context context.Context, URL, token string) (string, er
 		return "", errors.New(resp.Message)
 	}
 	if !gjson.Valid(resp.Body) {
-		return "", fmt.Errorf("invalid json: %v", resp.Body)
+		return "", fmt.Errorf("Invalid JSON: %v", resp.Body)
 	}
 
 	err := gjson.Get(resp.Body, "error")
 
 	if !err.Exists() {
-		return "", errors.New("incompatible request body")
+		return "", errors.New("Incompatible request body")
 	}
 
 	if err.Bool() {
