@@ -10,7 +10,7 @@ import (
 
 type CookieName string
 
-const (
+const ( // the __Host thing force it to be secure and same-origin (no subdomain) >> https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie
 	Cookie_Token      CookieName = "__Host-pixivfe-Token"
 	Cookie_CSRF       CookieName = "__Host-pixivfe-CSRF"
 	Cookie_ImageProxy CookieName = "__Host-pixivfe-ImageProxy"
