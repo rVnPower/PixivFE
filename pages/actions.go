@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/config"
+	session "codeberg.org/vnpower/pixivfe/v2/core/user"
 	"github.com/gofiber/fiber/v2"
 	"github.com/tidwall/gjson"
 )
@@ -56,7 +56,7 @@ func pixivPostRequest(c *fiber.Ctx, url, payload, token, csrf string) error {
 }
 
 func AddBookmarkRoute(c *fiber.Ctx) error {
-	token := session.CheckToken(c)
+	token := session.GetToken(c)
 	csrf := session.GetCSRFToken(c)
 
 	if token == "" || csrf == "" {
@@ -83,7 +83,7 @@ func AddBookmarkRoute(c *fiber.Ctx) error {
 }
 
 func DeleteBookmarkRoute(c *fiber.Ctx) error {
-	token := session.CheckToken(c)
+	token := session.GetToken(c)
 	csrf := session.GetCSRFToken(c)
 
 	if token == "" || csrf == "" {
@@ -106,7 +106,7 @@ func DeleteBookmarkRoute(c *fiber.Ctx) error {
 }
 
 func LikeRoute(c *fiber.Ctx) error {
-	token := session.CheckToken(c)
+	token := session.GetToken(c)
 	csrf := session.GetCSRFToken(c)
 
 	if token == "" || csrf == "" {

@@ -6,11 +6,14 @@ import (
 	"net/http"
 	"regexp"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/config"
+	session "codeberg.org/vnpower/pixivfe/v2/core/user"
 	httpc "codeberg.org/vnpower/pixivfe/v2/core/http"
 	"codeberg.org/vnpower/pixivfe/v2/doc"
 	"github.com/gofiber/fiber/v2"
 )
+
+// todo: allow clear proxy
+// todo: allow clear all settings
 
 func setToken(c *fiber.Ctx) error {
 	// Parse the value from the form
@@ -55,12 +58,8 @@ func setToken(c *fiber.Ctx) error {
 		}
 
 		// Set the token
-		if err := session.SetSessionValue(c, "Token", token); err != nil {
-			return err
-		}
-		if err := session.SetSessionValue(c, "CSRF", csrf); err != nil {
-			return err
-		}
+		session.SetCookie(c, session.Cookie_Token, token)
+		session.SetCookie(c, session.Cookie_CSRF, csrf)
 
 		return nil
 	}
@@ -71,17 +70,14 @@ func setImageServer(c *fiber.Ctx) error {
 	// Parse the value from the form
 	token := c.FormValue("image-proxy")
 	if token != "" {
-		if err := session.SetSessionValue(c, "ImageProxy", token); err != nil {
-			return err
-		}
-
+		session.SetCookie(c, session.Cookie_ImageProxy, token)
 		return nil
 	}
 	return errors.New("You submitted an empty/invalid form.")
 }
 
 func setLogout(c *fiber.Ctx) error {
-	session.RemoveSessionValue(c, "Token")
+	session.ClearCookie(c, session.Cookie_Token)
 	return nil
 }
 

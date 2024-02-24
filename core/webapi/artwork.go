@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/config"
+	session "codeberg.org/vnpower/pixivfe/v2/core/user"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"

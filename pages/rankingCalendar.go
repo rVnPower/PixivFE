@@ -64,7 +64,7 @@ func RankingCalendarPage(c *fiber.Ctx) error {
 			return err
 		}
 	} else {
-		now := time.Now()
+		now := c.Context().Time()
 		year = now.Year()
 		month = int(now.Month())
 	}

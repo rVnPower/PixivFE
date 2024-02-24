@@ -68,7 +68,7 @@ var EnvList []*EnvVar = []*EnvVar{
 	{
 		Name:       "PIXIVFE_IMAGEPROXY",
 		CommonName: "image proxy server",
-		Value:      "/proxy/i.pximg.net", // built-in proxy route
+		Value:      BuiltinProxyUrl,
 		Announce:   true,
 		// **Required**: No, default to using built-in proxy
 		//

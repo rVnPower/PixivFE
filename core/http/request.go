@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	core "codeberg.org/vnpower/pixivfe/v2/core/config"
+	config "codeberg.org/vnpower/pixivfe/v2/core/config"
 	"github.com/tidwall/gjson"
 )
 
@@ -31,13 +31,13 @@ func WebAPIRequest(context context.Context, URL, token string) HttpResponse {
 	}
 	req = req.WithContext(context)
 
-	req.Header.Add("User-Agent", core.GlobalServerConfig.UserAgent)
-	req.Header.Add("Accept-Language", core.GlobalServerConfig.AcceptLanguage)
+	req.Header.Add("User-Agent", config.GlobalServerConfig.UserAgent)
+	req.Header.Add("Accept-Language", config.GlobalServerConfig.AcceptLanguage)
 
 	if token == "" {
 		req.AddCookie(&http.Cookie{
 			Name:  "PHPSESSID",
-			Value: core.GetRandomDefaultToken(),
+			Value: config.GetRandomDefaultToken(),
 		})
 	} else {
 		req.AddCookie(&http.Cookie{

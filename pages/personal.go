@@ -4,13 +4,13 @@ import (
 	"strconv"
 	"strings"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/config"
+	session "codeberg.org/vnpower/pixivfe/v2/core/user"
 	core "codeberg.org/vnpower/pixivfe/v2/core/webapi"
 	"github.com/gofiber/fiber/v2"
 )
 
 func LoginUserPage(c *fiber.Ctx) error {
-	token := session.CheckToken(c)
+	token := session.GetToken(c)
 
 	if token == "" {
 		return c.Redirect("/settings")
@@ -24,7 +24,7 @@ func LoginUserPage(c *fiber.Ctx) error {
 }
 
 func LoginBookmarkPage(c *fiber.Ctx) error {
-	token := session.CheckToken(c)
+	token := session.GetToken(c)
 	if token == "" {
 		return c.Redirect("/settings")
 	}
@@ -37,7 +37,7 @@ func LoginBookmarkPage(c *fiber.Ctx) error {
 }
 
 func FollowingWorksPage(c *fiber.Ctx) error {
-	if token := session.CheckToken(c); token == "" {
+	if token := session.GetToken(c); token == "" {
 		return c.Redirect("/settings")
 	}
 

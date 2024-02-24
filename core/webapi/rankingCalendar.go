@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/config"
+	session "codeberg.org/vnpower/pixivfe/v2/core/user"
 	url "codeberg.org/vnpower/pixivfe/v2/core/http"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/net/html"
@@ -83,7 +83,7 @@ func GetRankingCalendar(c *fiber.Ctx, mode string, year, month int) (template.HT
 	}
 	link(doc)
 
-	// now := time.Now()
+	// now := c.Context().Time()
 	// yearNow := now.Year()
 	// monthNow := now.Month()
 	lastMonth := time.Date(year, time.Month(month), 0, 0, 0, 0, 0, time.UTC)

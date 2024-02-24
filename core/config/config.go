@@ -1,8 +1,11 @@
+// Global (Server-Wide) Settings
+
 package core
 
 import (
 	"errors"
 	"log"
+	"math/rand"
 	"net/url"
 	"strconv"
 	"strings"
@@ -107,4 +110,10 @@ func (s *ServerConfig) setStartingTime() {
 func (s *ServerConfig) setVersion() {
 	s.Version = "v2.4"
 	log.Printf("PixivFE %s\n", s.Version)
+}
+
+func GetRandomDefaultToken() string {
+	defaultToken := GlobalServerConfig.Token[rand.Intn(len(GlobalServerConfig.Token))]
+
+	return defaultToken
 }
