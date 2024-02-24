@@ -53,7 +53,7 @@ func main() {
 	if config.GlobalServerConfig.InDevelopment {
 		engine.Reload(true)
 	}
-	// gofiber bug: no error even if the templates are invalid???
+	// gofiber bug: no error even if the templates are invalid??? https://github.com/gofiber/template/issues/341
 	err := engine.Load()
 	if err != nil {
 		panic(err)

@@ -38,12 +38,12 @@ func SetCookie(c *fiber.Ctx, name CookieName, value string) {
 }
 
 func ClearCookie(c *fiber.Ctx, name CookieName) {
-	// c.ClearCookie(string(name)) // gofiber bug
+	// c.ClearCookie(string(name)) // gofiber bug https://github.com/gofiber/fiber/issues/2878
 	SetCookie(c, name, "")
 }
 
 func ClearAllCookies(c *fiber.Ctx) {
-	// c.ClearCookie() // gofiber bug
+	// c.ClearCookie() // gofiber bug https://github.com/gofiber/fiber/issues/2878
 	for _, name := range AllCookieNames {
 		SetCookie(c, name, "")
 	}
