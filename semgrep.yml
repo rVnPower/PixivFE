@@ -1,7 +1,7 @@
 # Usage: semgrep scan -f semgrep.yml
 rules:
 - id: rule-0
-  message: "find http requests made not with *fiber.Ctx available"
+  message: "http requests made without *fiber.Ctx"
   languages: [go]
   severity: WARNING
   patterns:
@@ -19,7 +19,6 @@ rules:
   message: "find http requests made to Pixiv"
   languages: [go]
   severity: INFO
-  # severity: INVENTORY
   patterns:
   - pattern: |
       http.UnwrapWebAPIRequest($A, $B)
@@ -29,7 +28,6 @@ rules:
   message: "find http requests made to Pixiv"
   languages: [go]
   severity: INFO
-  # severity: INVENTORY
   patterns:
   - pattern: |
       http.WebAPIRequest($A, $B)
@@ -54,11 +52,12 @@ rules:
 - id: rule-3
   message: "http request without context"
   languages: [go]
-  severity: INVENTORY
+  severity: WARNING
+  # severity: INVENTORY
   patterns:
   - pattern-inside: |
       $REQ, $ERR := http.NewRequest($...ARGV)
-      $...REST
+      ...
   - pattern-not: |
       $REQ, $ERR := http.NewRequest($...ARGV)
       if $ERR != nil {
