@@ -16,6 +16,9 @@ const (
 	Cookie_ImageProxy CookieName = "__Host-pixivfe-ImageProxy"
 )
 
+// Go can't make this a const...
+var AllCookieNames = []CookieName{Cookie_Token, Cookie_CSRF, Cookie_ImageProxy}
+
 func GetCookie(c *fiber.Ctx, name CookieName, defaultValue ...string) string {
 	return c.Cookies(string(name), defaultValue...)
 }
@@ -24,20 +27,24 @@ func SetCookie(c *fiber.Ctx, name CookieName, value string) {
 	cookie := fiber.Cookie{
 		Name:  string(name),
 		Value: value,
-		Path:    "/",
+		Path:  "/",
 		// expires in 30 days from now
-		Expires: c.Context().Time().Add(30 * (24 * time.Hour)),
+		Expires:  c.Context().Time().Add(30 * (24 * time.Hour)),
 		HTTPOnly: true,
-        Secure: true,
+		Secure:   true,
 		SameSite: fiber.CookieSameSiteStrictMode, // bye-bye cross site forgery
 	}
 	c.Cookie(&cookie)
 }
 
 func ClearCookie(c *fiber.Ctx, name CookieName) {
-	c.ClearCookie(string(name))
+	// c.ClearCookie(string(name)) // gofiber bug
+	SetCookie(c, name, "")
 }
 
 func ClearAllCookies(c *fiber.Ctx) {
-	c.ClearCookie()
+	// c.ClearCookie() // gofiber bug
+	for _, name := range AllCookieNames {
+		SetCookie(c, name, "")
+	}
 }

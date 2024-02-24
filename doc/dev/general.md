@@ -5,9 +5,7 @@
 /settings/
 
 - [x] Merge login page with settings page
-- [ ] Persistence  
-A JSON file to store values.
-This way, values set by users won't be lost after restarts.
+- [x] Persistence (http-only secure cookies)
 - [User Settings](user-customization.md)
 
 /novel/

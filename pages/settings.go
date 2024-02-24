@@ -71,9 +71,10 @@ func setImageServer(c *fiber.Ctx) error {
 	token := c.FormValue("image-proxy")
 	if token != "" {
 		session.SetCookie(c, session.Cookie_ImageProxy, token)
-		return nil
+	} else {
+		session.ClearCookie(c, session.Cookie_ImageProxy)
 	}
-	return errors.New("You submitted an empty/invalid form.")
+	return nil
 }
 
 func setLogout(c *fiber.Ctx) error {
@@ -81,8 +82,22 @@ func setLogout(c *fiber.Ctx) error {
 	return nil
 }
 
+func resetAll(c *fiber.Ctx) error {
+	session.ClearAllCookies(c)
+	return nil
+}
+
 func SettingsPage(c *fiber.Ctx) error {
+	cookies := []fiber.Map{}
+	for _, name := range session.AllCookieNames {
+		value := session.GetCookie(c, name)
+		cookies = append(cookies, fiber.Map{
+			"Key": name,
+			"Value": value,
+		})
+	}
 	return c.Render("pages/settings", fiber.Map{
+		"CookieList": cookies,
 		"ProxyList": doc.BuiltinProxyList,
 	})
 }
@@ -98,6 +113,8 @@ func SettingsPost(c *fiber.Ctx) error {
 		err = setToken(c)
 	case "logout":
 		err = setLogout(c)
+	case "reset-all":
+		err = resetAll(c)
 	default:
 		err = errors.New("no such setting available")
 	}

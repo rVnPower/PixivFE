@@ -1,4 +1,13 @@
 <div class="container" data-hx-boost="false">
+  <h2>Current Settings</h2>
+  {{ range CookieList }}
+  <div>
+    <span>{{.Key}}</span>=<span>{{.Value}}</span>
+  </div>
+  {{ end }}
+  <form action="/settings/reset-all" method="post">
+    <input type="submit" value="Reset All" />
+  </form>
   <h2>Login</h2>
   <p>Supported features (for now):</p>
   <ul>
@@ -31,27 +40,30 @@
   <form action="/settings/logout" method="post">
     <input type="submit" value="Logout!" />
   </form>
-<hr />
-
-    <h2>Image proxy server</h2>
-    <div class="form-field">
-        <form action="/settings/image_server" method="post">
-            {{ range ProxyList }}
-            <label>
-              <input type="radio" name="image-proxy" required="true" value="{{.}}" />
-              {{filterWordsIDK: .}}
-            </label>
-            {{ end }}
-            <input type="submit" value="Use Selected Proxy" />
-        </form>
-        <br />
-        <form action="/settings/image_server" method="post">
-            <label for="image-proxy">
-              Custom image proxy server
-              <input type="text" name="image-proxy" required="true" placeholder="https://example.com"
-                autocomplete="off" />
-            </label>
-            <input type="submit" value="Use Custom Proxy" />
-        </form>
-    </div>
+  <hr />
+  <h2>Image proxy server</h2>
+  <div class="form-field">
+      <form action="/settings/image_server" method="post">
+          <label>
+            <input type="radio" name="image-proxy" required="true" value="" />
+            No (use built-in proxy)
+          </label>
+          {{ range ProxyList }}
+          <label>
+            <input type="radio" name="image-proxy" required="true" value="{{.}}" />
+            {{filterWordsIDK: .}}
+          </label>
+          {{ end }}
+          <input type="submit" value="Use Selected Proxy" />
+      </form>
+      <br />
+      <form action="/settings/image_server" method="post">
+          <label for="image-proxy">
+            Custom image proxy server
+            <input type="text" name="image-proxy" required="true" placeholder="https://example.com"
+              autocomplete="off" />
+          </label>
+          <input type="submit" value="Use Custom Proxy" />
+      </form>
+  </div>
 </div>
