@@ -17,7 +17,7 @@ func GetDiscoveryArtwork(c *fiber.Ctx, mode string) ([]ArtworkBrief, error) {
 
 	var artworks []ArtworkBrief
 
-	resp, err := http.UnwrapWebAPIRequest(URL, token)
+	resp, err := http.UnwrapWebAPIRequest(c.Context(), URL, token)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func GetDiscoveryNovels(c *fiber.Ctx, mode string) ([]NovelBrief, error) {
 
 	var novels []NovelBrief
 
-	resp, err := http.UnwrapWebAPIRequest(URL, token)
+	resp, err := http.UnwrapWebAPIRequest(c.Context(), URL, token)
 	if err != nil {
 		return nil, err
 	}

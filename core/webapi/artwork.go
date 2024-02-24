@@ -137,7 +137,7 @@ func GetUserBasicInformation(c *fiber.Ctx, id string) (UserBrief, error) {
 
 	URL := http.GetUserInformationURL(id)
 
-	response, err := http.UnwrapWebAPIRequest(URL, "")
+	response, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {
 		return user, err
 	}
@@ -157,7 +157,7 @@ func GetArtworkImages(c *fiber.Ctx, id string) ([]Image, error) {
 
 	URL := http.GetArtworkImagesURL(id)
 
-	response, err := http.UnwrapWebAPIRequest(URL, "")
+	response, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {
 		return nil, err
 	}
@@ -196,7 +196,7 @@ func GetArtworkComments(c *fiber.Ctx, id string) ([]Comment, error) {
 
 	URL := http.GetArtworkCommentsURL(id)
 
-	response, err := http.UnwrapWebAPIRequest(URL, "")
+	response, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {
 		return nil, err
 	}
@@ -218,7 +218,7 @@ func GetRelatedArtworks(c *fiber.Ctx, id string) ([]ArtworkBrief, error) {
 	// TODO: keep the hard-coded limit?
 	URL := http.GetArtworkRelatedURL(id, 96)
 
-	response, err := http.UnwrapWebAPIRequest(URL, "")
+	response, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +236,7 @@ func GetRelatedArtworks(c *fiber.Ctx, id string) ([]ArtworkBrief, error) {
 func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
 	URL := http.GetArtworkInformationURL(id)
 
-	response, err := http.UnwrapWebAPIRequest(URL, "")
+	response, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {
 		return nil, err
 	}

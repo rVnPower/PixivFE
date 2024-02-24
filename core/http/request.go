@@ -1,6 +1,7 @@
 package core
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -18,8 +19,17 @@ type HttpResponse struct {
 	Message string
 }
 
-func WebAPIRequest(URL, token string) HttpResponse {
-	req, _ := http.NewRequest("GET", URL, nil)
+func WebAPIRequest(context context.Context, URL, token string) HttpResponse {
+	req, err := http.NewRequest("GET", URL, nil)
+	if err != nil {
+		return HttpResponse{
+			Ok:         false,
+			StatusCode: 0,
+			Body:       "",
+			Message:    fmt.Sprintf("Failed to create a request to %s\n.", URL),
+		}
+	}
+	req = req.WithContext(context)
 
 	req.Header.Add("User-Agent", core.GlobalServerConfig.UserAgent)
 	req.Header.Add("Accept-Language", core.GlobalServerConfig.AcceptLanguage)
@@ -44,7 +54,7 @@ func WebAPIRequest(URL, token string) HttpResponse {
 			Ok:         false,
 			StatusCode: 0,
 			Body:       "",
-			Message:    fmt.Sprintf("Failed to create a request to %s\n.", URL),
+			Message:    fmt.Sprintf("Failed to send a request to %s\n.", URL),
 		}
 	}
 
@@ -66,8 +76,8 @@ func WebAPIRequest(URL, token string) HttpResponse {
 	}
 }
 
-func UnwrapWebAPIRequest(URL, token string) (string, error) {
-	resp := WebAPIRequest(URL, token)
+func UnwrapWebAPIRequest(context context.Context, URL, token string) (string, error) {
+	resp := WebAPIRequest(context, URL, token)
 
 	if !resp.Ok {
 		return "", errors.New(resp.Message)

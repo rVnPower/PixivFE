@@ -39,7 +39,7 @@ func GetRanking(c *fiber.Ctx, mode, content, date, page string) (Ranking, error)
 
 	var ranking Ranking
 
-	resp := http.WebAPIRequest(URL, "")
+	resp := http.WebAPIRequest(c.Context(), URL, "")
 	if !resp.Ok {
 		return ranking, errors.New(resp.Message)
 	}

@@ -39,7 +39,7 @@ func GetTagData(c *fiber.Ctx, name string) (TagDetail, error) {
 
 	URL := http.GetTagDetailURL(name)
 
-	response, err := http.UnwrapWebAPIRequest(URL, "")
+	response, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {
 		return tag, err
 	}
@@ -58,7 +58,7 @@ func GetSearch(c *fiber.Ctx, artworkType, name, order, age_settings, page string
 
 	URL := http.GetSearchArtworksURL(artworkType, name, order, age_settings, page)
 
-	response, err := http.UnwrapWebAPIRequest(URL, "")
+	response, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {
 		return nil, err
 	}

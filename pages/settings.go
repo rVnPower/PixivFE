@@ -18,7 +18,7 @@ func setToken(c *fiber.Ctx) error {
 	if token != "" {
 		URL := httpc.GetNewestFromFollowingURL("all", "1")
 		
-		_, err := httpc.UnwrapWebAPIRequest(URL, token)
+		_, err := httpc.UnwrapWebAPIRequest(c.Context(), URL, token)
 		if err != nil {
 			return errors.New("Cannot authorize with supplied token.")
 		}

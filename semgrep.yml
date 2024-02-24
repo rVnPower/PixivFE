@@ -14,17 +14,27 @@ rules:
       func $FUNC(c *fiber.Ctx, ...) $RET {
         ...
       }
-- id: rule-1
-  message: "find http requests made (limiter should be installed at all places)"
+# note: the below two rules autofix have slight problems. where `http` is sometimes "net/http". need minor manual tweaking after --autofix.
+- id: rule-1-0
+  message: "find http requests made to Pixiv"
   languages: [go]
-  # severity: INFO
-  severity: INVENTORY
+  severity: INFO
+  # severity: INVENTORY
   patterns:
-  - pattern-either:
-    - pattern: |
-        http.UnwrapWebAPIRequest(...)
-    - pattern: |
-        http.WebAPIRequest(...)
+  - pattern: |
+      http.UnwrapWebAPIRequest($A, $B)
+  fix: |
+    http.UnwrapWebAPIRequest(c.Context(), $A, $B)
+- id: rule-1-1
+  message: "find http requests made to Pixiv"
+  languages: [go]
+  severity: INFO
+  # severity: INVENTORY
+  patterns:
+  - pattern: |
+      http.WebAPIRequest($A, $B)
+  fix: |
+    http.WebAPIRequest(c.Context(), $A, $B)
 - id: rule-2
   message: "gjson.Get without gjson.Valid"
   languages: [go]

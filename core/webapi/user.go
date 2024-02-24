@@ -50,7 +50,7 @@ func GetFrequentTags(c *fiber.Ctx, ids string) ([]FrequentTag, error) {
 
 	URL := http.GetFrequentTagsURL(ids)
 
-	response, err := http.UnwrapWebAPIRequest(URL, "")
+	response, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func GetUserArtworks(c *fiber.Ctx, id, ids string) ([]ArtworkBrief, error) {
 
 	URL := http.GetUserFullArtworkURL(id, ids)
 
-	resp, err := http.UnwrapWebAPIRequest(URL, "")
+	resp, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func GetUserArtworks(c *fiber.Ctx, id, ids string) ([]ArtworkBrief, error) {
 func GetUserArtworksID(c *fiber.Ctx, id, category string, page int) (string, int, error) {
 	URL := http.GetUserArtworksURL(id)
 
-	resp, err := http.UnwrapWebAPIRequest(URL, "")
+	resp, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {
 		return "", -1, err
 	}
@@ -176,7 +176,7 @@ func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
 
 	URL := http.GetUserInformationURL(id)
 
-	resp, err := http.UnwrapWebAPIRequest(URL, token)
+	resp, err := http.UnwrapWebAPIRequest(c.Context(), URL, token)
 	if err != nil {
 		return user, err
 	}
@@ -246,7 +246,7 @@ func GetUserBookmarks(c *fiber.Ctx, id, mode string, page int) ([]ArtworkBrief, 
 
 	URL := http.GetUserBookmarksURL(id, mode, page)
 
-	resp, err := http.UnwrapWebAPIRequest(URL, "")
+	resp, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {
 		return nil, -1, err
 	}

@@ -16,7 +16,7 @@ func GetNewestArtworks(c *fiber.Ctx, worktype string, r18 string) ([]ArtworkBrie
 		// LastId string
 	}
 
-	resp, err := http.UnwrapWebAPIRequest(URL, token)
+	resp, err := http.UnwrapWebAPIRequest(c.Context(), URL, token)
 	if err != nil {
 		return nil, err
 	}

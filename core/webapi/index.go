@@ -52,7 +52,7 @@ func GetLanding(c *fiber.Ctx, mode string) (*LandingArtworks, error) {
 
 	var landing LandingArtworks
 
-	resp, err := http.UnwrapWebAPIRequest(URL, "")
+	resp, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 
 	if err != nil {
 		return &landing, err

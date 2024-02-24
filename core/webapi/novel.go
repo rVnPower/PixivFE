@@ -88,7 +88,7 @@ func GetNovelByID(c *fiber.Ctx, id string) (Novel, error) {
 
 	URL := http.GetNovelURL(id)
 
-	response, err := http.UnwrapWebAPIRequest(URL, "")
+	response, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {
 		return novel, err
 	}
