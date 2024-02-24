@@ -296,11 +296,5 @@ func GetTemplateFunctions() template.FuncMap {
 		"floor": func(i float64) int {
 			return int(math.Floor(i))
 		},
-		"filterWordsIDK": func(s string) string {
-			// Don't say anything... we don't own these...
-			s = strings.ReplaceAll(s, "loli", "****")
-			s = strings.ReplaceAll(s, "sex", "***")
-			return s
-		},
 	}
 }
