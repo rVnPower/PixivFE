@@ -873,6 +873,10 @@ nav .sidebar-item img {
   justify-content: center;
 }
 
+.calendar-node-empty {
+  visibility: hidden;
+}
+
 @media screen and (max-width: 950px) {
   .calendar-board {
     justify-content: center;
