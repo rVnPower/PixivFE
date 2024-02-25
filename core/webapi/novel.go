@@ -108,7 +108,7 @@ func GetNovelRelated(c *fiber.Ctx, id string) ([]NovelBrief, error) {
 	}
 
 	// hard-coded value, may change
-	URL := http.GetNovelRelatedURL(id, 100)
+	URL := http.GetNovelRelatedURL(id, 50)
 
 	response, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {

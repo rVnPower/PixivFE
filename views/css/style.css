@@ -576,6 +576,32 @@ nav .sidebar-item img {
   margin-right: 5px;
 }
 
+.illust-attr {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.illust-attr .illust-avatar {
+  width: 62px;
+  height: 62px;
+  border-radius: 50px;
+  object-fit: cover;
+  object-position: center top;
+}
+.illust-attr .attr-wrap {
+  margin-left: 5px;
+}
+.illust-attr .attr-wrap .illust-title {
+  font-weight: bold;
+}
+.illust-attr .attr-wrap .illust-author {
+  font-size: 0.8em;
+}
+.illust-attr .attr-wrap a {
+  color: #aaa;
+}
+
 .illust {
   background-color: #222;
   border-radius: 5px;
@@ -592,31 +618,6 @@ nav .sidebar-item img {
   max-height: 1000px;
   width: auto;
   max-width: 100%;
-}
-.illust .illust-attr {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.illust .illust-attr .illust-avatar {
-  width: 62px;
-  height: 62px;
-  border-radius: 50px;
-  object-fit: cover;
-  object-position: center top;
-}
-.illust .illust-attr .attr-wrap {
-  margin-left: 5px;
-}
-.illust .illust-attr .attr-wrap .illust-title {
-  font-weight: bold;
-}
-.illust .illust-attr .attr-wrap .illust-author {
-  font-size: 0.8em;
-}
-.illust .illust-attr .attr-wrap .illust-author a {
-  color: #aaa;
 }
 .illust .illust-description {
   font-size: 0.85em;

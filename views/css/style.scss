@@ -666,6 +666,35 @@ nav {
   }
 }
 
+.illust-attr {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  .illust-avatar {
+    width: 62px;
+    height: 62px;
+    border-radius: 50px;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .attr-wrap {
+    margin-left: 5px;
+
+    .illust-title {
+      font-weight: bold;
+    }
+    .illust-author {
+      font-size: 0.8em;
+    }
+    a {
+      color: $fg-secondary;
+    }
+  }
+}
+
 .illust {
   background-color: $bg-secondary;
   border-radius: $border-radius;
@@ -685,34 +714,6 @@ nav {
     }
   }
 
-  .illust-attr {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-
-    .illust-avatar {
-      width: 62px;
-      height: 62px;
-      border-radius: 50px;
-      object-fit: cover;
-      object-position: center top;
-    }
-
-    .attr-wrap {
-      margin-left: 5px;
-
-      .illust-title {
-        font-weight: bold;
-      }
-      .illust-author {
-        font-size: 0.8em;
-        a {
-          color: $fg-secondary;
-        }
-      }
-    }
-  }
 
   .illust-description {
     font-size: 0.85em;

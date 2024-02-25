@@ -62,9 +62,23 @@
   <div class="novel-content">
   {{ raw: renderNovel(Novel.Content) }}
   </div>
+  <div class="illust-attr">
+    <a href="/users/{{ User.ID }}"
+      ><img
+        src="{{ User.Avatar }}"
+        alt="{{ User.Name }}"
+        class="illust-avatar"
+      />
+    </a>
+    <div class="attr-wrap">
+      <div class="illust-title">
+        <a href="/users/{{ User.ID }}">{{ User.Name }}</a>
+      </div>
+    </div>
+  </div>
   <div class="novel-container">
     {{ range NovelRelated }}
-    {{ include "components/novel-tn" . }}
+      {{ include "components/novel-tn" . }}
     {{ end }}
   </div>
 </div>
