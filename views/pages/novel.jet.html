@@ -62,4 +62,9 @@
   <div class="novel-content">
   {{ raw: renderNovel(Novel.Content) }}
   </div>
+  <div class="novel-container">
+    {{ range NovelRelated }}
+    {{ include "components/novel-tn" . }}
+    {{ end }}
+  </div>
 </div>

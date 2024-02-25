@@ -3,8 +3,8 @@ package core
 import (
 	"time"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/user"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
+	session "codeberg.org/vnpower/pixivfe/v2/core/user"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 )
@@ -100,4 +100,26 @@ func GetNovelByID(c *fiber.Ctx, id string) (Novel, error) {
 	}
 
 	return novel, nil
+}
+
+func GetNovelRelated(c *fiber.Ctx, id string) ([]NovelBrief, error) {
+	var novels struct {
+		List []NovelBrief `json:"novels"`
+	}
+
+	// hard-coded value, may change
+	URL := http.GetNovelRelatedURL(id, 100)
+
+	response, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
+	if err != nil {
+		return novels.List, err
+	}
+	response = session.ProxyImageUrl(c, response)
+
+	err = json.Unmarshal([]byte(response), &novels)
+	if err != nil {
+		return novels.List, err
+	}
+
+	return novels.List, nil
 }

@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/user"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
+	session "codeberg.org/vnpower/pixivfe/v2/core/user"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 )
@@ -342,7 +342,7 @@ func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
 			sort.Slice(recent[:], func(i, j int) bool {
 				left := recent[i].ID
 				right := recent[j].ID
-				return numberGreaterThan(left,right)
+				return numberGreaterThan(left, right)
 			})
 			illust.RecentWorks = recent
 		}()
@@ -366,7 +366,6 @@ func GetArtworkByID(c *fiber.Ctx, id string, full bool) (*Illust, error) {
 			var err error
 			comments, err := GetArtworkComments(c, id)
 			if err != nil {
-				println("here")
 				cerr <- err
 				return
 			}

@@ -19,9 +19,15 @@ func NovelPage(c *fiber.Ctx) error {
 		return err
 	}
 
+	related, err := core.GetNovelRelated(c, id)
+	if err != nil {
+		return err
+	}
+
 	// todo: passing ArtWorkData{} here will not work. maybe lowercase?
 	return c.Render("pages/novel", fiber.Map{
-		"Novel": novel,
-		"Title": novel.Title,
+		"Novel":        novel,
+		"NovelRelated": related,
+		"Title":        novel.Title,
 	})
 }

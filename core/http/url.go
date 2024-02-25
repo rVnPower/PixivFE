@@ -121,3 +121,9 @@ func GetNovelURL(id string) string {
 
 	return fmt.Sprintf(base, id)
 }
+
+func GetNovelRelatedURL(id string, limit int) string {
+	base := "https://www.pixiv.net/ajax/novel/%s/recommend/init?limit=%d"
+
+	return fmt.Sprintf(base, id, limit)
+}
