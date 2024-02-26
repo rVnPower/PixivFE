@@ -112,10 +112,12 @@ func main() {
 			defer keyedSleepingSpot.Unlock(requestIP)
 			if refcount >= 4 { // on too much concurrent requests
 				// todo: maybe blackhole `requestIP` here
-				log.Println("Limit Reached!")
+				log.Println("Limit Reached (Hard)!")
 				return fmt.Errorf("Woah! You are going too fast! I'll have to keep an eye on you.")
 			}
-			ctx, cancel := context.WithTimeout(c.Context(), time.Duration(retryAfter)*time.Second)
+			dur := time.Duration(retryAfter)*time.Second
+			log.Println("Limit Reached (Soft)! Sleeping for ", dur)
+			ctx, cancel := context.WithTimeout(c.Context(), dur)
 			defer cancel()
 			<-ctx.Done()
 			return c.Next()
