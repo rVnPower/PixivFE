@@ -92,38 +92,39 @@ func main() {
 		},
 	})
 
-	keyedSleepingSpot := kmutex.New()
-	server.Use(limiter.New(limiter.Config{
-		Next:              CanRequestSkipLimiter,
-		Expiration:        30 * time.Second,
-		Max:               config.GlobalServerConfig.RequestLimit,
-		LimiterMiddleware: limiter.SlidingWindow{},
-		LimitReached: func(c *fiber.Ctx) error {
-			// limit response throughput by pacing, since not every bot reads X-RateLimit-*
-			// on limit reached, they just have to wait
-			// the design of this means that if they send multiple requests when reaching rate limit, they will wait even longer (since `retryAfter` is calculated before anything has slept)
-			retryAfter_s := c.GetRespHeader(fiber.HeaderRetryAfter)
-			retryAfter, err := strconv.ParseUint(retryAfter_s, 10, 64)
-			if err != nil {
-				log.Panicf("response header 'RetryAfter' should be a number: %v", err)
-			}
-			requestIP := c.IP()
-			refcount := keyedSleepingSpot.Lock(requestIP)
-			defer keyedSleepingSpot.Unlock(requestIP)
-			if refcount >= 4 { // on too much concurrent requests
-				// todo: maybe blackhole `requestIP` here
-				log.Println("Limit Reached (Hard)!")
-				return fmt.Errorf("Woah! You are going too fast! I'll have to keep an eye on you.")
-			}
-			dur := time.Duration(retryAfter)*time.Second
-			log.Println("Limit Reached (Soft)! Sleeping for ", dur)
-			ctx, cancel := context.WithTimeout(c.Context(), dur)
-			defer cancel()
-			<-ctx.Done()
-			return c.Next()
-
-		},
-	}))
+	if config.GlobalServerConfig.RequestLimit > 0 {
+		keyedSleepingSpot := kmutex.New()
+		server.Use(limiter.New(limiter.Config{
+			Next:              CanRequestSkipLimiter,
+			Expiration:        30 * time.Second,
+			Max:               config.GlobalServerConfig.RequestLimit,
+			LimiterMiddleware: limiter.SlidingWindow{},
+			LimitReached: func(c *fiber.Ctx) error {
+				// limit response throughput by pacing, since not every bot reads X-RateLimit-*
+				// on limit reached, they just have to wait
+				// the design of this means that if they send multiple requests when reaching rate limit, they will wait even longer (since `retryAfter` is calculated before anything has slept)
+				retryAfter_s := c.GetRespHeader(fiber.HeaderRetryAfter)
+				retryAfter, err := strconv.ParseUint(retryAfter_s, 10, 64)
+				if err != nil {
+					log.Panicf("response header 'RetryAfter' should be a number: %v", err)
+				}
+				requestIP := c.IP()
+				refcount := keyedSleepingSpot.Lock(requestIP)
+				defer keyedSleepingSpot.Unlock(requestIP)
+				if refcount >= 4 { // on too much concurrent requests
+					// todo: maybe blackhole `requestIP` here
+					log.Println("Limit Reached (Hard)!")
+					return fmt.Errorf("Woah! You are going too fast! I'll have to keep an eye on you.")
+				}
+				dur := time.Duration(retryAfter) * time.Second
+				log.Println("Limit Reached (Soft)! Sleeping for ", dur)
+				ctx, cancel := context.WithTimeout(c.Context(), dur)
+				defer cancel()
+				<-ctx.Done()
+				return c.Next()
+			},
+		}))
+	}
 
 	server.Use(logger.New(
 		logger.Config{
@@ -263,17 +264,20 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		log.Printf("PixivFE is running on %v\n", config.GlobalServerConfig.UnixSocket)
+		log.Printf("Listening on domain socket %v\n", config.GlobalServerConfig.UnixSocket)
 		err = server.Listener(ln)
 		if err != nil {
 			panic(err)
 		}
 	} else {
 		addr := config.GlobalServerConfig.Host + ":" + config.GlobalServerConfig.Port
-		log.Printf("PixivFE is running on http://%v/\n", addr)
-
-		// note: string concatenation is very flaky
-		err := server.Listen(addr)
+		ln, err := net.Listen(server.Config().Network, addr)
+		if err != nil {
+			log.Panicf("failed to listen: %v", err)
+		}
+		addr = ln.Addr().String()
+		log.Printf("Listening on http://%v/\n", addr)
+		err = server.Listener(ln)
 		if err != nil {
 			panic(err)
 		}

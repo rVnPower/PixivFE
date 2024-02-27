@@ -31,7 +31,7 @@ type ServerConfig struct {
 
 	UserAgent      string
 	AcceptLanguage string
-	RequestLimit   int
+	RequestLimit   int // if 0, request limit is disabled
 
 	StartingTime  string
 	Version       string
@@ -95,11 +95,15 @@ func (s *ServerConfig) SetProxyServer(v string) {
 }
 
 func (s *ServerConfig) SetRequestLimit(v string) {
-	t, err := strconv.Atoi(v)
-	if err != nil {
-		panic(err)
+	if v == "" {
+		s.RequestLimit = 0
+	} else {
+		t, err := strconv.Atoi(v)
+		if err != nil {
+			panic(err)
+		}
+		s.RequestLimit = t
 	}
-	s.RequestLimit = t
 }
 
 func (s *ServerConfig) setStartingTime() {

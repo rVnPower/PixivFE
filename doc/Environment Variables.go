@@ -61,9 +61,12 @@ var EnvList []*EnvVar = []*EnvVar{
 	},
 	{
 		Name:       "PIXIVFE_REQUESTLIMIT",
-		CommonName: "request limit per 30 seconds",
-		Value:      "15",
+		CommonName: "limit number of request per 30 seconds",
 		// **Required**: No
+		//
+		// Set this to a number to enable the built-in rate limiter. For example `PIXIVFE_REQUESTLIMIT=15`.
+		// 
+		// It might be better to enable rate limiting in this application's reverse proxy rather than using this.
 	},
 	{
 		Name:       "PIXIVFE_IMAGEPROXY",
