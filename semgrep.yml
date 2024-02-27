@@ -83,3 +83,10 @@ rules:
   severity: WARNING
   pattern: |
     (_ : error) = ...
+- id: rule-6
+  message: "*fiber.Ctx usage"
+  languages: [go]
+  severity: INFO
+  patterns:
+  - pattern: |
+      ($C : *fiber.Ctx).$FIELD
