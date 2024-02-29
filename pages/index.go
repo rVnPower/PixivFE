@@ -1,7 +1,7 @@
 package pages
 
 import (
-	session "codeberg.org/vnpower/pixivfe/v2/core/user"
+	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	core "codeberg.org/vnpower/pixivfe/v2/core/webapi"
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,7 +9,7 @@ import (
 func IndexPage(c *fiber.Ctx) error {
 
 	// If token is set, do the landing request...
-	if token := session.GetToken(c); token != "" {
+	if token := session.GetCookie_PixivToken(c); token != "" {
 		mode := c.Query("mode", "all")
 
 		works, err := core.GetLanding(c, mode)

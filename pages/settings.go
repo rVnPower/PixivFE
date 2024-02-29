@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"regexp"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/user"
+	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	httpc "codeberg.org/vnpower/pixivfe/v2/core/http"
 	"codeberg.org/vnpower/pixivfe/v2/doc"
 	"github.com/gofiber/fiber/v2"

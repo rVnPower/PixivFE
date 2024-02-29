@@ -9,12 +9,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetToken(c *fiber.Ctx) string {
+func GetCookie_PixivToken(c *fiber.Ctx) string {
 	return GetCookie(c, Cookie_Token)
-}
-
-func GetCSRFToken(c *fiber.Ctx) string {
-	return GetCookie(c, Cookie_CSRF)
 }
 
 func GetImageProxy(c *fiber.Ctx) url.URL {

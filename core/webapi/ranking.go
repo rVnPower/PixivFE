@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/user"
+	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"

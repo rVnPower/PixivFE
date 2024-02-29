@@ -11,13 +11,20 @@ import (
 type CookieName string
 
 const ( // the __Host thing force it to be secure and same-origin (no subdomain) >> https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie
-	Cookie_Token      CookieName = "__Host-pixivfe-Token"
-	Cookie_CSRF       CookieName = "__Host-pixivfe-CSRF"
-	Cookie_ImageProxy CookieName = "__Host-pixivfe-ImageProxy"
+	Cookie_Token       CookieName = "__Host-pixivfe-Token"
+	Cookie_CSRF        CookieName = "__Host-pixivfe-CSRF"
+	Cookie_ImageProxy  CookieName = "__Host-pixivfe-ImageProxy"
+	Cookie_ShowArtR18  CookieName = "__Host-pixivfe-ShowArtR18"
+	Cookie_ShowArtR18G CookieName = "__Host-pixivfe-ShowArtR18G"
+	Cookie_ShowArtAI   CookieName = "__Host-pixivfe-ShowArtAI"
 )
 
 // Go can't make this a const...
-var AllCookieNames = []CookieName{Cookie_Token, Cookie_CSRF, Cookie_ImageProxy}
+var AllCookieNames []CookieName = []CookieName{
+	Cookie_Token,
+	Cookie_CSRF,
+	Cookie_ImageProxy,
+}
 
 func GetCookie(c *fiber.Ctx, name CookieName, defaultValue ...string) string {
 	return c.Cookies(string(name), defaultValue...)

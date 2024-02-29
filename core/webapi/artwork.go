@@ -10,7 +10,7 @@ import (
 	"time"
 
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
-	session "codeberg.org/vnpower/pixivfe/v2/core/user"
+	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 )

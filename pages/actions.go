@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/user"
+	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	"github.com/gofiber/fiber/v2"
 	"github.com/tidwall/gjson"
 )
@@ -56,8 +56,8 @@ func pixivPostRequest(c *fiber.Ctx, url, payload, token, csrf string) error {
 }
 
 func AddBookmarkRoute(c *fiber.Ctx) error {
-	token := session.GetToken(c)
-	csrf := session.GetCSRFToken(c)
+	token := session.GetCookie_PixivToken(c)
+	csrf := session.GetCookie(c, session.Cookie_CSRF)
 
 	if token == "" || csrf == "" {
 		return c.Redirect("/login")
@@ -83,8 +83,8 @@ func AddBookmarkRoute(c *fiber.Ctx) error {
 }
 
 func DeleteBookmarkRoute(c *fiber.Ctx) error {
-	token := session.GetToken(c)
-	csrf := session.GetCSRFToken(c)
+	token := session.GetCookie_PixivToken(c)
+	csrf := session.GetCookie(c, session.Cookie_CSRF)
 
 	if token == "" || csrf == "" {
 		return c.Redirect("/login")
@@ -106,8 +106,8 @@ func DeleteBookmarkRoute(c *fiber.Ctx) error {
 }
 
 func LikeRoute(c *fiber.Ctx) error {
-	token := session.GetToken(c)
-	csrf := session.GetCSRFToken(c)
+	token := session.GetCookie_PixivToken(c)
+	csrf := session.GetCookie(c, session.Cookie_CSRF)
 
 	if token == "" || csrf == "" {
 		return c.Redirect("/login")

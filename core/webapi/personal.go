@@ -1,14 +1,14 @@
 package core
 
 import (
-	session "codeberg.org/vnpower/pixivfe/v2/core/user"
+	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 )
 
 func GetNewestFromFollowing(c *fiber.Ctx, mode, page string) ([]ArtworkBrief, error) {
-	token := session.GetToken(c)
+	token := session.GetCookie_PixivToken(c)
 	URL := http.GetNewestFromFollowingURL(mode, page)
 
 	var body struct {

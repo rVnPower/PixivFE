@@ -7,7 +7,7 @@ import (
 	"math"
 	"sort"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/user"
+	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
@@ -175,7 +175,7 @@ func GetUserArtworksID(c *fiber.Ctx, id, category string, page int) (string, int
 func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
 	var user User
 
-	token := session.GetToken(c)
+	token := session.GetCookie_PixivToken(c)
 
 	URL := http.GetUserInformationURL(id)
 

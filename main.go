@@ -15,7 +15,7 @@ import (
 	"time"
 
 	config "codeberg.org/vnpower/pixivfe/v2/core/config"
-	session "codeberg.org/vnpower/pixivfe/v2/core/user"
+	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 
 	"codeberg.org/vnpower/pixivfe/v2/core/kmutex"
 	"codeberg.org/vnpower/pixivfe/v2/pages"
