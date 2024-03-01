@@ -56,7 +56,7 @@ var EnvList []*EnvVar = []*EnvVar{
 		//
 		// Authorization is required to fully access Pixiv's Ajax API. This variable will store your Pixiv's account cookie, which will be used by PixivFE for authorization.
 		//
-		// **Notice:** Please read [How to get PIXIVFE_TOKEN](How-to-get-the-pixiv-token.md) to see how can you get your own token and more.
+		// NOTE: See [How to get PIXIVFE_TOKEN](How-to-get-the-pixiv-token.md) for how to obtain your own token.
 
 	},
 	{
@@ -66,18 +66,19 @@ var EnvList []*EnvVar = []*EnvVar{
 		//
 		// Set this to a number to enable the built-in rate limiter. For example `PIXIVFE_REQUESTLIMIT=15`.
 		// 
-		// It might be better to enable rate limiting in this application's reverse proxy rather than using this.
+		// It might be better to enable rate limiting in the reverse proxy in front of PixivFE rather than using this.
 	},
 	{
 		Name:       "PIXIVFE_IMAGEPROXY",
 		CommonName: "image proxy server",
 		Value:      BuiltinProxyUrl,
 		Announce:   true,
-		// **Required**: No, default to using built-in proxy
+		// **Required**: No, defaults to using the built-in proxy
 		//
-		// See the current [list of image proxies](Built-in Proxy List.go).
+		// NOTE: The protocol must be included in the URL, for example `https://piximg.example.com`, where `https://` is the protocol used.
 		//
-		// The address to proxy images. Pixiv does not allow you to get their images normally. For example, this [image](https://i.pximg.net/img-original/img/2023/06/06/20/30/01/108783513_p0.png). We could bypass this anyway by using NGINX and reverse proxy. [You can host an image proxy server if you want](Hosting-an-image-proxy-server-for-Pixiv.md). If you wish not to, or unable to get images directly from Pixiv, set this variable.
+		// The URL of the image proxy server. Pixiv does not allow you to fetch their images directly, requiring `Referer: https://www.pixiv.net/` to be included in the HTTP request headers. For example, trying to directly access this [image](https://i.pximg.net/img-original/img/2023/06/06/20/30/01/108783513_p0.png) returns HTTP 403 Forbidden.
+		// This can be circumvented by using a reverse proxy that adds the required `Referer` HTTP request header to the HTTP request for the image. You can [host an image proxy server](Hosting-an-image-proxy-server-for-Pixiv.md), or see the [list of public image proxies](Built-in Proxy List.go). If you wish not to, or unable to get images directly from Pixiv, set this variable.
 	},
 	{
 		Name:       "PIXIVFE_USERAGENT",
