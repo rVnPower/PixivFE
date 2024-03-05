@@ -8,7 +8,7 @@ import (
 )
 
 func GetNewestArtworks(c *fiber.Ctx, worktype string, r18 string) ([]ArtworkBrief, error) {
-	token := session.GetCookie_PixivToken(c)
+	token := session.GetPixivToken(c)
 	URL := http.GetNewestArtworksURL(worktype, r18, "0")
 
 	var body struct {

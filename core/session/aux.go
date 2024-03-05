@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetCookie_PixivToken(c *fiber.Ctx) string {
+func GetPixivToken(c *fiber.Ctx) string {
 	return GetCookie(c, Cookie_Token)
 }
 

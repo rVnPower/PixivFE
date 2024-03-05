@@ -10,7 +10,7 @@ import (
 )
 
 func LoginUserPage(c *fiber.Ctx) error {
-	token := session.GetCookie_PixivToken(c)
+	token := session.GetPixivToken(c)
 
 	if token == "" {
 		return c.Redirect("/settings")
@@ -24,7 +24,7 @@ func LoginUserPage(c *fiber.Ctx) error {
 }
 
 func LoginBookmarkPage(c *fiber.Ctx) error {
-	token := session.GetCookie_PixivToken(c)
+	token := session.GetPixivToken(c)
 	if token == "" {
 		return c.Redirect("/settings")
 	}
@@ -37,7 +37,7 @@ func LoginBookmarkPage(c *fiber.Ctx) error {
 }
 
 func FollowingWorksPage(c *fiber.Ctx) error {
-	if token := session.GetCookie_PixivToken(c); token == "" {
+	if token := session.GetPixivToken(c); token == "" {
 		return c.Redirect("/settings")
 	}
 

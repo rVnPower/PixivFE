@@ -9,7 +9,7 @@ import (
 func IndexPage(c *fiber.Ctx) error {
 
 	// If token is set, do the landing request...
-	if token := session.GetCookie_PixivToken(c); token != "" {
+	if token := session.GetPixivToken(c); token != "" {
 		mode := c.Query("mode", "all")
 
 		works, err := core.GetLanding(c, mode)

@@ -175,7 +175,7 @@ func GetUserArtworksID(c *fiber.Ctx, id, category string, page int) (string, int
 func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
 	var user User
 
-	token := session.GetCookie_PixivToken(c)
+	token := session.GetPixivToken(c)
 
 	URL := http.GetUserInformationURL(id)
 

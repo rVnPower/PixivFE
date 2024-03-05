@@ -56,7 +56,7 @@ func pixivPostRequest(c *fiber.Ctx, url, payload, token, csrf string) error {
 }
 
 func AddBookmarkRoute(c *fiber.Ctx) error {
-	token := session.GetCookie_PixivToken(c)
+	token := session.GetPixivToken(c)
 	csrf := session.GetCookie(c, session.Cookie_CSRF)
 
 	if token == "" || csrf == "" {
@@ -83,7 +83,7 @@ func AddBookmarkRoute(c *fiber.Ctx) error {
 }
 
 func DeleteBookmarkRoute(c *fiber.Ctx) error {
-	token := session.GetCookie_PixivToken(c)
+	token := session.GetPixivToken(c)
 	csrf := session.GetCookie(c, session.Cookie_CSRF)
 
 	if token == "" || csrf == "" {
@@ -106,7 +106,7 @@ func DeleteBookmarkRoute(c *fiber.Ctx) error {
 }
 
 func LikeRoute(c *fiber.Ctx) error {
-	token := session.GetCookie_PixivToken(c)
+	token := session.GetPixivToken(c)
 	csrf := session.GetCookie(c, session.Cookie_CSRF)
 
 	if token == "" || csrf == "" {

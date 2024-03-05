@@ -8,7 +8,7 @@ import (
 )
 
 func GetNewestFromFollowing(c *fiber.Ctx, mode, page string) ([]ArtworkBrief, error) {
-	token := session.GetCookie_PixivToken(c)
+	token := session.GetPixivToken(c)
 	URL := http.GetNewestFromFollowingURL(mode, page)
 
 	var body struct {

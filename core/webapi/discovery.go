@@ -11,7 +11,7 @@ import (
 )
 
 func GetDiscoveryArtwork(c *fiber.Ctx, mode string) ([]ArtworkBrief, error) {
-	token := session.GetCookie(c, session.Cookie_Token)
+	token := session.GetPixivToken(c)
 
 	URL := http.GetDiscoveryURL(mode, 100)
 
@@ -36,7 +36,7 @@ func GetDiscoveryArtwork(c *fiber.Ctx, mode string) ([]ArtworkBrief, error) {
 }
 
 func GetDiscoveryNovels(c *fiber.Ctx, mode string) ([]NovelBrief, error) {
-	token := session.GetCookie(c, session.Cookie_Token)
+	token := session.GetPixivToken(c)
 
 	URL := http.GetDiscoveryNovelURL(mode, 100)
 

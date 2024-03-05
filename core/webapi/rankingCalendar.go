@@ -36,7 +36,7 @@ func get_weekday(n time.Weekday) int {
 // so the funny thing about Pixiv is that they will return this month's data for a request of a future date
 // is it a bug or a feature?
 func GetRankingCalendar(c *fiber.Ctx, mode string, year, month int) (template.HTML, error) {
-	token := session.GetCookie_PixivToken(c)
+	token := session.GetPixivToken(c)
 	URL := url.GetRankingCalendarURL(mode, year, month)
 
 	req, err := http.NewRequest("GET", URL, nil)
