@@ -68,12 +68,18 @@ func WebAPIRequest(context context.Context, URL, token string) HttpResponse {
 		}
 	}
 
-	return HttpResponse{
+	resp2 := HttpResponse{
 		Ok:         true,
 		StatusCode: resp.StatusCode,
 		Body:       string(body),
 		Message:    "",
 	}
+	
+	if !(300 > resp2.StatusCode && resp2.StatusCode >= 200)  {
+		fmt.Println("non-2xx response from pixiv:", URL, resp2.StatusCode, resp2.Body)
+	}
+
+	return resp2
 }
 
 func UnwrapWebAPIRequest(context context.Context, URL, token string) (string, error) {

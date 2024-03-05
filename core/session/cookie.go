@@ -44,14 +44,24 @@ func SetCookie(c *fiber.Ctx, name CookieName, value string) {
 	c.Cookie(&cookie)
 }
 
+var CookieExpireDelete = time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC)
+
 func ClearCookie(c *fiber.Ctx, name CookieName) {
-	// c.ClearCookie(string(name)) // gofiber bug https://github.com/gofiber/fiber/issues/2878
-	SetCookie(c, name, "")
+	cookie := fiber.Cookie{
+		Name:  string(name),
+		Value: "",
+		Path:  "/",
+		// expires in 30 days from now
+		Expires:  CookieExpireDelete,
+		HTTPOnly: true,
+		Secure:   true,
+		SameSite: fiber.CookieSameSiteStrictMode,
+	}
+	c.Cookie(&cookie)
 }
 
 func ClearAllCookies(c *fiber.Ctx) {
-	// c.ClearCookie() // gofiber bug https://github.com/gofiber/fiber/issues/2878
 	for _, name := range AllCookieNames {
-		SetCookie(c, name, "")
+		ClearCookie(c, name)
 	}
 }
