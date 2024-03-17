@@ -92,6 +92,12 @@ func main() {
 		},
 	})
 
+	server.Use(func(c *fiber.Ctx) error {
+		baseURL := c.BaseURL() + c.OriginalURL()
+		c.Bind(fiber.Map{"BaseURL": baseURL})
+		return c.Next()
+	})
+
 	if config.GlobalServerConfig.RequestLimit > 0 {
 		keyedSleepingSpot := kmutex.New()
 		server.Use(limiter.New(limiter.Config{
@@ -113,8 +119,9 @@ func main() {
 				defer keyedSleepingSpot.Unlock(requestIP)
 				if refcount >= 4 { // on too much concurrent requests
 					// todo: maybe blackhole `requestIP` here
-					log.Println("Limit Reached (Hard)!")
-					return fmt.Errorf("Woah! You are going too fast! I'll have to keep an eye on you.")
+					log.Println("Limit Reached (Hard)!", requestIP)
+					// saves bandwidth by not rendering template
+					return c.SendString("Woah! You are going too fast! I'll have to keep an eye on you.")
 				}
 				dur := time.Duration(retryAfter) * time.Second
 				log.Println("Limit Reached (Soft)! Sleeping for ", dur)
@@ -177,12 +184,6 @@ func main() {
 		// use this if need iframe: `frame-ancestors 'self'`
 		c.Set("Permissions-Policy", "accelerometer=(), ambient-light-sensor=(), battery=(), camera=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()")
 
-		return c.Next()
-	})
-
-	server.Use(func(c *fiber.Ctx) error {
-		baseURL := c.BaseURL() + c.OriginalURL()
-		c.Bind(fiber.Map{"BaseURL": baseURL})
 		return c.Next()
 	})
 
