@@ -2,11 +2,7 @@
   <div class="tag-header">
     {{ if Tag.Metadata.ID }}
     <a href="/artworks/{{ Tag.Metadata.ID }}">
-      <img
-        class="tag-thumbnail"
-        src="{{ Tag.Metadata.Image }}"
-        alt="{{ Tag.Name }}"
-      />
+      <img class="tag-thumbnail" src="{{ Tag.Metadata.Image }}" alt="{{ Tag.Name }}" />
     </a>
     {{ end }}
 
@@ -33,7 +29,7 @@
 
   <div class="switcher">
     {{ url := "/tags/" + Tag.Name + "?order=" + Queries.Order + "&mode=" +
-    Queries.Mode + "&page=1" + "&category=" }}
+    Queries.Mode + "&ratio=" + Queries.Ratio + "&page=1" + "&category=" }}
     <div class="switch-title">Type</div>
     <a href="{{url }}artworks" class="switch-button">All</a>
     <a href="{{url }}illustrations" class="switch-button">Illustrations</a>
@@ -41,7 +37,7 @@
   </div>
   <div class="switcher">
     {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&mode=" +
-    Queries.Mode + "&page=1" + "&order=" }}
+    Queries.Mode + "&ratio=" + Queries.Ratio + "&page=1" + "&order=" }}
     <div class="switch-title">Order</div>
     <a href="{{url }}date_d" class="switch-button">Newest</a>
     <a href="{{url }}date" class="switch-button">Oldest</a>
@@ -49,10 +45,19 @@
   <div class="switcher">
     <div class="switch-title">Filter</div>
     {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&order="
-    + Queries.Order + "&page=1" + "&mode=" }}
+    + Queries.Order + "&ratio=" + Queries.Ratio + "&page=1" + "&mode=" }}
     <a href="{{url }}all" class="switch-button">All</a>
     <a href="{{url }}safe" class="switch-button">Safe</a>
     <a href="{{url }}r18" class="switch-button">R-18</a>
+  </div>
+  <div class="switcher">
+    <div class="switch-title">Ratio</div>
+    {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&order="
+    + Queries.Order + "&page=1" + "&mode=" + Queries.Mode + "&ratio=" }}
+    <a href="{{url }}" class="switch-button">All</a>
+    <a href="{{url }}-0.5" class="switch-button">Portrait</a>
+    <a href="{{url }}0" class="switch-button">Square</a>
+    <a href="{{url }}0.5" class="switch-button">Landscape</a>
   </div>
   {{ if Data.Popular.Recent }}
   <h2>Popular artworks</h2>
@@ -74,7 +79,7 @@
 
   <div class="pagination">
     {{ url := "/tags/" + Tag.Name + "?category=" + Queries.Category + "&order="
-    + Queries.Order + "&mode=" + Queries.Mode + "&page=" }}
+    + Queries.Order + "&mode=" + Queries.Mode + "&ratio=" + Queries.Ratio + "&page=" }}
     <small>Page {{ Page }}</small>
     <br />
     {{ raw: createPaginator(url, "#checkpoint", Page, -1) }}

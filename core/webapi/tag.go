@@ -3,8 +3,8 @@ package core
 import (
 	"strings"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
+	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 )
@@ -54,9 +54,9 @@ func GetTagData(c *fiber.Ctx, name string) (TagDetail, error) {
 	return tag, nil
 }
 
-func GetSearch(c *fiber.Ctx, artworkType, name, order, age_settings, page string) (*SearchResult, error) {
+func GetSearch(c *fiber.Ctx, artworkType, name, order, age_settings, ratio, page string) (*SearchResult, error) {
 
-	URL := http.GetSearchArtworksURL(artworkType, name, order, age_settings, page)
+	URL := http.GetSearchArtworksURL(artworkType, name, order, age_settings, ratio, page)
 
 	response, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
 	if err != nil {

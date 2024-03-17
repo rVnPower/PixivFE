@@ -104,10 +104,10 @@ func GetTagDetailURL(unescapedTag string) string {
 	return fmt.Sprintf(base, url.PathEscape(unescapedTag))
 }
 
-func GetSearchArtworksURL(artworkType, name, order, age_settings, page string) string {
-	base := "https://www.pixiv.net/ajax/search/%s/%s?order=%s&mode=%s&p=%s"
+func GetSearchArtworksURL(artworkType, name, order, age_settings, ratio, page string) string {
+	base := "https://www.pixiv.net/ajax/search/%s/%s?order=%s&mode=%s&ratio=%s&p=%s"
 
-	return fmt.Sprintf(base, artworkType, name, order, age_settings, page)
+	return fmt.Sprintf(base, artworkType, name, order, age_settings, ratio, page)
 }
 
 func GetLandingURL(mode string) string {

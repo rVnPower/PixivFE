@@ -13,6 +13,7 @@ func TagPage(c *fiber.Ctx) error {
 	queries["Mode"] = c.Query("mode", "safe")
 	queries["Category"] = c.Query("category", "artworks")
 	queries["Order"] = c.Query("order", "date_d")
+	queries["Ratio"] = c.Query("ratio", "")
 
 	name, err := url.PathUnescape(c.Params("name"))
 	if err != nil {
@@ -29,7 +30,7 @@ func TagPage(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-	result, err := core.GetSearch(c, queries["Category"], name, queries["Order"], queries["Mode"], page)
+	result, err := core.GetSearch(c, queries["Category"], name, queries["Order"], queries["Mode"], queries["Ratio"], page)
 	if err != nil {
 		return err
 	}
