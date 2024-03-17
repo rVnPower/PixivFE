@@ -120,14 +120,20 @@ func main() {
 				if refcount >= 4 { // on too much concurrent requests
 					// todo: maybe blackhole `requestIP` here
 					log.Println("Limit Reached (Hard)!", requestIP)
-					// saves bandwidth by not rendering template
-					return c.SendString("Woah! You are going too fast! I'll have to keep an eye on you.")
+					// close the connection immediately
+					_ = c.Context().Conn().Close()
+					return nil
 				}
+
+				// sleeping
+				// here, sleeping is not the best solution.
+				// todo: close this connection when this IP reaches hard limit
 				dur := time.Duration(retryAfter) * time.Second
 				log.Println("Limit Reached (Soft)! Sleeping for ", dur)
 				ctx, cancel := context.WithTimeout(c.Context(), dur)
 				defer cancel()
 				<-ctx.Done()
+
 				return c.Next()
 			},
 		}))
