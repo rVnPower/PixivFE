@@ -18,7 +18,7 @@ func (km *Kmutex) Unlock(key any) uint64 {
 	for {
 		actual, ok := km.Map.Load(key)
 		if !ok {
-			panic("what")
+			panic("impossible! memory corruption?")
 		}
 		if actual.(uint64) == 1 {
 			deleted := km.Map.CompareAndDelete(key, actual.(uint64))
