@@ -46,23 +46,23 @@ a {
 
 /* Scrollbars */
 * {
-    scrollbar-width: thin;
-    // invalid line
-    // scrollbar-color: $link auto;
+  scrollbar-width: thin;
+  // invalid line
+  // scrollbar-color: $link auto;
 }
 
 *::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+  width: 5px;
+  height: 5px;
 }
 
 *::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: $link;
-    border-radius: 10px;
+  background-color: $link;
+  border-radius: 10px;
 }
 
 .special-symbol {
@@ -92,8 +92,8 @@ input[type="radio"] {
   display: inline-block;
 }
 
-input[type="checkbox"] + label,
-input[type="radio"] + label {
+input[type="checkbox"]+label,
+input[type="radio"]+label {
   display: inline-block;
   font-weight: normal;
   position: relative;
@@ -142,7 +142,7 @@ textarea[readonly] {
   label {
     font-weight: bold;
     margin-bottom: 0.2rem;
-  }  
+  }
 }
 
 a b,
@@ -215,7 +215,7 @@ input[type="submit"][hidden] {
     text-align: center;
 
     input {
-	  width: 5em;
+      width: 5em;
     }
   }
 
@@ -244,13 +244,14 @@ input[type="submit"][hidden] {
   margin-bottom: -4px;
 
   // background-size: 200px auto;
-  animation: rolling-something 1s linear infinite;  
-  background-image: repeating-linear-gradient(-0.25turn, $link 0vw, transparent 40vw); 
+  animation: rolling-something 1s linear infinite;
+  background-image: repeating-linear-gradient(-0.25turn, $link 0vw, transparent 40vw);
   background-size: 80vw auto;
 
   will-change: opacity;
   transition: opacity 0.3s;
   opacity: 0;
+
   &.htmx-request {
     opacity: 1;
     transition-duration: 1s;
@@ -262,6 +263,7 @@ input[type="submit"][hidden] {
   0% {
     background-position-x: 0vw
   }
+
   100% {
     background-position-x: 40vw
   }
@@ -330,7 +332,7 @@ nav {
   .sidebar-toggler {
     display: none;
 
-    &:checked ~ .sidebar {
+    &:checked~.sidebar {
       transform: translateX(0);
     }
   }
@@ -389,45 +391,45 @@ nav {
 
 // mobile nav bar
 @media screen and (max-height: 767px) {
-nav {
-  position: sticky;
-  top: 0;
-  isolation: isolate;
-  z-index: 1;
+  nav {
+    position: sticky;
+    top: 0;
+    isolation: isolate;
+    z-index: 1;
 
-  background-color: $bg;
-  .navigation-wrapper {
     background-color: $bg;
-    padding-block: 8px; // Reduced from 15px
-  }
-  
-  .sidebar {
-    z-index: -1;
-    width: 100vw;
-    transform: translateY(-110%);
-    padding-block: 8px 16px;
-    br {
-      display: none;
+
+    .navigation-wrapper {
+      background-color: $bg;
+      padding-block: 8px; // Reduced from 15px
+    }
+
+    .sidebar {
+      z-index: -1;
+      width: 100vw;
+      transform: translateY(-110%);
+      padding-block: 8px 16px;
+
+      br {
+        display: none;
+      }
+    }
+
+    .sidebar-list {
+      background-color: $bg;
+      // display: flex;
+      // flex-direction: row;
+      // flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: minmax(0px, 400px) repeat(auto-fit,
+          minmax(0px, 400px));
+
+    }
+
+    .sidebar-item {
+      padding-inline: unset;
     }
   }
-
-  .sidebar-list {
-    background-color: $bg;
-    // display: flex;
-    // flex-direction: row;
-    // flex-wrap: wrap;
-    display: grid;
-    grid-template-columns: minmax(0px, 400px) repeat(
-      auto-fit,
-      minmax(0px, 400px)
-    );
-
-  }
-
-  .sidebar-item {
-    padding-inline: unset;
-  }
-}
 }
 
 .component-header {
@@ -445,11 +447,14 @@ nav {
   max-width: 1200px;
   margin-inline: auto;
   padding-inline: 4px;
+
   @media (min-width: $small-breakpoint) {
     padding-inline: 10px;
   }
+
   scroll-margin-top: 71px; // Prevent images from being covered; equal to the navigation bar height
 }
+
 .error.container {
   text-align: center;
 }
@@ -464,10 +469,8 @@ nav {
 .artwork-container {
   display: grid;
 
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(calc($small-artwork-width + 15px), 1fr)
-  );
+  grid-template-columns: repeat(auto-fit,
+      minmax(calc($small-artwork-width + 15px), 1fr));
   align-items: center;
   justify-items: center;
 }
@@ -497,6 +500,7 @@ nav {
 
     .artwork-author {
       max-width: $large-artwork-width;
+
       a {
         max-width: $small-artwork-width;
       }
@@ -550,6 +554,7 @@ nav {
         font-size: 16px;
         background-color: rgba(0, 0, 0, 0.32);
       }
+
       .artwork-profanity-label {
         display: flex;
         align-items: center;
@@ -686,9 +691,11 @@ nav {
     .illust-title {
       font-weight: bold;
     }
+
     .illust-author {
       font-size: 0.8em;
     }
+
     a {
       color: $fg-secondary;
     }
@@ -706,7 +713,8 @@ nav {
     flex-direction: column;
     width: 100%;
 
-    img {
+    img,
+    video {
       margin-top: 15px;
       max-height: 1000px;
       width: auto;
@@ -757,7 +765,7 @@ nav {
       text-decoration: none;
       color: $fg;
 
-      & > img {
+      &>img {
         aspect-ratio: 1/1;
         width: 50px;
         height: 50px;
@@ -773,10 +781,8 @@ nav {
 .novel-container {
   display: grid;
 
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(calc($novel-width + 15px), 1fr)
-  );
+  grid-template-columns: repeat(auto-fit,
+      minmax(calc($novel-width + 15px), 1fr));
   justify-content: center;
 }
 
@@ -848,8 +854,8 @@ nav {
   .novel-content {
     margin: 1.2rem 0;
     line-height: 1.8;
-        color: black;
-        background-color: white;
+    color: black;
+    background-color: white;
   }
 }
 
@@ -894,13 +900,11 @@ nav {
 }
 
 .background-cover {
-  background: repeating-linear-gradient(
-    52.5deg,
-    rgba(32, 32, 32, 0.8),
-    rgba(32, 32, 32, 0.8) 14px,
-    rgba(240, 248, 255, 0) 14px,
-    rgba(240, 248, 255, 0) 28px
-  );
+  background: repeating-linear-gradient(52.5deg,
+      rgba(32, 32, 32, 0.8),
+      rgba(32, 32, 32, 0.8) 14px,
+      rgba(240, 248, 255, 0) 14px,
+      rgba(240, 248, 255, 0) 28px);
   height: 10vw;
   min-height: 100px;
   overflow: hidden;
@@ -926,6 +930,7 @@ nav {
   .user-avatar {
     text-align: center;
   }
+
   .user-avatar img {
     aspect-ratio: 1/1;
     width: 150px;
@@ -960,8 +965,10 @@ nav {
   row-gap: 8px;
   column-gap: 1em;
   margin-block: 4px 20px;
+
   &>a {
     line-height: 1;
+
     &:hover {
       text-decoration: underline;
     }
@@ -1069,6 +1076,7 @@ nav {
   .main {
     font-size: 1.6em;
   }
+
   .sub {
     font-size: 1.2em;
     font-weight: normal;

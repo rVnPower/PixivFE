@@ -613,7 +613,8 @@ nav .sidebar-item img {
   flex-direction: column;
   width: 100%;
 }
-.illust .illust-images img {
+.illust .illust-images img,
+.illust .illust-images video {
   margin-top: 15px;
   max-height: 1000px;
   width: auto;
