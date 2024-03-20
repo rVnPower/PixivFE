@@ -7,11 +7,32 @@ import (
 	"math"
 	"sort"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	http "codeberg.org/vnpower/pixivfe/v2/core/http"
+	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 )
+
+// pixivfe internal data type. not used by pixiv.
+type UserArtCategory string
+
+const (
+	UserArt_Any          UserArtCategory = "artworks"
+	UserArt_Illustration UserArtCategory = "illustrations"
+	UserArt_Manga        UserArtCategory = "manga"
+	UserArt_Bookmarked   UserArtCategory = "bookmarks" // what this user has bookmarked; not art by this user
+)
+
+func (s UserArtCategory) Validate() error {
+	if s != UserArt_Any &&
+		s != UserArt_Illustration &&
+		s != UserArt_Manga &&
+		s != UserArt_Bookmarked {
+		return fmt.Errorf("Invalid work category: %s\nonly '%s', '%s', '%s' and '%s' are available", s, UserArt_Any, UserArt_Illustration, UserArt_Manga, UserArt_Bookmarked)
+	} else {
+		return nil
+	}
+}
 
 type FrequentTag struct {
 	Name           string `json:"tag"`
@@ -100,7 +121,7 @@ func GetUserArtworks(c *fiber.Ctx, id, ids string) ([]ArtworkBrief, error) {
 	return works, nil
 }
 
-func GetUserArtworksID(c *fiber.Ctx, id, category string, page int) (string, int, error) {
+func GetUserArtworksID(c *fiber.Ctx, id string, category UserArtCategory, page int) (string, int, error) {
 	URL := http.GetUserArtworksURL(id)
 
 	resp, err := http.UnwrapWebAPIRequest(c.Context(), URL, "")
@@ -139,13 +160,13 @@ func GetUserArtworksID(c *fiber.Ctx, id, category string, page int) (string, int
 
 	// Get the keys, because Pixiv only returns IDs (very evil)
 
-	if category == "illustrations" || category == "artworks" {
+	if category == UserArt_Illustration || category == UserArt_Any {
 		for k := range illusts {
 			ids = append(ids, k)
 			count++
 		}
 	}
-	if category == "manga" || category == "artworks" {
+	if category == UserArt_Manga || category == UserArt_Any {
 		for k := range mangas {
 			ids = append(ids, k)
 			count++
@@ -172,7 +193,7 @@ func GetUserArtworksID(c *fiber.Ctx, id, category string, page int) (string, int
 	return idsString, count, nil
 }
 
-func GetUserArtwork(c *fiber.Ctx, id, category string, page int) (User, error) {
+func GetUserArtwork(c *fiber.Ctx, id string, category UserArtCategory, page int) (User, error) {
 	var user User
 
 	token := session.GetPixivToken(c)

@@ -83,3 +83,10 @@ rules:
   severity: WARNING
   pattern: |
     (_ : error) = ...
+- id: rule-6
+  message: "raw UserArtCategory string"
+  languages: [go]
+  severity: WARNING
+  pattern-either:
+  - pattern: |
+      ($A : UserArtCategory) == "$B"

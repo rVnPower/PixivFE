@@ -14,9 +14,10 @@ func UserPage(c *fiber.Ctx) error {
 	if _, err := strconv.Atoi(id); err != nil {
 		return err
 	}
-	category := c.Params("category", "artworks")
-	if !(category == "artworks" || category == "illustrations" || category == "manga" || category == "bookmarks") {
-		return errors.New("Invalid work category: only illustrations, manga, artworks and bookmarks are available")
+	category := core.UserArtCategory(c.Params("category", string(core.UserArt_Any)))
+	err := category.Validate()
+	if err != nil {
+		return err
 	}
 
 	page := c.Query("page", "1")
@@ -33,7 +34,7 @@ func UserPage(c *fiber.Ctx) error {
 	var worksCount int
 	var worksPerPage float64
 
-	if category == "bookmarks" {
+	if category == core.UserArt_Bookmarked {
 		worksPerPage = 48.0
 	} else {
 		worksPerPage = 30.0
@@ -50,4 +51,8 @@ func UserPage(c *fiber.Ctx) error {
 		"Page":      pageInt,
 		"MetaImage": user.BackgroundImage,
 	})
+}
+
+func UserFeed(c *fiber.Ctx) error {
+	return errors.New("not implemented")
 }

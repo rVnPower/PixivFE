@@ -211,6 +211,8 @@ func main() {
 	server.Get("/ranking", pages.RankingPage)
 	server.Get("/rankingCalendar", pages.RankingCalendarPage)
 	server.Post("/rankingCalendar", pages.RankingCalendarPicker)
+	server.Get("/users/:id.rss", pages.UserFeed)
+	server.Get("/users/:id/:category?.rss", pages.UserFeed)
 	server.Get("/users/:id/:category?", pages.UserPage)
 	server.Get("/artworks/:id/", pages.ArtworkPage).Name("artworks")
 	server.Get("/artworks/:id/embed", pages.ArtworkEmbedPage)
