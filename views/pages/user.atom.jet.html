@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>{* <?xml-stylesheet href="/feed.xsl" type="text/xsl"?> *}
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>{{ Title }}</title>
+  <id>{{ BaseURL }}/users/{{ User.ID }}/{{ Category }}</id>
   <link rel="alternate" href="{{ BaseURL }}/users/{{ User.ID }}/{{ Category }}"/>
   <link rel="self" href="{{ BaseURL }}{{ URL }}"/>
+  <link rel="first" href="TK_feed_url?page=1"/>
+  <link rel="last" href="TK_feed_url?page={{ PageLimit }}"/>
+  {{ if Page - 1 >= 1 }}
+  <link rel="previous" href="TK_feed_url?page={{ Page - 1 }}"/>
+  {{ end }}
+  {{ if Page + 1 <= PageLimit }}
+  <link rel="next" href="TK_feed_url?page={{ Page + 1 }}"/>
+  {{ end }}
   <updated>{{ Updated }}</updated>
+  <title>{{ Title }}</title>
   <author>
     <name>{{ User.Name }}</name>
+    <uri>http://example.com/TK</uri>
   </author>
-  <id>{{ BaseURL }}{{ URL }}</id>
   <entry>
     <id>TK: art URL</id>
+    <link rel="alternate" href="TK: art URL"/>
     <link rel="self" href="TK: art URL" />
     <title>TK</title>
     <updated>TK: ISO8601 time</updated>
