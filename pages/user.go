@@ -9,26 +9,33 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func UserPage(c *fiber.Ctx) error {
+type userPageData struct {
+	user        core.User
+	category    core.UserArtCategory
+	pageLimit   int
+	pageCurrent int
+}
+
+func process(c *fiber.Ctx) (userPageData, error) {
 	id := c.Params("id")
 	if _, err := strconv.Atoi(id); err != nil {
-		return err
+		return userPageData{}, err
 	}
 	category := core.UserArtCategory(c.Params("category", string(core.UserArt_Any)))
 	err := category.Validate()
 	if err != nil {
-		return err
+		return userPageData{}, err
 	}
 
-	page := c.Query("page", "1")
-	pageInt, err := strconv.Atoi(page)
+	pageCurrentString := c.Query("page", "1")
+	pageCurrent, err := strconv.Atoi(pageCurrentString)
 	if err != nil {
-		return err
+		return userPageData{}, err
 	}
 
-	user, err := core.GetUserArtwork(c, id, category, pageInt)
+	user, err := core.GetUserArtwork(c, id, category, pageCurrent)
 	if err != nil {
-		return err
+		return userPageData{}, err
 	}
 
 	var worksCount int
@@ -41,18 +48,33 @@ func UserPage(c *fiber.Ctx) error {
 	}
 
 	worksCount = user.ArtworksCount
-	pageLimit := math.Ceil(float64(worksCount) / worksPerPage)
+	pageLimit := int(math.Ceil(float64(worksCount) / worksPerPage))
+
+	return userPageData{user, category, pageLimit, pageCurrent}, nil
+}
+
+func UserPage(c *fiber.Ctx) error {
+	data, err := process(c)
+	if err != nil {
+		return err
+	}
 
 	return c.Render("pages/user", fiber.Map{
-		"Title":     user.Name,
-		"User":      user,
-		"Category":  category,
-		"PageLimit": int(pageLimit),
-		"Page":      pageInt,
-		"MetaImage": user.BackgroundImage,
+		"Title":     data.user.Name,
+		"User":      data.user,
+		"Category":  data.category,
+		"PageLimit": data.pageLimit,
+		"Page":      data.pageCurrent,
+		"MetaImage": data.user.BackgroundImage,
 	})
 }
 
-func UserFeed(c *fiber.Ctx) error {
-	return errors.New("not implemented")
+func UserAtomFeed(c *fiber.Ctx) error {
+	data, err := process(c)
+	if err != nil {
+		return err
+	}
+	
+	_ = data
+	return errors.New("unimplemented")
 }
