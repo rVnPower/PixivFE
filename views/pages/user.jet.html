@@ -39,14 +39,14 @@
     {{ range User.FrequentTags }}
     <a href="/tags/{{ .Name }}">
       #{{ .Name }}
-      <!-- <div>
+      {* <div>
         {{ if ! .TranslatedName }}
         <div class="main">{{ .Name }}</div>
         {{ else }}
         <div class="main">{{ .TranslatedName }}</div>
         <div class="sub">#{{ .Name }}</div>
         {{ end }}
-      </div> -->
+      </div> *}
     </a>
     {{ end }}
   </div>

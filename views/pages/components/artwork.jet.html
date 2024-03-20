@@ -3,7 +3,7 @@
   {{ range index := .Images }}
   <a href="{{ .Original }}" target="_blank">
     {{ if .Width != 0 && .Height != 0 }}
-    <!-- todo: do not reflow the page because of loading image -->
+    {* todo: do not reflow the page because of loading image *}
     <img src="{{ .Large }}" alt="Page {{ index }}" data-width="{{.Width}}" data-height="{{.Height}}" />
     {{ else }}
     <img src="{{ .Large }}" alt="Page {{ index }}" />
@@ -58,7 +58,7 @@
   <br />
 </div>
 <div class="illust-tags">
-  <!--
+  {*
         To know if this artwork is bookmarked:
         ```
         {{ if .Bookmarked }}
@@ -71,7 +71,7 @@
         ```
 
         Same with .Liked
-  -->
+  *}
   <span class="illust-tag-attr">
     <img src="/assets/eye.png" alt="Views" />
     {{ .Views }}
