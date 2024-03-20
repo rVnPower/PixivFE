@@ -13,7 +13,7 @@ type userPageData struct {
 	user        core.User
 	category    core.UserArtCategory
 	pageLimit   int
-	pageCurrent int
+	page int
 }
 
 func process(c *fiber.Ctx) (userPageData, error) {
@@ -64,7 +64,7 @@ func UserPage(c *fiber.Ctx) error {
 		"User":      data.user,
 		"Category":  data.category,
 		"PageLimit": data.pageLimit,
-		"Page":      data.pageCurrent,
+		"Page":      data.page,
 		"MetaImage": data.user.BackgroundImage,
 	})
 }
@@ -82,7 +82,7 @@ func UserAtomFeed(c *fiber.Ctx) error {
 		"Category":  data.category,
 		"Updated":   time.Now().Format(time.RFC3339),
 		"PageLimit": data.pageLimit,
-		"Page":      data.pageCurrent,
+		"Page":      data.page,
 		// "MetaImage": data.user.BackgroundImage,
 	}, "")
 	if err != nil {
