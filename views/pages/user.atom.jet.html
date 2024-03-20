@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>{* <?xml-stylesheet href="/feed.xsl" type="text/xsl"?> *}
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ Title }}</title>
+  <link rel="alternate" href="{{ BaseURL }}/users/{{ User.ID }}/{{ Category }}"/>
+  <link rel="self" href="{{ BaseURL }}{{ URL }}"/>
+  <updated>{{ Updated }}</updated>
+  <author>
+    <name>{{ User.Name }}</name>
+  </author>
+  <id>{{ BaseURL }}{{ URL }}</id>
+  <entry>
+    <id>TK: art URL</id>
+    <link rel="self" href="TK: art URL" />
+    <title>TK</title>
+    <updated>TK: ISO8601 time</updated>
+    <content type="xhtml" xml:base="TK: art URL">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        TK: xhtml content here
+      </div>
+    </content>
+  </entry>
+</feed>
