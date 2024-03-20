@@ -1,9 +1,9 @@
 package pages
 
 import (
-	"errors"
 	"math"
 	"strconv"
+	"time"
 
 	core "codeberg.org/vnpower/pixivfe/v2/core/webapi"
 	"github.com/gofiber/fiber/v2"
@@ -74,7 +74,22 @@ func UserAtomFeed(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-	
-	_ = data
-	return errors.New("unimplemented")
+
+	err = c.Render("pages/user.atom", fiber.Map{
+		"URL":       string(c.Request().RequestURI()),
+		"Title":     data.user.Name,
+		"User":      data.user,
+		"Category":  data.category,
+		"Updated":   time.Now().Format(time.RFC3339),
+		"PageLimit": data.pageLimit,
+		"Page":      data.pageCurrent,
+		// "MetaImage": data.user.BackgroundImage,
+	}, "")
+	if err != nil {
+		return err
+	}
+
+	c.Context().SetContentType("application/atom+xml")
+
+	return nil
 }

@@ -212,7 +212,7 @@ func main() {
 	server.Get("/rankingCalendar", pages.RankingCalendarPage)
 	server.Post("/rankingCalendar", pages.RankingCalendarPicker)
 	server.Get("/users/:id.atom.xml", pages.UserAtomFeed)
-	server.Get("/users/:id/:category.atom.xml", pages.UserAtomFeed)
+	server.Get("/users/:id/:category?.atom.xml", pages.UserAtomFeed)
 	server.Get("/users/:id/:category?", pages.UserPage)
 	server.Get("/artworks/:id/", pages.ArtworkPage).Name("artworks")
 	server.Get("/artworks/:id/embed", pages.ArtworkEmbedPage)
