@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/goccy/go-json v0.10.2
-	github.com/gofiber/fiber/v2 v2.52.0
+	github.com/gofiber/fiber/v2 v2.52.2
 	github.com/gofiber/template/jet/v2 v2.1.8
 	github.com/tidwall/gjson v1.17.0
 	golang.org/x/net v0.17.0
@@ -31,3 +31,5 @@ require (
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	golang.org/x/sys v0.15.0 // indirect
 )
+
+replace github.com/gofiber/template/jet/v2 => github.com/iacore/template/jet/v2 v2.0.0-20240319184104-a6fac91c3493
