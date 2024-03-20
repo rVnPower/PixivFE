@@ -27,13 +27,13 @@ func process(c *fiber.Ctx) (userPageData, error) {
 		return userPageData{}, err
 	}
 
-	pageCurrentString := c.Query("page", "1")
-	pageCurrent, err := strconv.Atoi(pageCurrentString)
+	page_param := c.Query("page", "1")
+	page, err := strconv.Atoi(page_param)
 	if err != nil {
 		return userPageData{}, err
 	}
 
-	user, err := core.GetUserArtwork(c, id, category, pageCurrent)
+	user, err := core.GetUserArtwork(c, id, category, page)
 	if err != nil {
 		return userPageData{}, err
 	}
@@ -50,7 +50,7 @@ func process(c *fiber.Ctx) (userPageData, error) {
 	worksCount = user.ArtworksCount
 	pageLimit := int(math.Ceil(float64(worksCount) / worksPerPage))
 
-	return userPageData{user, category, pageLimit, pageCurrent}, nil
+	return userPageData{user, category, pageLimit, page}, nil
 }
 
 func UserPage(c *fiber.Ctx) error {
