@@ -17,7 +17,7 @@ import (
 type UserArtCategory string
 
 const (
-	UserArt_Any          UserArtCategory = "artworks"
+	UserArt_Any          UserArtCategory = ""
 	UserArt_Illustration UserArtCategory = "illustrations"
 	UserArt_Manga        UserArtCategory = "manga"
 	UserArt_Bookmarked   UserArtCategory = "bookmarks" // what this user has bookmarked; not art by this user
@@ -28,7 +28,7 @@ func (s UserArtCategory) Validate() error {
 		s != UserArt_Illustration &&
 		s != UserArt_Manga &&
 		s != UserArt_Bookmarked {
-		return fmt.Errorf("Invalid work category: %s\nonly '%s', '%s', '%s' and '%s' are available", s, UserArt_Any, UserArt_Illustration, UserArt_Manga, UserArt_Bookmarked)
+		return fmt.Errorf("Invalid work category: %#v. " + `only "%s", "%s", "%s" and "%s" are available`, s, UserArt_Any, UserArt_Illustration, UserArt_Manga, UserArt_Bookmarked)
 	} else {
 		return nil
 	}
