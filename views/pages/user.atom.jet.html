@@ -2,31 +2,42 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>{{ BaseURL }}/users/{{ User.ID }}/{{ Category }}</id>
   <link rel="alternate" href="{{ BaseURL }}/users/{{ User.ID }}/{{ Category }}"/>
-  <link rel="self" href="{{ BaseURL }}{{ URL }}"/>
-  <link rel="first" href="TK_feed_url?page=1"/>
-  <link rel="last" href="TK_feed_url?page={{ PageLimit }}"/>
+  <link rel="self" href="{{ PageURL }}"/>
+  <link rel="first" href="{{ BaseURL }}/users/{{ User.ID }}/{{ Category }}.atom.xml?page=1"/>
+  <link rel="last" href="{{ BaseURL }}/users/{{ User.ID }}/{{ Category }}.atom.xml?page={{ PageLimit }}"/>
   {{ if Page - 1 >= 1 }}
-  <link rel="previous" href="TK_feed_url?page={{ Page - 1 }}"/>
+  <link rel="previous" href="{{ BaseURL }}/users/{{ User.ID }}/{{ Category }}.atom.xml?page={{ Page - 1 }}"/>
   {{ end }}
   {{ if Page + 1 <= PageLimit }}
-  <link rel="next" href="TK_feed_url?page={{ Page + 1 }}"/>
+  <link rel="next" href="{{ BaseURL }}/users/{{ User.ID }}/{{ Category }}.atom.xml?page={{ Page + 1 }}"/>
   {{ end }}
   <updated>{{ Updated }}</updated>
   <title>{{ Title }}</title>
   <author>
     <name>{{ User.Name }}</name>
-    <uri>http://example.com/TK</uri>
+    <uri>{{ BaseURL }}/users/{{ User.ID }}/</uri>
   </author>
+
+  {{ range User.Artworks }}
   <entry>
-    <id>TK: art URL</id>
-    <link rel="alternate" href="TK: art URL"/>
-    <link rel="self" href="TK: art URL" />
-    <title>TK</title>
-    <updated>TK: ISO8601 time</updated>
-    <content type="xhtml" xml:base="TK: art URL">
+    <id>{{ BaseURL }}/artworks/{{ .ID }}/</id>
+    <link rel="alternate" href="{{ BaseURL }}/artworks/{{ .ID }}/"/>
+    <title>{{ .Title }}</title>
+    <author>
+      <name>{{ .ArtistName }}</name>
+      <uri>{{ BaseURL }}/users/{{ .ArtistID }}/</uri>
+    </author>
+    <content type="xhtml" xml:base="{{ BaseURL }}">
       <div xmlns="http://www.w3.org/1999/xhtml">
-        TK: xhtml content here
+        <div><img src="{{ .Thumbnail }}"></img></div>
+        <div><a href="{{ BaseURL }}/users/{{ .ArtistID }}/">{{ .ArtistName }}</a></div>
+        <div>Pages: {{ .Pages }}</div>
+        <div>XRestrict: {{ .XRestrict }}</div>
+        <div>AiType: {{ .AiType }}</div>
+        <div>Bookmarked: {{ .Bookmarked }}</div>
+        <div>IllustType: {{ .IllustType }}</div>
       </div>
     </content>
   </entry>
+  {{ end }}
 </feed>
