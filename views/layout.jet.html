@@ -14,9 +14,9 @@
     <meta name="htmx-config" content='{"includeIndicatorStyles":false}'>
     <script src="/js/htmx@1.9.10.min.js" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"></script>
 
-    {{ if BaseURL }}
+    {{ if PageURL }}
       <meta property="og:title" content="{{ title }}" />
-      <meta property="og:url" content="{{ BaseURL }}" />
+      <meta property="og:url" content="{{ PageURL }}" />
       <meta property="og:site_name" content="PixivFE" />
       <meta property="og:type" content="article" />
       <meta content="summary_large_image" name="twitter:card" />

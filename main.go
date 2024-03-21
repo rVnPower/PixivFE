@@ -93,8 +93,12 @@ func main() {
 	})
 
 	server.Use(func(c *fiber.Ctx) error {
-		baseURL := c.BaseURL() + c.OriginalURL()
-		c.Bind(fiber.Map{"BaseURL": baseURL})
+		pageURL := c.BaseURL() + c.OriginalURL()
+		c.Bind(fiber.Map{
+			"BaseURL": c.BaseURL(),
+			"OriginalURL": c.OriginalURL(),
+			"PageURL": pageURL,
+		})
 		return c.Next()
 	})
 
