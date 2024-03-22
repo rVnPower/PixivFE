@@ -1,5 +1,5 @@
 # ------ Builder stage ------
-FROM docker.io/golang:1.21 as builder
+FROM docker.io/golang:1.22 as builder
 WORKDIR /app
 
 COPY go.* ./
@@ -10,7 +10,7 @@ COPY . ./
 RUN CGO_ENABLED=0 GOOS=linux go build -mod=readonly -v -ldflags="-s -w" -o pixivfe
 
 # ------ Final image ------
-FROM docker.io/alpine:3.14
+FROM docker.io/alpine:3.19
 WORKDIR /app
 
 # Create a non-root user `pixivfe` for security purposes and set ownership
