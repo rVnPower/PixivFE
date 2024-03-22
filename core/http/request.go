@@ -65,6 +65,9 @@ func WebAPIRequest(context context.Context, URL, token string) HttpResponse {
 			if err != nil {
 				log.Println(err)
 			}
+			if !(300 > resp.StatusCode && resp.StatusCode >= 200) {
+				log.Println("(WARN) non-2xx response from pixiv:")
+			}
 			log.Println("->", URL, "->", resp.StatusCode, filename)
 		} else {
 			log.Println("->", URL, "ERR", resp.Message)
@@ -127,11 +130,6 @@ func webAPIRequest(context context.Context, URL, token string) HttpResponse {
 		StatusCode: resp.StatusCode,
 		Body:       string(body),
 		Message:    "",
-	}
-
-	if !(300 > resp2.StatusCode && resp2.StatusCode >= 200) {
-		// class:warn
-		log.Println("non-2xx response from pixiv:", URL, resp2.StatusCode, resp2.Body)
 	}
 
 	return resp2
