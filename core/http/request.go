@@ -5,7 +5,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
+	"os"
+	"path"
+	"time"
 
 	config "codeberg.org/vnpower/pixivfe/v2/core/config"
 	"github.com/tidwall/gjson"
@@ -15,11 +19,61 @@ type HttpResponse struct {
 	Ok         bool
 	StatusCode int
 
+	// @iacore: this not being []byte might come back to bite us
 	Body    string
 	Message string
 }
 
+const DevDir_Response = "/tmp/pixivfe-dev/resp"
+
+var devdir_initialized = false
+
+func Init() error {
+	if config.GlobalServerConfig.InDevelopment {
+		err := os.MkdirAll(DevDir_Response, 0o700)
+		if err != nil {
+			return err
+		}
+		devdir_initialized = true
+	}
+	return nil
+}
+
+func CleanUp() {
+	if devdir_initialized {
+		err := os.RemoveAll(DevDir_Response)
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func logResponseBody(body string) (string, error) {
+	filename := path.Join(DevDir_Response, time.Now().UTC().Format(time.RFC3339Nano))
+	err := os.WriteFile(filename, []byte(body), 0o600)
+	if err != nil {
+		return "", err
+	}
+	return filename, nil
+}
+
 func WebAPIRequest(context context.Context, URL, token string) HttpResponse {
+	resp := webAPIRequest(context, URL, token)
+	if config.GlobalServerConfig.InDevelopment {
+		if resp.Ok {
+			filename, err := logResponseBody(resp.Body)
+			if err != nil {
+				log.Println(err)
+			}
+			log.Println("->", URL, "->", resp.StatusCode, filename)
+		} else {
+			log.Println("->", URL, "ERR", resp.Message)
+		}
+	}
+	return resp
+}
+
+func webAPIRequest(context context.Context, URL, token string) HttpResponse {
 	req, err := http.NewRequest("GET", URL, nil)
 	if err != nil {
 		return HttpResponse{
@@ -74,8 +128,8 @@ func WebAPIRequest(context context.Context, URL, token string) HttpResponse {
 		Body:       string(body),
 		Message:    "",
 	}
-	
-	if !(300 > resp2.StatusCode && resp2.StatusCode >= 200)  {
+
+	if !(300 > resp2.StatusCode && resp2.StatusCode >= 200) {
 		fmt.Println("non-2xx response from pixiv:", URL, resp2.StatusCode, resp2.Body)
 	}
 

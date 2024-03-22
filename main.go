@@ -15,6 +15,7 @@ import (
 	"time"
 
 	config "codeberg.org/vnpower/pixivfe/v2/core/config"
+	core_http "codeberg.org/vnpower/pixivfe/v2/core/http"
 	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 
 	"codeberg.org/vnpower/pixivfe/v2/core/kmutex"
@@ -47,6 +48,8 @@ func CanRequestSkipLogger(c *fiber.Ctx) bool {
 
 func main() {
 	config.GlobalServerConfig.InitializeConfig()
+	core_http.Init()
+	defer core_http.CleanUp()
 
 	engine := jet.New("./views", ".jet.html")
 	engine.AddFuncMap(serve.GetTemplateFunctions())
@@ -95,9 +98,9 @@ func main() {
 	server.Use(func(c *fiber.Ctx) error {
 		pageURL := c.BaseURL() + c.OriginalURL()
 		c.Bind(fiber.Map{
-			"BaseURL": c.BaseURL(),
+			"BaseURL":     c.BaseURL(),
 			"OriginalURL": c.OriginalURL(),
-			"PageURL": pageURL,
+			"PageURL":     pageURL,
 		})
 		return c.Next()
 	})

@@ -16,7 +16,7 @@ type userPageData struct {
 	page int
 }
 
-func process(c *fiber.Ctx) (userPageData, error) {
+func fetchData(c *fiber.Ctx, getTags bool) (userPageData, error) {
 	id := c.Params("id")
 	if _, err := strconv.Atoi(id); err != nil {
 		return userPageData{}, err
@@ -33,7 +33,7 @@ func process(c *fiber.Ctx) (userPageData, error) {
 		return userPageData{}, err
 	}
 
-	user, err := core.GetUserArtwork(c, id, category, page)
+	user, err := core.GetUserArtwork(c, id, category, page, getTags)
 	if err != nil {
 		return userPageData{}, err
 	}
@@ -54,7 +54,7 @@ func process(c *fiber.Ctx) (userPageData, error) {
 }
 
 func UserPage(c *fiber.Ctx) error {
-	data, err := process(c)
+	data, err := fetchData(c, true)
 	if err != nil {
 		return err
 	}
@@ -70,7 +70,7 @@ func UserPage(c *fiber.Ctx) error {
 }
 
 func UserAtomFeed(c *fiber.Ctx) error {
-	data, err := process(c)
+	data, err := fetchData(c, false)
 	if err != nil {
 		return err
 	}

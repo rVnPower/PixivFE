@@ -193,7 +193,7 @@ func GetUserArtworksID(c *fiber.Ctx, id string, category UserArtCategory, page i
 	return idsString, count, nil
 }
 
-func GetUserArtwork(c *fiber.Ctx, id string, category UserArtCategory, page int) (User, error) {
+func GetUserArtwork(c *fiber.Ctx, id string, category UserArtCategory, page int, getTags bool) (User, error) {
 	var user User
 
 	token := session.GetPixivToken(c)
@@ -233,9 +233,11 @@ func GetUserArtwork(c *fiber.Ctx, id string, category UserArtCategory, page int)
 			})
 			user.Artworks = works
 
-			user.FrequentTags, err = GetFrequentTags(c, ids)
-			if err != nil {
-				return user, err
+			if getTags {
+				user.FrequentTags, err = GetFrequentTags(c, ids)
+				if err != nil {
+					return user, err
+				}
 			}
 		}
 
