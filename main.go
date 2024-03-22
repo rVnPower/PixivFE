@@ -49,7 +49,6 @@ func CanRequestSkipLogger(c *fiber.Ctx) bool {
 func main() {
 	config.GlobalServerConfig.InitializeConfig()
 	core_http.Init()
-	defer core_http.CleanUp()
 
 	engine := jet.New("./views", ".jet.html")
 	engine.AddFuncMap(serve.GetTemplateFunctions())

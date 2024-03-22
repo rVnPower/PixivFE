@@ -26,26 +26,19 @@ type HttpResponse struct {
 
 const DevDir_Response = "/tmp/pixivfe-dev/resp"
 
-var devdir_initialized = false
-
 func Init() error {
 	if config.GlobalServerConfig.InDevelopment {
+		// {err := os.RemoveAll(DevDir_Response)
+		// if err != nil {
+		// 	log.Println(err)
+		// }}
+
 		err := os.MkdirAll(DevDir_Response, 0o700)
 		if err != nil {
 			return err
 		}
-		devdir_initialized = true
 	}
 	return nil
-}
-
-func CleanUp() {
-	if devdir_initialized {
-		err := os.RemoveAll(DevDir_Response)
-		if err != nil {
-			log.Println(err)
-		}
-	}
 }
 
 func logResponseBody(body string) (string, error) {
