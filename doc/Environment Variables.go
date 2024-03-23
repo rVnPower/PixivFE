@@ -83,7 +83,7 @@ var EnvList []*EnvVar = []*EnvVar{
 	{
 		Name:       "PIXIVFE_USERAGENT",
 		CommonName: "user agent",
-		Value:      "Mozilla/5.0",
+		Value:      "Mozilla/5.0 (Windows NT 10.0; rv:123.0) Gecko/20100101 Firefox/123.0",
 		// **Required**: No
 		//
 		// The value of the `User-Agent` header, used to make requests to Pixiv's API.
