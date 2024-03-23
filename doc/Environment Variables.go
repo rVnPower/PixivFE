@@ -1,6 +1,10 @@
 // Environment Variables
 //
 // PixivFE's behavior is governed by those Environment Variables.
+//
+// If you don't have time to read all these, set only `PIXIVFE_TOKEN=XXXXX PIXIVFE_PORT=8282`.
+// For development, set in addition `PIXIVFE_DEV=true`.
+// How to get PIXIVFE_TOKEN is described in How-to-get-the-pixiv-token.md.
 
 package doc
 
