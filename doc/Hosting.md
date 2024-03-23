@@ -34,7 +34,7 @@ Copy the `PHPSESSID` cookie value into `docker/pixivfe_token.txt`. This file wil
 
 ##### 3. Configure environment variables
 
-Copy `.env.example` to `.env` and configure the variables as needed. Refer to [`Environment Variables.go`](https://codeberg.org/VnPower/PixivFE/src/branch/v2/doc/Environment%20Variables.go) for more information.
+Copy `.env.example` to `.env` and configure the variables as needed. Refer to [`Environment Variables.go`](./Environment%20Variables.go) for more information.
 
 ##### 4. Compose!
 
@@ -72,7 +72,7 @@ docker buildx build --platform linux/arm64 -t vnpower/pixivfe:latest-arm64 --loa
 
 ##### 3. Configure environment variables
 
-Copy `.env.example` to `.env` and configure the variables as needed. Refer to [`Environment Variables.go`](https://codeberg.org/VnPower/PixivFE/src/branch/v2/doc/Environment%20Variables.go) for more information.
+Copy `.env.example` to `.env` and configure the variables as needed. Refer to [`Environment Variables.go`](./Environment%20Variables.go) for more information.
 
 ##### 4. Deploying PixivFE
 
@@ -108,7 +108,7 @@ go install
 
 ##### 2. Configure environment variables
 
-Copy `.env.example` to `.env` and configure the variables as needed. Refer to [`Environment Variables.go`](https://codeberg.org/VnPower/PixivFE/src/branch/v2/doc/Environment%20Variables.go) for more information.
+Copy `.env.example` to `.env` and configure the variables as needed. Refer to [`Environment Variables.go`](./Environment%20Variables.go) for more information.
 
 ##### 3. Deploying PixivFE
 
