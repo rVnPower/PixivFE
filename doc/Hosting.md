@@ -22,11 +22,7 @@ Deploying PixivFE using Docker Compose requires the Compose plugin to be install
 
 ##### 1. Setting up the repository
 
-Clone the PixivFE repository and navigate to the directory:
-
-```bash
-git clone https://codeberg.org/VnPower/PixivFE.git && cd PixivFE
-```
+Go to the root directory of this repo with `cd`.
 
 ##### 2. Set token
 
@@ -50,11 +46,7 @@ Furthermore, the `buildx` Docker plugin needs to be installed. Follow these [ins
 
 ##### 1. Setting up the repository
 
-Clone the PixivFE repository and navigate to the directory:
-
-```bash
-git clone https://codeberg.org/VnPower/PixivFE.git && cd PixivFE
-```
+Go to the root directory of this repo with `cd`.
 
 ##### 2. Building the image
 
@@ -99,12 +91,7 @@ When using a reverse proxy, prefix the host port with `127.0.0.1` to make PixivF
 
 ##### 1. Setting up the repository
 
-Clone the PixivFE repository, navigate to the directory, and install the dependencies:
-
-```bash
-git clone https://codeberg.org/VnPower/PixivFE.git && cd PixivFE
-go install
-```
+Go to the root directory of this repo with `cd`.
 
 ##### 2. Configure environment variables
 
