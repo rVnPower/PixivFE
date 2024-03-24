@@ -179,7 +179,17 @@ func main() {
 				CacheControl: true,
 
 				KeyGenerator: func(c *fiber.Ctx) string {
-					return utils.CopyString(c.OriginalURL())
+					key := utils.CopyString(c.Path())
+					for _, cookieName := range session.AllCookieNames {
+						cookieValue := session.GetCookie(c, cookieName)
+						if cookieValue != "" {
+							key += "\x00\x00"
+							key += string(cookieName)
+							key += "\x00"
+							key += cookieValue
+						}
+					}
+					return key
 				},
 			},
 		))
