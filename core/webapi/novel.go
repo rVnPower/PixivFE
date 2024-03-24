@@ -45,6 +45,7 @@ type Novel struct {
 	SeriesNavData  interface{} `json:"seriesNavData"`
 	HasGlossary    bool        `json:"hasGlossary"`
 	IsUnlisted     bool        `json:"isUnlisted"`
+	// seen values: zh-cn, ja
 	Language       string      `json:"language"`
 	CommentOff     int         `json:"commentOff"`
 	CharacterCount int         `json:"characterCount"`

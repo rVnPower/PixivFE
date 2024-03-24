@@ -78,7 +78,7 @@
     </span>
     <img src="/assets/font-size.png" alt="Font size" />
   </div>
-  <div class="novel-content novel-{{ FontType }}">
+  <div class="novel-content" data-font="{{ FontType }}" data-lang="{{ Language }}">
     {{ raw: renderNovel(Novel.Content) }}
   </div>
   <div class="illust-attr">

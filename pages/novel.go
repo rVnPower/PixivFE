@@ -3,6 +3,7 @@ package pages
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
 	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	core "codeberg.org/vnpower/pixivfe/v2/core/webapi"
@@ -32,11 +33,14 @@ func NovelPage(c *fiber.Ctx) error {
 
 	fontType := session.GetCookie(c, session.Cookie_NovelFontType, "gothic")
 
+	println("fontType", fontType)
+
 	return c.Render("pages/novel", fiber.Map{
 		"Novel":        novel,
 		"NovelRelated": related,
 		"User":         user,
 		"Title":        novel.Title,
 		"FontType":     fontType,
+		"Language":     strings.ToLower(novel.Language),
 	})
 }
