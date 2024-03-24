@@ -59,10 +59,26 @@
     </div>
   </div>
   <div class="novel-settings">
-    <img src="/assets/font-family.png" alt="Font family" />
+    <span class="dropdown">
+      <input type="checkbox" class="dropdown-toggler" id="font-type-toggler" />
+      <label for="font-type-toggler" class="dropdown-toggler-label">
+        <img src="/assets/font-family.png" alt="Font family" />
+      </label>
+      <div class="dropdown-content">
+        <div>Font type</div>
+        <form action="/settings/novelFontType?redirect={{PageURL}}" method="post">
+          <input type="text" name="font-type" value="gothic" class="value-holder" />
+          <input type="submit" value="Gothic" />
+        </form>
+        <form action="/settings/novelFontType?redirect={{PageURL}}" method="post">
+          <input type="text" name="font-type" value="mincho" class="value-holder" />
+          <input type="submit" value="Mincho" />
+        </form>
+      </div>
+    </span>
     <img src="/assets/font-size.png" alt="Font size" />
   </div>
-  <div class="novel-content">
+  <div class="novel-content novel-{{ FontType }}">
     {{ raw: renderNovel(Novel.Content) }}
   </div>
   <div class="illust-attr">

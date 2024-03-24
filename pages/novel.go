@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
+	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	core "codeberg.org/vnpower/pixivfe/v2/core/webapi"
 	"github.com/gofiber/fiber/v2"
 )
@@ -29,10 +30,13 @@ func NovelPage(c *fiber.Ctx) error {
 		return err
 	}
 
+	fontType := session.GetCookie(c, session.Cookie_NovelFontType, "gothic")
+
 	return c.Render("pages/novel", fiber.Map{
 		"Novel":        novel,
 		"NovelRelated": related,
 		"User":         user,
 		"Title":        novel.Title,
+		"FontType":     fontType,
 	})
 }

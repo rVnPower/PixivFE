@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"regexp"
 
-	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	httpc "codeberg.org/vnpower/pixivfe/v2/core/http"
+	session "codeberg.org/vnpower/pixivfe/v2/core/session"
 	"codeberg.org/vnpower/pixivfe/v2/doc"
 	"github.com/gofiber/fiber/v2"
 )
@@ -77,6 +77,15 @@ func setImageServer(c *fiber.Ctx) error {
 	return nil
 }
 
+func setNovelFontType(c *fiber.Ctx) error {
+	fontType := c.FormValue("font-type")
+	if fontType != "" {
+		session.SetCookie(c, session.Cookie_NovelFontType, fontType)
+	}
+
+	return nil
+}
+
 func setLogout(c *fiber.Ctx) error {
 	session.ClearCookie(c, session.Cookie_Token)
 	return nil
@@ -92,13 +101,13 @@ func SettingsPage(c *fiber.Ctx) error {
 	for _, name := range session.AllCookieNames {
 		value := session.GetCookie(c, name)
 		cookies = append(cookies, fiber.Map{
-			"Key": name,
+			"Key":   name,
 			"Value": value,
 		})
 	}
 	return c.Render("pages/settings", fiber.Map{
 		"CookieList": cookies,
-		"ProxyList": doc.BuiltinProxyList,
+		"ProxyList":  doc.BuiltinProxyList,
 	})
 }
 
@@ -107,7 +116,7 @@ func SettingsPost(c *fiber.Ctx) error {
 	var err error
 
 	switch t {
-	case "image_server":
+	case "imageServer":
 		err = setImageServer(c)
 	case "token":
 		err = setToken(c)
@@ -115,6 +124,8 @@ func SettingsPost(c *fiber.Ctx) error {
 		err = setLogout(c)
 	case "reset-all":
 		err = resetAll(c)
+	case "novelFontType":
+		err = setNovelFontType(c)
 	default:
 		err = errors.New("No such setting is available.")
 	}
@@ -122,6 +133,8 @@ func SettingsPost(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-	c.Redirect("/")
+
+	ret := c.Query("redirect", "/")
+	c.Redirect(ret)
 	return nil
 }

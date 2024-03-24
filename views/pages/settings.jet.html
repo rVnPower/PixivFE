@@ -16,10 +16,8 @@
   </ul>
   <p>
     You can only login using your account's cookie, check out
-    <a
-      href="https://codeberg.org/VnPower/PixivFE/src/branch/v2/doc/How-to-get-the-cookie-%28PIXIVFE_TOKEN%29.md"
-      >this page</a
-    >
+    <a href="https://codeberg.org/VnPower/PixivFE/src/branch/v2/doc/How-to-get-the-cookie-%28PIXIVFE_TOKEN%29.md">this
+      page</a>
     to see how to get it.
   </p>
   <p>
@@ -43,27 +41,26 @@
   <hr />
   <h2>Image proxy server</h2>
   <div class="form-field">
-      <form action="/settings/image_server" method="post">
-          <label>
-            <input type="radio" name="image-proxy" required="true" value="" />
-            No (use built-in proxy)
-          </label>
-          {{ range ProxyList }}
-          <label>
-            <input type="radio" name="image-proxy" required="true" value="{{.}}" />
-            {{.}}
-          </label>
-          {{ end }}
-          <input type="submit" value="Use Selected Proxy" />
-      </form>
-      <br />
-      <form action="/settings/image_server" method="post">
-          <label for="image-proxy">
-            Custom image proxy server
-            <input type="text" name="image-proxy" required="true" placeholder="https://example.com"
-              autocomplete="off" />
-          </label>
-          <input type="submit" value="Use Custom Proxy" />
-      </form>
+    <form action="/settings/imageServer" method="post">
+      <label>
+        <input type="radio" name="image-proxy" required="true" value="" />
+        No (use built-in proxy)
+      </label>
+      {{ range ProxyList }}
+      <label>
+        <input type="radio" name="image-proxy" required="true" value="{{.}}" />
+        {{.}}
+      </label>
+      {{ end }}
+      <input type="submit" value="Use Selected Proxy" />
+    </form>
+    <br />
+    <form action="/settings/imageServer" method="post">
+      <label for="image-proxy">
+        Custom image proxy server
+        <input type="text" name="image-proxy" required="true" placeholder="https://example.com" autocomplete="off" />
+      </label>
+      <input type="submit" value="Use Custom Proxy" />
+    </form>
   </div>
 </div>
