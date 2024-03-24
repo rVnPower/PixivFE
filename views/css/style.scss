@@ -897,6 +897,18 @@ nav {
     color: black;
     background-color: white;
   }
+
+  .novel-settings {
+    background-color: $bg;
+    padding: 0.5rem;
+    position: sticky;
+    top: 0;
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
 }
 
 .background-cover {

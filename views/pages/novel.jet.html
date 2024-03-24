@@ -7,7 +7,8 @@
     </div>
     <div class="novel-metadata">
       <div class="novel-title">{{ Novel.Title }}</div>
-      <small><span>{{ Novel.WordCount }} word(s)</span>&nbsp;<span>{{ floor: Novel.ReadingTime / 60 }} min</span></small>
+      <small><span>{{ Novel.WordCount }} word(s)</span>&nbsp;<span>{{ floor: Novel.ReadingTime / 60 }}
+          min</span></small>
       <p class="novel-description">{{ raw: Novel.Description }}</p>
 
       <div class="illust-tags">
@@ -32,9 +33,7 @@
         </span>
         {{ else }}
         <span class="illust-tag">
-          <span class="illust-tag-translation"
-            ><a href="/tags/{{ escapeString(.Name) }}">#{{ .Name }}</a></span
-          >
+          <span class="illust-tag-translation"><a href="/tags/{{ escapeString(.Name) }}">#{{ .Name }}</a></span>
         </span>
         {{ end }} {{ end }}
       </div>
@@ -59,16 +58,15 @@
       </div>
     </div>
   </div>
+  <div class="novel-settings">
+    <img src="/assets/font-family.png" alt="Font family" />
+    <img src="/assets/font-size.png" alt="Font size" />
+  </div>
   <div class="novel-content">
-  {{ raw: renderNovel(Novel.Content) }}
+    {{ raw: renderNovel(Novel.Content) }}
   </div>
   <div class="illust-attr">
-    <a href="/users/{{ User.ID }}"
-      ><img
-        src="{{ User.Avatar }}"
-        alt="{{ User.Name }}"
-        class="illust-avatar"
-      />
+    <a href="/users/{{ User.ID }}"><img src="{{ User.Avatar }}" alt="{{ User.Name }}" class="illust-avatar" />
     </a>
     <div class="attr-wrap">
       <div class="illust-title">
@@ -78,7 +76,7 @@
   </div>
   <div class="novel-container">
     {{ range NovelRelated }}
-      {{ include "components/novel-tn" . }}
+    {{ include "components/novel-tn" . }}
     {{ end }}
   </div>
 </div>
