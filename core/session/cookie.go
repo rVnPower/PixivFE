@@ -26,6 +26,9 @@ var AllCookieNames []CookieName = []CookieName{
 	Cookie_CSRF,
 	Cookie_ImageProxy,
 	Cookie_NovelFontType,
+	Cookie_ShowArtR18,
+	Cookie_ShowArtR18G,
+	Cookie_ShowArtAI,
 }
 
 func GetCookie(c *fiber.Ctx, name CookieName, defaultValue ...string) string {

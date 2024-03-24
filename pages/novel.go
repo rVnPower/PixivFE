@@ -33,7 +33,7 @@ func NovelPage(c *fiber.Ctx) error {
 
 	fontType := session.GetCookie(c, session.Cookie_NovelFontType, "gothic")
 
-	println("fontType", fontType)
+	// println("fontType", fontType)
 
 	return c.Render("pages/novel", fiber.Map{
 		"Novel":        novel,
